@@ -30,3 +30,32 @@
 *.exe
 *.out
 *.app
+
+# Configure/make files
+*.ac
+Makefile.am
+configure
+config.guess
+config.sub
+
+# bakefiles
+*.bkgen
+*.bkl
+
+# wxWidgets make files
+makefile.bcc
+makefile.gcc
+makefile.vc
+makefile.wat
+
+# CodeBlocks build files
+*.cbp
+
+# Simple makefiles
+Makefile
+
+# MS build files
+*.dsp
+*.dsw
+*.sln
+*.vcproj
