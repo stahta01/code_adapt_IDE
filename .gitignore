@@ -50,6 +50,8 @@ makefile.wat
 
 # CodeBlocks build files
 *.cbp
+update
+update30
 
 # Simple makefiles
 Makefile
@@ -62,3 +64,5 @@ Makefile
 
 # batch files
 *.bat
+
+#
