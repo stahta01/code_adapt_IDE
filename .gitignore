@@ -62,6 +62,7 @@ Makefile
 *.dsw
 *.sln
 *.vcproj
+*.vcxproj
 
 # batch files
 *.bat
