@@ -50,6 +50,7 @@ makefile.wat
 
 # CodeBlocks build files
 *.cbp
+*.layout
 update
 update30
 
