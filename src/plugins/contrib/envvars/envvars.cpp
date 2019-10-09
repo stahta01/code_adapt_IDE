@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU General Public License, version 3
  * http://www.gnu.org/licenses/gpl-3.0.html
  *
- * $Revision: 11861 $
- * $Id: envvars.cpp 11861 2019-09-29 12:54:17Z fuscated $
+ * $Revision: 11873 $
+ * $Id: envvars.cpp 11873 2019-10-07 18:30:38Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/contrib/envvars/envvars.cpp $
  */
 
@@ -49,9 +49,11 @@ END_EVENT_TABLE()
 
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
-wxString EnvVars::ParseProjectEnvvarSet(const cbProject &project)
+wxString EnvVars::ParseProjectEnvvarSet(const cbProject *project)
 {
-    const TiXmlNode *extNode = project.GetExtensionsNode();
+    if (!project)
+        return wxString();
+    const TiXmlNode *extNode = project->GetExtensionsNode();
     if (!extNode)
         return wxString();
     const TiXmlElement* elem = extNode->ToElement();
@@ -93,7 +95,7 @@ void EnvVars::SaveProjectEnvvarSet(cbProject &project, const wxString& envvar_se
 
 void EnvVars::DoProjectActivate(cbProject* project)
 {
-    const wxString prj_envvar_set = ParseProjectEnvvarSet(*project);
+    const wxString prj_envvar_set = ParseProjectEnvvarSet(project);
     if (prj_envvar_set.IsEmpty())  // There is no envvar set to apply...
       // Apply default envvar set (but only, if not already active)
       nsEnvVars::EnvvarSetApply(wxEmptyString, false);
@@ -143,7 +145,7 @@ void EnvVars::OnProjectClosed(CodeBlocksEvent& event)
 
   if (IsAttached())
   {
-    prj_envvar_set = ParseProjectEnvvarSet(*event.GetProject());
+    prj_envvar_set = ParseProjectEnvvarSet(event.GetProject());
 
     // If there is an envvar set connected to this project...
     if (!prj_envvar_set.IsEmpty())

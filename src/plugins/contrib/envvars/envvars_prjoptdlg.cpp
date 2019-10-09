@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU General Public License, version 3
  * http://www.gnu.org/licenses/gpl-3.0.html
  *
- * $Revision: 11861 $
- * $Id: envvars_prjoptdlg.cpp 11861 2019-09-29 12:54:17Z fuscated $
+ * $Revision: 11873 $
+ * $Id: envvars_prjoptdlg.cpp 11873 2019-10-07 18:30:38Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/contrib/envvars/envvars_prjoptdlg.cpp $
  */
 
@@ -49,7 +49,7 @@ EnvVarsProjectOptionsDlg::EnvVarsProjectOptionsDlg(wxWindow* parent, EnvVars* pl
   wxCheckBox* checkbox_control = XRCCTRL(*this, "chkEnvvarSet", wxCheckBox);
   if (checkbox_control && choice_control->GetCount())
   {
-    wxString envvar_set = EnvVars::ParseProjectEnvvarSet(*project);
+    wxString envvar_set = EnvVars::ParseProjectEnvvarSet(project);
     if (envvar_set.IsEmpty())
     {
       checkbox_control->SetValue(false);
