@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU General Public License, version 3
  * http://www.gnu.org/licenses/gpl-3.0.html
  *
- * $Revision: 11860 $
- * $Id: debuggergdb.cpp 11860 2019-09-29 12:54:06Z fuscated $
+ * $Revision: 11877 $
+ * $Id: debuggergdb.cpp 11877 2019-10-16 07:24:24Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/debuggergdb/debuggergdb.cpp $
  */
 
@@ -877,22 +877,25 @@ int DebuggerGDB::DoDebug(bool breakOnEntry)
     else // m_PidToAttach != 0
         cmdline = m_State.GetDriver()->GetCommandLine(cmdexe, m_PidToAttach, GetActiveConfigEx().GetUserArguments());
 
-    // Note: This is parsing the remote debugging info on every start. It is not fast but it is not
-    //       slow - parsing the info for 500 targets takes 2-3ms, which is fine.
-    //       One easy optimization is to parse  the info only for the project and the target which
-    //       is being debugged.
-    const RemoteDebuggingMap &remoteDebuggingMap = ParseRemoteDebuggingMap(*m_pProject);
     RemoteDebugging rd;
 
-    // project settings
-    RemoteDebuggingMap::const_iterator it = remoteDebuggingMap.find(nullptr);
-    if (it != remoteDebuggingMap.end())
-        rd = it->second;
+    if (m_pProject)
+    {
+        // Note: This is parsing the remote debugging info on every start. It is not fast but it is
+        //       not slow - parsing the info for 500 targets takes 2-3ms, which is fine.
+        //       One easy optimization is to parse  the info only for the project and the target
+        //       which is being debugged.
+        const RemoteDebuggingMap &remoteDebuggingMap = ParseRemoteDebuggingMap(*m_pProject);
+        // project settings
+        RemoteDebuggingMap::const_iterator it = remoteDebuggingMap.find(nullptr);
+        if (it != remoteDebuggingMap.end())
+            rd = it->second;
 
-    // target settings
-    it = remoteDebuggingMap.find(target);
-    if (it != remoteDebuggingMap.end())
-        rd.MergeWith(it->second);
+        // target settings
+        it = remoteDebuggingMap.find(target);
+        if (it != remoteDebuggingMap.end())
+            rd.MergeWith(it->second);
+    }
 
 //////////////////killerbot : most probably here : execute the shell commands (we could access the per target debugger settings)
     wxString oldLibPath; // keep old PATH/LD_LIBRARY_PATH contents

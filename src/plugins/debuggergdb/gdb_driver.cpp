@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU General Public License, version 3
  * http://www.gnu.org/licenses/gpl-3.0.html
  *
- * $Revision: 11858 $
- * $Id: gdb_driver.cpp 11858 2019-09-29 12:53:40Z fuscated $
+ * $Revision: 11876 $
+ * $Id: gdb_driver.cpp 11876 2019-10-10 23:13:33Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/debuggergdb/gdb_driver.cpp $
  */
 
@@ -154,7 +154,7 @@ void GDB_driver::Prepare(bool isConsole, int printElements, const RemoteDebuggin
     QueueCommand(new DebuggerCmd(this, _T("set print asm-demangle on")));
     // unwind stack on signal
     QueueCommand(new DebuggerCmd(this, _T("set unwindonsignal on")));
-    // disalbe result string truncations
+    // disable result string truncations
     QueueCommand(new DebuggerCmd(this, wxString::Format(wxT("set print elements %d"), printElements)));
 
     if (platform::windows && isConsole)
@@ -187,30 +187,31 @@ void GDB_driver::Prepare(bool isConsole, int printElements, const RemoteDebuggin
     if (!m_Args.IsEmpty())
         QueueCommand(new DebuggerCmd(this, _T("set args ") + m_Args));
 
+    // Send additional gdb commands before establishing remote connection.
+    // These are executed no matter if doing remote debugging or not.
+    if (!remoteDebugging.additionalCmdsBefore.IsEmpty())
+    {
+        wxArrayString initCmds = GetArrayFromString(remoteDebugging.additionalCmdsBefore, _T('\n'));
+        for (unsigned int i = 0; i < initCmds.GetCount(); ++i)
+        {
+            macrosManager->ReplaceMacros(initCmds[i]);
+            QueueCommand(new DebuggerCmd(this, initCmds[i]));
+        }
+    }
+    if (!remoteDebugging.additionalShellCmdsBefore.IsEmpty())
+    {
+        wxArrayString initCmds = GetArrayFromString(remoteDebugging.additionalShellCmdsBefore, _T('\n'));
+        for (unsigned int i = 0; i < initCmds.GetCount(); ++i)
+        {
+            macrosManager->ReplaceMacros(initCmds[i]);
+            QueueCommand(new DebuggerCmd(this, _T("shell ") + initCmds[i]));
+        }
+    }
+
+    // if performing remote debugging, now is a good time to try and connect to the target :)
     m_isRemoteDebugging = remoteDebugging.IsOk();
     if (m_isRemoteDebugging)
     {
-        // send additional gdb commands before establishing remote connection
-        if (!remoteDebugging.additionalCmdsBefore.IsEmpty())
-        {
-            wxArrayString initCmds = GetArrayFromString(remoteDebugging.additionalCmdsBefore, _T('\n'));
-            for (unsigned int i = 0; i < initCmds.GetCount(); ++i)
-            {
-                macrosManager->ReplaceMacros(initCmds[i]);
-                QueueCommand(new DebuggerCmd(this, initCmds[i]));
-            }
-        }
-        if (!remoteDebugging.additionalShellCmdsBefore.IsEmpty())
-        {
-            wxArrayString initCmds = GetArrayFromString(remoteDebugging.additionalShellCmdsBefore, _T('\n'));
-            for (unsigned int i = 0; i < initCmds.GetCount(); ++i)
-            {
-                macrosManager->ReplaceMacros(initCmds[i]);
-                QueueCommand(new DebuggerCmd(this, _T("shell ") + initCmds[i]));
-            }
-        }
-
-        // if performing remote debugging, now is a good time to try and connect to the target :)
         if (remoteDebugging.connType == RemoteDebugging::Serial)
             QueueCommand(new GdbCmd_RemoteBaud(this, remoteDebugging.serialBaud));
         QueueCommand(new GdbCmd_RemoteTarget(this, &remoteDebugging));
