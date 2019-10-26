@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU General Public License, version 3
  * http://www.gnu.org/licenses/gpl-3.0.html
  *
- * $Revision: 11831 $
- * $Id: compileroptionsdlg.cpp 11831 2019-08-31 07:09:43Z fuscated $
+ * $Revision: 11883 $
+ * $Id: compileroptionsdlg.cpp 11883 2019-10-26 09:11:12Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/compilergcc/compileroptionsdlg.cpp $
  */
 
@@ -160,6 +160,7 @@ BEGIN_EVENT_TABLE(CompilerOptionsDlg, wxPanel)
     EVT_CHOICE(                XRCID("cmbLibDirsPolicy"),               CompilerOptionsDlg::OnDirty)
     EVT_CHOICE(                XRCID("cmbResDirsPolicy"),               CompilerOptionsDlg::OnDirty)
     EVT_CHOICE(                XRCID("cmbLogging"),                     CompilerOptionsDlg::OnDirty)
+    EVT_CHOICE(                XRCID("chLinkerExe"),                    CompilerOptionsDlg::OnDirty)
     EVT_CHECKBOX(              XRCID("chkAlwaysRunPost"),               CompilerOptionsDlg::OnDirty)
     EVT_CHECKBOX(              XRCID("chkNonPlatComp"),                 CompilerOptionsDlg::OnDirty)
     EVT_TEXT(                  XRCID("txtCompilerOptions"),             CompilerOptionsDlg::OnDirty)
@@ -820,6 +821,7 @@ void CompilerOptionsDlg::DoLoadOptions()
     wxArrayString IncludeDirs;
     wxArrayString LibDirs;
     wxArrayString ResDirs;
+
     if (!m_pProject && !m_pTarget)
     {
         // global options
@@ -834,9 +836,14 @@ void CompilerOptionsDlg::DoLoadOptions()
             m_LinkerOptions = compiler->GetLinkerOptions();
             m_LinkLibs = compiler->GetLinkLibs();
 
-            wxChoice* cmb = XRCCTRL(*this, "cmbLogging", wxChoice);
-            if (cmb)
-                cmb->SetSelection((int)compiler->GetSwitches().logging);
+            wxChoice* cmbLogging = XRCCTRL(*this, "cmbLogging", wxChoice);
+            if (cmbLogging)
+                cmbLogging->SetSelection((int)compiler->GetSwitches().logging);
+
+            wxChoice *cmbLinkerExe = XRCCTRL(*this, "chLinkerExe", wxChoice);
+            cmbLinkerExe->Show(false);
+            wxStaticText *txtLinkerExe = XRCCTRL(*this, "txtLinkerExe", wxStaticText);
+            txtLinkerExe->Show(false);
         }
     }
     else
@@ -852,6 +859,7 @@ void CompilerOptionsDlg::DoLoadOptions()
             m_ResourceCompilerOptions = m_pProject->GetResourceCompilerOptions();
             m_LinkerOptions = m_pProject->GetLinkerOptions();
             m_LinkLibs = m_pProject->GetLinkLibs();
+
             CommandsAfterBuild = m_pProject->GetCommandsAfterBuild();
             CommandsBeforeBuild = m_pProject->GetCommandsBeforeBuild();
             AlwaysUsePost = m_pProject->GetAlwaysRunPostBuildSteps();
@@ -889,6 +897,9 @@ void CompilerOptionsDlg::DoLoadOptions()
             XRCCTRL(*this, "txtMakeCmd_DistClean",        wxTextCtrl)->SetValue(m_pTarget->GetMakeCommandFor(mcDistClean));
             XRCCTRL(*this, "txtMakeCmd_AskRebuildNeeded", wxTextCtrl)->SetValue(m_pTarget->GetMakeCommandFor(mcAskRebuildNeeded));
             XRCCTRL(*this, "txtMakeCmd_SilentBuild",      wxTextCtrl)->SetValue(m_pTarget->GetMakeCommandFor(mcSilentBuild));
+
+            const LinkerExecutableOption linkerExecutable = m_pTarget->GetLinkerExecutable();
+            XRCCTRL(*this, "chLinkerExe", wxChoice)->SetSelection(int(linkerExecutable));
         }
     }
     TextToOptions();
@@ -1068,6 +1079,17 @@ void CompilerOptionsDlg::DoSaveOptions()
             m_pTarget->SetResourceCompilerOptions(m_ResourceCompilerOptions);
             m_pTarget->SetLinkerOptions(m_LinkerOptions);
             m_pTarget->SetLinkLibs(m_LinkLibs);
+
+            {
+                int value = XRCCTRL(*this, "chLinkerExe", wxChoice)->GetSelection();
+                LinkerExecutableOption linkerExe;
+                if (value >= 0 && value < int(LinkerExecutableOption::Last))
+                    linkerExe = LinkerExecutableOption(value);
+                else
+                    linkerExe = LinkerExecutableOption::AutoDetect;
+                m_pTarget->SetLinkerExecutable(linkerExe);
+            }
+
             m_pTarget->SetOptionRelation(ortCompilerOptions, OptionsRelation(XRCCTRL(*this, "cmbCompilerPolicy", wxChoice)->GetSelection()));
             m_pTarget->SetOptionRelation(ortLinkerOptions, OptionsRelation(XRCCTRL(*this, "cmbLinkerPolicy", wxChoice)->GetSelection()));
             m_pTarget->SetOptionRelation(ortIncludeDirs, OptionsRelation(XRCCTRL(*this, "cmbIncludesPolicy", wxChoice)->GetSelection()));
@@ -1546,6 +1568,16 @@ void CompilerOptionsDlg::OnTreeSelectionChange(wxTreeEvent& event)
             if (wxNotebook* nb = XRCCTRL(*this, "nbMain", wxNotebook))
                 nb->Disable();
         }
+    }
+
+    {
+        const bool show = (m_pTarget != nullptr);
+
+        // Hide linker executable because it doesn't make sense to change it in the project.
+        wxChoice *cmbLinkerExe = XRCCTRL(*this, "chLinkerExe", wxChoice);
+        cmbLinkerExe->Show(show);
+        wxStaticText *txtLinkerExe = XRCCTRL(*this, "txtLinkerExe", wxStaticText);
+        txtLinkerExe->Show(show);
     }
 } // OnTreeSelectionChange
 
