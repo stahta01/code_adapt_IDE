@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU Lesser General Public License, version 3
  * http://www.gnu.org/licenses/lgpl-3.0.html
  *
- * $Revision: 10833 $
- * $Id: compiletargetbase.cpp 10833 2016-04-17 21:31:25Z jenslody $
+ * $Revision: 11884 $
+ * $Id: compiletargetbase.cpp 11884 2019-10-26 09:11:35Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/sdk/compiletargetbase.cpp $
  */
 
@@ -159,7 +159,7 @@ void CompileTargetBase::SetOptionRelation(OptionsRelationType type, OptionsRelat
     SetModified(true);
 }
 
-wxString CompileTargetBase::GetOutputFilename()
+wxString CompileTargetBase::GetOutputFilename() const
 {
     if (m_TargetType == ttCommandsOnly)
         return wxEmptyString;
@@ -168,7 +168,7 @@ wxString CompileTargetBase::GetOutputFilename()
     return m_OutputFilename;
 }
 
-wxString CompileTargetBase::SuggestOutputFilename()
+wxString CompileTargetBase::SuggestOutputFilename() const
 {
     wxString suggestion;
     switch (m_TargetType)
@@ -338,7 +338,7 @@ wxString CompileTargetBase::GetExecutableFilename() const
     return fname.GetFullPath();
 }
 
-wxString CompileTargetBase::GetNativeFilename()
+wxString CompileTargetBase::GetNativeFilename() const
 {
     if (m_TargetType == ttCommandsOnly)
         return wxEmptyString;
@@ -359,7 +359,7 @@ wxString CompileTargetBase::GetNativeFilename()
     return fname.GetFullPath();
 }
 
-wxString CompileTargetBase::GetDynamicLibFilename()
+wxString CompileTargetBase::GetDynamicLibFilename() const
 {
     if (m_TargetType == ttCommandsOnly)
         return wxEmptyString;
@@ -419,7 +419,7 @@ wxString CompileTargetBase::GetDynamicLibDefFilename()
     return fname.GetFullPath();
 }
 
-wxString CompileTargetBase::GetStaticLibFilename()
+wxString CompileTargetBase::GetStaticLibFilename() const
 {
     if (m_TargetType == ttCommandsOnly)
         return wxEmptyString;

@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU Lesser General Public License, version 3
  * http://www.gnu.org/licenses/lgpl-3.0.html
  *
- * $Revision: 11851 $
- * $Id: projectbuildtarget.cpp 11851 2019-09-17 06:12:21Z fuscated $
+ * $Revision: 11884 $
+ * $Id: projectbuildtarget.cpp 11884 2019-10-26 09:11:35Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/sdk/projectbuildtarget.cpp $
  */
 
@@ -51,6 +51,11 @@ ProjectBuildTarget::~ProjectBuildTarget()
 }
 
 cbProject* ProjectBuildTarget::GetParentProject()
+{
+    return m_Project;
+}
+
+const cbProject* ProjectBuildTarget::GetParentProject() const
 {
     return m_Project;
 }
@@ -116,7 +121,7 @@ void ProjectBuildTarget::SetCreateDefFile(bool createIt)
     }
 }
 
-bool ProjectBuildTarget::GetCreateStaticLib()
+bool ProjectBuildTarget::GetCreateStaticLib() const
 {
     return m_CreateStaticLib;
 }

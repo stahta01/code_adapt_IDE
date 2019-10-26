@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU Lesser General Public License, version 3
  * http://www.gnu.org/licenses/lgpl-3.0.html
  *
- * $Revision: 11858 $
- * $Id: cbproject.cpp 11858 2019-09-29 12:53:40Z fuscated $
+ * $Revision: 11884 $
+ * $Id: cbproject.cpp 11884 2019-10-26 09:11:35Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/sdk/cbproject.cpp $
  */
 
@@ -1089,7 +1089,7 @@ void cbProject::RestoreTreeState(wxTreeCtrl* tree)
     ::RestoreTreeState(tree, m_ProjectNode, m_ExpandedNodes, m_SelectedNodes);
 }
 
-const wxString& cbProject::GetMakefile()
+const wxString& cbProject::GetMakefile() const
 {
     if (!m_Makefile.IsEmpty())
         return m_Makefile;
@@ -1500,7 +1500,20 @@ ProjectBuildTarget* cbProject::GetBuildTarget(int index)
     return nullptr;
 }
 
+const ProjectBuildTarget* cbProject::GetBuildTarget(int index) const
+{
+    if (index >= 0 && index < (int)m_Targets.GetCount())
+        return m_Targets[index];
+    return nullptr;
+}
+
 ProjectBuildTarget* cbProject::GetBuildTarget(const wxString& targetName)
+{
+    int idx = IndexOfBuildTargetName(targetName);
+    return GetBuildTarget(idx);
+}
+
+const ProjectBuildTarget* cbProject::GetBuildTarget(const wxString& targetName) const
 {
     int idx = IndexOfBuildTargetName(targetName);
     return GetBuildTarget(idx);
