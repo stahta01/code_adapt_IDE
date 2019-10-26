@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU Lesser General Public License, version 3
  * http://www.gnu.org/licenses/lgpl-3.0.html
  *
- * $Revision: 11857 $
- * $Id: scriptbindings.cpp 11857 2019-09-29 12:53:19Z fuscated $
+ * $Revision: 11887 $
+ * $Id: scriptbindings.cpp 11887 2019-10-26 09:12:28Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/sdk/scripting/bindings/scriptbindings.cpp $
  */
 
@@ -847,6 +847,8 @@ namespace ScriptBindings
                 func(&CompileOptionsBase::SupportsCurrentPlatform, "SupportsCurrentPlatform").
                 func(&CompileOptionsBase::SetLinkerOptions, "SetLinkerOptions").
                 func(&CompileOptionsBase::SetLinkLibs, "SetLinkLibs").
+                func(&CompileOptionsBase::SetLinkerExecutable, "SetLinkerExecutable").
+                func(&CompileOptionsBase::GetLinkerExecutable, "GetLinkerExecutable").
                 func(&CompileOptionsBase::SetCompilerOptions, "SetCompilerOptions").
                 func(&CompileOptionsBase::SetResourceCompilerOptions, "SetResourceCompilerOptions").
                 func(&CompileOptionsBase::SetIncludeDirs, "SetIncludeDirs").
@@ -936,7 +938,7 @@ namespace ScriptBindings
                 func(&CompileTargetBase::MakeCommandsModified, "MakeCommandsModified");
 
         SqPlus::SQClassDef<ProjectBuildTarget>("ProjectBuildTarget", "CompileTargetBase").
-                func(&ProjectBuildTarget::GetParentProject, "GetParentProject").
+                func<const cbProject* (ProjectBuildTarget::*)() const>(&ProjectBuildTarget::GetParentProject, "GetParentProject").
                 func(&ProjectBuildTarget::GetFullTitle, "GetFullTitle").
                 func(&ProjectBuildTarget::GetExternalDeps, "GetExternalDeps").
                 func(&ProjectBuildTarget::SetExternalDeps, "SetExternalDeps").
@@ -987,7 +989,7 @@ namespace ScriptBindings
                 func(&cbProject::SetActiveBuildTarget, "SetActiveBuildTarget").
                 func(&cbProject::GetActiveBuildTarget, "GetActiveBuildTarget").
                 func(&cbProject::SelectTarget, "SelectTarget").
-                func(&cbProject::GetCurrentlyCompilingTarget, "GetCurrentlyCompilingTarget").
+                func<const ProjectBuildTarget* (cbProject::*)() const>(&cbProject::GetCurrentlyCompilingTarget, "GetCurrentlyCompilingTarget").
                 func(&cbProject::SetCurrentlyCompilingTarget, "SetCurrentlyCompilingTarget").
                 func(&cbProject::GetModeForPCH, "GetModeForPCH").
                 func(&cbProject::SetModeForPCH, "SetModeForPCH").
