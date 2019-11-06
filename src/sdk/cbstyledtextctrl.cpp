@@ -403,6 +403,19 @@ bool cbStyledTextCtrl::DoSelectionBraceCompletion(const wxChar& ch)
     return true; // succeeded
 }
 
+void cbStyledTextCtrl::SetSelectionVoid(int startPos, int endPos)
+{
+    SetSelectionMode(wxSTC_SEL_STREAM);
+    if (startPos < 0)
+        SetEmptySelection(endPos);
+    else
+    {
+        SetSelectionStart(startPos);
+        SetSelectionEnd(endPos);
+    }
+    EnsureCaretVisible();
+}
+
 bool cbStyledTextCtrl::AllowTabSmartJump()
 {
     const int pos = GetCurrentPos();

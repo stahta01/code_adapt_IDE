@@ -64,6 +64,18 @@ class DLLIMPORT cbStyledTextCtrl : public wxScintilla
          */
         bool DoSelectionBraceCompletion(const wxChar& ch);
 
+        /**
+         * @brief Select a range of text.
+         *
+         * Select a range of text using Stream mode.
+         * If startPos is less than zero remove selection.
+         * Set caret to endPos position and ensure caret is visible.
+         *
+         * @param startPos  The starting postion to select text.
+         * @param endPos    The ending postion to select text. 
+         */
+        void SetSelectionVoid(int startPos, int endPos);
+
         static std::map<int, std::set<int> > &GetCharacterLexerStyles();
         static std::map<int, std::set<int> > &GetStringLexerStyles();
         static std::map<int, std::set<int> > &GetPreprocessorLexerStyles();
