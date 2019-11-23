@@ -8,7 +8,7 @@
 
 #include "cbplugin.h" // the base class we 're inheriting
 
-#ifndef __WXMSW__
+#ifndef __WINDOWS__
     #error This plugin is for use under Win32 only!
 #endif
 
