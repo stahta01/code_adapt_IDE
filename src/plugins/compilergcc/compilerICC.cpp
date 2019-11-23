@@ -13,14 +13,15 @@
 	#include <wx/msgdlg.h>
 	#include <wx/regex.h>
 
-	#include "compilerfactory.h"
 	#include "logmanager.h"
 	#include "manager.h"
-	#include "macrosmanager.h"
 #endif // CB_PRECOMP
 
 #include <wx/config.h>
 #include <wx/fileconf.h>
+
+#include "compilerfactory.h"
+#include "macrosmanager.h"
 
 #include "compilerICC.h"
 

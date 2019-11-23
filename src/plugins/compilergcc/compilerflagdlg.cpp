@@ -1,8 +1,9 @@
 #include <sdk.h>
-#include <prep.h>
+#ifndef WX_PRECOMP
+    #include <wx/combobox.h>
+#endif
 #ifndef CB_PRECOMP
     #include <wx/button.h>
-    #include <wx/combobox.h>
     #include <wx/xrc/xmlres.h>
     #include <wx/textctrl.h>
 #endif

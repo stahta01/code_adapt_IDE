@@ -8,8 +8,6 @@
  */
 
 #include <sdk.h>
-#include <prep.h>
-#ifndef CB_PRECOMP
     #include <algorithm>
     #include <wx/arrstr.h>
     #include <wx/button.h>
@@ -20,10 +18,8 @@
     #include <wx/filename.h>
     #include <wx/listbox.h>
     #include <wx/menu.h>
-    #include <wx/notebook.h>
     #include <wx/stattext.h>
     #include <wx/sizer.h>
-    #include <wx/spinctrl.h>
     #include <wx/textdlg.h>
     #include <wx/treectrl.h>
     #include <wx/xrc/xmlres.h>
@@ -32,13 +28,13 @@
     #include "compilerfactory.h"
     #include "configmanager.h"
     #include "globals.h"
-    #include "macrosmanager.h"
     #include "manager.h"
     #include "logmanager.h"
     #include "projectmanager.h"
-#endif
 #include <wx/filedlg.h>
+#include <wx/notebook.h>
 #include <wx/propgrid/propgrid.h>
+#include <wx/spinctrl.h>
 #include <wx/xml/xml.h>
 
 #include "advancedcompileroptionsdlg.h"
@@ -50,6 +46,7 @@
 #include "editpathdlg.h"
 #include "editpairdlg.h"
 #include "compilerflagdlg.h"
+#include "macrosmanager.h"
 
 // TO DO :  - add/edit/delete compiler : applies directly , so no cancel out (change this behaviour)
 //          - compiler change of project/target -> check if the policy is still sound (both should have the same compiler)

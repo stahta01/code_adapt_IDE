@@ -18,14 +18,11 @@
 #include <wx/stattext.h>
 #include <wx/statline.h>
 #include <wx/ffile.h>
+#include <wx/toolbar.h>
 #include <wx/utils.h>
 #include <wx/uri.h>
 #include <wx/xml/xml.h>
-
-#ifndef CB_PRECOMP
-    #include <wx/app.h>
-    #include <wx/toolbar.h>
-#endif
+#include <wx/app.h>
 
 #include <prep.h>
 #include <manager.h>

@@ -8,20 +8,23 @@
  */
 
 #include "sdk.h"
+#ifndef WX_PRECOMP
+    #include <wx/choice.h>
+    #include <wx/combobox.h>
+#endif
 #ifndef CB_PRECOMP
     #include <wx/button.h>
     #include <wx/checkbox.h>
-    #include <wx/choice.h>
-    #include <wx/combobox.h>
     #include <wx/intl.h>
     #include <wx/listbox.h>
     #include <wx/sizer.h>
-    #include <wx/spinctrl.h>
     #include <wx/textctrl.h>
     #include <wx/xrc/xmlres.h>
-    #include "compilerfactory.h"
     #include "globals.h"
 #endif
+#include <wx/spinctrl.h>
+#include "compilerfactory.h"
+
 #include "advancedcompileroptionsdlg.h"
 
 // TODO : implement full IsDirty mechanism, now always forced to true when OK is pressed

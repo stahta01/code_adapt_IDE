@@ -9,13 +9,14 @@
 
 #include <sdk.h>
 #ifndef CB_PRECOMP
-#   include "compiler.h"
 #   include "cbproject.h"
 #   include "projectbuildtarget.h"
 #   include "logmanager.h"
-#   include "macrosmanager.h"
 #endif
+#include "compiler.h"
 #include "compileoptionsbase.h"
+#include "macrosmanager.h"
+
 #include "compilerOWgenerator.h"
 
 
