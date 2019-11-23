@@ -14,7 +14,7 @@
 #include <editormanager.h>
 #include <editorcolourset.h>
 #include <logmanager.h>
-#include <cbexception.h>
+
 #include "HTMLExporter.h"
 #include "RTFExporter.h"
 #include "ODTExporter.h"
