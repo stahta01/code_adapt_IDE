@@ -12,7 +12,7 @@
 #ifndef CB_PRECOMP
     #include <wx/event.h>
     #include <wx/menu.h>
-    #include "cbexception.h"
+    #include "ca/exception.h"
     #include "globals.h"
     #include "configmanager.h"
 #endif
@@ -523,7 +523,7 @@ bool InfoPane::RemoveNonLogger(wxWindow* p)
         if (m_Pages.Item(i)->window == p)
         {
             if (m_Pages.Item(i)->islogger)
-                cbThrow(_T("Bad API usage. Shame on you."));
+                caThrow(_T("Bad API usage. Shame on you."));
 
             RemovePage(GetPageIndex(m_Pages.Item(i)->window));
             m_Pages.RemoveAt(i);
@@ -541,7 +541,7 @@ bool InfoPane::DeleteNonLogger(wxWindow* p)
         if (m_Pages.Item(i)->window == p)
         {
             if (m_Pages.Item(i)->islogger)
-                cbThrow(_T("Bad API usage. Shame on you."));
+                caThrow(_T("Bad API usage. Shame on you."));
 
             if (m_Pages.Item(i)->indexInNB >= 0)
                 DeletePage(GetPageIndex(m_Pages.Item(i)->window));

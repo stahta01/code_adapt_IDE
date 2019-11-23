@@ -50,7 +50,7 @@
 
 #include "goto_file.h"
 #include "startherepage.h"
-#include "cbassert.h"
+#include "ca/assert.h"
 
 #include "projectmanagerui.h"
 
@@ -2455,7 +2455,7 @@ void ProjectManagerUI::MoveProjectUp(cbProject* project, bool warpAround)
 
     // re-select the project
     wxTreeItemId itemId = project->GetProjectNode();
-    cbAssert(itemId.IsOk());
+    caAssert(itemId.IsOk());
     m_pTree->SelectItem(itemId);
     m_pTree->EnsureVisible(itemId);
 }
@@ -2486,7 +2486,7 @@ void ProjectManagerUI::MoveProjectDown(cbProject* project, bool warpAround)
 
     // re-select the project
     wxTreeItemId itemId = project->GetProjectNode();
-    cbAssert(itemId.IsOk());
+    caAssert(itemId.IsOk());
     m_pTree->SelectItem(itemId);
     m_pTree->EnsureVisible(itemId);
 }

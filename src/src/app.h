@@ -90,7 +90,7 @@
 
 class cbSplashScreen;
 
-class CodeBlocksApp : public wxApp
+class CodeAdaptApp : public wxApp
 {
     public:
         virtual bool OnInit();
@@ -168,6 +168,6 @@ class CodeBlocksApp : public wxApp
         DECLARE_EVENT_TABLE()
 };
 
-wxDECLARE_APP(CodeBlocksApp);
+wxDECLARE_APP(CodeAdaptApp);
 
 #endif // CODEBLOCKS_APP_H

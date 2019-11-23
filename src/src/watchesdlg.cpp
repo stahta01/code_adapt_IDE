@@ -18,7 +18,7 @@
     #include <wx/settings.h>
     #include <wx/sizer.h>
 
-    #include "cbexception.h"
+    #include "ca/exception.h"
     #include "logmanager.h"
 #endif
 
@@ -36,7 +36,7 @@
 #include "cbcolourmanager.h"
 #include <cbplugin.h>
 #include "debuggermanager.h"
-#include "cbassert.h"
+#include "ca/assert.h"
 #include "scrollingdialog.h"
 
 namespace
@@ -214,7 +214,7 @@ class WatchRawDialog : public wxScrollingDialog
     public:
         static WatchRawDialog* Create(const WatchesProperty* watch)
         {
-            cbAssert(watch->GetWatch());
+            caAssert(watch->GetWatch());
 
             WatchRawDialog *dlg;
             const cbWatch *watchPtr = watch->GetWatch().get();

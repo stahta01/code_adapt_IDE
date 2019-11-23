@@ -29,7 +29,7 @@
     #include "projectmanager.h"
 #endif
 
-#include "cbassert.h"
+#include "ca/assert.h"
 #include <cbplugin.h>
 
 #include "debuggermanager.h"
@@ -262,7 +262,7 @@ void DisassemblyDlg::OnSave(cb_unused wxCommandEvent& event)
 void DisassemblyDlg::OnRefresh(cb_unused wxCommandEvent& event)
 {
     cbDebuggerPlugin *plugin = Manager::Get()->GetDebuggerManager()->GetActiveDebugger();
-    cbAssert(plugin);
+    caAssert(plugin);
     plugin->RequestUpdate(cbDebuggerPlugin::Disassembly);
 }
 
@@ -274,7 +274,7 @@ void DisassemblyDlg::OnMixedModeCB(cb_unused wxCommandEvent &event)
     m_MixedModeCB->SetValue(newMode);
 
     cbDebuggerPlugin *plugin = manager.GetActiveDebugger();
-    cbAssert(plugin);
+    caAssert(plugin);
     plugin->RequestUpdate(cbDebuggerPlugin::Disassembly);
 }
 

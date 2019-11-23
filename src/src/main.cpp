@@ -52,7 +52,7 @@
 #include <wx/tokenzr.h>
 
 #include <annoyingdialog.h>
-#include <cbexception.h>
+#include <ca/exception.h>
 #include <cbplugin.h>
 #include <cbworkspace.h>
 #include <ccmanager.h>
@@ -75,7 +75,7 @@
 #include "cbcolourmanager.h"
 #include "editorconfigurationdlg.h"
 #include "projectmanagerui.h"
-#include "cbassert.h"
+#include "ca/assert.h"
 
 class cbFileDropTarget : public wxFileDropTarget
 {
@@ -1160,7 +1160,7 @@ void MainFrame::CreateMenubar()
                 {
                     plug->BuildMenu(mbar);
                 }
-                catch (cbException& e)
+                catch (caException& e)
                 {
                     e.ShowErrorMessage();
                 }
@@ -1910,7 +1910,7 @@ ToolbarInfo MainFrame::DoAddPluginToolbar(cbPlugin* plugin)
 
         const PluginInfo* pluginInfo = Manager::Get()->GetPluginManager()->GetPluginInfo(plugin);
         if (!pluginInfo)
-            cbThrow(_T("No plugin info?!?"));
+            caThrow(_T("No plugin info?!?"));
 
         info.paneInfo.Name(pluginInfo->name + _T("Toolbar")).Caption(pluginInfo->title + _(" Toolbar"));
     }
@@ -1939,7 +1939,7 @@ void MainFrame::DoAddPlugin(cbPlugin* plugin)
             wxMenuBar* mbar = GetMenuBar();
             plugin->BuildMenu(mbar);
         }
-        catch (cbException& e)
+        catch (caException& e)
         {
             e.ShowErrorMessage();
         }
@@ -3074,7 +3074,7 @@ void MainFrame::OnApplicationClose(wxCloseEvent& event)
         if (toolbar)//Disconnect the mouse right click event handler before the toolbar is destroyed
         {
             bool result = toolbar->Disconnect(wxID_ANY, wxEVT_COMMAND_TOOL_RCLICKED, wxCommandEventHandler(MainFrame::OnToolBarRightClick));
-            cbAssert(result);
+            caAssert(result);
         }
     }
 
@@ -4851,7 +4851,7 @@ void MainFrame::OnPluginUnloaded(CodeBlocksEvent& event)
     {
         // Disconnect the mouse right click event handler before the toolbar is destroyed
         bool result = m_PluginsTools[plugin]->Disconnect(wxID_ANY, wxEVT_COMMAND_TOOL_RCLICKED, wxCommandEventHandler(MainFrame::OnToolBarRightClick));
-        cbAssert(result);
+        caAssert(result);
         m_LayoutManager.DetachPane(m_PluginsTools[plugin]);
         m_PluginsTools[plugin]->Destroy();
         m_PluginsTools.erase(plugin);

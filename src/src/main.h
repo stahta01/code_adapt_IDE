@@ -15,7 +15,7 @@
 #include <wx/dynarray.h>
 #include <cbeditor.h>
 #include "manager.h"
-#include "cbexception.h"
+#include "ca/exception.h"
 #include "cbplugin.h"
 #include "find_replace.h"
 #include "sdk_events.h"
@@ -63,7 +63,7 @@ class MainFrame : public wxFrame
         // needed for binding with SqPlus
         MainFrame& operator=(cb_unused const MainFrame& rhs) // prevent assignment operator
         {
-            cbThrow(_T("Can't use MainFrame's operator="));
+            caThrow(_T("Can't use MainFrame's operator="));
             return *this;
         }
     private:

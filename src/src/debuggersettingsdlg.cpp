@@ -8,14 +8,14 @@
     #include <wx/choicdlg.h>
 #endif
 #ifndef CB_PRECOMP
-    #include "cbexception.h"
+    #include "ca/exception.h"
 #endif
 //(*InternalHeaders(DebuggerSettingsDlg)
 #include <wx/button.h>
 #include <wx/font.h>
 //*)
 
-#include "cbassert.h"
+#include "ca/assert.h"
 #include <cbplugin.h>
 
 #include "debuggersettingsdlg.h"
@@ -251,7 +251,7 @@ void DebuggerSettingsDlg::DeleteConfig(wxWindow *panel, cbDebuggerPlugin *plugin
             if (p < m_treebook->GetPageCount())
             {
                 MapPanelToConfiguration::iterator it = m_mapPanelToConfig.find(panels[index]);
-                cbAssert(plugin == it->second.plugin);
+                caAssert(plugin == it->second.plugin);
                 delete it->second.config;
 
                 m_mapPanelToConfig.erase(it);
@@ -275,7 +275,7 @@ void DebuggerSettingsDlg::ResetConfig(wxWindow *panel, cbDebuggerPlugin *plugin)
         {
             wxString title = m_treebook->GetPageText(index);
             MapPanelToConfiguration::iterator it = m_mapPanelToConfig.find(m_treebook->GetPage(index));
-            cbAssert(plugin == it->second.plugin);
+            caAssert(plugin == it->second.plugin);
             delete it->second.config;
 
             m_mapPanelToConfig.erase(it);

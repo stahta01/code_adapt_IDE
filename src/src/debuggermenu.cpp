@@ -28,7 +28,7 @@
 
 #include "cbdebugger_interfaces.h"
 #include "cbstyledtextctrl.h"
-#include "cbassert.h"
+#include "ca/assert.h"
 #include <cbplugin.h>
 #include "debuggermanager.h"
 
@@ -389,7 +389,7 @@ void DebuggerMenuHandler::RebuildMenus()
     if (m_activeDebugger && !dbgManager->IsActiveDebuggerTargetsDefault())
     {
         DebuggerManager::RegisteredPlugins::const_iterator it = allDebugger.find(m_activeDebugger);
-        cbAssert(it != allDebugger.end());
+        caAssert(it != allDebugger.end());
 
         const DebuggerManager::ConfigurationVector &configs = it->second.GetConfigurations();
 
@@ -532,7 +532,7 @@ void DebuggerMenuHandler::LogActiveConfig()
 
 void DebuggerMenuHandler::OnStart(cb_unused wxCommandEvent& event)
 {
-    cbAssert(m_activeDebugger);
+    caAssert(m_activeDebugger);
     if (!m_activeDebugger->IsRunning())
     {
         m_disableContinue = true;
@@ -559,21 +559,21 @@ void DebuggerMenuHandler::OnStart(cb_unused wxCommandEvent& event)
 
 void DebuggerMenuHandler::OnBreak(cb_unused wxCommandEvent& event)
 {
-    cbAssert(m_activeDebugger);
+    caAssert(m_activeDebugger);
     HideValueTooltip();
     m_activeDebugger->Break();
 }
 
 void DebuggerMenuHandler::OnStop(cb_unused wxCommandEvent& event)
 {
-    cbAssert(m_activeDebugger);
+    caAssert(m_activeDebugger);
     HideValueTooltip();
     m_activeDebugger->Stop();
 }
 
 void DebuggerMenuHandler::OnContinue(cb_unused wxCommandEvent& event)
 {
-    cbAssert(m_activeDebugger);
+    caAssert(m_activeDebugger);
     if(!m_disableContinue)
     {
         HideValueTooltip();
@@ -583,28 +583,28 @@ void DebuggerMenuHandler::OnContinue(cb_unused wxCommandEvent& event)
 
 void DebuggerMenuHandler::OnNext(cb_unused wxCommandEvent& event)
 {
-    cbAssert(m_activeDebugger);
+    caAssert(m_activeDebugger);
     HideValueTooltip();
     m_activeDebugger->Next();
 }
 
 void DebuggerMenuHandler::OnNextInstr(cb_unused wxCommandEvent& event)
 {
-    cbAssert(m_activeDebugger);
+    caAssert(m_activeDebugger);
     HideValueTooltip();
     m_activeDebugger->NextInstruction();
 }
 
 void DebuggerMenuHandler::OnStepIntoInstr(cb_unused wxCommandEvent& event)
 {
-    cbAssert(m_activeDebugger);
+    caAssert(m_activeDebugger);
     HideValueTooltip();
     m_activeDebugger->StepIntoInstruction();
 }
 
 void DebuggerMenuHandler::OnStep(cb_unused wxCommandEvent& event)
 {
-    cbAssert(m_activeDebugger);
+    caAssert(m_activeDebugger);
     if (m_activeDebugger->IsRunning())
     {
         if(!m_disableContinue)
@@ -632,14 +632,14 @@ void DebuggerMenuHandler::OnStep(cb_unused wxCommandEvent& event)
 
 void DebuggerMenuHandler::OnStepOut(cb_unused wxCommandEvent& event)
 {
-    cbAssert(m_activeDebugger);
+    caAssert(m_activeDebugger);
     HideValueTooltip();
     m_activeDebugger->StepOut();
 }
 
 void DebuggerMenuHandler::OnRunToCursor(cb_unused wxCommandEvent& event)
 {
-    cbAssert(m_activeDebugger);
+    caAssert(m_activeDebugger);
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (!ed)
         return;
@@ -662,7 +662,7 @@ void DebuggerMenuHandler::OnRunToCursor(cb_unused wxCommandEvent& event)
 
 void DebuggerMenuHandler::OnSetNextStatement(cb_unused wxCommandEvent& event)
 {
-    cbAssert(m_activeDebugger);
+    caAssert(m_activeDebugger);
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (!ed)
         return;
@@ -672,7 +672,7 @@ void DebuggerMenuHandler::OnSetNextStatement(cb_unused wxCommandEvent& event)
 
 void DebuggerMenuHandler::OnToggleBreakpoint(cb_unused wxCommandEvent& event)
 {
-    cbAssert(m_activeDebugger);
+    caAssert(m_activeDebugger);
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (!ed)
         return;
@@ -681,13 +681,13 @@ void DebuggerMenuHandler::OnToggleBreakpoint(cb_unused wxCommandEvent& event)
 
 void DebuggerMenuHandler::OnRemoveAllBreakpoints(cb_unused wxCommandEvent& event)
 {
-    cbAssert(m_activeDebugger);
+    caAssert(m_activeDebugger);
     Manager::Get()->GetDebuggerManager()->GetBreakpointDialog()->RemoveAllBreakpoints();
 }
 
 void DebuggerMenuHandler::OnAddDataBreakpoint(cb_unused wxCommandEvent& event)
 {
-    cbAssert(m_activeDebugger);
+    caAssert(m_activeDebugger);
     const wxString& word_at_caret = m_activeDebugger->GetEditorWordAtCaret();
     if (!word_at_caret.empty())
     {
@@ -698,7 +698,7 @@ void DebuggerMenuHandler::OnAddDataBreakpoint(cb_unused wxCommandEvent& event)
 
 void DebuggerMenuHandler::OnAttachToProcess(cb_unused wxCommandEvent& event)
 {
-    cbAssert(m_activeDebugger);
+    caAssert(m_activeDebugger);
     wxString pidStr = cbGetTextFromUser(_("PID to attach to:"));
     if (!pidStr.empty())
     {
@@ -708,13 +708,13 @@ void DebuggerMenuHandler::OnAttachToProcess(cb_unused wxCommandEvent& event)
 
 void DebuggerMenuHandler::OnDetachFromProcess(cb_unused wxCommandEvent& event)
 {
-    cbAssert(m_activeDebugger);
+    caAssert(m_activeDebugger);
     m_activeDebugger->DetachFromProcess();
 }
 
 void DebuggerMenuHandler::OnSendCommand(cb_unused wxCommandEvent& event)
 {
-    cbAssert(m_activeDebugger);
+    caAssert(m_activeDebugger);
     wxString cmd = cbGetTextFromUser(_("Enter command for Debugger:"), _("Send command to Debugger:"), m_lastCommand);
     if (cmd.IsEmpty())
         return;

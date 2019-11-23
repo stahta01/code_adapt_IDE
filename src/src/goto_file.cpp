@@ -22,12 +22,12 @@
     #include <algorithm>
     #include <cmath>
 
-    #include "cbexception.h"
+    #include "ca/exception.h"
 #endif
 //(*InternalHeaders(GotoFile)
 //*)
 
-#include "cbassert.h"
+#include "ca/assert.h"
 #include "goto_file.h"
 
 //(*IdInit(GotoFile)
@@ -44,7 +44,7 @@ GotoFile::GotoFile(wxWindow* parent, IncrementalSelectIterator *iterator, const 
                    const wxString &message) :
     m_handler(this, iterator)
 {
-    cbAssert(parent);
+    caAssert(parent);
 
     BuildContent(parent, iterator, title, message);
 }

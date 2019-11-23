@@ -43,7 +43,7 @@
 #include <wx/msgout.h>
 #include <wx/tokenzr.h>
 
-#include <cbexception.h>
+#include <ca/exception.h>
 #include <debuggermanager.h>
 #include <globals.h>
 #include <loggers.h>
@@ -149,7 +149,7 @@ bool DDEConnection::OnExecute(cb_unused const wxString& topic, wxChar *data, int
             const wxString file = reCmd.GetMatch(strData, 1);
             // always put files in the delayed queue, the will either be loaded in OnDisconnect, or after creating of MainFrame
             // if we open the files directly it can lead to an applicaton hang (at least when opening C::B's project-file on linux)
-            CodeBlocksApp* cb = (CodeBlocksApp*)wxTheApp;
+            CodeAdaptApp* cb = (CodeAdaptApp*)wxTheApp;
             if (cb)
                 cb->AddFileToOpenDelayed(file);
         }
@@ -161,7 +161,7 @@ bool DDEConnection::OnExecute(cb_unused const wxString& topic, wxChar *data, int
         if (reCmd.Matches(strData))
         {
             wxString file = reCmd.GetMatch(strData, 1);
-            CodeBlocksApp* cb = (CodeBlocksApp*)wxTheApp;
+            CodeAdaptApp* cb = (CodeAdaptApp*)wxTheApp;
             cb->SetAutoFile(file);
         }
         return true;
@@ -184,7 +184,7 @@ bool DDEConnection::OnExecute(cb_unused const wxString& topic, wxChar *data, int
             wxString line = strData.Mid(10, pos-10);
             line.Replace(_T("\\)"), _T(")"));
             line.Replace(_T("\\("), _T("("));
-            CodeBlocksApp* cb = (CodeBlocksApp*)wxTheApp;
+            CodeAdaptApp* cb = (CodeAdaptApp*)wxTheApp;
             if (m_Frame && !line.empty())
             {
                 // Manager::Get()->GetLogManager()->Log(wxString::Format(_T("DDEConnection::OnExecute line = ") + line));
@@ -206,7 +206,7 @@ bool DDEConnection::OnDisconnect()
     // otherwise it happens automatically in OnInit after MainFrame is created
     if (!s_Loading && m_Frame)
     {
-        CodeBlocksApp* cb = (CodeBlocksApp*)wxTheApp;
+        CodeAdaptApp* cb = (CodeAdaptApp*)wxTheApp;
         cb->LoadDelayedFiles(m_Frame);
         cb->AttachDebugger();
     }
@@ -349,11 +349,11 @@ void cbMessageOutputNull::Printf(cb_unused const wxChar* format, ...){}
 #endif
 } // namespace
 
-wxIMPLEMENT_APP(CodeBlocksApp);
+wxIMPLEMENT_APP(CodeAdaptApp);
 
-BEGIN_EVENT_TABLE(CodeBlocksApp, wxApp)
-    EVT_ACTIVATE_APP(CodeBlocksApp::OnAppActivate)
-    EVT_TASKBAR_LEFT_DOWN(CodeBlocksApp::OnTBIconLeftDown)
+BEGIN_EVENT_TABLE(CodeAdaptApp, wxApp)
+    EVT_ACTIVATE_APP(CodeAdaptApp::OnAppActivate)
+    EVT_TASKBAR_LEFT_DOWN(CodeAdaptApp::OnTBIconLeftDown)
 END_EVENT_TABLE()
 
 #ifdef __WXMAC__
@@ -446,7 +446,7 @@ void AdjustPathForMSYSIfNeeded()
 #endif
 }
 
-bool CodeBlocksApp::LoadConfig()
+bool CodeAdaptApp::LoadConfig()
 {
     if (m_UserDataDir!=wxEmptyString)
     {
@@ -506,7 +506,7 @@ bool CodeBlocksApp::LoadConfig()
     return true;
 }
 
-void CodeBlocksApp::InitAssociations()
+void CodeAdaptApp::InitAssociations()
 {
 #ifdef __WINDOWS__
     ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("app"));
@@ -538,7 +538,7 @@ void CodeBlocksApp::InitAssociations()
 #endif
 }
 
-void CodeBlocksApp::InitDebugConsole()
+void CodeAdaptApp::InitDebugConsole()
 {
 #ifdef __WINDOWS__
     #ifdef __CBDEBUG__
@@ -553,14 +553,14 @@ void CodeBlocksApp::InitDebugConsole()
 #endif
 }
 
-void CodeBlocksApp::InitExceptionHandler()
+void CodeAdaptApp::InitExceptionHandler()
 {
 #ifdef __WINDOWS__
     ExcHndlInit();
 #endif
 }
 
-bool CodeBlocksApp::InitXRCStuff()
+bool CodeAdaptApp::InitXRCStuff()
 {
     if ( !Manager::LoadResource(_T("resources.zip")) )
     {
@@ -582,7 +582,7 @@ bool CodeBlocksApp::InitXRCStuff()
     return true;
 }
 
-MainFrame* CodeBlocksApp::InitFrame()
+MainFrame* CodeAdaptApp::InitFrame()
 {
     static_assert(wxMinimumVersion<2,8,12>::eval, "wxWidgets 2.8.12 is required");
 
@@ -596,7 +596,7 @@ MainFrame* CodeBlocksApp::InitFrame()
     return frame;
 }
 
-void CodeBlocksApp::CheckVersion()
+void CodeAdaptApp::CheckVersion()
 {
     // This is a remnant from early 2006 (Windows only), but keep the revision tag for possible future use
     ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("app"));
@@ -605,7 +605,7 @@ void CodeBlocksApp::CheckVersion()
         cfg->Write(_T("version"), appglobals::AppActualVersion);
 }
 
-void CodeBlocksApp::InitLocale()
+void CodeAdaptApp::InitLocale()
 {
     ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("app"));
 
@@ -653,7 +653,7 @@ void CodeBlocksApp::InitLocale()
     }
 }
 
-bool CodeBlocksApp::OnInit()
+bool CodeAdaptApp::OnInit()
 {
 #ifdef __WINDOWS__
     InitCommonControls();
@@ -832,7 +832,7 @@ bool CodeBlocksApp::OnInit()
             CodeBlocksEvent event(cbEVT_APP_STARTUP_DONE);
             Manager::Get()->ProcessEvent(event);
 
-            Manager::Get()->RegisterEventSink(cbEVT_COMPILER_FINISHED, new cbEventFunctor<CodeBlocksApp, CodeBlocksEvent>(this, &CodeBlocksApp::OnBatchBuildDone));
+            Manager::Get()->RegisterEventSink(cbEVT_COMPILER_FINISHED, new cbEventFunctor<CodeAdaptApp, CodeBlocksEvent>(this, &CodeAdaptApp::OnBatchBuildDone));
             s_Loading = false;
             LoadDelayedFiles(frame);
 
@@ -907,7 +907,7 @@ bool CodeBlocksApp::OnInit()
 
         return true;
     }
-    catch (cbException& exception)
+    catch (caException& exception)
     {
         exception.ShowErrorMessage();
     }
@@ -927,7 +927,7 @@ bool CodeBlocksApp::OnInit()
     return false;
 }
 
-int CodeBlocksApp::OnExit()
+int CodeAdaptApp::OnExit()
 {
     wxTheClipboard->Flush();
 
@@ -972,7 +972,7 @@ int CodeBlocksApp::OnExit()
     inline void EnableLFH() {}
 #endif
 
-int CodeBlocksApp::OnRun()
+int CodeAdaptApp::OnRun()
 {
     EnableLFH();
     try
@@ -981,7 +981,7 @@ int CodeBlocksApp::OnRun()
         // wx 2.6.3 docs says that OnRun() function's return value is used as exit code
         return m_Batch ? m_BatchExitCode : retval;
     }
-    catch (cbException& exception)
+    catch (caException& exception)
     {
         exception.ShowErrorMessage();
     }
@@ -1001,12 +1001,12 @@ int CodeBlocksApp::OnRun()
     return -1;
 }
 
-bool CodeBlocksApp::OnCmdLineParsed(wxCmdLineParser& parser)
+bool CodeAdaptApp::OnCmdLineParsed(wxCmdLineParser& parser)
 {
     return wxApp::OnCmdLineParsed(parser);
 }
 
-void CodeBlocksApp::OnFatalException()
+void CodeAdaptApp::OnFatalException()
 {
 #if wxUSE_DEBUGREPORT && wxUSE_XML && wxUSE_ON_FATAL_EXCEPTION
     wxDebugReport report;
@@ -1021,7 +1021,7 @@ void CodeBlocksApp::OnFatalException()
 #endif
 }
 
-int CodeBlocksApp::BatchJob()
+int CodeAdaptApp::BatchJob()
 {
     if (!m_Batch)
         return -1;
@@ -1075,7 +1075,7 @@ int CodeBlocksApp::BatchJob()
     m_pBatchBuildDialog->Show();
 #if wxCHECK_VERSION(3,0,0)
     // Clean up after the window is closed
-    m_pBatchBuildDialog->Bind(wxEVT_CLOSE_WINDOW, &CodeBlocksApp::OnCloseBatchBuildWindow, this);
+    m_pBatchBuildDialog->Bind(wxEVT_CLOSE_WINDOW, &CodeAdaptApp::OnCloseBatchBuildWindow, this);
 #endif // wxCHECK_VERSION
 
     if (m_ReBuild)
@@ -1102,7 +1102,7 @@ int CodeBlocksApp::BatchJob()
 #if wxCHECK_VERSION(3,0,0)
 #else
     // The batch build log might have been deleted in
-    // CodeBlocksApp::OnBatchBuildDone().
+    // CodeAdaptApp::OnBatchBuildDone().
     // If it has not, it's still compiling.
     if (m_pBatchBuildDialog)
     {
@@ -1131,7 +1131,7 @@ int CodeBlocksApp::BatchJob()
 }
 
 #if wxCHECK_VERSION(3,0,0)
-void CodeBlocksApp::OnCloseBatchBuildWindow(wxCloseEvent& evt)
+void CodeAdaptApp::OnCloseBatchBuildWindow(wxCloseEvent& evt)
 {
     cbCompilerPlugin *compiler = Manager::Get()->GetPluginManager()->GetFirstCompiler();
     if(compiler != nullptr && compiler->IsRunning())
@@ -1149,7 +1149,7 @@ void CodeBlocksApp::OnCloseBatchBuildWindow(wxCloseEvent& evt)
 }
 #endif // wxCHECK_VERSION
 
-void CodeBlocksApp::OnBatchBuildDone(CodeBlocksEvent& event)
+void CodeAdaptApp::OnBatchBuildDone(CodeBlocksEvent& event)
 {
     event.Skip();
     // the event comes more than once. deal with it...
@@ -1198,7 +1198,7 @@ void CodeBlocksApp::OnBatchBuildDone(CodeBlocksEvent& event)
 
 }
 
-void CodeBlocksApp::OnTBIconLeftDown(wxTaskBarIconEvent& event)
+void CodeAdaptApp::OnTBIconLeftDown(wxTaskBarIconEvent& event)
 {
     event.Skip();
     if (m_pBatchBuildDialog)
@@ -1208,7 +1208,7 @@ void CodeBlocksApp::OnTBIconLeftDown(wxTaskBarIconEvent& event)
     }
 }
 
-wxString CodeBlocksApp::GetAppPath() const
+wxString CodeAdaptApp::GetAppPath() const
 {
     wxString base;
 #ifdef __WINDOWS__
@@ -1245,12 +1245,12 @@ wxString CodeBlocksApp::GetAppPath() const
     return base;
 }
 
-void CodeBlocksApp::SetAutoFile(wxString& file)
+void CodeAdaptApp::SetAutoFile(wxString& file)
 {
     m_AutoFile = file;
 }
 
-int CodeBlocksApp::ParseCmdLine(MainFrame* handlerFrame, const wxString& CmdLineString)
+int CodeAdaptApp::ParseCmdLine(MainFrame* handlerFrame, const wxString& CmdLineString)
 {
     // code shamelessely taken from the console wxWindows sample :)
     bool filesInCmdLine = false;
@@ -1366,7 +1366,7 @@ int CodeBlocksApp::ParseCmdLine(MainFrame* handlerFrame, const wxString& CmdLine
     return filesInCmdLine ? 1 : 0;
 }
 
-void CodeBlocksApp::SetupPersonality(const wxString& personality)
+void CodeAdaptApp::SetupPersonality(const wxString& personality)
 {
     if (personality.CmpNoCase(_T("ask")) == 0)
     {
@@ -1383,7 +1383,7 @@ void CodeBlocksApp::SetupPersonality(const wxString& personality)
         Manager::Get()->GetPersonalityManager()->SetPersonality(personality, true);
 }
 
-void CodeBlocksApp::LoadDelayedFiles(MainFrame *const frame)
+void CodeAdaptApp::LoadDelayedFiles(MainFrame *const frame)
 {
     std::set<wxString> uniqueFilesToOpen(m_DelayedFilesToOpen.begin(), m_DelayedFilesToOpen.end());
     for (std::set<wxString>::const_iterator it = uniqueFilesToOpen.begin(); it != uniqueFilesToOpen.end(); ++it)
@@ -1432,7 +1432,7 @@ void CodeBlocksApp::LoadDelayedFiles(MainFrame *const frame)
     }
 }
 
-void CodeBlocksApp::AttachDebugger()
+void CodeAdaptApp::AttachDebugger()
 {
     const wxString localAttach = m_DebuggerAttach;
     const wxString localConfig = m_DebuggerConfig;
@@ -1534,7 +1534,7 @@ void CodeBlocksApp::AttachDebugger()
 
 #ifdef __WXMAC__
 
-void CodeBlocksApp::MacOpenFile(const wxString & fileName )
+void CodeAdaptApp::MacOpenFile(const wxString & fileName )
 {
     if (s_Loading)
         m_DelayedFilesToOpen.Add(fileName);
@@ -1542,7 +1542,7 @@ void CodeBlocksApp::MacOpenFile(const wxString & fileName )
         m_Frame->Open(fileName, true);
 }
 
-void CodeBlocksApp::MacPrintFile(const wxString & fileName )
+void CodeAdaptApp::MacPrintFile(const wxString & fileName )
 {
     // TODO
     wxApp::MacPrintFile(fileName);
@@ -1552,7 +1552,7 @@ void CodeBlocksApp::MacPrintFile(const wxString & fileName )
 
 // event handlers
 
-void CodeBlocksApp::OnAppActivate(wxActivateEvent& event)
+void CodeAdaptApp::OnAppActivate(wxActivateEvent& event)
 {
     // allow others to process this event
     event.Skip();
@@ -1606,7 +1606,7 @@ void CodeBlocksApp::OnAppActivate(wxActivateEvent& event)
     }
 }
 
-void CodeBlocksApp::AddFileToOpenDelayed(const wxString& filename)
+void CodeAdaptApp::AddFileToOpenDelayed(const wxString& filename)
 {
     m_DelayedFilesToOpen.Add(filename);
 }
