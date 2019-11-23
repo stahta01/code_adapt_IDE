@@ -168,6 +168,6 @@ class CodeBlocksApp : public wxApp
         DECLARE_EVENT_TABLE()
 };
 
-DECLARE_APP(CodeBlocksApp);
+wxDECLARE_APP(CodeBlocksApp);
 
 #endif // CODEBLOCKS_APP_H

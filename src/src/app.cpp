@@ -349,7 +349,7 @@ void cbMessageOutputNull::Printf(cb_unused const wxChar* format, ...){}
 #endif
 } // namespace
 
-IMPLEMENT_APP(CodeBlocksApp) // TODO: This gives a "redundant declaration" warning, though I think it's false. Dig through macro and check.
+wxIMPLEMENT_APP(CodeBlocksApp);
 
 BEGIN_EVENT_TABLE(CodeBlocksApp, wxApp)
     EVT_ACTIVATE_APP(CodeBlocksApp::OnAppActivate)
