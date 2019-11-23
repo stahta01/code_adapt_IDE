@@ -1,7 +1,11 @@
 #include <sdk.h>
 
+#include <wx/checkbox.h>
 #include <wx/sstream.h>
 #include <wx/regex.h>
+#include <wx/stattext.h>
+#include <wx/timer.h>
+
 #include <set>
 
 #include "FileExplorerUpdater.h"

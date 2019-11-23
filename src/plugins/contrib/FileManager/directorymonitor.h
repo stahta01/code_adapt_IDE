@@ -1,9 +1,7 @@
 #ifndef WXFILESYSTEMMONITOR_H
 #define WXFILESYSTEMMONITOR_H
 
-
-
-#include <wx/wx.h>
+#include <wx/event.h>
 
 #define MONITOR_TERMINATE 0x010000
 #define MONITOR_TOO_MANY_CHANGES 0x020000

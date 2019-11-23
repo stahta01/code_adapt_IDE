@@ -1,7 +1,6 @@
 #ifndef FILEEXPLORERUPDATER_H_INCLUDED
 #define FILEEXPLORERUPDATER_H_INCLUDED
 
-#include <wx/wx.h>
 #include <wx/treectrl.h>
 #include <wx/thread.h>
 #include <wx/process.h>
@@ -11,6 +10,8 @@
 class VCSstatearray;
 class FileExplorer;
 class wxStringOutputStream;
+class wxTimer;
+class wxTimerEvent;
 
 // SIMPLE wxCommandEvent DERIVED CUSTOM EVENTS THAT USE THE BUILTIN EVT_COMMAND EVENT TABLE ENTRY
 BEGIN_DECLARE_EVENT_TYPES()

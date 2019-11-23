@@ -1,10 +1,10 @@
 #ifndef FILEEXPLORERSETTINGS_H
 #define FILEEXPLORERSETTINGS_H
 
-#include <wx/wx.h>
-
 #include <wx/button.h>
+#include <wx/dirdlg.h>
 
+class wxListBox;
 
 class FavoriteDir
 {

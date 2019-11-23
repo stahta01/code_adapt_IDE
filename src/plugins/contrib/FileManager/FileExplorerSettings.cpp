@@ -1,14 +1,16 @@
-#include "FileExplorerSettings.h"
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
 
-#include <sdk.h>
 #ifndef CB_PRECOMP
   #include <wx/xrc/xmlres.h>
   #include <wx/checkbox.h>
   #include <wx/choice.h>
+  #include <wx/dirdlg.h>
+  #include <wx/listbox.h>
 
   #include "cbproject.h"
 #endif
 
+#include "FileExplorerSettings.h"
 
 #include <wx/arrimpl.cpp> // this is a magic incantation which must be done!
 WX_DEFINE_OBJARRAY(FavoriteDirs);

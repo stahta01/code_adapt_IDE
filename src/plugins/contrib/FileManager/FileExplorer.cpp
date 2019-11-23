@@ -1,11 +1,9 @@
-#include "FileExplorer.h"
-#include <wx/dir.h>
-#include <wx/filename.h>
-#include <wx/aui/aui.h>
-
-#include <sdk.h>
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
+#ifndef WX_PRECOMP
+    #include <wx/textdlg.h>
+#endif
 #ifndef CB_PRECOMP
-    #include <wx/dnd.h>
+    #include <wx/dirdlg.h>
     #include <wx/imaglist.h>
 
     #include <cbproject.h>
@@ -17,6 +15,13 @@
 #include <vector>
 #include <iostream>
 
+#include <wx/dnd.h>
+#include <wx/dir.h>
+#include <wx/filename.h>
+#include <wx/aui/aui.h>
+
+#include <cbplugin.h>
+#include "FileExplorer.h"
 #include "se_globals.h"
 #include "CommitBrowser.h"
 
