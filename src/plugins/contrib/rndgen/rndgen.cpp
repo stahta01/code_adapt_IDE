@@ -8,7 +8,7 @@
     #include "manager.h"
 #endif
 #include "rndgen.h"
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 
 namespace
 {
