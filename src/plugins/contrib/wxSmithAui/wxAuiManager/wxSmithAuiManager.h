@@ -2,7 +2,6 @@
 #define WXSMITHAUIMANAGER_H
 
 #include <wx/aui/aui.h>
-#include <wx/wx.h>
 #include <wx/event.h>
 
 #include <prep.h>

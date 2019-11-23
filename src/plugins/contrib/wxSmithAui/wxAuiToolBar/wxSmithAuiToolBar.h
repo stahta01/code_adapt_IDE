@@ -19,7 +19,6 @@
 #ifndef WXSMITHAUITOOLBAR_H
 #define WXSMITHAUITOOLBAR_H
 
-#include <wx/wx.h>
 
 #include <wx/aui/auibar.h>
 
