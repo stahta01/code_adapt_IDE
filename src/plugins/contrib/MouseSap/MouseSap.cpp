@@ -29,7 +29,7 @@
 #include <wx/fileconf.h> // wxFileConfig
 #include <wx/clipbrd.h>
 #include <wx/strconv.h>
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "personalitymanager.h"
 #include "MouseSap.h"
 
