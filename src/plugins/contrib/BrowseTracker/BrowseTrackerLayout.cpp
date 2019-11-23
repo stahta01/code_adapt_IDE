@@ -30,7 +30,7 @@
 * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/contrib/BrowseTracker/BrowseTrackerLayout.cpp $
 */
 
-#include "sdk_precomp.h"
+#include "sdk.h"
 #include "BrowseTrackerLayout.h"
 
 #ifndef CB_PRECOMP

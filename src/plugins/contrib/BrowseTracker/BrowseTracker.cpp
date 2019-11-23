@@ -64,10 +64,11 @@
 //      FileBook_MarksArchive:   filePath, BrowseMarks*
 //      BrowseMarks              wxArray containing editor cursor locations
 
-
-#if defined(CB_PRECOMP)
 #include "sdk.h"
-#else
+#ifndef WX_PRECOMP
+    #include <wx/toolbar.h>
+#endif
+#ifndef CB_PRECOMP
 	#include "sdk_events.h"
 	#include "manager.h"
 	#include "editormanager.h"
@@ -77,9 +78,9 @@
 	#include "cbproject.h"
 	#include "configmanager.h"
 	#include "logmanager.h"
-	#include "cbauibook.h"
 	#include "infowindow.h"
 #endif
+#include "cbauibook.h"
 #include "projectloader_hooks.h"
 #include "configurationpanel.h"
 

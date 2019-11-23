@@ -10,13 +10,6 @@
 #ifndef TESTPLUGIN_H_INCLUDED
 #define TESTPLUGIN_H_INCLUDED
 
-// For compilers that support precompilation, includes <wx/wx.h>
-#include <wx/wxprec.h>
-
-#ifndef WX_PRECOMP
-    #include <wx/wx.h>
-#endif
-
 #include <cbplugin.h> // for "class cbPlugin"
 // we must forward declare the array because it is used inside the class
 // declaration

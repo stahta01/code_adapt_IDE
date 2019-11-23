@@ -7,6 +7,8 @@
 #include <projectmanager.h>
 #include <editormanager.h>
 #include <cbeditor.h>
+#include <wx/menu.h>
+#include <wx/toolbar.h>
 #include <wx/xrc/xmlres.h>
 
 #include "Version.h"
