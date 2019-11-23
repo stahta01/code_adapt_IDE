@@ -31,7 +31,7 @@
 
 #include <wx/menu.h>
 #include <wx/progdlg.h>
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 
 #include "astyleplugin.h"
 #include "astyleconfigdlg.h"

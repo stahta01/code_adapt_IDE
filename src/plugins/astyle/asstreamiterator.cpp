@@ -13,7 +13,7 @@
 
 #include <vector>
 
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "globals.h"
 
 ASStreamIterator::ASStreamIterator(cbEditor* cbe, const wxChar* in) :
