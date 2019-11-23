@@ -29,7 +29,7 @@
 #include <wx/listbox.h>
 
 #include "cbart_provider.h"
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "IncrementalSearch.h"
 #include "IncrementalSearchConfDlg.h"
 

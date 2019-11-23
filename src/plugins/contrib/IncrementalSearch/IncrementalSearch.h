@@ -13,7 +13,7 @@
 #define INCREMENTAL_SEARCH_H_INCLUDED
 
 #include <cbplugin.h>
-#include <wx/wxscintilla.h>
+#include "ca/sci_defines.h"
 
 class cbArtProvider;
 class cbStyledTextCtrl;
