@@ -15,7 +15,7 @@
     #include <manager.h>
 #endif
 
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 
 #include "EditorConfig.h"
 #include "EditorConfigUI.h"
