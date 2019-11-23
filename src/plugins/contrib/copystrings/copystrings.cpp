@@ -17,7 +17,7 @@
 #include "globals.h"
 #include "manager.h"
 #endif
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 
 #include <wx/clipbrd.h>
 #include <wx/dataobj.h>
