@@ -1,0 +1,23 @@
+First, please install packages listed in msys2_required_packages.txt
+
+GCC Compiler Configuration
+
+64 bit values shown first
+installation directory: C:\msys64\mingw64
+additional paths:       [may need path to zip command added]
+
+C Compiler:         x86_64-w64-mingw32-gcc.exe
+C++ Compiler:       x86_64-w64-mingw32-g++.exe
+Linker Dyn. libs:   x86_64-w64-mingw32-g++.exe
+Linker Static libs: ar.exe
+Resource Compiler:  windres.exe
+
+32 bit values shown next
+installation directory: C:\msys32\mingw32
+additional paths:       [may need path to zip command added]
+
+C Compiler:         i686-w64-mingw32-gcc.exe
+C++ Compiler:       i686-w64-mingw32-g++.exe
+Linker Dyn. libs:   i686-w64-mingw32-g++.exe
+Linker Static libs: ar.exe
+Resource Compiler:  windres.exe
