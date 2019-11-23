@@ -64,6 +64,7 @@
 #include "compilerOW.h"
 #include "compilerGNUARM.h"
 #include "compilerCYGWIN.h"
+#include "compilerMSYS2.h"
 #include "compilerLCC.h"
 #include "compilerKeilC51.h"
 #include "compilerIAR.h"
@@ -897,6 +898,8 @@ void CompilerGCC::DoRegisterCompilers()
         CompilerFactory::RegisterCompiler(new CompilerKeilCX51);
         CompilerFactory::RegisterCompiler(new CompilerIAR(wxT("8051")));
         CompilerFactory::RegisterCompiler(new CompilerIAR(wxT("ARM")));
+        CompilerFactory::RegisterCompiler(new CompilerMSYS2(wxT("")));
+        CompilerFactory::RegisterCompiler(new CompilerMSYS2(wxT("mingw")));
     }
     CompilerFactory::RegisterCompiler(new CompilerICC);
     CompilerFactory::RegisterCompiler(new CompilerGDC);
