@@ -5,7 +5,7 @@
     #include <wx/msgdlg.h>
     #include <wx/menu.h>
 
-    #include <tinyxml/tinyxml.h>
+    #include <tinyxml.h>
 
     #include <cbproject.h>
     #include <cbeditor.h>
