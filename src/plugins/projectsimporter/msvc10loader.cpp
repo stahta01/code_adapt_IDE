@@ -25,7 +25,6 @@
 
 #include <tinyxml.h>
 
-#include "prep.h"
 #include "msvc7workspaceloader.h"
 #include "msvc10loader.h"
 #include "multiselectdlg.h"

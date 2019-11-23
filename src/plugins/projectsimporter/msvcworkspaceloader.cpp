@@ -12,11 +12,9 @@
 #ifndef CB_PRECOMP
     #include <wx/string.h>
     #include <wx/intl.h>
-    #include <wx/txtstrm.h>
     #include <wx/dynarray.h>
     #include <wx/filename.h>
     #include <wx/msgdlg.h>
-    #include <wx/wfstream.h>
 
     #include "globals.h"
     #include "manager.h"
@@ -27,8 +25,10 @@
     #include "cbproject.h"
 #endif
 
-#include <wx/stream.h>
 #include <wx/progdlg.h>
+#include <wx/stream.h>
+#include <wx/txtstrm.h>
+#include <wx/wfstream.h>
 
 #include "msvcworkspaceloader.h"
 #include "importers_globals.h"

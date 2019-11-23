@@ -23,10 +23,12 @@
     #include "logmanager.h"
     #include "projectmanager.h"
     #include "logmanager.h"
-    #include "compilerfactory.h"
     #include "cbproject.h"
-    #include "cbworkspace.h"
 #endif
+
+#include "cbworkspace.h"
+#include "compiler.h"
+#include "compilerfactory.h"
 
 #include "projectsimporter.h"
 #include "devcpploader.h"

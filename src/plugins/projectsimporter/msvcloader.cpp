@@ -15,23 +15,23 @@
     #include <wx/msgdlg.h>
     #include <wx/intl.h>
     #include <wx/filename.h>
-    #include <wx/txtstrm.h>
     #include <wx/dynarray.h>
-    #include <wx/wfstream.h>
 
     #include "manager.h"
     #include "projectmanager.h"
     #include "logmanager.h"
     #include "cbproject.h"
     #include "globals.h"
-    #include "compilerfactory.h"
-    #include "compiler.h"
 #endif
 
 #include <wx/stream.h>
 #include <wx/tokenzr.h>
+#include <wx/txtstrm.h>
+#include <wx/wfstream.h>
 
-#include "prep.h"
+#include "compilerfactory.h"
+#include "compiler.h"
+
 #include "importers_globals.h"
 #include "msvcloader.h"
 #include "multiselectdlg.h"

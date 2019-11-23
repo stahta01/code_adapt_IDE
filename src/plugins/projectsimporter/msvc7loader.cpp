@@ -17,15 +17,15 @@
     #include "logmanager.h"
     #include "cbproject.h"
     #include "globals.h"
-    #include "compilerfactory.h"
-    #include "compiler.h"
 #endif
 
 #include <wx/choicdlg.h>
 
 #include <tinyxml.h>
 
-#include "prep.h"
+#include "compilerfactory.h"
+#include "compiler.h"
+
 #include "msvc7loader.h"
 #include "multiselectdlg.h"
 #include "importers_globals.h"

@@ -13,10 +13,11 @@
     #include "manager.h"
     #include "logmanager.h"
     #include "projectmanager.h"
-    #include "compilerfactory.h"
-    #include "compiler.h"
     #include "cbproject.h"
 #endif
+
+#include "compilerfactory.h"
+#include "compiler.h"
 
 #include "msvcworkspacebase.h"
 
