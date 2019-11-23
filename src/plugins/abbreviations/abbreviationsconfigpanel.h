@@ -11,6 +11,7 @@
 
 #include <configurationpanel.h>
 
+#include <wx/combobox.h>
 #include <wx/stattext.h>
 #include <wx/listbox.h>
 #include <wx/panel.h>

@@ -7,12 +7,10 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/abbreviations/abbreviations.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
 
 #ifndef CB_PRECOMP
     #include <configurationpanel.h>
-    #include <cbstyledtextctrl.h>
-    #include <editorcolourset.h>
 #endif
 
 #include "abbreviations.h"
@@ -22,7 +20,8 @@
 #include <editor_hooks.h>
 #include <sqplus.h>
 #include <sc_base_types.h>
-
+#include <cbstyledtextctrl.h>
+#include <editorcolourset.h>
 
 // Register the plugin with Code::Blocks.
 // We are using an anonymous namespace so we don't litter the global one.
