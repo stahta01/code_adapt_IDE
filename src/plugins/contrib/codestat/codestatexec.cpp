@@ -6,12 +6,13 @@
  * Copyright: (c) Zlika
  * License:   GPL
  **************************************************************/
-#include "codestatexec.h"
 
 #include "sdk.h"
-#ifndef CB_PRECOMP
+#ifndef WX_PRECOMP
 #   include <wx/choice.h>
 #   include <wx/gauge.h>
+#endif
+#ifndef CB_PRECOMP
 #   include <wx/intl.h>
 #   include <wx/sizer.h>
 #   include <wx/stattext.h>
@@ -31,6 +32,8 @@
 #include <wx/textfile.h>
 
 #include <algorithm>
+
+#include "codestatexec.h"
 
 void CountLines(ProjectCodeStats& stat, const wxFileName &filename, const LanguageDef &language);
 

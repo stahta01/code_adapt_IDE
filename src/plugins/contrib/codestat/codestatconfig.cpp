@@ -7,8 +7,10 @@
  * License:   GPL
  **************************************************************/
 #include "sdk.h"
-#ifndef CB_PRECOMP
+#ifndef WX_PRECOMP
     #include <wx/combobox.h>
+#endif
+#ifndef CB_PRECOMP
     #include <wx/event.h>
     #include <wx/stattext.h>
     #include <wx/textctrl.h>
