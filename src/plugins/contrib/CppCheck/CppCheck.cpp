@@ -26,7 +26,6 @@
     #include "logmanager.h"
     #include "pluginmanager.h"
     #include "projectmanager.h"
-    #include "macrosmanager.h"
 #endif
 
 #include <wx/busyinfo.h>
@@ -37,6 +36,7 @@
 #include <tinyxml.h>
 #include "filefilters.h"
 #include "loggers.h"
+#include "macrosmanager.h"
 
 #include "CppCheck.h"
 #include "CppCheckListLog.h"
