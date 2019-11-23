@@ -20,7 +20,7 @@
 #include <wx/tokenzr.h>
 #include <wx/regex.h>
 
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "fileanalysis.h"
 
 const wxString reInclude = _T("^[ \t]*#[ \t]*include[ \t]+[\"<]([^\">]+)[\">]");
