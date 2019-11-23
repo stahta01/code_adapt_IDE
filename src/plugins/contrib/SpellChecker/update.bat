@@ -1,7 +1,7 @@
 @echo off
 
 set CB_DEVEL_DIR=devel%1
-set CB_DEVEL_RESDIR=..\..\..\%CB_DEVEL_DIR%\share\CodeBlocks
+set CB_DEVEL_RESDIR=..\..\..\%CB_DEVEL_DIR%\share\codeadapt
 
 call:mkdirSilent "%CB_DEVEL_RESDIR%\SpellChecker"
 call:mkdirSilent "%CB_DEVEL_RESDIR%\images\settings"
@@ -18,7 +18,7 @@ xcopy /D /Y *.png "%CB_DEVEL_RESDIR%\images\settings\"
 call:copyImageFiles rc "%CB_DEVEL_RESDIR%\SpellChecker"
 
 set CB_OUTPUT_DIR=output%1
-set CB_OUTPUT_RESDIR=..\..\..\%CB_OUTPUT_DIR%\share\CodeBlocks
+set CB_OUTPUT_RESDIR=..\..\..\%CB_OUTPUT_DIR%\share\codeadapt
 
 call:mkdirSilent "%CB_OUTPUT_RESDIR%\SpellChecker"
 call:mkdirSilent "%CB_OUTPUT_RESDIR%\images\settings"
