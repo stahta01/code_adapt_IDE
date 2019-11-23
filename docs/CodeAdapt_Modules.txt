@@ -1,0 +1,44 @@
+Module Name
+  bz2                   MSys2 library
+  z                     MSys2 library
+  hunspell              ???
+  exchndl               MSys2 library
+  tinyxml               MSys2 library
+  scripting             CodeBlocks scripting is the following sub-modules
+    bindings              CodeBlocks Created and Maintained code
+    Squirrel              CodeBlocks customized version of Squirrel
+    sqstdlib              CodeBlocks customized version of Squirrel library
+    SqPlus                CodeBlocks customized version of SqPlus
+  Compiler depslib      Is a CodeBlocks maintained Module
+  sdk                   CodeBlocks SDK with modified wxWidgets Scintilla Editor
+  coreApp               CodeBlocks IDE main application
+  mozilla_chardet       CodeBlocks customized version
+
+  AutoRevision          Is a CodeBlocks maintained Module
+  ConsoleRunner         Is a CodeBlocks maintained Module
+  Addr2LineUI           Is a CodeBlocks maintained Module
+  cb_share_config       Is a CodeBlocks maintained Module
+  CBLauncher            Is a CodeBlocks maintained Module
+  cbp2make              https://sourceforge.net/projects/cbp2make/
+
+  wxSpellChecker        http://wxcode.sourceforge.net/showcomp.php?name=wxSpellChecker
+  wxPdfDocument         CodeBlocks run-time fix version
+  wxContribItems
+    wxLED                 contains code from multiple sources
+      wxLEDNumberCtrl     ? http://wxcode.sourceforge.net/showcomp.php?name=gizmos
+                            wxCode_components\gizmos\include\wx\gizmos\ledctrl.h
+      wxLEDPanel          ? http://wxcode.sourceforge.net/components/ledpanel/
+                            wxCode_components\ledpanel\include\wx\wxledpanel.h
+      LCDWindow           ? http://wxcode.sourceforge.net/components/lcdwindow/
+                            wxCode_components\kwic\include\kwic\lcdwindow.h
+      wxLed               ? http://wxcode.sourceforge.net/showcomp.php?name=wxLed
+                            wxCode_components\led\include\wx\led.h
+    wxFlatNoteBook        https://sourceforge.net/projects/wxflatnotebook/
+    wxDateTimePicker      ? Unknown creator
+    wxChartCtrl           CodeBlocks customized version
+    wxCustomButton        http://svn.code.sf.net/p/wxcode/code/trunk/wxCode/components/wxthings/
+    KWIC                  http://svn.code.sf.net/p/wxcode/code/trunk/wxCode/components/kwic/
+    wxTreeList            http://svn.code.sf.net/p/wxcode/code/trunk/wxCode/components/treelistctrl/
+    wxMathPlot            https://github.com/R1kk3r/wxMathPlot
+    wxImagePanel          CodeBlocks Created and Maintained code
+    wxSpeedButton         CodeBlocks Created and Maintained code
