@@ -3556,12 +3556,19 @@ void cbEditor::OnZoom(wxScintillaEvent& event)
 {
     ConfigManager* mgr =  Manager::Get()->GetConfigManager(_T("editor"));
 
-    int zoom = GetControl()->GetZoom();
+    int zoom = 0;
+    cbStyledTextCtrl* control = GetControl();
+    if (control)
+        zoom = control->GetZoom();
+
     Manager::Get()->GetEditorManager()->SetZoom(zoom);
     // if all editors should be zoomed, we call cbAuiNotebooks SetZoom()
     bool both = mgr->ReadBool(_T("/zoom_all"));
-    if (both)
-        Manager::Get()->GetEditorManager()->GetNotebook()->SetZoom(zoom);
+    if (both) {
+        cbAuiNotebook* nb = Manager::Get()->GetEditorManager()->GetNotebook();
+        if (nb)
+            nb->SetZoom(zoom);
+    }
 
     m_pData->SetLineNumberColWidth(both);
 
