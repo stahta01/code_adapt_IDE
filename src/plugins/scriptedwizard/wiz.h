@@ -9,7 +9,7 @@
 
 #include <cbplugin.h> // the base class we 're inheriting
 #include <settings.h> // needed to use the Code::Blocks SDK
-#include <cbexception.h>
+#include <ca/exception.h>
 #include <wx/bitmap.h>
 
 class wxWizard;
@@ -43,7 +43,7 @@ class Wiz : public cbWizardPlugin
 
         Wiz& operator=(cb_unused const Wiz& rhs)  // prevent assignment operator
         {
-        	cbThrow(_T("Can't assign an Wiz* !!!"));
+        	caThrow(_T("Can't assign an Wiz* !!!"));
         	return *this;
 		}
 

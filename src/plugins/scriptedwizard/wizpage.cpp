@@ -17,7 +17,7 @@
     #include <scriptingmanager.h>
     #include <macrosmanager.h>
     #include <cbproject.h>
-    #include <cbexception.h>
+    #include <ca/exception.h>
 #endif
 
 #include <compilerfactory.h>
@@ -96,7 +96,7 @@ WizPageBase::WizPageBase(const wxString& pageName, wxWizard* parent, const wxBit
 {
     // duplicate pageIDs are not allowed
     if (s_PagesByName[m_PageName])
-        cbThrow(_T("Page ID in use:") + pageName);
+        caThrow(_T("Page ID in use:") + pageName);
 
     // register this to the static pages map
     s_PagesByName[m_PageName] = this;

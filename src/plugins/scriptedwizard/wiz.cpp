@@ -26,7 +26,7 @@
     #include <wx/wizard.h>
     #include <wx/xrc/xmlres.h>
 
-    #include <cbexception.h>
+    #include <ca/exception.h>
     #include <cbproject.h>
     #include <configmanager.h>
     #include <filefilters.h>
@@ -42,7 +42,7 @@
 #include <compilerfactory.h>
 #include <infowindow.h>
 #include <scripting/bindings/sc_base_types.h>
-#include "cbassert.h"
+#include "ca/assert.h"
 
 #include "wiz.h"
 #include "wizpage.h"
@@ -150,7 +150,7 @@ TemplateOutputType Wiz::GetOutputType(int index) const
 {
     //return this wizard's output type
     //make sure you set this!
-    cbAssert(index >= 0 && index < GetCount());
+    caAssert(index >= 0 && index < GetCount());
     return m_Wizards[index].output_type;
 }
 
@@ -159,7 +159,7 @@ wxString Wiz::GetTitle(int index) const
     //return this wizard's title
     //this will appear in the new-project dialog
     //make sure you set this!
-    cbAssert(index >= 0 && index < GetCount());
+    caAssert(index >= 0 && index < GetCount());
     return m_Wizards[index].title;
 }
 
@@ -167,7 +167,7 @@ wxString Wiz::GetDescription(int index) const
 {
     //return this wizard's description
     //make sure you set this!
-    cbAssert(index >= 0 && index < GetCount());
+    caAssert(index >= 0 && index < GetCount());
     return _("A generic scripted wizard");
 }
 
@@ -176,7 +176,7 @@ wxString Wiz::GetCategory(int index) const
     //return this wizard's category
     //try to match an existing category
     //make sure you change this!
-    cbAssert(index >= 0 && index < GetCount());
+    caAssert(index >= 0 && index < GetCount());
     return m_Wizards[index].cat;
 }
 
@@ -184,14 +184,14 @@ const wxBitmap& Wiz::GetBitmap(int index) const
 {
     //return this wizard's bitmap
     //this will appear in the new-project dialog
-    cbAssert(index >= 0 && index < GetCount());
+    caAssert(index >= 0 && index < GetCount());
     return m_Wizards[index].templatePNG;
 }
 
 wxString Wiz::GetScriptFilename(int index) const
 {
     //return this wizard's script relative filename
-    cbAssert(index >= 0 && index < GetCount());
+    caAssert(index >= 0 && index < GetCount());
     return m_Wizards[index].script;
 }
 
@@ -216,7 +216,7 @@ void Wiz::Clear()
 
 CompileTargetBase* Wiz::Launch(int index, wxString* pFilename)
 {
-    cbAssert(index >= 0 && index < GetCount());
+    caAssert(index >= 0 && index < GetCount());
 
     // clear previous script's context
     static const wxString clearout_wizscripts =  _T("function BeginWizard(){};\n"
@@ -304,7 +304,7 @@ CompileTargetBase* Wiz::Launch(int index, wxString* pFilename)
         Clear();
         return nullptr;
     }
-    catch (cbException& e)
+    catch (caException& e)
     {
         e.ShowErrorMessage(false);
         Clear();
@@ -874,7 +874,7 @@ wxString Wiz::FindTemplateFile(const wxString& filename)
 
 TemplateOutputType Wiz::GetWizardType()
 {
-    cbAssert(m_LaunchIndex >= 0 && m_LaunchIndex < GetCount());
+    caAssert(m_LaunchIndex >= 0 && m_LaunchIndex < GetCount());
     return m_Wizards[m_LaunchIndex].output_type;
 }
 
