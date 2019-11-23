@@ -1,8 +1,6 @@
 #ifndef BASEEXPORTER_INCLUDED
 #define BASEEXPORTER_INCLUDED
 
-#include <wx/wxscintilla.h>
-
 #include <editorcolourset.h>
 
 class BaseExporter
