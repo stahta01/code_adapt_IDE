@@ -1,3 +1,5 @@
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
+
 #include "ReopenEditorConfDLg.h"
 #include "ReopenEditor.h"
 #include "configmanager.h"
