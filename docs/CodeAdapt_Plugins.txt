@@ -1,0 +1,57 @@
+planned no changes
+  astyle
+  autosave
+  classwizard
+  defaultmimehandler
+  occurrenceshighlighting
+  openfileslist
+  todo
+  xpmanifest
+  AutoVersioning
+  BrowseTracker
+  byogames
+  Cccc
+  codesnippets
+  codestat
+  copystrings
+  CppCheck
+  Cscope
+  DoxyBlocks
+  dragscroll
+  EditorConfig
+  EditorTweaks
+  FileManager                 Build problems under wxGTK/Win
+  headerfixup
+  HexEditor
+  IncrementalSearch
+  keybinder
+  MouseSap
+  NassiShneiderman
+  profiler
+  ProjectOptionsManipulator
+  regex_testbed
+  ReopenEditor
+  rndgen
+  SmartIndent
+  source_exporter
+  SpellChecker
+  symtab
+  ToolsPlus
+
+planned minor changes
+  compiler
+  debugger
+  projectsimporter
+
+planned major changes
+  scriptedwizard  scripting changes
+  envvars         scripting changes
+  help_plugin     scripting changes
+  lib_finder      scripting changes
+
+planned complete replacement or removal
+  codecompletion
+  wxSmith
+
+planned complete removal because of run-time issue
+  ThreadSearch when disabled crashes IDE
