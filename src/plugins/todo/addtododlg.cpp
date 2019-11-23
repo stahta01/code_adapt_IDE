@@ -8,12 +8,13 @@
  */
 
 #include "sdk.h"
+#ifndef WX_PRECOMP
+    #include <wx/choice.h>
+#endif
 #ifndef CB_PRECOMP
   #include <wx/arrstr.h>
   #include <wx/checkbox.h>
-  #include <wx/choice.h>
   #include <wx/intl.h>
-  #include <wx/spinctrl.h>
   #include <wx/textctrl.h>
   #include <wx/xrc/xmlres.h>
 
@@ -21,6 +22,7 @@
   #include "configmanager.h"
   #include "globals.h"
 #endif
+#include <wx/spinctrl.h>
 #include "addtododlg.h"
 
 BEGIN_EVENT_TABLE(AddTodoDlg, wxScrollingDialog)

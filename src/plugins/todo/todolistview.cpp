@@ -8,11 +8,13 @@
  */
 
 #include "sdk.h"
+#ifndef WX_PRECOMP
+    #include <wx/checklst.h>
+    #include <wx/combobox.h>
+#endif
 #ifndef CB_PRECOMP
     #include <wx/arrstr.h>
     #include <wx/button.h>
-    #include <wx/checklst.h>
-    #include <wx/combobox.h>
     #include <wx/event.h>
     #include <wx/file.h>
     #include <wx/intl.h>
@@ -23,6 +25,7 @@
 
     #include "cbeditor.h"
     #include "cbproject.h"
+    #include "configmanager.h"
     #include "editormanager.h"
     #include "filemanager.h"
     #include "globals.h"

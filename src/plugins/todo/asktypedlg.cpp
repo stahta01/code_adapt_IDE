@@ -8,8 +8,10 @@
  */
 
 #include "sdk.h"
+#ifndef WX_PRECOMP
+    #include <wx/choice.h>
+#endif
 #ifndef CB_PRECOMP
-  #include <wx/choice.h>
   #include <wx/intl.h>
   #include <wx/string.h>
   #include <wx/xrc/xmlres.h>
