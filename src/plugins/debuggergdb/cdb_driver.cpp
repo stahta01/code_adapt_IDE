@@ -11,7 +11,7 @@
 
 #ifndef CB_PRECOMP
     #include <cbproject.h>
-    #include <cbexception.h>
+    #include <ca/exception.h>
     #include <configmanager.h>
     #include <debuggermanager.h>
     #include <globals.h>
@@ -21,7 +21,7 @@
     #include <projectbuildtarget.h>
 #endif
 
-#include "cbassert.h"
+#include "ca/assert.h"
 #include <infowindow.h>
 
 #include "cdb_driver.h"
@@ -361,7 +361,7 @@ void CDB_driver::ParseOutput(const wxString& output)
     if (rePrompt.Matches(buffer))
     {
         int idx = buffer.First(rePrompt.GetMatch(buffer));
-        cbAssert(idx != wxNOT_FOUND);
+        caAssert(idx != wxNOT_FOUND);
         m_ProgramIsStopped = true;
         m_QueueBusy = false;
         DebuggerCmd* cmd = CurrentCommand();

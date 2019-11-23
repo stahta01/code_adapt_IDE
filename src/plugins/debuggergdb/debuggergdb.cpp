@@ -55,7 +55,7 @@
 #include "debuggeroptionsdlg.h"
 #include "debuggeroptionsprjdlg.h"
 #include "editwatchdlg.h"
-#include "cbassert.h"
+#include "ca/assert.h"
 
 // function pointer to DebugBreakProcess under windows (XP+)
 #if defined(_WIN32_WINNT) && (_WIN32_WINNT >= 0x0501)
@@ -1455,7 +1455,7 @@ cb::shared_ptr<cbBreakpoint> DebuggerGDB::GetBreakpoint(int index)
 {
     BreakpointsList::const_iterator it = m_State.GetBreakpoints().begin();
     std::advance(it, index);
-    cbAssert(it != m_State.GetBreakpoints().end());
+    caAssert(it != m_State.GetBreakpoints().end());
     return *it;
 }
 
@@ -1463,7 +1463,7 @@ cb::shared_ptr<const cbBreakpoint> DebuggerGDB::GetBreakpoint(int index) const
 {
     BreakpointsList::const_iterator it = m_State.GetBreakpoints().begin();
     std::advance(it, index);
-    cbAssert(it != m_State.GetBreakpoints().end());
+    caAssert(it != m_State.GetBreakpoints().end());
     return *it;
 }
 

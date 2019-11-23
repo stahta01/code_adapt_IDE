@@ -8,7 +8,7 @@
  */
 
 #include "sdk.h"         // Precompiled Header needs to be the first include
-#include <cbexception.h>
+#include <ca/exception.h>
 #include "debuggerstate.h"
 #include <compilerfactory.h>
 #include "debuggergdb.h"
@@ -25,7 +25,7 @@
     #include "projectmanager.h"
 #endif
 
-#include "cbassert.h"
+#include "ca/assert.h"
 
 DebuggerState::DebuggerState(DebuggerGDB* plugin)
     : m_pPlugin(plugin),
@@ -73,12 +73,12 @@ bool DebuggerState::HasDriver() const
 
 DebuggerDriver* DebuggerState::GetDriver()
 {
-    cbAssert(m_pDriver != NULL);
+    caAssert(m_pDriver != NULL);
     return m_pDriver;
 }
 const DebuggerDriver* DebuggerState::GetDriver() const
 {
-    cbAssert(m_pDriver != NULL);
+    caAssert(m_pDriver != NULL);
     return m_pDriver;
 }
 
