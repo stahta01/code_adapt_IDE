@@ -7,11 +7,13 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/classwizard/classwizarddlg.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#ifndef WX_PRECOMP
+    #include <wx/combobox.h>
+#endif
 #ifndef CB_PRECOMP
   #include <wx/button.h>
   #include <wx/checkbox.h>
-  #include <wx/combobox.h>
   #include <wx/event.h>
   #include <wx/file.h>
   #include <wx/filename.h>
@@ -26,10 +28,10 @@
   #include "editormanager.h"
   #include "globals.h"
   #include "manager.h"
-  #include "macrosmanager.h"
   #include "projectmanager.h"
 #endif
 #include "cbstyledtextctrl.h"
+#include "macrosmanager.h"
 
 #include <wx/tokenzr.h>
 #include <wx/dirdlg.h>
