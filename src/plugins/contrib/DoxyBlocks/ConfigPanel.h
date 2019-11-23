@@ -34,7 +34,7 @@
 #include <wx/stattext.h>
 #include <wx/textctrl.h>
 //*)
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 #include <configurationpanel.h>
 
 #include "DoxyBlocks.h"

@@ -35,7 +35,7 @@
     #include <logmanager.h>
     #include <projectmanager.h>
 #endif
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 #include <configurationpanel.h>
 #include <macrosmanager.h>
 #include <projectloader_hooks.h>
