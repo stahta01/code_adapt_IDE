@@ -85,7 +85,7 @@
 #include "configurationpanel.h"
 
     #include <wx/dynarray.h> //for wxArray and wxSortedArray
-    #include <cbstyledtextctrl.h>
+    #include <ca/styledtextctrl.h>
     #include <editor_hooks.h>
     #include "personalitymanager.h"
 	#include <wx/stdpaths.h>

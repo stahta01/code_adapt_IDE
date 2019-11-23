@@ -28,7 +28,7 @@
 #endif
 
 #include "BrowseTracker.h"
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "BrowseMarks.h"
 #include "BrowseTrackerDefs.h"
 #include "Version.h"

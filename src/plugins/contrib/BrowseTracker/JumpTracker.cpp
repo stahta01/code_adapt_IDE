@@ -3,7 +3,7 @@
 // ----------------------------------------------------------------------------
 #include <sdk.h> // Code::Blocks SDK
 #include <configurationpanel.h>
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 #include <projectmanager.h>
 #include <editormanager.h>
 #include <cbeditor.h>
