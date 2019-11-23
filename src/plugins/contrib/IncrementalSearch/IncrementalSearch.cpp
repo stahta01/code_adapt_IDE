@@ -10,13 +10,12 @@
  */
 
 #include "sdk.h"
-
-#include "IncrementalSearch.h"
-
+#ifndef WX_PRECOMP
+    #include <wx/toolbar.h>
+#endif
 #ifndef CB_PRECOMP
     #include <wx/menu.h>
     #include <wx/settings.h>
-    #include <wx/toolbar.h>
     #include <wx/textctrl.h>
     #include <wx/xrc/xmlres.h>
 
@@ -31,6 +30,7 @@
 
 #include "cbart_provider.h"
 #include "cbstyledtextctrl.h"
+#include "IncrementalSearch.h"
 #include "IncrementalSearchConfDlg.h"
 
 // Register the plugin with Code::Blocks.

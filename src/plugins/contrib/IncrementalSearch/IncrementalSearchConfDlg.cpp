@@ -10,16 +10,17 @@
  */
 
 #include "sdk.h"
-
+#ifndef WX_PRECOMP
+    #include <wx/choice.h>
+#endif
 #ifndef CB_PRECOMP
     #include <wx/xrc/xmlres.h>
     #include <wx/button.h>
     #include <wx/checkbox.h>
-    #include <wx/choice.h>
-    #include <wx/colordlg.h>
     #include <configmanager.h>
 #endif
 
+#include <wx/colordlg.h>
 #include <wx/spinctrl.h>
 #include "IncrementalSearchConfDlg.h"
 #include "IncrementalSearch.h"
