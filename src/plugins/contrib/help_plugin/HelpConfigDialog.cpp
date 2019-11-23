@@ -7,9 +7,13 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/contrib/help_plugin/HelpConfigDialog.cpp $
  */
 
-#include "HelpConfigDialog.h"
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
+
+#ifndef CB_PRECOMP
+    #include <globals.h> // cbMessageBox
+#endif
+
 #include <wx/xrc/xmlres.h>
-#include <globals.h> // cbMessageBox
 #include <manager.h>
 #include <editormanager.h>
 #include <logmanager.h>
@@ -24,6 +28,7 @@
 
 #include <algorithm>
 
+#include "HelpConfigDialog.h"
 #include "help_plugin.h"
 
 using std::find;

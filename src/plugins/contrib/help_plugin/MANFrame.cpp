@@ -6,7 +6,7 @@
  * $Id: MANFrame.cpp 10848 2016-05-05 14:29:22Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/contrib/help_plugin/MANFrame.cpp $
  */
-#include <sdk.h>
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
 
 #ifndef CB_PRECOMP
   #include <map>

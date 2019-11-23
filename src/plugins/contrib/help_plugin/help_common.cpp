@@ -7,6 +7,8 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/contrib/help_plugin/help_common.cpp $
  */
 
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
+
 #include <algorithm>
 
 #include <wx/intl.h>
