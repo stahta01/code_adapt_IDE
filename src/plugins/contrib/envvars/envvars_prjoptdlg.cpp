@@ -10,10 +10,12 @@
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
 #include "sdk.h"
+#ifndef WX_PRECOMP
+    #include <wx/choice.h>
+#endif
 #ifndef CB_PRECOMP
   #include <wx/xrc/xmlres.h>
   #include <wx/checkbox.h>
-  #include <wx/choice.h>
 
   #include "cbproject.h"
 #endif

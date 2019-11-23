@@ -10,20 +10,22 @@
 // ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
 
 #include "sdk.h"
-#include "prep.h"
+#ifndef WX_PRECOMP
+    #include <wx/checklst.h>
+#endif
 #ifndef CB_PRECOMP
-  #include <wx/checklst.h>
   #include <wx/utils.h>
 
   #include "configmanager.h"
   #include "globals.h"
   #include "manager.h"
-  #include "macrosmanager.h"
   #include "logmanager.h"
 #endif
 
 #include <map>
 #include <utility> // std::pair
+
+#include "macrosmanager.h"
 
 #include "envvars_common.h"
 
