@@ -40,7 +40,7 @@
 #include <wx/thread.h>
 #endif
 
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 #include <sc_base_types.h>
 #include <sqplus.h>
 
