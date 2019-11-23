@@ -30,7 +30,7 @@
   #include "manager.h"
   #include "projectmanager.h"
 #endif
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "macrosmanager.h"
 
 #include <wx/tokenzr.h>
