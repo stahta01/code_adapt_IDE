@@ -8,14 +8,15 @@
  */
 
 #include "sdk.h"
-
+#ifndef WX_PRECOMP
+    #include <wx/checklst.h>
+    #include <wx/radiobox.h>
+#endif
 #ifndef CB_PRECOMP
     #include <wx/button.h>
     #include <wx/checkbox.h>
-    #include <wx/checklst.h>
     #include <wx/intl.h>
     #include <wx/listbox.h>
-    #include <wx/radiobox.h>
     #include <wx/xrc/xmlres.h>
     #include "globals.h"
     #include "manager.h"

@@ -7,7 +7,7 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/codecompletion/ccoptionsprjdlg.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
 
 #ifndef CB_PRECOMP
     #include <wx/button.h>

@@ -6,7 +6,7 @@
 #ifndef GOTOFUNCTIONDLG_H
 #define GOTOFUNCTIONDLG_H
 
-#ifndef CB_PRECOMP
+#ifndef WX_PRECOMP
     //(*HeadersPCH(GotoFunctionDlg)
     #include <wx/dialog.h>
     class wxBoxSizer;

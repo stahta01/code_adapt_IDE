@@ -7,19 +7,19 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/codecompletion/coderefactoring.cpp $
  */
 
-#include <sdk.h>
-
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#ifndef WX_PRECOMP
+    #include <wx/statbmp.h>
+#endif
 #ifndef CB_PRECOMP
     #include <wx/artprov.h>
     #include <wx/button.h>
     #include <wx/image.h>
     #include <wx/sizer.h>
-    #include <wx/statbmp.h>
     #include <wx/stattext.h>
 
     #include <cbeditor.h>
     #include <cbproject.h>
-    #include <editorcolourset.h>
     #include <editormanager.h>
     #include <logmanager.h>
 #endif
@@ -27,6 +27,7 @@
 #include <wx/progdlg.h>
 
 #include <cbstyledtextctrl.h>
+#include <editorcolourset.h>
 #include <encodingdetector.h>
 #include <searchresultslog.h>
 

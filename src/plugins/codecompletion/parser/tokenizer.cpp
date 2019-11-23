@@ -7,15 +7,16 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/codecompletion/parser/tokenizer.cpp $
  */
 
-#include <sdk.h>
-
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#ifndef CB_PRECOMP
+    #include <logmanager.h>
+#endif
 #include <cctype>
 #include <wx/utils.h>
 #include <wx/file.h>
 #include <wx/msgdlg.h>
 
 #include "globals.h"
-#include "logmanager.h"
 #include "manager.h"
 
 #include "cclogger.h"

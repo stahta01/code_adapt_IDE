@@ -7,13 +7,9 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/codecompletion/parser/expression.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
 
 #include <stack>
-
-#ifndef CB_PRECOMP
-    #include <wx/wx.h>
-#endif
 
 #include <logmanager.h>
 #include <manager.h>

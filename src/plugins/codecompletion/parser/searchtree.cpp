@@ -7,7 +7,7 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/codecompletion/parser/searchtree.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
 #include "searchtree.h"
 
 // *** SearchTreeIterator ***

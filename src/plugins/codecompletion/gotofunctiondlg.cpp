@@ -4,9 +4,7 @@
  */
 
 #include "sdk.h"
-#include "gotofunctiondlg.h"
-
-#ifndef CB_PRECOMP
+#ifndef WX_PRECOMP
     //(*InternalHeadersPCH(GotoFunctionDlg)
     #include <wx/checkbox.h>
     #include <wx/sizer.h>
@@ -16,12 +14,15 @@
     #include <wx/stattext.h>
     #include <wx/textctrl.h>
     //*)
-
+#endif
+#ifndef CB_PRECOMP
     #include "configmanager.h"
     #include <algorithm>
 #endif
 //(*InternalHeaders(GotoFunctionDlg)
 //*)
+
+#include "gotofunctiondlg.h"
 
 //(*IdInit(GotoFunctionDlg)
 const long GotoFunctionDlg::ID_CHECKBOX1 = wxNewId();

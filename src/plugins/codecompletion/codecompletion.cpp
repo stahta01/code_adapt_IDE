@@ -7,8 +7,10 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/codecompletion/codecompletion.cpp $
  */
 
-#include <sdk.h>
-
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#ifndef WX_PRECOMP
+    #include <wx/toolbar.h>
+#endif
 #ifndef CB_PRECOMP
     #include <algorithm>
     #include <iterator>
@@ -24,18 +26,14 @@
     #include <wx/msgdlg.h>
     #include <wx/regex.h>
     #include <wx/tipwin.h>
-    #include <wx/toolbar.h>
     #include <wx/utils.h>
     #include <wx/xrc/xmlres.h>
-    #include <wx/wxscintilla.h>
 
     #include <cbeditor.h>
     #include <configmanager.h>
-    #include <editorcolourset.h>
     #include <editormanager.h>
     #include <globals.h>
     #include <logmanager.h>
-    #include <macrosmanager.h>
     #include <manager.h>
     #include <projectmanager.h>
     #include <sdk_events.h>
@@ -44,9 +42,12 @@
 #include <wx/tokenzr.h>
 #include <wx/html/htmlwin.h>
 
+#include <wx/wxscintilla.h>
+#include <editorcolourset.h>
 #include <cbstyledtextctrl.h>
 #include <editor_hooks.h>
 #include <filegroupsandmasks.h>
+#include <macrosmanager.h>
 #include <multiselectdlg.h>
 
 #include "codecompletion.h"

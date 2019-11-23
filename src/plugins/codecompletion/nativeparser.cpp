@@ -7,7 +7,7 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/codecompletion/nativeparser.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
 
 #ifndef CB_PRECOMP
     #include <cctype>
@@ -17,27 +17,27 @@
     #include <wx/regex.h>
     #include <wx/wfstream.h>
 
-    #include <cbauibook.h>
     #include <cbeditor.h>
     #include <cbexception.h>
     #include <cbproject.h>
-    #include <compilerfactory.h>
     #include <configmanager.h>
     #include <editormanager.h>
     #include <logmanager.h>
-    #include <macrosmanager.h>
     #include <manager.h>
     #include <pluginmanager.h>
-    #include <prep.h> // nullptr
     #include <projectmanager.h>
 
-    #include <tinyxml/tinyxml.h>
+    #include <tinyxml.h>
 #endif
 
 #include <wx/tokenzr.h>
 
+#include <cbauibook.h>
 #include <cbstyledtextctrl.h>
+#include <compiler.h>
 #include <compilercommandgenerator.h>
+#include <compilerfactory.h>
+#include <macrosmanager.h>
 
 #include "nativeparser.h"
 #include "classbrowser.h"
@@ -478,7 +478,7 @@ wxArrayString NativeParser::GetAllPathsByFilename(const wxString& filename)
             {
                 wxFileName priFn(prjPath);
                 // hard-coded candidate path, the ./sdk or ./include under the project top level folder
-                priFn.AppendDir(fn.GetExt().StartsWith(_T("h")) ? _T("sdk") : _T("include"));
+                priFn.AppendDir(fn.GetExt().StartsWith(_T("h")) ? _T("sdk.h") : _T("include"));
                 if (priFn.DirExists())
                 {
                     priorityPath = priFn.GetFullPath();

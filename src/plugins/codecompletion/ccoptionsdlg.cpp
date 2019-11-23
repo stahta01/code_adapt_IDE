@@ -7,31 +7,33 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/codecompletion/ccoptionsdlg.cpp $
  */
 
-#include <sdk.h>
-
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#ifndef WX_PRECOMP
+    #include <wx/radiobut.h>
+    #include <wx/slider.h>
+#endif
 #ifndef CB_PRECOMP
     #include <wx/button.h>
     #include <wx/checkbox.h>
-    #include <wx/colordlg.h>
     #include <wx/combobox.h>
     #include <wx/intl.h>
     #include <wx/listbox.h>
-    #include <wx/radiobut.h>
     #include <wx/regex.h>
-    #include <wx/slider.h>
-    #include <wx/spinctrl.h>
     #include <wx/stattext.h>
     #include <wx/treectrl.h>
     #include <wx/xrc/xmlres.h>
 
-    #include <cbstyledtextctrl.h>
     #include <configmanager.h>
     #include <globals.h>
     #include <logmanager.h>
     #include <manager.h>
 #endif
 
+#include <wx/colordlg.h>
+#include <wx/spinctrl.h>
+
 #include <editpairdlg.h>
+#include <cbstyledtextctrl.h>
 
 #include "cbcolourmanager.h"
 #include "ccoptionsdlg.h"

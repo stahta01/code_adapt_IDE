@@ -7,10 +7,13 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/codecompletion/selectincludefile.cpp $
  */
 
-#include "prep.h"
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#ifndef CB_PRECOMP
+    #include <wx/xrc/xmlres.h>
+#endif
+
 #include "selectincludefile.h"
 
-#include <wx/xrc/xmlres.h>
 #include <wx/arrstr.h>
 
 BEGIN_EVENT_TABLE(SelectIncludeFile,wxScrollingDialog)

@@ -7,7 +7,7 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/codecompletion/classbrowser.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
 
 #ifndef CB_PRECOMP
     #include <wx/button.h>
@@ -20,7 +20,6 @@
     #include <wx/stattext.h>
     #include <wx/treectrl.h>
     #include <wx/settings.h>
-    #include <wx/splitter.h>
     #include <wx/utils.h> // wxBusyCursor
     #include <wx/tipwin.h>
     #include <wx/xrc/xmlres.h>
@@ -36,6 +35,7 @@
     #include <projectmanager.h>
 #endif
 
+#include <wx/splitter.h>
 #include <wx/tokenzr.h>
 
 #include <cbstyledtextctrl.h>

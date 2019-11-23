@@ -6,17 +6,13 @@
 #ifndef SELECTINCLUDEFILE_H
 #define SELECTINCLUDEFILE_H
 
-#include <wx/wxprec.h>
+#include <wx/button.h>
+#include <wx/intl.h>
+#include <wx/listbox.h>
+#include <wx/sizer.h>
+#include <wx/xrc/xmlres.h>
 
 #include "scrollingdialog.h"
-
-#ifndef WX_PRECOMP
-    #include <wx/button.h>
-    #include <wx/intl.h>
-    #include <wx/listbox.h>
-    #include <wx/sizer.h>
-    #include <wx/xrc/xmlres.h>
-#endif
 
 class SelectIncludeFile: public wxScrollingDialog
 {
