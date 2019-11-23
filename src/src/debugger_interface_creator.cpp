@@ -15,7 +15,7 @@
 
 #include "backtracedlg.h"
 #include "breakpointsdlg.h"
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "cpuregistersdlg.h"
 #include "disassemblydlg.h"
 #include "examinememorydlg.h"

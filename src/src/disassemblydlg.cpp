@@ -31,6 +31,7 @@
 
 #include "ca/assert.h"
 #include <cbplugin.h>
+#include <ca/styledtextctrl.h>
 
 #include "debuggermanager.h"
 #include "filefilters.h"

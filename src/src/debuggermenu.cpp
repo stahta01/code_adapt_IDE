@@ -27,7 +27,7 @@
 #include <wx/aui/aui.h> // wxAuiManager
 
 #include "cbdebugger_interfaces.h"
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "ca/assert.h"
 #include <cbplugin.h>
 #include "debuggermanager.h"

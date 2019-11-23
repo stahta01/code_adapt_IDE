@@ -16,7 +16,7 @@
 #include "find_replace.h"
 #include "annoyingdialog.h"
 #include "cbauibook.h"
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "confirmreplacedlg.h"
 #include "encodingdetector.h"
 #include "findreplacedlg.h"

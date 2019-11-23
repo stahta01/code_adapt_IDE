@@ -32,7 +32,7 @@
 #include "debuggermanager.h"
 
 #include "breakpointsdlg.h"
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "cbplugin.h"
 
 namespace

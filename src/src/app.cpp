@@ -58,7 +58,7 @@
 #include "appglobals.h"
 #include "associations.h"
 #include "cbauibook.h"
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "crashhandler.h"
 #include "filemanager.h" // LoaderBase
 #include "projectmanagerui.h"

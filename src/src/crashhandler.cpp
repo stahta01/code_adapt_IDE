@@ -20,7 +20,7 @@
 #include "editormanager.h"
 #include "globals.h"
 
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 
 #include "crashhandler.h"
 #include <shlobj.h>

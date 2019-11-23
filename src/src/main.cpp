@@ -21,7 +21,7 @@
 #include "batchbuild.h"
 #include "cbart_provider.h"
 #include "cbauibook.h"
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "compilersettingsdlg.h"
 #include "debuggersettingsdlg.h"
 #include "dlgabout.h"

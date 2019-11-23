@@ -33,7 +33,7 @@
     #include "globals.h"
     #include "pluginmanager.h"
 #endif
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "cbcolourmanager.h"
 #include "cbplugin.h" // cgEditor
 

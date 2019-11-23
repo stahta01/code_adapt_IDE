@@ -23,7 +23,7 @@
     #include "editormanager.h"
     #include "manager.h"
 #endif
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 
 #include "printdlg.h"
 
