@@ -8,10 +8,12 @@
  */
 
 #include "sdk.h"
+#ifndef WX_PRECOMP
+    #include <wx/choice.h>
+#endif
 #ifndef CB_PRECOMP
   #include <wx/button.h>
   #include <wx/checkbox.h>
-  #include <wx/choice.h>
   #include <wx/event.h>
   #include <wx/intl.h>
   #include <wx/string.h>
@@ -32,7 +34,6 @@
 #include <wx/dirdlg.h>
 #include <wx/filedlg.h>
 #include "symtabconfig.h"
-#include "prep.h"
 
 /* ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- */
 
