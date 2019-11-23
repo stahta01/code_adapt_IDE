@@ -1,4 +1,4 @@
-#include <sdk.h> // Code::Blocks SDK
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
 #include <algorithm> // std::sort
 #include <configurationpanel.h>
 #include "EditorTweaks.h"

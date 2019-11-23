@@ -1,3 +1,5 @@
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
+
 #include "EditorTweaksConfDlg.h"
 #include "configmanager.h"
 
