@@ -20,9 +20,10 @@
 * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/contrib/HexEditor/DigitView.cpp $
 */
 
-#include "DigitView.h"
-
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
 #include <logmanager.h>
+
+#include "DigitView.h"
 
 #define DEFAULT_DIGIT_BITS      4
 #define DEFAULT_BLOCK_BYTES     1

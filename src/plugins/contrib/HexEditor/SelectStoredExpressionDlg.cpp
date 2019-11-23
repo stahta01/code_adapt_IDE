@@ -20,13 +20,16 @@
 * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/contrib/HexEditor/SelectStoredExpressionDlg.cpp $
 */
 
-#include "SelectStoredExpressionDlg.h"
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
+
 #include <configmanager.h>
 
 //(*InternalHeaders(SelectStoredExpressionDlg)
 #include <wx/string.h>
 #include <wx/intl.h>
 //*)
+
+#include "SelectStoredExpressionDlg.h"
 
 //(*IdInit(SelectStoredExpressionDlg)
 const long SelectStoredExpressionDlg::ID_LISTBOX1 = wxNewId();

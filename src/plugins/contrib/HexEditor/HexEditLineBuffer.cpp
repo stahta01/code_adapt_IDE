@@ -20,9 +20,10 @@
 * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/contrib/HexEditor/HexEditLineBuffer.cpp $
 */
 
-#include "HexEditLineBuffer.h"
-
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
 #include <logmanager.h>
+
+#include "HexEditLineBuffer.h"
 
 HexEditLineBuffer::HexEditLineBuffer( unsigned length )
 {

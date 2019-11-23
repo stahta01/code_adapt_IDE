@@ -20,9 +20,14 @@
 * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/contrib/HexEditor/FileContentDisk.cpp $
 */
 
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
+
+#ifndef CB_PRECOMP
+    #include <globals.h> // cbMessageBox
+#endif
+
 #include "FileContentDisk.h"
 #include "TestCasesHelper.h"
-#include "globals.h"
 
 #include <wx/utils.h>
 #include <wx/progdlg.h>

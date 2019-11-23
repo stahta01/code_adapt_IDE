@@ -20,6 +20,12 @@
 * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/contrib/HexEditor/SearchDialog.cpp $
 */
 
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
+
+#ifndef CB_PRECOMP
+    #include <globals.h> // cbMessageBox
+#endif
+
 #include "SearchDialog.h"
 #include "ExpressionParser.h"
 #include "ExpressionExecutor.h"
@@ -29,7 +35,6 @@
 #include <wx/intl.h>
 //*)
 
-#include <globals.h>
 #include <vector>
 #include <wx/progdlg.h>
 #include <manager.h>

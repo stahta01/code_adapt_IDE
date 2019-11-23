@@ -20,6 +20,12 @@
 * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/contrib/HexEditor/ExpressionTester.cpp $
 */
 
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
+
+#ifndef CB_PRECOMP
+    #include <globals.h> // cbMessageBox
+#endif
+
 #include "ExpressionTester.h"
 
 #include "ExpressionParser.h"
@@ -27,9 +33,6 @@
 #include "ExpressionTestCases.h"
 #include "SelectStoredExpressionDlg.h"
 #include "TestCasesDlg.h"
-
-
-#include <globals.h>
 
 //(*InternalHeaders(ExpressionTester)
 #include <wx/string.h>

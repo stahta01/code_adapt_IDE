@@ -33,7 +33,6 @@
     #include <configmanager.h>
     #include <logmanager.h>
     #include <globals.h>
-    #include "prep.h"
 #endif // CB_PRECOMP
 
 #include <wx/dcbuffer.h>
