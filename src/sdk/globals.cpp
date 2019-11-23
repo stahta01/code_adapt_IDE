@@ -53,6 +53,7 @@
     #include <sys/stat.h> // lstat
 #endif
 
+
 const wxString DEFAULT_WORKSPACE     = _T("default.workspace");
 const wxString DEFAULT_ARRAY_SEP     = _T(";");
 
@@ -70,6 +71,49 @@ const wxString cbDEFAULT_OPEN_FOLDER_CMD = _T("open -R");
 #else
 const wxString cbDEFAULT_OPEN_FOLDER_CMD = _T("xdg-open");
 #endif
+
+void WrapInShExe(wxString& cmd)
+{
+    wxString command;
+    command << wxT("sh.exe -c '");
+    // escape any single quoutes
+    cmd.Replace("'", "\\'");
+    command << cmd << wxT("'");
+    cmd = command;
+}
+
+bool clIsMSYSEnvironment()
+{
+// Based on CodeLite clIsMSYSEnvironment function
+#ifdef __WINDOWS__
+    static bool isMSYS = false;
+    static bool firstTime = true;
+
+    if(firstTime) {
+        firstTime = false;
+        // CL_DEBUG("Testing for MSYS environment...uname -a");
+        if ( wxExecute(wxS("where uname"), wxEXEC_SYNC) )
+            return false;
+
+        wxArrayString output;
+        wxExecute(wxS("uname -a"), output);
+
+        size_t count = output.GetCount();
+        for ( size_t n = 0; n < count; n++ )
+        {
+            output[n].MakeLower();
+            if( output[n].Contains("msys") && output[n].Contains("mingw") )
+            {
+               isMSYS = true;
+               break;
+            }
+        }
+    }
+    return isMSYS;
+#else
+    return false;
+#endif
+}
 
 int GetPlatformsFromString(const wxString& platforms)
 {
@@ -881,6 +925,10 @@ wxString ExpandBackticks(wxString& str) // backticks are written in-place to str
         cmd.Trim(false);
         if (cmd.IsEmpty())
             break;
+
+        if(::clIsMSYSEnvironment()) {
+            WrapInShExe(cmd);
+        }
 
         wxString bt;
         BackticksMap::iterator it = m_Backticks.find(cmd);

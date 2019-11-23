@@ -26,6 +26,7 @@
 #include <wx/debugrpt.h>
 #include <wx/ipc.h>
 #include <wx/msgout.h>
+#include <wx/tokenzr.h>
 
 #include <cbexception.h>
 #include <configmanager.h>
@@ -370,6 +371,68 @@ static wxString GetResourcesDir()
     #endif
 }
 #endif
+
+void AdjustPathForMSYSIfNeeded()
+{
+#ifdef __WINDOWS__
+    //CL_DEBUG("AdjustPathForMSYSIfNeeded called");
+    if(!::clIsMSYSEnvironment()) {
+        //CL_DEBUG("Not running under MSYS - nothing be done");
+        return;
+    }
+
+    //CL_SYSTEM("MSYS environment detected");
+
+    // Running under Msys
+    // Adjust the PATH environment variable
+    wxString pathEnv;
+    ::wxGetEnv("PATH", &pathEnv);
+
+    // Always add the default paths
+    wxArrayString paths;
+
+    wxString rootDir = "/"; // Default
+    // determine the baseroot of the MSYS installation
+
+    wxArrayString output;
+    wxExecute(wxS("sh -c 'cd / && pwd -W'"), output);
+
+    size_t count = output.GetCount();
+    for ( size_t n = 0; n < count; n++ )
+    {
+        if( output[n].Contains(":") && output[n].Contains("/") )
+        {
+            wxString msysRoot = output[n];
+            //CL_SYSTEM("MSYS Root folder is set to: %s", msysRoot);
+            msysRoot.Trim().Trim(false);
+            rootDir.Clear();
+            rootDir << msysRoot << "/";
+            break;
+        }
+    }
+
+    paths.Add(rootDir + "usr/local/bin");
+    paths.Add(rootDir + "usr/bin");
+    paths.Add(rootDir + "usr/sbin");
+    paths.Add(rootDir + "bin");
+    paths.Add(rootDir + "sbin");
+
+    // Append the paths from the environment variables
+    wxArrayString userPaths = ::wxStringTokenize(pathEnv, ";", wxTOKEN_STRTOK);
+    paths.insert(paths.end(), userPaths.begin(), userPaths.end());
+
+    wxString fixedPath = ::wxJoin(paths, ';');
+    //CL_DEBUG("Setting PATH environment variable to:\n%s", fixedPath);
+    ::wxSetEnv("PATH", fixedPath);
+
+    wxFileName::Mkdir (
+        rootDir + "var/opt/" + "CodeBlocks",
+        wxS_DIR_DEFAULT,
+        wxPATH_MKDIR_FULL
+    );
+
+#endif
+}
 
 bool CodeBlocksApp::LoadConfig()
 {
@@ -811,6 +874,9 @@ bool CodeBlocksApp::OnInit()
         frame->StartupDone();
 
         frame->ShowTips(); // this func checks if the user wants tips, so no need to check here
+
+        // If running under MSys2 terminal, adjust the environment variables
+        AdjustPathForMSYSIfNeeded();
 
         if (platform::windows)
             InitAssociations();
