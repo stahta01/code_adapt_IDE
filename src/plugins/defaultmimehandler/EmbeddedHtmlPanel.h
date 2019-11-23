@@ -5,8 +5,7 @@
 
 #ifndef EMBEDDEDHTMLPANEL_H
 #define EMBEDDEDHTMLPANEL_H
-
-#ifndef CB_PRECOMP
+#ifndef WX_PRECOMP
     //(*HeadersPCH(EmbeddedHtmlPanel)
     #include <wx/panel.h>
     class wxBitmapButton;

@@ -10,7 +10,7 @@
 #include "sdk.h"
 #include "EmbeddedHtmlPanel.h"
 
-#ifndef CB_PRECOMP
+#ifndef WX_PRECOMP
     //(*InternalHeadersPCH(EmbeddedHtmlPanel)
     #include <wx/bmpbuttn.h>
     #include <wx/sizer.h>
