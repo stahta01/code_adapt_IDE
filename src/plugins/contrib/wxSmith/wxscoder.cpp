@@ -31,7 +31,7 @@
 #include <globals.h>
 #include <wx/file.h>
 #include <wx/intl.h>
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include <editormanager.h>
 #include <projectmanager.h>
 #include <pluginmanager.h>
