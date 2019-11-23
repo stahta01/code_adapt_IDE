@@ -8,49 +8,51 @@
  */
 
 #include "sdk.h"
-
+#ifndef WX_PRECOMP
+    #include <wx/choice.h>
+#endif
 #ifndef CB_PRECOMP
     #include "manager.h"
     #include "logmanager.h"
-    #include "macrosmanager.h"
     #include "pluginmanager.h"
     #include "projectmanager.h"
-    #include "scriptingmanager.h"
-    #include "compilerfactory.h"
     #include "globals.h"
     #include "cbproject.h"
-    #include "cbplugin.h"
     #include "sdk_events.h"
 
     #include <wx/button.h>
     #include <wx/checkbox.h>
     #include <wx/checklst.h>
-    #include <wx/choice.h>
     #include <wx/filedlg.h>
     #include <wx/filefn.h> // wxMatchWild
-    #include <wx/notebook.h>
     #include <wx/sizer.h>
-    #include <wx/spinctrl.h>
     #include <wx/stattext.h>
     #include <wx/treectrl.h>
     #include <wx/xrc/xmlres.h>
 #endif
 
+#include <wx/notebook.h>
 #include <wx/radiobox.h>
+#include <wx/spinctrl.h>
 
 #include "scripting/sqplus/sqplus.h"
 
 #include "annoyingdialog.h"
+#include <cbplugin.h>
+#include "compiler.h"
+#include "compilerfactory.h"
 #include "configurationpanel.h"
 #include "editarrayorderdlg.h"
 #include "editarrayfiledlg.h"
 #include "editpathdlg.h"
 #include "externaldepsdlg.h"
 #include "filefilters.h"
+#include "macrosmanager.h"
 #include "multiselectdlg.h"
 #include "projectdepsdlg.h"
 #include "projectloader.h"
 #include "projectoptionsdlg.h" // class's header file
+#include "scriptingmanager.h"
 #include "virtualbuildtargetsdlg.h"
 
 

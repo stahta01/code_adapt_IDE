@@ -1,26 +1,26 @@
 #include "sdk.h"
 
-#include "find_replace.h"
-
 #ifndef CB_PRECOMP
     #include <wx/dir.h>
     #include <wx/regex.h>
 
-    #include "cbauibook.h"
     #include "cbeditor.h"
     #include "cbproject.h"
+    #include "configmanager.h"
     #include "editormanager.h"
-    #include "infowindow.h"
     #include "projectfile.h"
 #endif
 
 #include <wx/progdlg.h>
 
+#include "find_replace.h"
 #include "annoyingdialog.h"
+#include "cbauibook.h"
 #include "cbstyledtextctrl.h"
 #include "confirmreplacedlg.h"
 #include "encodingdetector.h"
 #include "findreplacedlg.h"
+#include "infowindow.h"
 #include "searchresultslog.h"
 
 struct cbFindReplaceData

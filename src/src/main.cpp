@@ -7,8 +7,15 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/src/main.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#ifndef CB_PRECOMP
+    #include <wx/xrc/xmlres.h>
 
+    #include <cbproject.h>
+    #include <configmanager.h>
+    #include <editormanager.h>
+    #include <logmanager.h>
+#endif
 #include "app.h"
 #include "appglobals.h"
 #include "batchbuild.h"
@@ -32,30 +39,27 @@
 #include "cbstatusbar.h"
 #include "loggers.h"
 
+#include <wx/dcclient.h>
 #include <wx/display.h>
 #include <wx/dnd.h>
 #include <wx/fileconf.h>
+#include <wx/filedlg.h>
 #include <wx/filename.h>
 #include <wx/gdicmn.h>
 #include <wx/printdlg.h>
 #include <wx/sstream.h>
 #include <wx/tipdlg.h>
 #include <wx/tokenzr.h>
-#include <wx/xrc/xmlres.h>
 
 #include <annoyingdialog.h>
 #include <cbexception.h>
 #include <cbplugin.h>
-#include <cbproject.h>
 #include <cbworkspace.h>
 #include <ccmanager.h>
-#include <configmanager.h>
 #include <debuggermanager.h>
 #include <editorcolourset.h>
-#include <editormanager.h>
 #include <filefilters.h>
 #include <globals.h>
-#include <logmanager.h>
 #include <personalitymanager.h>
 #include <pluginmanager.h>
 #include <projectmanager.h>

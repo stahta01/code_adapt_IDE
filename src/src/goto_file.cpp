@@ -8,8 +8,6 @@
  */
 
 #include "sdk.h"
-#include "goto_file.h"
-
 #ifndef WX_PRECOMP
     //(*InternalHeadersPCH(GotoFile)
     #include <wx/sizer.h>
@@ -19,7 +17,8 @@
     #include <wx/stattext.h>
     #include <wx/textctrl.h>
     //*)
-
+#endif
+#ifndef CB_PRECOMP
     #include <algorithm>
     #include <cmath>
 
@@ -29,6 +28,7 @@
 //*)
 
 #include "cbassert.h"
+#include "goto_file.h"
 
 //(*IdInit(GotoFile)
 const long GotoFile::ID_TEXTCTRL1 = wxNewId();

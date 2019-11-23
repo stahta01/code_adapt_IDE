@@ -1,11 +1,10 @@
 #ifndef DEBUGGERSETTINGSDLG_H
 #define DEBUGGERSETTINGSDLG_H
 
-#ifndef CB_PRECOMP
+#ifndef WX_PRECOMP
 	//(*HeadersPCH(DebuggerSettingsDlg)
 	#include <wx/sizer.h>
 	#include <wx/panel.h>
-	#include "scrollingdialog.h"
 	#include <wx/stattext.h>
 	//*)
 
@@ -15,6 +14,7 @@
 #include <wx/statline.h>
 #include <wx/treebook.h>
 //*)
+#include "scrollingdialog.h"
 
 class cbDebuggerConfiguration;
 class cbDebuggerPlugin;

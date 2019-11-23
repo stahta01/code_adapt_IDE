@@ -7,16 +7,19 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/src/associations.cpp $
  */
 
-#include <sdk.h>
-#ifndef CB_PRECOMP
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#ifndef WX_PRECOMP
     #include <wx/radiobox.h>
+#endif
+#ifndef CB_PRECOMP
     #include <wx/xrc/xmlres.h>
+
+    #include <configmanager.h>
 #endif
 #include "associations.h"
 #include "appglobals.h"
 #include <branding.h>
 #include <manager.h>
-#include <configmanager.h>
 #include <filefilters.h>
 #include <wx/checklst.h>
 

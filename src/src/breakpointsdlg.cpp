@@ -17,7 +17,6 @@
 #   include "manager.h"
 #   include "editormanager.h"
 #   include "cbeditor.h"
-#   include "cbplugin.h"
 
 #   include <wx/button.h>
 #   include <wx/checkbox.h>
@@ -34,6 +33,7 @@
 
 #include "breakpointsdlg.h"
 #include "cbstyledtextctrl.h"
+#include "cbplugin.h"
 
 namespace
 {

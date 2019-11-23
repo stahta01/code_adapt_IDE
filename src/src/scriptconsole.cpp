@@ -7,7 +7,7 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/src/scriptconsole.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
 #include <sqplus.h>
 
 #include "scriptconsole.h"
@@ -16,7 +16,6 @@
     #include <globals.h>
     #include <manager.h>
     #include <configmanager.h>
-    #include <scriptingmanager.h>
 #endif
 
 #include <wx/filedlg.h>
@@ -30,6 +29,8 @@
 #include <wx/image.h>
 #include <wx/artprov.h>
 //*)
+
+#include <scriptingmanager.h>
 
 //(*IdInit(ScriptConsole)
 const long ScriptConsole::ID_TEXTCTRL1 = wxNewId();

@@ -1,16 +1,14 @@
 #include "sdk.h"
-#include "debuggersettingsdlg.h"
-
-#ifndef CB_PRECOMP
+#ifndef WX_PRECOMP
 	//(*InternalHeadersPCH(DebuggerSettingsDlg)
 	#include <wx/string.h>
 	#include <wx/intl.h>
 	//*)
 
     #include <wx/choicdlg.h>
-
+#endif
+#ifndef CB_PRECOMP
     #include "cbexception.h"
-    #include "cbplugin.h"
 #endif
 //(*InternalHeaders(DebuggerSettingsDlg)
 #include <wx/button.h>
@@ -18,7 +16,9 @@
 //*)
 
 #include "cbassert.h"
+#include <cbplugin.h>
 
+#include "debuggersettingsdlg.h"
 #include "debuggermanager.h"
 #include "debuggersettingspanel.h"
 #include "debuggersettingscommonpanel.h"

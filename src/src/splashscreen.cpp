@@ -7,6 +7,8 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/src/splashscreen.cpp $
  */
 
+#include "sdk.h"
+
 #include "splashscreen.h"
 
 #include <wx/dc.h>

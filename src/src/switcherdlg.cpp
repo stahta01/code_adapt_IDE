@@ -9,9 +9,11 @@
 // Licence:     wxWidgets licence
 /////////////////////////////////////////////////////////////////////////////
 
-#include <wx/wx.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
 
+#include <wx/control.h>
 #include <wx/settings.h>
+#include <wx/sizer.h>
 #include <wx/dcbuffer.h>
 
 #if defined(__WXMSW__) && wxUSE_UXTHEME

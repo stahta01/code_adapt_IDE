@@ -8,8 +8,9 @@
  */
 
 #include "sdk.h"
-#include "projectmanagerui.h"
-
+#ifndef WX_PRECOMP
+    #include <wx/textdlg.h>
+#endif
 #ifndef CB_PRECOMP
     #include <algorithm>
 
@@ -21,12 +22,10 @@
     #include <wx/listctrl.h>
     #include <wx/menu.h>
     #include <wx/settings.h>
-    #include <wx/textdlg.h>
     #include <wx/xrc/xmlres.h>
 
     #include "cbeditor.h"
     #include "cbproject.h"
-    #include "cbworkspace.h"
     #include "configmanager.h"
     #include "editormanager.h"
     #include "logmanager.h"
@@ -38,6 +37,8 @@
 
 #include "cbauibook.h"
 #include "cbcolourmanager.h"
+#include <cbplugin.h>
+#include "cbworkspace.h"
 #include "confirmreplacedlg.h"
 #include "filefilters.h"
 #include "filegroupsandmasks.h"
@@ -50,6 +51,8 @@
 #include "goto_file.h"
 #include "startherepage.h"
 #include "cbassert.h"
+
+#include "projectmanagerui.h"
 
 namespace
 {

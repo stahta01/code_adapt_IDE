@@ -11,10 +11,10 @@
 #ifndef CB_PRECOMP
     #include <wx/utils.h>
     #include <wx/intl.h>
-    #include "cbplugin.h"
     #include "configmanager.h"
 #endif
 #include <branding.h>
+#include "cbplugin.h"
 #include "appglobals.h"
 
 namespace appglobals

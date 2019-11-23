@@ -7,10 +7,11 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/src/debuggermenu.cpp $
  */
 #include "sdk.h"
-
+#ifndef WX_PRECOMP
+    #include <wx/toolbar.h>
+#endif
 #ifndef CB_PRECOMP
     #include <wx/menu.h>
-    #include <wx/toolbar.h>
     #include <wx/xrc/xmlres.h>
 
     #include "cbeditor.h"
@@ -28,6 +29,7 @@
 #include "cbdebugger_interfaces.h"
 #include "cbstyledtextctrl.h"
 #include "cbassert.h"
+#include <cbplugin.h>
 #include "debuggermanager.h"
 
 namespace

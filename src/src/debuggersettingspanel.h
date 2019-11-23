@@ -1,7 +1,7 @@
 #ifndef DEBUGGERSETTINGSPANEL_H
 #define DEBUGGERSETTINGSPANEL_H
 
-#ifndef CB_PRECOMP
+#ifndef WX_PRECOMP
 	//(*HeadersPCH(DebuggerSettingsPanel)
 	#include <wx/sizer.h>
 	#include <wx/button.h>

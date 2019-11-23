@@ -8,29 +8,26 @@
  */
 
 #include "sdk.h"
-
+#ifndef WX_PRECOMP
+    #include <wx/choice.h>
+    #include <wx/radiobox.h>
+    #include <wx/slider.h>
+    #include <wx/textdlg.h>
+#endif
 #ifndef CB_PRECOMP
     #include <wx/button.h>
     #include <wx/checkbox.h>
-    #include <wx/choice.h>
-    #include <wx/colordlg.h>
     #include <wx/imaglist.h>
     #include <wx/listbox.h>
     #include <wx/listctrl.h>
     #include <wx/menu.h>
-    #include <wx/radiobox.h>
     #include <wx/regex.h>
     #include <wx/settings.h>
-    #include <wx/slider.h>
-    #include <wx/spinctrl.h>
     #include <wx/stattext.h>
-    #include <wx/textdlg.h>
     #include <wx/xrc/xmlres.h>
 
     #include "manager.h"
-    #include "cbauibook.h"
     #include "cbeditor.h"
-    #include "cbplugin.h" // cgEditor
     #include "configmanager.h"
     #include "editormanager.h"
     #include "globals.h"
@@ -38,12 +35,16 @@
 #endif
 #include "cbstyledtextctrl.h"
 #include "cbcolourmanager.h"
+#include "cbplugin.h" // cgEditor
 
+#include <wx/colordlg.h>
 #include <wx/fontdlg.h>
 #include <wx/fontutil.h>
 #include <wx/fontmap.h>
 #include <wx/listbook.h>
+#include <wx/spinctrl.h>
 
+#include "cbauibook.h"
 #include "configurationpanel.h"
 #include "editkeywordsdlg.h"
 #include "editorcolourset.h"

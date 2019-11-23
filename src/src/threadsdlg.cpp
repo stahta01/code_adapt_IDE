@@ -14,12 +14,12 @@
     #include <wx/menu.h>
     #include <wx/sizer.h>
 
-    #include "cbplugin.h"
     #include "debuggermanager.h"
 #endif
 
 #include "threadsdlg.h"
 #include "cbcolourmanager.h"
+#include <cbplugin.h>
 #include "debuggermanager.h"
 
 namespace

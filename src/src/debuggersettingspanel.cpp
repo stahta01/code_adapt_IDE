@@ -1,20 +1,21 @@
 #include "sdk.h"
-#include "debuggersettingspanel.h"
+#ifndef WX_PRECOMP
+    //(*InternalHeadersPCH(DebuggerSettingsPanel)
+    #include <wx/string.h>
+    #include <wx/intl.h>
+    //*)
 
+    #include <wx/textdlg.h>
+#endif
 #ifndef CB_PRECOMP
-	//(*InternalHeadersPCH(DebuggerSettingsPanel)
-	#include <wx/string.h>
-	#include <wx/intl.h>
-	//*)
-
-	#include <wx/textdlg.h>
-
-	#include "cbplugin.h"
-	#include "debuggermanager.h"
+    #include "debuggermanager.h"
 #endif
 //(*InternalHeaders(DebuggerSettingsPanel)
 //*)
 
+#include <cbplugin.h>
+
+#include "debuggersettingspanel.h"
 #include "debuggersettingsdlg.h"
 
 //(*IdInit(DebuggerSettingsPanel)

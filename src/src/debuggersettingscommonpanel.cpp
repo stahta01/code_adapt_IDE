@@ -1,15 +1,15 @@
 #include "sdk.h"
-#include "debuggersettingscommonpanel.h"
-
-#ifndef CB_PRECOMP
+#ifndef WX_PRECOMP
+    #include <wx/choice.h>
     //(*InternalHeadersPCH(DebuggerSettingsCommonPanel)
     #include <wx/string.h>
     #include <wx/intl.h>
     //*)
-
+#endif
+#ifndef CB_PRECOMP
     #include <wx/fontutil.h>
 #endif
-
+#include "debuggersettingscommonpanel.h"
 #include <wx/fontdlg.h>
 
 #include "debuggermanager.h"

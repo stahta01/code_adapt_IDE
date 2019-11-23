@@ -1,7 +1,7 @@
 #ifndef DEBUGGERSETTINGSCOMMONPANEL_H
 #define DEBUGGERSETTINGSCOMMONPANEL_H
 
-#ifndef CB_PRECOMP
+#ifndef WX_PRECOMP
 	//(*HeadersPCH(DebuggerSettingsCommonPanel)
 	#include <wx/checkbox.h>
 	#include <wx/sizer.h>

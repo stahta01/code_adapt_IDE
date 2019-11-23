@@ -7,14 +7,29 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/src/app.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
+
+#if !defined(WX_PRECOMP)
+    #include <wx/intl.h>
+    #include <wx/laywin.h>
+    #include <wx/image.h>
+    #include <wx/filename.h>
+    #include <wx/hashmap.h>
+    #include <wx/docview.h> // recent files history
+#endif
+#ifndef CB_PRECOMP
+    #include <wx/xrc/xmlres.h>
+
+    #include <configmanager.h>
+    #include <editormanager.h>
+    #include <logmanager.h>
+#endif
 #include "app.h"
 #include <branding.h>
 
 #include <wx/arrstr.h>
 #include <wx/fs_zip.h>
 #include <wx/fs_mem.h>
-#include <wx/xrc/xmlres.h>
 #include <wx/cmdline.h>
 #include <wx/regex.h>
 #include <wx/filefn.h>
@@ -29,12 +44,9 @@
 #include <wx/tokenzr.h>
 
 #include <cbexception.h>
-#include <configmanager.h>
 #include <debuggermanager.h>
-#include <editormanager.h>
 #include <globals.h>
 #include <loggers.h>
-#include <logmanager.h>
 #include <manager.h>
 #include <personalitymanager.h>
 #include <pluginmanager.h>
@@ -48,8 +60,10 @@
 #include "cbauibook.h"
 #include "cbstyledtextctrl.h"
 #include "crashhandler.h"
+#include "filemanager.h" // LoaderBase
 #include "projectmanagerui.h"
 #include "splashscreen.h"
+#include "xtra_res.h"
 
 #ifndef __WXMSW__
     #include "prefix.h"  // binreloc
@@ -62,8 +76,6 @@
 
 #ifndef CB_PRECOMP
     #include <wx/dir.h>
-    #include "xtra_res.h"
-    #include "filemanager.h" // LoaderBase
 #endif
 
 #ifndef APP_PREFIX

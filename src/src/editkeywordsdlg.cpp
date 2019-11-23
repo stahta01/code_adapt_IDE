@@ -7,18 +7,20 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/src/editkeywordsdlg.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
 
 #ifndef CB_PRECOMP
     #include <wx/button.h>
     #include <wx/intl.h>
     #include <wx/xrc/xmlres.h>
-    #include <wx/spinctrl.h>
     #include <wx/stattext.h>
     #include <wx/textctrl.h>
-    #include <wx/wxscintilla.h>
-    #include "editorcolourset.h"
 #endif
+
+#include <wx/spinctrl.h>
+
+#include <wx/wxscintilla.h>
+#include "editorcolourset.h"
 
 #include "editkeywordsdlg.h"
 

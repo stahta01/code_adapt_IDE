@@ -3,6 +3,7 @@
  * http://www.gnu.org/licenses/gpl-3.0.html
  */
 
+ #include "sdk.h"         // Precompiled Header needs to be the first include
 
 #include <wx/window.h>
 #include <wx/gdicmn.h>

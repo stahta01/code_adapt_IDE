@@ -7,15 +7,15 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/src/compilersettingsdlg.cpp $
  */
 
-#include <sdk.h>
-
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#ifndef WX_PRECOMP
+    #include <wx/checklst.h>        // wxCheckListBox
+#endif
 #ifndef CB_PRECOMP
     #include <manager.h>
     #include <configmanager.h>
     #include <pluginmanager.h>
-    #include <cbplugin.h>
     #include <wx/button.h>
-    #include <wx/checklst.h>
     #include <wx/filename.h>
     #include <wx/imaglist.h>
     #include <wx/intl.h>
@@ -26,6 +26,8 @@
 #endif // CB_PRECOMP
 
 #include <wx/listbook.h>
+
+#include <cbplugin.h>
 
 #include "configurationpanel.h"
 #include "compilersettingsdlg.h"

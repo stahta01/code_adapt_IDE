@@ -8,6 +8,9 @@
  */
 
 #include "sdk.h"
+#ifndef WX_PRECOMP
+    #include <wx/radiobox.h>
+#endif
 #ifndef CB_PRECOMP
     #include <wx/button.h>
     #include <wx/intl.h>

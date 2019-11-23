@@ -6,12 +6,6 @@
 #ifndef VIRTUALBUILDTARGETSDLG_H
 #define VIRTUALBUILDTARGETSDLG_H
 
-#include <wx/wxprec.h>
-
-#ifdef __BORLANDC__
-    #pragma hdrstop
-#endif
-
 //(*Headers(VirtualBuildTargetsDlg)
 #include <wx/checklst.h>
 #include <wx/button.h>

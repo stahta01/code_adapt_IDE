@@ -11,7 +11,6 @@
 
 #include "disassemblydlg.h"
 #ifndef CB_PRECOMP
-    #include <wx/wxscintilla.h>
     #include <wx/intl.h>
     #include <wx/xrc/xmlres.h>
     #include <wx/textctrl.h>
@@ -24,7 +23,6 @@
 
     #include "cbproject.h"
     #include "configmanager.h"
-    #include "editorcolourset.h"
     #include "editormanager.h"
     #include "globals.h"
     #include "manager.h"
@@ -32,9 +30,12 @@
 #endif
 
 #include "cbassert.h"
+#include <cbplugin.h>
 
 #include "debuggermanager.h"
 #include "filefilters.h"
+#include <wx/wxscintilla.h>
+#include "editorcolourset.h"
 
 // Keep in sync with cbEditor.cpp:
 #define DEBUG_MARKER     6

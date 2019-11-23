@@ -6,21 +6,7 @@
 #ifndef CODEBLOCKS_APP_H
 #define CODEBLOCKS_APP_H
 
-#include <wx/wxprec.h>
-
-#ifdef __BORLANDC__
-    #pragma hdrstop
-#endif
-
-#if !defined(WX_PRECOMP)
-    #include <wx/wx.h>
-    #include <wx/intl.h>
-    #include <wx/laywin.h>
-    #include <wx/image.h>
-    #include <wx/filename.h>
-    #include <wx/hashmap.h>
-    #include <wx/docview.h> // recent files history
-#endif
+#include <wx/dcmemory.h>
 
 #if defined(__WXGTK__) || defined(__WXMOTIF__) || defined(__WXMAC__) || defined(__WXMGL__) || defined(__WXX11__)
     #include "resources/icons/app.xpm"

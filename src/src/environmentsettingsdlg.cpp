@@ -7,22 +7,22 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/src/environmentsettingsdlg.cpp $
  */
 
-#include <sdk.h>
-
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#ifndef WX_PRECOMP
+    #include <wx/checklst.h>
+    #include <wx/combobox.h>
+    #include <wx/radiobox.h>
+    #include <wx/radiobut.h>
+    #include <wx/statbox.h>             // wxStaticBox
+#endif
 #ifndef CB_PRECOMP
     #include <wx/button.h>
     #include <wx/menu.h>
-    #include <wx/radiobut.h>
     #include <wx/xrc/xmlres.h>
     #include <wx/intl.h>
     #include <wx/listctrl.h>
-    #include <wx/combobox.h>
     #include <wx/choice.h>
     #include <wx/checkbox.h>
-    #include <wx/checklst.h>
-    #include <wx/radiobox.h>
-    #include <wx/spinctrl.h>
-    #include <wx/colordlg.h>
     #include <wx/msgdlg.h>
     #include <wx/imaglist.h>
     #include <wx/settings.h>
@@ -36,14 +36,16 @@
     #include "appglobals.h"
     #include "globals.h"
     #include "associations.h"
-    #include "cbauibook.h"
 #endif
 
 #include <wx/aui/aui.h>
+#include <wx/colordlg.h>
 #include <wx/listbook.h>
+#include <wx/spinctrl.h>
 
 #include "annoyingdialog.h"
 #include "appglobals.h"
+#include "cbauibook.h"
 #include "configurationpanel.h"
 #include "environmentsettingsdlg.h"
 #include "cbcolourmanager.h"
@@ -54,8 +56,8 @@
 
 #ifndef CB_PRECOMP
     #include <wx/dir.h>
-    #include "cbplugin.h" // cgCompiler...
 #endif
+#include "cbplugin.h" // cgCompiler...
 
 // images by order of pages
 const wxString base_imgs[] =

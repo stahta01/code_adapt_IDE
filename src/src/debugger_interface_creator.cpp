@@ -4,7 +4,7 @@
  */
 
 // sdk.h must be the first include in the file to work as a PCH
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
 
 #ifndef CB_PRECOMP
     #include "cbeditor.h"
