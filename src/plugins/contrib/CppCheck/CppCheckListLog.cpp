@@ -8,7 +8,7 @@
     #include "editormanager.h"
     #include "cbeditor.h"
 #endif
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 
 #include "CppCheckListLog.h"
 
