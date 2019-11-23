@@ -43,7 +43,7 @@
 #include <wx/html/htmlwin.h>
 
 #include <editorcolourset.h>
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 #include <editor_hooks.h>
 #include <filegroupsandmasks.h>
 #include <macrosmanager.h>

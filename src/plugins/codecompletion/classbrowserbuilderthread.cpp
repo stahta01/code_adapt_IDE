@@ -19,7 +19,7 @@
     #include <wx/utils.h>
 
     #include <cbproject.h>
-    #include <cbstyledtextctrl.h>
+    #include <ca/styledtextctrl.h>
     #include <globals.h>
     #include <logmanager.h>
     #include <manager.h>

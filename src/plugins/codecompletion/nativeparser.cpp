@@ -33,7 +33,7 @@
 #include <wx/tokenzr.h>
 
 #include <cbauibook.h>
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 #include <compiler.h>
 #include <compilercommandgenerator.h>
 #include <compilerfactory.h>

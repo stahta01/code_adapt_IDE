@@ -33,7 +33,7 @@
 #include <wx/spinctrl.h>
 
 #include <editpairdlg.h>
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 
 #include "cbcolourmanager.h"
 #include "ccoptionsdlg.h"

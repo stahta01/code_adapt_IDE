@@ -20,7 +20,7 @@
 #include <wx/tokenzr.h>
 #include <wx/html/htmlwin.h>
 
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 
 #include "doxygen_parser.h"
 

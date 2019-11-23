@@ -38,7 +38,7 @@
 #include <wx/splitter.h>
 #include <wx/tokenzr.h>
 
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 
 #include "classbrowser.h" // class's header file
 #include "nativeparser.h"

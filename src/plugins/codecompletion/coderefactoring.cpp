@@ -26,7 +26,7 @@
 
 #include <wx/progdlg.h>
 
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 #include <editorcolourset.h>
 #include <encodingdetector.h>
 #include <searchresultslog.h>

@@ -6,7 +6,7 @@
 #endif
 
 #include <wx/tokenzr.h>
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 
 #include "parser_base.h"
 
