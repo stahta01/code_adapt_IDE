@@ -8,9 +8,11 @@
  */
 
 #include "sdk.h"
+#ifndef WX_PRECOMP
+    #include <wx/choice.h>
+#endif
 #ifndef CB_PRECOMP
     #include <wx/checkbox.h>
-    #include <wx/choice.h>
     #include <wx/filefn.h>
     #include <wx/filename.h>
     #include <wx/textctrl.h>
@@ -18,7 +20,6 @@
     #include <wx/xrc/xmlres.h>
     #include "cbeditor.h"
     #include "cbproject.h"
-    #include "cbworkspace.h"
     #include "configmanager.h"
     #include "editormanager.h"
     #include "globals.h"
@@ -26,8 +27,10 @@
     #include "projectmanager.h"
     #include "manager.h"
     #include "sdk_events.h"
-    #include "workspaceloader.h"
 #endif
+
+#include "cbworkspace.h"
+#include "workspaceloader.h"
 
 #include <algorithm>
 #include "cbstyledtextctrl.h"
