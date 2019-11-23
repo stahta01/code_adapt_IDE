@@ -10,13 +10,6 @@
 #ifndef TOOLSPLUS_H_INCLUDED
 #define TOOLSPLUS_H_INCLUDED
 
-// For compilers that support precompilation, includes <wx/wx.h>
-#include <wx/wxprec.h>
-
-#ifndef WX_PRECOMP
-	#include <wx/wx.h>
-#endif
-
 #include <sdk.h>
 #include <cbplugin.h> // for "class cbPlugin"
 #include "shellproperties.h"

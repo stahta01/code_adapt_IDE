@@ -1,16 +1,11 @@
 #ifndef IL_GLOBALS_H
 #define IL_GLOBALS_H
 
-#include <wx/wxprec.h>
-
-#ifndef WX_PRECOMP
-	#include <wx/wx.h>
-#endif
 
 #include <sdk.h>
 #ifndef CB_PRECOMP
     #include <wx/filename.h>
- 
+
     #include <editorbase.h>
     #include <editormanager.h>
     #include <logmanager.h>

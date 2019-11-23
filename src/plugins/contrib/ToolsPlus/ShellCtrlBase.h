@@ -4,13 +4,6 @@
 #include <map>
 
 
-#include <wx/wxprec.h>
-
-#ifndef WX_PRECOMP
-    #include <wx/wx.h>
-#endif
-
-
 #include <wx/process.h>
 #include <wx/aui/aui.h>
 #include <sdk.h>
