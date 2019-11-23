@@ -9,7 +9,7 @@
     #include <manager.h>
 #endif
 
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 #include <editorcolourset.h>
 
 // Register the plugin with Code::Blocks.

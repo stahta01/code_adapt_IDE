@@ -12,7 +12,7 @@
 
 #include <wx/regex.h>
 
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 
 // Register the plugin with Code::Blocks.
 // We are using an anonymous namespace so we don't litter the global one.
