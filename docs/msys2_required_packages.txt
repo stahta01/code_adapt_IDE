@@ -1,0 +1,23 @@
+##Run Time Requirements
+# Run from MSys2 32 bit or 64 bit *Mingw prompt*
+pacman -S --noconfirm --needed ${MINGW_PACKAGE_PREFIX}-drmingw;
+pacman -S --noconfirm --needed ${MINGW_PACKAGE_PREFIX}-expat;
+pacman -S --noconfirm --needed ${MINGW_PACKAGE_PREFIX}-libjpeg-turbo;
+pacman -S --noconfirm --needed ${MINGW_PACKAGE_PREFIX}-libpng;
+pacman -S --noconfirm --needed ${MINGW_PACKAGE_PREFIX}-libtiff;
+pacman -S --noconfirm --needed ${MINGW_PACKAGE_PREFIX}-zstd;
+pacman -S --noconfirm --needed ${MINGW_PACKAGE_PREFIX}-xz;
+pacman -S --noconfirm --needed ${MINGW_PACKAGE_PREFIX}-gcc-libs;
+pacman -S --noconfirm --needed ${MINGW_PACKAGE_PREFIX}-libwinpthread-git;
+pacman -S --noconfirm --needed ${MINGW_PACKAGE_PREFIX}-zlib;
+pacman -S --noconfirm --needed ${MINGW_PACKAGE_PREFIX}-bzip2;
+pacman -S --noconfirm --needed ${MINGW_PACKAGE_PREFIX}-tinyxml;
+
+pacman -U --noconfirm ${MINGW_PACKAGE_PREFIX}-wxmsw3.1-3.1.2-1-any.pkg.tar.xz;
+
+##Build Time Requirements
+# Run from MSys2 32 bit or 64 bit *Mingw prompt*
+pacman -S --noconfirm --needed zip;
+pacman -S --noconfirm --needed ${MINGW_PACKAGE_PREFIX}-gcc;
+pacman -S --noconfirm --needed ${MINGW_PACKAGE_PREFIX}-wxWidgets;
+pacman -S --noconfirm --needed ${MINGW_PACKAGE_PREFIX}-boost;
