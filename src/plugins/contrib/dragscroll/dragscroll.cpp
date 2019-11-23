@@ -21,7 +21,7 @@
 #include <wx/fileconf.h> // wxFileConfig
 #include <wx/html/htmlwin.h>
 #include <wx/tokenzr.h>
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "dragscroll.h"
 #include "dragscrollcfg.h"
 #include "dragscrollevent.h"
