@@ -11,7 +11,7 @@
 #include <wx/process.h>
 #include <configurationpanel.h>
 #include <configmanager.h>
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 #include "CscopePlugin.h"
 
 #include "CscopeStatusMessage.h"
