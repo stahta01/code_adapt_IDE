@@ -23,6 +23,10 @@
 
 #include <memory>
 
+#ifdef __WINDOWS__
+    #include <wx/msw/wrapwin.h>  // MoveFileEx
+#endif
+
 template<> FileManager* Mgr<FileManager>::instance = nullptr;
 template<> bool  Mgr<FileManager>::isShutdown = false;
 

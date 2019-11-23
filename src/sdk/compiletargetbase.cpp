@@ -330,7 +330,7 @@ wxString CompileTargetBase::GetExecutableFilename() const
     }
 
     wxFileName fname(m_Filename);
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     fname.SetExt(FileFilters::EXECUTABLE_EXT);
 #else
     fname.SetExt(_T(""));

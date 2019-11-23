@@ -865,7 +865,7 @@ ProjectFile* cbProject::AddFile(int targetIndex, const wxString& filename, bool 
     wxString local_filename = filename;
     const wxString &projectBasePath = GetBasePath();
 
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     // for Windows, make sure the filename is not on another drive...
     if (   (local_filename.Length() > 1)
         && (local_filename.GetChar(1) == _T(':'))

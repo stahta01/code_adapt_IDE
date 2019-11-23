@@ -104,7 +104,7 @@ bool ToolsManager::Execute(const cbTool* tool)
 
     if (tool->GetLaunchOption() == cbTool::LAUNCH_NEW_CONSOLE_WINDOW)
     {
-#ifndef __WXMSW__
+#ifndef __WINDOWS__
         // for non-win platforms, use m_ConsoleTerm to run the console app
         wxString term = Manager::Get()->GetConfigManager(_T("app"))->Read(_T("/console_terminal"), DEFAULT_CONSOLE_TERM);
         term.Replace(_T("$TITLE"), _T("'") + tool->GetName() + _T("'"));

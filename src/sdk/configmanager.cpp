@@ -29,7 +29,7 @@
 #include <wx/stdpaths.h>
 #include <wx/filename.h>
 
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
 #include <shlobj.h>
 #endif
 
@@ -89,9 +89,9 @@ namespace
 {
     wxString DetermineExecutablePath()
     {
-        #ifdef __WXMSW__
-            wxChar name[MAX_PATH];
-            GetModuleFileName(0L, name, MAX_PATH);
+        #ifdef __WINDOWS__
+            wxChar name[_MAX_PATH];
+            GetModuleFileName(0L, name, _MAX_PATH);
             wxFileName fname(name);
             return fname.GetPath(wxPATH_GET_VOLUME);
         #else

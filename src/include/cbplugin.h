@@ -18,7 +18,7 @@
 #include "pluginmanager.h"
 #include "prep.h"
 
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     #ifndef PLUGIN_EXPORT
         #ifdef EXPORT_LIB
             #define PLUGIN_EXPORT __declspec (dllexport)

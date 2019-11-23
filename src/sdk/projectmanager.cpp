@@ -203,7 +203,7 @@ cbProject* ProjectManager::IsOpen(const wxString& filename)
         cbProject* project = m_pProjects->Item(i);
         if (project)
         {
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
             // MS Windows Filenames are case-insensitive, we have to
             // avoid opening the same project if the files are only
             // different in upper/lowercase.

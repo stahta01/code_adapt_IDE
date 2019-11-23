@@ -171,7 +171,7 @@ void SelectTargetDlg::OnHostApplicationButtonClick(cb_unused wxCommandEvent& eve
                          _("Select host application"),
                          _T(""),
                          obj->GetValue(),
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
                          _("Executable files (*.exe)|*.exe"),
 #else
                          _("All files (*)|*"),
