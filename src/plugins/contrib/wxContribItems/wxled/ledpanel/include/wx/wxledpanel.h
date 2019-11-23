@@ -11,7 +11,7 @@
 
 #include "wx/advancedmatrixobject.h"
 #include "wx/wxledfont.h"
-//#include "wx/wxledpaneldef.h"
+#include "wx/wxledpaneldef.h"
 #include <wx/wx.h>
 #include <wx/animate.h>
 
@@ -26,7 +26,7 @@ enum wxLEDColour
 	wxLED_COLOUR_GREY = 7
 };
 
-class wxLEDPanel : public wxControl
+class WXDLLIMPEXP_LEDPANEL wxLEDPanel : public wxControl
 {
 	public:
 		// Ctor
