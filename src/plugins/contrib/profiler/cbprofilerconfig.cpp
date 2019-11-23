@@ -11,12 +11,12 @@
 #ifndef CB_PRECOMP
     #include <wx/checkbox.h>
     #include <wx/event.h>
-    #include <wx/spinctrl.h>
     #include <wx/textctrl.h>
     #include <wx/xrc/xmlres.h>
     #include "manager.h"
     #include "configmanager.h"
 #endif
+#include <wx/spinctrl.h>
 #include "cbprofilerconfig.h"
 
 BEGIN_EVENT_TABLE(CBProfilerConfigDlg, wxPanel)

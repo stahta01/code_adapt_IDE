@@ -13,7 +13,6 @@
     #include <wx/font.h>
     #include <wx/intl.h>
     #include <wx/listctrl.h>
-    #include <wx/notebook.h>
     #include <wx/textctrl.h>
     #include <wx/utils.h>
     #include <wx/xrc/xmlres.h>
@@ -25,6 +24,7 @@
 #include <wx/colour.h>
 #include <wx/ffile.h>
 #include <wx/filedlg.h>
+#include <wx/notebook.h>
 #include <wx/progdlg.h>
 #include "cbprofilerexec.h"
 
