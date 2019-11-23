@@ -23,8 +23,6 @@
 #ifndef WXSTOOLBAREDITOR_H
 #define WXSTOOLBAREDITOR_H
 
-#include <wx/wxprec.h>
-
 #include "wxstoolbar.h"
 
 //(*Headers(wxsToolBarEditor)

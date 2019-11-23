@@ -24,7 +24,6 @@
 #include "wxsresource.h"
 #include "wxsmith.h"
 
-#include <wx/wx.h>
 
 wxsEditor::wxsEditor(wxWindow* parent, const wxString& title,wxsResource* Resource):
     EditorBase(parent,title),

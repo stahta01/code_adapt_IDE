@@ -27,6 +27,7 @@
 #include <tinyxml.h>
 #include "wxsresourcetree.h"
 
+class cbConfigurationPanel;
 class wxSmith;
 class wxsResource;
 class wxsGUI;

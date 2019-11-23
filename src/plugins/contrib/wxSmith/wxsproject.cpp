@@ -20,6 +20,10 @@
 * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/contrib/wxSmith/wxsproject.cpp $
 */
 
+#include <wx/string.h>
+#include <configurationpanel.h>
+#include <logmanager.h>
+
 #include "wxsproject.h"
 #include "wxsmith.h"
 #include "wxsresource.h"
@@ -27,9 +31,6 @@
 #include "wxsguifactory.h"
 #include "wxsgui.h"
 #include "wxsversionconverter.h"
-
-#include <wx/string.h>
-#include <logmanager.h>
 
 namespace
 {

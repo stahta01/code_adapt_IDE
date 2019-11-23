@@ -23,10 +23,6 @@
 #ifndef __WXSSTYLE_H
 #define __WXSSTYLE_H
 
-#ifndef WX_PRECOMP
-    #include <wx/arrstr.h>
-#endif
-
 #include "../wxscodinglang.h"
 #include <wx/dynarray.h>
 #include <wx/arrstr.h>

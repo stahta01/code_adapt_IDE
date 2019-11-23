@@ -23,12 +23,6 @@
 #ifndef WXSFONTFACEEDITORDLG_H
 #define WXSFONTFACEEDITORDLG_H
 
-#include <wx/wxprec.h>
-
-#ifdef __BORLANDC__
-    #pragma hdrstop
-#endif
-
 //(*Headers(wxsFontFaceEditorDlg)
 #include <wx/sizer.h>
 #include <wx/textctrl.h>
