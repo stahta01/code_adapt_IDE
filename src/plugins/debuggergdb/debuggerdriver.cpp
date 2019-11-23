@@ -7,7 +7,8 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/debuggergdb/debuggerdriver.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#include "configmanager.h"
 #include "debuggerdriver.h"
 #include "debuggergdb.h"
 #include "macrosmanager.h"

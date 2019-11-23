@@ -7,7 +7,7 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/debuggergdb/cdb_driver.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
 
 #ifndef CB_PRECOMP
     #include <cbproject.h>
@@ -22,6 +22,7 @@
 #endif
 
 #include "cbassert.h"
+#include <infowindow.h>
 
 #include "cdb_driver.h"
 #include "cdb_commands.h"

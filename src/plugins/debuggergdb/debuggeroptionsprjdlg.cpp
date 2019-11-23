@@ -7,15 +7,18 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/debuggergdb/debuggeroptionsprjdlg.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#ifndef CB_PRECOMP
+    #include <wx/xrc/xmlres.h>
+
+    #include <cbproject.h>
+#endif
 #include "debuggeroptionsprjdlg.h"
 #include <wx/intl.h>
-#include <wx/xrc/xmlres.h>
 #include <wx/listbox.h>
 #include <wx/button.h>
 #include <wx/choice.h>
 #include <wx/checkbox.h>
-#include <cbproject.h>
 #include <editpathdlg.h>
 #include <manager.h>
 #include <globals.h>

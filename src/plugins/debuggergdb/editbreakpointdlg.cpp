@@ -7,18 +7,18 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/debuggergdb/editbreakpointdlg.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
 #ifndef CB_PRECOMP
     #include <wx/checkbox.h>
     #include <wx/intl.h>
     #include <wx/button.h>
     #include <wx/listbox.h>
-    #include <wx/spinctrl.h>
     #include <wx/textctrl.h>
     #include <wx/xrc/xmlres.h>
 
     #include <debuggermanager.h>
 #endif
+#include <wx/spinctrl.h>
 
 #include "editbreakpointdlg.h"
 

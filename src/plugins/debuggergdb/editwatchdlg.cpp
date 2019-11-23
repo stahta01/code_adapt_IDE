@@ -7,22 +7,23 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/debuggergdb/editwatchdlg.cpp $
  */
 
-#include <sdk.h>
-#include "editwatchdlg.h"
-
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#ifndef WX_PRECOMP
+    #include <wx/radiobox.h>
+#endif
 #ifndef CB_PRECOMP
     #include <wx/button.h>
     #include <wx/checkbox.h>
     #include <wx/defs.h>
     #include <wx/intl.h>
-    #include <wx/radiobox.h>
     #include <wx/sizer.h>
-    #include <wx/spinctrl.h>
     #include <wx/textctrl.h>
     #include <wx/xrc/xmlres.h>
 #endif // CB_PRECOMP
+#include <wx/spinctrl.h>
 
 #include "debugger_defs.h"
+#include "editwatchdlg.h"
 
 EditWatchDlg::EditWatchDlg(cb::shared_ptr<GDBWatch> w, wxWindow* parent)
     : m_watch(w)

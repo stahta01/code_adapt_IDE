@@ -7,9 +7,11 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/debuggergdb/debuggergdb.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
 #include <algorithm> // std::remove_if
-
+#ifndef WX_PRECOMP
+    #include <wx/app.h>
+#endif
 #ifndef CB_PRECOMP
     #include <wx/app.h>
     #include <wx/txtstrm.h>
@@ -26,11 +28,9 @@
     #include "projectmanager.h"
     #include "pluginmanager.h"
     #include "editormanager.h"
-    #include "macrosmanager.h"
     #include "cbeditor.h"
     #include "projectbuildtarget.h"
     #include "sdk_events.h"
-    #include "compilerfactory.h"
     #include "xtra_res.h"
 
     #include "scrollingdialog.h"
@@ -42,6 +42,9 @@
 #include "annoyingdialog.h"
 #include "cbstyledtextctrl.h"
 #include "compilercommandgenerator.h"
+#include "compiler.h"
+#include "compilerfactory.h"
+#include "macrosmanager.h"
 
 #include <cbdebugger_interfaces.h>
 #include "editbreakpointdlg.h"

@@ -7,7 +7,10 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/debuggergdb/gdb_driver.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#ifndef CB_PRECOMP
+    #include <configmanager.h>
+#endif
 #include "gdb_driver.h"
 #include "gdb_commands.h"
 #include "debuggeroptionsdlg.h"
@@ -15,7 +18,6 @@
 #include <cbdebugger_interfaces.h>
 #include <manager.h>
 #include <macrosmanager.h>
-#include <configmanager.h>
 #include <globals.h>
 #include <infowindow.h>
 

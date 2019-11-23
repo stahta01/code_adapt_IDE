@@ -9,13 +9,13 @@
 
 #include "sdk.h"
 #ifndef CB_PRECOMP
-#include "scrollingdialog.h"
 #include <wx/font.h>
 #include <wx/sizer.h>
 #include <wx/textctrl.h>
 #include <wx/frame.h>
 #include "manager.h"
 #endif
+#include "scrollingdialog.h"
 #include <cbdebugger_interfaces.h>
 #include "debugger_defs.h"
 #include "debuggerdriver.h"

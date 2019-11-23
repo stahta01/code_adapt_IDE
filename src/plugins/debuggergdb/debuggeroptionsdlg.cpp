@@ -7,23 +7,26 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/debuggergdb/debuggeroptionsdlg.cpp $
  */
 
-#include <sdk.h>
-#include "debuggeroptionsdlg.h"
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#ifndef WX_PRECOMP
+    #include <wx/choice.h>
+    #include <wx/radiobox.h>
+#endif
 #ifndef CB_PRECOMP
     #include <wx/checkbox.h>
-    #include <wx/choice.h>
     #include <wx/filedlg.h>
     #include <wx/intl.h>
-    #include <wx/radiobox.h>
     #include <wx/spinctrl.h>
     #include <wx/textctrl.h>
     #include <wx/xrc/xmlres.h>
 
     #include <configmanager.h>
-    #include <macrosmanager.h>
 #endif
 
+#include <macrosmanager.h>
+
 #include "debuggergdb.h"
+#include "debuggeroptionsdlg.h"
 
 class DebuggerConfigurationPanel : public wxPanel
 {

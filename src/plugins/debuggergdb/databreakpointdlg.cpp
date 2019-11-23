@@ -7,6 +7,10 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/debuggergdb/databreakpointdlg.cpp $
  */
 
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#ifndef CB_PRECOMP
+    #include <configmanager.h>
+#endif
 #include "databreakpointdlg.h"
 #include "debugger_defs.h"
 

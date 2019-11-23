@@ -6,12 +6,6 @@
 #ifndef DATABREAKPOINTDLG_H
 #define DATABREAKPOINTDLG_H
 
-#include <wx/wxprec.h>
-
-#ifdef __BORLANDC__
-    #pragma hdrstop
-#endif
-
 //(*Headers(DataBreakpointDlg)
 #include <wx/checkbox.h>
 #include <wx/sizer.h>
