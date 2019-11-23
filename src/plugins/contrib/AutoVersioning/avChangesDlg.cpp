@@ -1,4 +1,4 @@
-#include "avChangesDlg.h"
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
 
 //(*InternalHeaders(avChangesDlg)
 #include <wx/string.h>
@@ -9,6 +9,8 @@
 #include <wx/msgdlg.h>
 #include <wx/ffile.h>
 #include <wx/filefn.h>
+
+#include "avChangesDlg.h"
 
 //Choices to initialize the l_TypesArray
 const wxString strTypes[] =

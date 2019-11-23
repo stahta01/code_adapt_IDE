@@ -1,12 +1,12 @@
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
+
 #include <ctime>
 #include <cstdlib> //For random numbers
-#include <sdk.h>
 
 #ifndef CB_PRECOMP
 #include <wx/dynarray.h>
 #include <wx/file.h>
 #include <wx/filefn.h>
-#include <wx/ffile.h>
 #include <wx/filename.h>
 #include <wx/intl.h>
 #include <wx/menu.h>
@@ -20,6 +20,7 @@
 #include <tinyxml.h>
 #endif
 #include <tinywxuni.h>
+#include <wx/ffile.h>
 #include <wx/textfile.h>
 
 #include "projectloader_hooks.h"
