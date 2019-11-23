@@ -1,16 +1,16 @@
-#include "SmartIndentLua.h"
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
 
-#include <sdk.h> // Code::Blocks SDK
+#include "SmartIndentLua.h"
 
 #ifndef CB_PRECOMP
     #include <cbeditor.h>
     #include <configmanager.h>
     #include <editormanager.h>
-    #include <editorcolourset.h>
     #include <manager.h>
 #endif
 
 #include <cbstyledtextctrl.h>
+#include <editorcolourset.h>
 
 // Register the plugin with Code::Blocks.
 // We are using an anonymous namespace so we don't litter the global one.

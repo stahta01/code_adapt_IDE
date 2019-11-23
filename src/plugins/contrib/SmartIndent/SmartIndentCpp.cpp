@@ -1,16 +1,16 @@
-#include "SmartIndentCpp.h"
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
 
-#include <sdk.h> // Code::Blocks SDK
+#include "SmartIndentCpp.h"
 
 #ifndef CB_PRECOMP
     #include <cbeditor.h>
     #include <configmanager.h>
     #include <editormanager.h>
-    #include <editorcolourset.h>
     #include <manager.h>
 #endif
 
 #include <cbstyledtextctrl.h>
+#include <editorcolourset.h>
 #include <wx/regex.h>
 
 
