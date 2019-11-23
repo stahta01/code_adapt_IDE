@@ -49,7 +49,7 @@ void HelpCommon::LoadHelpFilesVector(HelpCommon::HelpFilesVector &vect)
       }
   }
 
-  wxString docspath = ConfigManager::GetFolder(sdBase)+_("/share/codeblocks/docs");
+  wxString docspath = ConfigManager::GetFolder(sdBase) + wxS("STANDARD_DATA_PATH") + wxS("/docs");
   wxString iniFileName =  docspath + wxFileName::GetPathSeparator() + _T("index.ini");
 
   if ((wxFileName::DirExists(docspath)) && (wxFileName::FileExists(iniFileName)))
