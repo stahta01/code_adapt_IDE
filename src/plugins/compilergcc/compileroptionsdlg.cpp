@@ -39,7 +39,7 @@
 
 #include "advancedcompileroptionsdlg.h"
 #include "annoyingdialog.h"
-#include "cbexception.h"
+#include <ca/exception.h>
 #include "compilergcc.h"
 #include "compileroptionsdlg.h"
 #include "debuggermanager.h"
@@ -2159,7 +2159,7 @@ void CompilerOptionsDlg::OnAddCompilerClick(cb_unused wxCommandEvent& event)
         {
             newC = CompilerFactory::CreateCompilerCopy(CompilerFactory::GetCompiler(m_CurrentCompilerIdx), value);
         }
-        catch (cbException& e)
+        catch (caException& e)
         {
             // usually throws because of non-unique ID
             e.ShowErrorMessage(false);

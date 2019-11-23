@@ -10,7 +10,7 @@
 #include <sdk.h>
 #include "compilerMINGWgenerator.h"
 #include <wx/intl.h>
-#include "cbexception.h"
+#include <ca/exception.h>
 #include "cbproject.h"
 #include "compilerfactory.h"
 #include "compiler.h"

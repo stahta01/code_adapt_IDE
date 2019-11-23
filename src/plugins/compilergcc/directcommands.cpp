@@ -26,7 +26,7 @@
 #include "directcommands.h"
 #include "compilercommandgenerator.h"
 #include "compilergcc.h"
-#include "cbexception.h"
+#include <ca/exception.h>
 #include "filefilters.h"
 #include <depslib.h>
 
@@ -358,7 +358,7 @@ wxArrayString DirectCommands::GetCompileSingleFileCommand(const wxString& filena
         return ret;
 
     // please leave this check here for convenience: single file compilation is "special"
-    if (!m_pGenerator) cbThrow(_T("Command generator not initialised through ctor!"));
+    if (!m_pGenerator) caThrow(_T("Command generator not initialised through ctor!"));
 
     wxString compilerCmd = compiler->GetCommand(ctCompileObjectCmd, srcExt);
     CompilerCommandGenerator::Result compilerResult(&compilerCmd);
@@ -818,7 +818,7 @@ wxArrayString DirectCommands::GetTargetLinkCommands(ProjectBuildTarget* target, 
         default:
             wxString ex;
             ex.Printf(_T("Encountered invalid TargetType (value = %d)"), target->GetTargetType());
-            cbThrow(ex);
+            caThrow(ex);
         break;
     }
 
