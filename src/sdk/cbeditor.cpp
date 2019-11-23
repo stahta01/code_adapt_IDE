@@ -39,6 +39,7 @@
 #endif
 #include "cbstyledtextctrl.h"
 #include "cbcolourmanager.h"
+#include "cbassert.h"
 
 #include <stack>
 

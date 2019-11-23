@@ -49,6 +49,7 @@
 
 #include "goto_file.h"
 #include "startherepage.h"
+#include "cbassert.h"
 
 namespace
 {

@@ -34,6 +34,7 @@
 
 #include "cbcolourmanager.h"
 #include "debuggermanager.h"
+#include "cbassert.h"
 
 namespace
 {

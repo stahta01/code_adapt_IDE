@@ -17,6 +17,8 @@
 #include <wx/font.h>
 //*)
 
+#include "cbassert.h"
+
 #include "debuggermanager.h"
 #include "debuggersettingspanel.h"
 #include "debuggersettingscommonpanel.h"

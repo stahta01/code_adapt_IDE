@@ -23,6 +23,7 @@
 
 #include "loggers.h"
 #include "cbcolourmanager.h"
+#include "cbassert.h"
 
 // Helper function which blends a colour with the default window text colour,
 // so that text will be readable in bright and dark colour schemes

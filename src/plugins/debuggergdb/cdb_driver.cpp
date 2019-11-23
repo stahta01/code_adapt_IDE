@@ -21,6 +21,8 @@
     #include <projectbuildtarget.h>
 #endif
 
+#include "cbassert.h"
+
 #include "cdb_driver.h"
 #include "cdb_commands.h"
 #include "debuggeroptionsdlg.h"

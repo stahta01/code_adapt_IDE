@@ -28,6 +28,8 @@
 //(*InternalHeaders(GotoFile)
 //*)
 
+#include "cbassert.h"
+
 //(*IdInit(GotoFile)
 const long GotoFile::ID_TEXTCTRL1 = wxNewId();
 const long GotoFile::ID_RESULT_LIST = wxNewId();

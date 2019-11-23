@@ -17,6 +17,7 @@
     #include "logmanager.h"
 #endif
 
+#include "cbassert.h"
 
 IMPLEMENT_DYNAMIC_CLASS(CodeBlocksEvent, wxEvent)
 IMPLEMENT_DYNAMIC_CLASS(CodeBlocksDockEvent, wxEvent)

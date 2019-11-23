@@ -41,6 +41,7 @@
 #include "cbdebugger_interfaces.h"
 #include "loggers.h"
 #include "manager.h"
+#include "cbassert.h"
 
 cbWatch::cbWatch() :
     m_changed(true),

@@ -31,6 +31,7 @@
 
 #include "cbstyledtextctrl.h"
 #include "encodingdetector.h"
+#include "cbassert.h"
 #include "SearchInPanel.h"
 #include "DirectoryParamsPanel.h"
 #include "ThreadSearch.h"

@@ -27,6 +27,7 @@
 
 #include "cbdebugger_interfaces.h"
 #include "cbstyledtextctrl.h"
+#include "cbassert.h"
 #include "debuggermanager.h"
 
 namespace

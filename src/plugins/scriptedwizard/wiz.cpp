@@ -40,6 +40,7 @@
     #include <scriptingmanager.h>
 #endif // CB_PRECOMP
 #include <scripting/bindings/sc_base_types.h>
+#include "cbassert.h"
 
 #include "wiz.h"
 #include "wizpage.h"

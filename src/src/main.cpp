@@ -71,6 +71,7 @@
 #include "cbcolourmanager.h"
 #include "editorconfigurationdlg.h"
 #include "projectmanagerui.h"
+#include "cbassert.h"
 
 class cbFileDropTarget : public wxFileDropTarget
 {

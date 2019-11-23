@@ -40,6 +40,7 @@
 #include "debuggermanager.h"
 #include "editor_hooks.h"
 #include "loggers.h"
+#include "cbassert.h"
 
 #ifndef __WXMSW__
     #include <errno.h>

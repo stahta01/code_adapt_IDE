@@ -25,6 +25,8 @@
     #include "projectmanager.h"
 #endif
 
+#include "cbassert.h"
+
 DebuggerState::DebuggerState(DebuggerGDB* plugin)
     : m_pPlugin(plugin),
     m_pDriver(0)

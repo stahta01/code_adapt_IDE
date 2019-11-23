@@ -11,7 +11,7 @@
 
 #include <memory> // unique_ptr
 
-#include <cbexception.h> // cbAssert
+#include <cbassert.h>    // cbAssert
 #include <logmanager.h>  // F()
 #include <prep.h>        // nullptr
 

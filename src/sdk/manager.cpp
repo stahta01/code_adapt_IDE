@@ -47,6 +47,7 @@
 #include "cbcolourmanager.h"
 #include "ccmanager.h"
 #include "debuggermanager.h"
+#include "cbassert.h"
 
 static Manager* s_ManagerInstance = nullptr;
 

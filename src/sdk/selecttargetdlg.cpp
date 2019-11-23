@@ -20,6 +20,9 @@
     #include "projectbuildtarget.h"
     #include "cbproject.h"
 #endif
+
+#include "cbassert.h"
+
 #include <wx/filedlg.h>
 #include "selecttargetdlg.h"
 

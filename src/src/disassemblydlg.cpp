@@ -31,6 +31,8 @@
     #include "projectmanager.h"
 #endif
 
+#include "cbassert.h"
+
 #include "debuggermanager.h"
 #include "filefilters.h"
 

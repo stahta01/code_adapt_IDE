@@ -21,6 +21,7 @@
 #include "sdk_events.h"
 #include "cbfunctor.h"
 #include "cbexception.h"
+#include "logassert.h"
 
 // forward decls
 class wxFrame;
@@ -224,7 +225,7 @@ public:
             if (isShutdown == false)
                 instance = new MgrT();
             else
-                cbAssert(false && "Calling Get after the subsystem has been shutdown is an error!");
+                logAssert(false && "Calling Get after the subsystem has been shutdown is an error!");
         }
         return instance;
     }
