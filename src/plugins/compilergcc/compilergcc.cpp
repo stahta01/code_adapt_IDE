@@ -50,7 +50,7 @@
 #include "globals.h"
 #include "cbart_provider.h"
 #include "cbworkspace.h"
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 
 
 #include "compilerMINGW.h"
