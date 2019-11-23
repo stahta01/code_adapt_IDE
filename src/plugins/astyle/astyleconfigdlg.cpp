@@ -7,9 +7,11 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/astyle/astyleconfigdlg.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#ifndef CB_PRECOMP
+    #include <wx/xrc/xmlres.h>
+#endif
 #include "astyleconfigdlg.h"
-#include <wx/xrc/xmlres.h>
 #include <wx/intl.h>
 #include <wx/font.h>
 #include <wx/radiobut.h>

@@ -7,7 +7,7 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/astyle/astyleplugin.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
 
 #ifndef CB_PRECOMP
     #include <algorithm>
@@ -29,6 +29,7 @@
     #include <projectmanager.h>
 #endif
 
+#include <wx/menu.h>
 #include <wx/progdlg.h>
 #include <cbstyledtextctrl.h>
 

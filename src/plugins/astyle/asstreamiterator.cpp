@@ -7,6 +7,8 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/astyle/asstreamiterator.cpp $
  */
 
+#include "sdk.h"         // Precompiled Header needs to be the first include
+
 #include "asstreamiterator.h"
 
 #include <vector>

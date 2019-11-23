@@ -7,7 +7,7 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/astyle/formattersettings.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
 #include "formattersettings.h"
 #include "astylepredefinedstyles.h"
 #include <configmanager.h>
