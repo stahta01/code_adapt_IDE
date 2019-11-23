@@ -47,7 +47,6 @@
         #include "macrosmanager.h"
         #include "configmanager.h"
         #include "editormanager.h"
-        #include "wx/wxscintilla.h"
         #include "cbeditor.h"
         #include "globals.h"
     #endif
