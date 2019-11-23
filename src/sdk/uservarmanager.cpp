@@ -37,6 +37,7 @@
 #endif
 
 #include <ctype.h>
+#include <branding.h>
 
 template<> UserVariableManager* Mgr<UserVariableManager>::instance   = nullptr;
 template<> bool                 Mgr<UserVariableManager>::isShutdown = false;
@@ -819,5 +820,5 @@ void UsrGlblMgrEditDialog::OnFS(wxCommandEvent& event)
 
 void UsrGlblMgrEditDialog::Help(cb_unused wxCommandEvent& event)
 {
-    wxLaunchDefaultBrowser(_T("http://wiki.codeblocks.org/index.php?title=Global_compiler_variables"));
+    wxLaunchDefaultBrowser(wxString(BRANDING_URL_WIKI_SEARCH) + wxS("?title=Global_compiler_variables"));
 }

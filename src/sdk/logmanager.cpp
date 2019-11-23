@@ -17,6 +17,8 @@
 #include <wx/log.h>
 #endif
 
+#include <branding.h>
+
 #include "cbcolourmanager.h"
 #include "logmanager.h"
 #include "loggers.h"
@@ -70,8 +72,8 @@ LogManager::LogManager()
     SetLog(new StdoutLogger, app_log);
     SetLog(new StdoutLogger, debug_log);
     slot[stdout_log].title = _T("stdout");
-    slot[app_log].title = _T("Code::Blocks");
-    slot[debug_log].title = _T("Code::Blocks Debug");
+    slot[app_log].title = wxT_2(BRANDING_APP_NAME_FANCY);
+    slot[debug_log].title = wxString(BRANDING_APP_NAME_FANCY) + wxT_2(" Debug");
 
     ColourManager *manager = Manager::Get()->GetColourManager();
     manager->RegisterColour(_("Logs"), _("Success text"), wxT("logs_success_text"), *wxBLUE);
@@ -200,7 +202,7 @@ void LogManager::Panic(const wxString& msg, const wxString& component)
     title.Append(component);
 
     if (!component)
-        title.Append(_T("Code::Blocks"));
+        title.Append(wxT_2(BRANDING_APP_NAME_FANCY));
 
     wxSafeShowMessage(title, msg);
 }

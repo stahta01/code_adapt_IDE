@@ -28,6 +28,8 @@
     #include "compiler.h"
 #endif
 
+#include "branding.h"
+
 #include <wx/stdpaths.h> // wxStandardPaths
 #include <cstdlib>
 
@@ -116,7 +118,7 @@ void MacrosManager::ClearProjectKeys()
     m_Macros.clear();
 
     m_Macros[_T("AMP")]        = _T("&");
-    m_Macros[_T("CODEBLOCKS")] = m_AppPath;
+    m_Macros[wxT_2(BRANDING_APP_UPPERCASE_NAME)] = m_AppPath;
     m_Macros[_T("APP_PATH")]   = m_AppPath;
     m_Macros[_T("APP-PATH")]   = m_AppPath;
     m_Macros[_T("APPPATH")]    = m_AppPath;

@@ -20,6 +20,8 @@
     #include <wx/log.h> // for wxSafeShowMessage()
 #endif
 
+#include "branding.h"
+
 #include "crc32.h"
 
 #include <wx/url.h>
@@ -195,8 +197,8 @@ CfgMgrBldr::CfgMgrBldr() : doc(nullptr), volatile_doc(nullptr), r(false)
         cfg = ConfigManager::GetConfigFolder() + wxFILE_SEP_PATH + personality + _T(".conf");
         doc = new TiXmlDocument();
         doc->InsertEndChild(TiXmlDeclaration("1.0", "UTF-8", "yes"));
-        doc->InsertEndChild(TiXmlElement("CodeBlocksConfig"));
-        doc->FirstChildElement("CodeBlocksConfig")->SetAttribute("version", CfgMgrConsts::version);
+        doc->InsertEndChild(TiXmlElement(BRANDING_APP_CONFIG));
+        doc->FirstChildElement(BRANDING_APP_CONFIG)->SetAttribute("version", CfgMgrConsts::version);
         return;
     }
     SwitchTo(cfg);
@@ -247,8 +249,8 @@ static void handleConfigError(TiXmlDocument &doc, const wxString &fileName, cons
 
     doc.ClearError();
     doc.InsertEndChild(TiXmlDeclaration("1.0", "UTF-8", "yes"));
-    doc.InsertEndChild(TiXmlElement("CodeBlocksConfig"));
-    doc.FirstChildElement("CodeBlocksConfig")->SetAttribute("version", CfgMgrConsts::version);
+    doc.InsertEndChild(TiXmlElement(BRANDING_APP_CONFIG));
+    doc.FirstChildElement(BRANDING_APP_CONFIG)->SetAttribute("version", CfgMgrConsts::version);
 }
 
 void CfgMgrBldr::SwitchTo(const wxString& fileName)
@@ -262,13 +264,13 @@ void CfgMgrBldr::SwitchTo(const wxString& fileName)
         handleConfigError(*doc, fileName, message);
     }
 
-    TiXmlElement* docroot = doc->FirstChildElement("CodeBlocksConfig");
+    TiXmlElement* docroot = doc->FirstChildElement(BRANDING_APP_CONFIG);
     if (!docroot)
     {
         const wxString message = wxString::Format(wxT("Cannot find docroot in config file '%s'"),
                                                   fileName.wx_str());
         handleConfigError(*doc, fileName, message);
-        docroot = doc->FirstChildElement("CodeBlocksConfig");
+        docroot = doc->FirstChildElement(BRANDING_APP_CONFIG);
 
         if (!docroot)
             cbThrow(wxT("Something really bad happened while reading the config file. Aborting!"));
@@ -450,14 +452,14 @@ ConfigManager* CfgMgrBldr::Build(const wxString& name_space)
         if (!volatile_doc)
         {
             volatile_doc = new TiXmlDocument();
-            volatile_doc->InsertEndChild(TiXmlElement("CodeBlocksConfig"));
+            volatile_doc->InsertEndChild(TiXmlElement(BRANDING_APP_CONFIG));
             volatile_doc->SetCondenseWhiteSpace(false);
         }
-        docroot = volatile_doc->FirstChildElement("CodeBlocksConfig");
+        docroot = volatile_doc->FirstChildElement(BRANDING_APP_CONFIG);
     }
     else
     {
-        docroot = doc->FirstChildElement("CodeBlocksConfig");
+        docroot = doc->FirstChildElement(BRANDING_APP_CONFIG);
         if (!docroot)
         {
             wxString err(_("Fatal error parsing supplied configuration file.\nParser error message:\n"));
@@ -612,7 +614,7 @@ inline wxString ConfigManager::GetUserDataFolder()
         return wxStandardPathsBase::Get().GetUserDataDir();
 #else
 #ifdef __linux__
-    return wxString::FromUTF8(g_build_filename (g_get_user_config_dir(), "codeblocks", NULL));
+    return wxString::FromUTF8(g_build_filename (g_get_user_config_dir(), BRANDING_APP_LOWERCASE_NAME, NULL));
 #else
     return wxStandardPathsBase::Get().GetUserDataDir();
 #endif // __linux__
@@ -1549,9 +1551,9 @@ void ConfigManager::InitPaths()
     if (data_path_global.IsEmpty())
     {
         if (platform::windows)
-            ConfigManager::data_path_global = app_path + _T("\\share\\codeblocks");
+            ConfigManager::data_path_global = app_path + wxT_2(BRANDING_WIN_STANDARD_DATA_PATH);
         else if (platform::macosx)
-            ConfigManager::data_path_global = res_path + _T("/share/codeblocks");
+            ConfigManager::data_path_global = res_path + wxT_2(BRANDING_STANDARD_DATA_PATH);
         else
             ConfigManager::data_path_global = wxStandardPathsBase::Get().GetDataDir();
     }
@@ -1589,7 +1591,7 @@ void ConfigManager::InitPaths()
       dataPathUser = wxString::FromUTF8(g_build_filename (g_get_user_data_dir(), NULL));
 #endif // __linux__
 
-    ConfigManager::data_path_user = dataPathUser + wxFILE_SEP_PATH + _T("codeblocks");
+    ConfigManager::data_path_user = dataPathUser + wxFILE_SEP_PATH + _T(BRANDING_APP_LOWERCASE_NAME);
 
     // if user- and global-datapath are the same (can happen in portable mode) we run in conflicts
     // so we extend the user-datapath with the users name
@@ -1612,14 +1614,14 @@ void ConfigManager::MigrateFolders()
 
     // ConfigManager::config_folder might be the portable-path but we want to migrate the standard-conform folder,
     // but only if it not already exists
-    wxString newConfigFolder = wxString::FromUTF8(g_build_filename (g_get_user_config_dir(), "codeblocks", NULL));
+    wxString newConfigFolder = wxString::FromUTF8(g_build_filename (g_get_user_config_dir(), BRANDING_APP_LOWERCASE_NAME, NULL));
     // if the new config folder already exist, we step out immediately
     if (wxDirExists(newConfigFolder))
         return;
 
     wxString oldConfigFolder = wxStandardPaths::Get().GetUserDataDir();
-    wxString oldDataFolder = oldConfigFolder + wxFILE_SEP_PATH + _T("share") + wxFILE_SEP_PATH + _T("codeblocks");
-    wxString newDataFolder = wxString::FromUTF8(g_build_filename (g_get_user_data_dir(), NULL)) + wxFILE_SEP_PATH + _T("codeblocks");
+    wxString oldDataFolder = oldConfigFolder + wxFILE_SEP_PATH + _T("share") + wxFILE_SEP_PATH + _T(BRANDING_APP_LOWERCASE_NAME);
+    wxString newDataFolder = wxString::FromUTF8(g_build_filename (g_get_user_data_dir(), NULL)) + wxFILE_SEP_PATH + _T(BRANDING_APP_LOWERCASE_NAME);
     wxString msg;
     msg = F(_("The places where the configuration files and user-data files are stored\n"
               "have been changed to be more standard-conform.\n"
