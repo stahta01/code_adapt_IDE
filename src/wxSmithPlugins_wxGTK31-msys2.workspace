@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="wxSmith plugins wxGTK3.1.x - MSys2">
+		<Project filename="plugins/contrib/wxSmith/wxSmith_wx31-msys2.cbp" />
+		<Project filename="plugins/contrib/wxSmithContribItems/wxSmithContribItems_wxGTK31-msys2.cbp" />
+		<Project filename="plugins/contrib/wxSmithAui/wxSmithAui_wx31-msys2.cbp" />
+	</Workspace>
+</CodeBlocks_workspace_file>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="Tools wx3.1.x - MSys2">
+		<Project filename="tools/Addr2LineUI/Addr2LineUI_wx31-msys2.cbp" />
+		<Project filename="tools/cb_share_config/cb_share_config_wx31-msys2.cbp" />
+		<Project filename="tools/cbp2make/cbp2make_wx31-msys2.cbp" />
+	</Workspace>
+</CodeBlocks_workspace_file>

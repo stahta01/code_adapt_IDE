@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_workspace_file>
+	<Workspace title="CodeAdapt wxGTK3.1.x - NOPCH MSys2">
+		<Project filename="CodeAdapt_wxGTK31-nopch-msys2.cbp" />
+		<Project filename="plugins/contrib/wxContribItems/wxContribItems_wxGTK31-nopch-msys2.cbp" />
+	</Workspace>
+</CodeBlocks_workspace_file>
