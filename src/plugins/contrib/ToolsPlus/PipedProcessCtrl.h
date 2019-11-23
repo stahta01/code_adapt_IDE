@@ -1,8 +1,6 @@
 #ifndef PPCTRL_H
 #define PPCTRL_H
 
-#include <sdk.h>
-
 #include <wx/process.h>
 #include <wx/aui/aui.h>
 

@@ -1,3 +1,5 @@
+#include <sdk.h>
+
 #include <wx/notebook.h>
 #include <wx/textctrl.h>
 #include <wx/regex.h>
