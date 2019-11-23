@@ -18,7 +18,7 @@
     #include <editormanager.h>
 #endif
 
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 #include <cbcolourmanager.h>
 
 enum Indicator : int {

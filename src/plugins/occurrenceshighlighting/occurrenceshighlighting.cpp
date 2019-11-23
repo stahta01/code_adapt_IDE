@@ -23,7 +23,7 @@
 #include <wx/menu.h>
 
 #include "cbcolourmanager.h"
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 
 #include "occurrenceshighlighting.h"
 #include "highlighter.h"

@@ -6,7 +6,7 @@
 #ifndef OCCURRENCESHIGHLIGHTINGCONFIGURATIONPANEL_H
 #define OCCURRENCESHIGHLIGHTINGCONFIGURATIONPANEL_H
 
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 #include <configurationpanel.h>
 
 #include <wx/string.h>
