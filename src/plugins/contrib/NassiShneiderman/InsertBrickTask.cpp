@@ -6,7 +6,7 @@
 #include "commands.h"
 #include "NassiView.h"
 
-
+#include <wx/event.h>
 #include <wx/mstream.h>
 
 

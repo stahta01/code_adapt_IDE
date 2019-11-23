@@ -1,13 +1,6 @@
 #ifndef _GRAPH_BRICK_H_INCLUDED
 #define _GRAPH_BRICK_H_INCLUDED
 
-// For compilers that support precompilation, includes <wx/wx.h>
-#include <wx/wxprec.h>
-
-#ifndef WX_PRECOMP
-    #include <wx/wx.h>
-#endif
-
 #include "TextGraph.h"
 
 #include <map>

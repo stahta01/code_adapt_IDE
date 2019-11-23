@@ -1,3 +1,5 @@
+#include <wx/dc.h>
+
 #include "RedHatchDrawlet.h"
 
 RedHatchDrawlet::RedHatchDrawlet(wxRect rect):

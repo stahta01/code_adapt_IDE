@@ -3,13 +3,6 @@
 #ifndef _NASSI_DIAGRAM_H_INCLUDED
 #define _NASSI_DIAGRAM_H_INCLUDED
 
-// For compilers that support precompilation, includes <wx/wx.h>
-#include <wx/wxprec.h>
-
-#ifndef WX_PRECOMP
-    #include <wx/wx.h>
-#endif
-
 
 #include <wx/scrolwin.h>
 #include <wx/caret.h>

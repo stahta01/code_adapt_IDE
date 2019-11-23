@@ -3,12 +3,6 @@
 #ifndef Task_h
 #define Task_h
 
-// For compilers that support precompilation, includes <wx/wx.h>
-#include <wx/wxprec.h>
-
-#ifndef WX_PRECOMP
-    #include <wx/wx.h>
-#endif
 
 // END Interface Dependencies -----------------------------------------
 
@@ -26,6 +20,10 @@
 // --------------------------------------------------------------------
 
 class HooverDrawlet;
+class wxCursor;
+class wxKeyEvent;
+class wxMouseEvent;
+class wxPoint;
 
 class Task
 {

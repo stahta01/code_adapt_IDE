@@ -23,13 +23,6 @@
 #ifndef __CB_EDITOR_PANEL_H__
 #define __CB_EDITOR_PANEL_H__
 
-// For compilers that support precompilation, includes <wx/wx.h>
-#include <wx/wxprec.h>
-
-#ifndef WX_PRECOMP
-    #include <wx/wx.h>
-#endif
-
 #include <manager.h>
 #include <editormanager.h>
 #include <configmanager.h>

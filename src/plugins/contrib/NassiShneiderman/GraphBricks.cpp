@@ -1,5 +1,9 @@
 #include <manager.h>
 
+#include <wx/brush.h>
+#include <wx/dc.h>
+#include <wx/pen.h>
+
 #include "GraphBricks.h"
 #include "TextGraph.h"
 #include "bricks.h"

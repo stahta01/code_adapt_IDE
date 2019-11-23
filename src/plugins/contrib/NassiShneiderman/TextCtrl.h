@@ -1,12 +1,7 @@
 #ifndef TEXTCTRL_H
 #define TEXTCTRL_H
 
-// For compilers that support precompilation, includes <wx/wx.h>
-#include <wx/wxprec.h>
-
-#ifndef WX_PRECOMP
-    #include <wx/wx.h>
-#endif
+#include <wx/textctrl.h>
 
 class TextCtrl : public wxTextCtrl
 {

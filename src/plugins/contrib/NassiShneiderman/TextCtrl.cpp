@@ -1,3 +1,5 @@
+#include <wx/dcclient.h>
+
 #include "TextCtrl.h"
 #include "NassiDiagramWindow.h"
 

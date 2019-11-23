@@ -21,6 +21,8 @@
 */
 
 #include <wx/cmdproc.h>
+#include <wx/filedlg.h>
+
 #include <configmanager.h>
 #include "cbEditorPanel.h"
 

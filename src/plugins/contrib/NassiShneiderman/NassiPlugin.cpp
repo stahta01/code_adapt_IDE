@@ -1,12 +1,16 @@
+#include <sdk.h> // Code::Blocks SDK
+#ifndef WX_PRECOMP
+    #include <wx/toolbar.h>
+#endif
+#ifndef CB_PRECOMP
+    #include <wx/xrc/xmlres.h>
+    #include <wx/menu.h>
+
+    #include <cbeditor.h>
+#endif
 #include <wx/sstream.h>
 #include <wx/txtstrm.h>
 
-
-#include <sdk.h> // Code::Blocks SDK
-#ifndef CB_PRECOMP
-    #include <wx/xrc/xmlres.h>
-    #include <cbeditor.h>
-#endif
 #include <configurationpanel.h>
 #include <cbstyledtextctrl.h>
 #include <cbcolourmanager.h>

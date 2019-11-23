@@ -1,18 +1,16 @@
 #ifndef TEXTGRAPH_H
 #define TEXTGRAPH_H
 
-// For compilers that support precompilation, includes <wx/wx.h>
-#include <wx/wxprec.h>
-
-#ifndef WX_PRECOMP
-    #include <wx/wx.h>
-#endif
 
 #include <vector>
+#include <wx/dc.h>
+#include <wx/gdicmn.h>
 
 class NassiView;
 class NassiBrick;
 class TextCtrlTask;
+class wxDC;
+class wxArrayInt;
 
 class TextGraph
 {

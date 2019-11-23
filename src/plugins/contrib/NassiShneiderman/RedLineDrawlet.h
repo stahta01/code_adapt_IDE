@@ -1,8 +1,9 @@
 #ifndef REDLINEDRAWLET_H
 #define REDLINEDRAWLET_H
 
-#include "HooverDrawlet.h"
+#include <wx/gdicmn.h>
 
+#include "HooverDrawlet.h"
 
 class RedLineDrawlet : public HooverDrawlet
 {

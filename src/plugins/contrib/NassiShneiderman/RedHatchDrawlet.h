@@ -1,8 +1,9 @@
 #ifndef REDHATCHDRAWLET_H
 #define REDHATCHDRAWLET_H
 
-#include "HooverDrawlet.h"
+#include <wx/gdicmn.h>
 
+#include "HooverDrawlet.h"
 
 class RedHatchDrawlet : public HooverDrawlet
 {

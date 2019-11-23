@@ -13,12 +13,6 @@
 #ifndef NASSISHNEIDERMAN_H_INCLUDED
 #define NASSISHNEIDERMAN_H_INCLUDED
 
-// For compilers that support precompilation, includes <wx/wx.h>
-#include <wx/wxprec.h>
-
-#ifndef WX_PRECOMP
-    #include <wx/wx.h>
-#endif
 
 #include <cbplugin.h> // for "class cbMimePlugin"
 

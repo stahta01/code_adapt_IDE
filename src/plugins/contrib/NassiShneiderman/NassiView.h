@@ -5,14 +5,9 @@
 #ifndef NASSIVIEW_H_INCLUDED
 #define NASSIVIEW_H_INCLUDED
 
-// For compilers that support precompilation, includes <wx/wx.h>
-#include <wx/wxprec.h>
-
-#ifndef WX_PRECOMP
-    #include <wx/wx.h>
-#endif
 
 #include <wx/dnd.h>
+#include <wx/font.h>
 
 #include "FileContent.h"
 #include "GraphBricks.h"
@@ -25,6 +20,8 @@ class GraphFabric;
 class wxCommand;
 class HooverDrawlet;
 class TextCtrl;
+class wxMouseEvent;
+class wxKeyEvent;
 
 class Task;
 

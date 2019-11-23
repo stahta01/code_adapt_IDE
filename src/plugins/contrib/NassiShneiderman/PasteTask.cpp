@@ -1,3 +1,5 @@
+#include <wx/event.h>
+
 #include "PasteTask.h"
 #include "GraphBricks.h"
 #include "RedLineDrawlet.h"

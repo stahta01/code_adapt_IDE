@@ -1,3 +1,7 @@
+#include <wx/dcclient.h>
+#include <wx/dcmemory.h>
+#include <wx/filedlg.h>
+
 #include "NassiView.h"
 #include "NassiFileContent.h"
 #include "NassiDiagramWindow.h"
