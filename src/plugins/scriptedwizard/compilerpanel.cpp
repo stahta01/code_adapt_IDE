@@ -8,12 +8,14 @@
  */
 
 #include "sdk.h"
-#ifndef CB_PRECOMP
-#include <wx/event.h>
+#ifndef WX_PRECOMP
 //(*InternalHeadersPCH(CompilerPanel)
 #include <wx/string.h>
 #include <wx/intl.h>
 //*)
+#endif
+#ifndef CB_PRECOMP
+#include <wx/event.h>
 #include "globals.h"
 #endif
 #include "compilerpanel.h"

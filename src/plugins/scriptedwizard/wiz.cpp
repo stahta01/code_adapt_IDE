@@ -7,20 +7,21 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/scriptedwizard/wiz.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#ifndef WX_PRECOMP
+    #include <wx/checklst.h>
+    #include <wx/combobox.h>
+    #include <wx/radiobox.h>
+#endif
 #ifndef CB_PRECOMP
     #include <wx/button.h>
     #include <wx/checkbox.h>
-    #include <wx/checklst.h>
-    #include <wx/combobox.h>
     #include <wx/dir.h>
     #include <wx/image.h>
     #include <wx/intl.h>
     #include <wx/listbox.h>
     #include <wx/panel.h>
-    #include <wx/radiobox.h>
     #include <wx/sizer.h>
-    #include <wx/spinctrl.h>
     #include <wx/stattext.h>
     #include <wx/wizard.h>
     #include <wx/xrc/xmlres.h>
@@ -28,17 +29,19 @@
     #include <wx/wxscintilla.h> // CB Header
     #include <cbexception.h>
     #include <cbproject.h>
-    #include <compiler.h>
-    #include <compilerfactory.h>
     #include <configmanager.h>
     #include <filefilters.h>
     #include <globals.h>
-    #include <infowindow.h>
     #include <manager.h>
     #include <projectbuildtarget.h>
     #include <projectmanager.h>
     #include <scriptingmanager.h>
 #endif // CB_PRECOMP
+#include <wx/spinctrl.h>
+
+#include <compiler.h>
+#include <compilerfactory.h>
+#include <infowindow.h>
 #include <scripting/bindings/sc_base_types.h>
 #include "cbassert.h"
 

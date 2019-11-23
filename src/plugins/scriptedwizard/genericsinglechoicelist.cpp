@@ -7,13 +7,15 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/scriptedwizard/genericsinglechoicelist.cpp $
  */
 
-#include <sdk.h>
-#ifndef CB_PRECOMP
-    #include <wx/arrstr.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#ifndef WX_PRECOMP
     //(*InternalHeadersPCH(GenericSingleChoiceList)
     #include <wx/string.h>
     #include <wx/intl.h>
     //*)
+#endif
+#ifndef CB_PRECOMP
+    #include <wx/arrstr.h>
 #endif // CB_PRECOMP
 
 #include "genericsinglechoicelist.h"

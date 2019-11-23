@@ -7,13 +7,13 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/scriptedwizard/infopanel.cpp $
  */
 
-#include <sdk.h>
-#ifndef CB_PRECOMP
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#ifndef WX_PRECOMP
     //(*InternalHeadersPCH(InfoPanel)
     #include <wx/string.h>
     #include <wx/intl.h>
     //*)
-#endif // CB_PRECOMP
+#endif // WX_PRECOMP
 
 #include "infopanel.h"
 

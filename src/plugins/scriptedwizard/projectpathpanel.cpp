@@ -7,13 +7,15 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/scriptedwizard/projectpathpanel.cpp $
  */
 
-#include <sdk.h>
-#ifndef CB_PRECOMP
-    #include <wx/filename.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#ifndef WX_PRECOMP
     //(*InternalHeadersPCH(ProjectPathPanel)
     #include <wx/string.h>
     #include <wx/intl.h>
     //*)
+#endif
+#ifndef CB_PRECOMP
+    #include <wx/filename.h>
 #endif // CB_PRECOMP
 #include <filefilters.h>
 

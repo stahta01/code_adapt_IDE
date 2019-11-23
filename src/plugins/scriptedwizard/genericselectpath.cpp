@@ -7,8 +7,8 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/scriptedwizard/genericselectpath.cpp $
  */
 
-#include <sdk.h>
-#ifndef CB_PRECOMP
+#include "sdk.h"         // Precompiled Header needs to be the first include
+#ifndef WX_PRECOMP
     //(*InternalHeadersPCH(GenericSelectPath)
     #include <wx/string.h>
     #include <wx/intl.h>
