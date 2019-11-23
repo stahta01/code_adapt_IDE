@@ -42,7 +42,6 @@
 #include <wx/tokenzr.h>
 #include <wx/html/htmlwin.h>
 
-#include <wx/wxscintilla.h>
 #include <editorcolourset.h>
 #include <cbstyledtextctrl.h>
 #include <editor_hooks.h>
