@@ -90,58 +90,33 @@
     #include <wx/txtstrm.h>
     #include <wx/utils.h>
     #include <wx/wfstream.h>
-    #include <wx/wxscintilla.h>
     #include <wx/xrc/xmlres.h>
 
-    // basic headers
-    #include "settings.h"
-    #include "globals.h"
-    #include "sdk_events.h"
-    #include "cbexception.h"
+/*
+ *  cbplugin.h removed because it changes too often.
+ *  cbstyledtextctrl.h removed because it includes "wx/wxscintilla.h".
+ *  editorcolourset.h removed because it includes "wx/wxscintilla.h".
+ */
 
-    // absolute base classes
-    #include "logger.h"
-    #include "editorbase.h"
-    #include "cbeditor.h"
-    #include "compileoptionsbase.h"
-    #include "compiletargetbase.h"
-    #include "projectbuildtarget.h"
-    #include "projectfile.h"
-    #include "cbplugin.h"
-    #include "cbproject.h"
-    #include "cbtool.h"
-    #include "cbworkspace.h"
-    #include "compilerfactory.h"
-    #include "compiler.h"
-    #include "workspaceloader.h"
-    #include "editorcolourset.h"
-    #include "pipedprocess.h"
-    #include "scrollingdialog.h"
-    #include "cbauibook.h"
+    #include <algorithm>              // included by 28 plugins cpp files
+    #include <map>                    // included by cbproject.h
+    #include <set>                    // included by configmanager.h
+    #include <vector>                 // included by cbproject.h
 
-
-    // managers
-    #include "manager.h"
-    #include "configmanager.h"
-    #include "editormanager.h"
-    #include "logmanager.h"
-    #include "projectmanager.h"
-    #include "menuitemsmanager.h"
-    #include "scriptingmanager.h"
-    #include "toolsmanager.h"
-    #include "templatemanager.h"
-    #include "macrosmanager.h"
-    #include "pluginmanager.h"
-    #include "personalitymanager.h"
-    #include "uservarmanager.h"
-    #include "filemanager.h"
-
-    // other base files
-    #include "xtra_res.h"
-    #include "safedelete.h"
-    #include "infowindow.h"
-    #include "licenses.h"
-
+    #include "cbproject.h"            // included by 65 plugins cpp files
+    #include "cbeditor.h"             // included by 65 plugins cpp files
+    #include "cbexception.h"          // included by editormanager.h
+    #include "configmanager.h"        // included by 137 plugins cpp files
+    #include "editorbase.h"           // included by cbeditor.h
+    #include "editormanager.h"        // included by 79 plugins cpp files
+    #include "globals.h"              // included by configmanager.h
+    #include "logmanager.h"           // included by 122 plugins cpp files
+    #include "manager.h"              // included by configmanager.h
+    #include "projectbuildtarget.h"   // included by cbproject.h
+    #include "projectfile.h"          // included by projectbuildtarget.h
+    #include "projectmanager.h"       // included by cbproject.h
+    #include "sdk_events.h"           // included by manager.h
+    #include "settings.h"             // included by cbproject.h
 #endif // CB_PRECOMP
 
 #endif // SDK_COMMON_H
