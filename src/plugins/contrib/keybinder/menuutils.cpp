@@ -10,20 +10,9 @@
 // RCS-ID:      $Id: menuutils.cpp 11957 2020-02-03 18:51:45Z pecanh $
 
 // menuutils for KeyBinder v2.0 2019/04/8
-#ifdef __GNUG__
-#pragma implementation "menuutils.h"
-#endif
 
-// For compilers that support precompilation, includes "wx/wx.h".
-#include "wx/wxprec.h"
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
 
-#ifdef __BORLANDC__
-#pragma hdrstop
-#endif
-
-#ifndef WX_PRECOMP
-#include "wx/wx.h"
-#endif
 
 //#if defined(CB_PRECOMP) //(2019/03/1)-
 //#include "sdk.h"

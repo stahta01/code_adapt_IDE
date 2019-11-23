@@ -11,6 +11,8 @@
 //////////////////////////////////////////////////////////////////////////////
 // Modifed for Code::Blocks by pecan
 
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
+
 #include <vector>
 #include <algorithm>
 

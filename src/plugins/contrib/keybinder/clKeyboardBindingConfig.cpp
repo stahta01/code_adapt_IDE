@@ -11,6 +11,8 @@
 //////////////////////////////////////////////////////////////////////////////
 // Modifed for Code::Blocks by pecan
 
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
+
 #include <wx/filename.h>
 # if defined(LOGGING)
     #include <wx/private/wxprintf.h>

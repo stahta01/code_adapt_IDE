@@ -12,13 +12,10 @@
 
 // Modified CodeBlocks KeyBnder v2.0 2019/04/8
 
-#if defined(__GNUG__) && !defined(__APPLE__)
-    #pragma implementation "cbkeybinder.h"
-#endif
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
 
 #include <vector>
 
-#include <sdk.h>
 #ifndef CB_PRECOMP
     #include <wx/dynarray.h>
     #include <wx/intl.h>

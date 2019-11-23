@@ -12,10 +12,7 @@
 
 // Modified Keybinder for CodeBlocks KeyBnder v2.0 2019/04/8
 
-#ifdef __GNUG__
-#pragma implementation "keybinder.h" //necessary for linux, else undefines when linking
-#endif
-
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
 
 // includes
 #include <wx/event.h>
@@ -23,22 +20,20 @@
 #include <wx/intl.h>
 #include <wx/menu.h>
 #include <wx/menuitem.h>
+#include <wx/sizer.h>
 #include <wx/string.h>
 #include "wx/statline.h"
 #include "keybinder.h"
 #include "menuutils.h"
 #include "wx/config.h"
 #include "wx/tokenzr.h"
+#include <wx/textdlg.h>
 
 #if defined(kbLOGGING)
     #include "debugging.h"
 #endif
 
-// For compilers that support precompilation, includes "wx/wx.h".
-#include "wx/wxprec.h"
-
 #ifndef WX_PRECOMP
-    #include "wx/wx.h"
     #include "wx/log.h"
 #endif
 

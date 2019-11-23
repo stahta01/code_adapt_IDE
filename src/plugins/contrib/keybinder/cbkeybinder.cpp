@@ -12,13 +12,10 @@
 
 // Modified CodeBlocks KeyBnder v2.0 2019/04/8
 
-#if defined(__GNUG__) && !defined(__APPLE__)
-    #pragma implementation "cbkeybinder.h"
-#endif
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
 
 #include <vector>
 
-#include <sdk.h>
 #ifndef CB_PRECOMP
     #include <wx/dynarray.h>
     #include <wx/intl.h>
@@ -31,7 +28,6 @@
     #include "editormanager.h"
     #include "manager.h"
     #include "pluginmanager.h"
-    #include "personalitymanager.h"
 #endif
 
 #include <wx/xrc/xmlres.h>
@@ -43,6 +39,7 @@
 #include <wx/listbook.h>
 
 #include "logmanager.h"
+#include "personalitymanager.h"
 #if defined(LOGGING)
     #include "debugging.h"
 #endif
