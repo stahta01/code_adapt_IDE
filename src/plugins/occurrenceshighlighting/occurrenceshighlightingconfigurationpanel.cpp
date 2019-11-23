@@ -7,7 +7,7 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/occurrenceshighlighting/occurrenceshighlightingconfigurationpanel.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
 #include "occurrenceshighlightingconfigurationpanel.h"
 
 #ifndef CB_PRECOMP
@@ -15,14 +15,15 @@
     #include <wx/xrc/xmlres.h>
     #include <wx/button.h>
     #include <wx/checkbox.h>
-    #include <wx/colordlg.h>
     #include <wx/stattext.h>
-    #include <wx/spinctrl.h>
 
     #include <configmanager.h>
     #include <editormanager.h>
     #include <logmanager.h>
 #endif
+
+#include <wx/colordlg.h>
+#include <wx/spinctrl.h>
 
 #include "cbcolourmanager.h"
 

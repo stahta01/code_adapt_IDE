@@ -7,7 +7,7 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/occurrenceshighlighting/occurrenceshighlighting.cpp $
  */
 
-#include <sdk.h> // Code::Blocks SDK
+#include "sdk.h"         // Precompiled Header needs to be the first include
 
 #ifndef CB_PRECOMP
     #include <algorithm>
@@ -20,6 +20,7 @@
 #include <configurationpanel.h>
 
 #include <wx/listctrl.h>
+#include <wx/menu.h>
 
 #include "cbcolourmanager.h"
 #include "cbstyledtextctrl.h"

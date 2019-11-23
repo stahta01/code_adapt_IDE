@@ -6,14 +6,10 @@
 #ifndef HIGHLIGHTER_H
 #define HIGHLIGHTER_H
 
-// For compilers that support precompilation, includes <wx/wx.h>
-#include <wx/wxprec.h>
-
-#ifndef WX_PRECOMP
-    #include <wx/wx.h>
-#endif
-
 #include <set>
+
+#include <wx/string.h>
+#include <wx/dynarray.h>
 
 #include <editor_hooks.h>
 
