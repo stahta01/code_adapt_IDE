@@ -9,6 +9,7 @@
 
 #include <sdk.h>
 #include "app.h"
+#include <branding.h>
 
 #include <wx/arrstr.h>
 #include <wx/fs_zip.h>
@@ -109,7 +110,7 @@ class DDEConnection : public wxConnection
 
 wxConnectionBase* DDEServer::OnAcceptConnection(const wxString& topic)
 {
-    return topic == DDE_TOPIC ? new DDEConnection(m_Frame) : nullptr;
+    return topic == BRANDING_DDE_TOPIC ? new DDEConnection(m_Frame) : nullptr;
 }
 
 #if wxCHECK_VERSION(3, 0, 0)
@@ -407,12 +408,12 @@ bool CodeBlocksApp::LoadConfig()
     {
 
         wxString env;
-        wxGetEnv(_T("CODEBLOCKS_DATA_DIR"), &env);
+        wxGetEnv(wxT_2(BRANDING_APP_ENV_DATA_DIR), &env);
         if (!env.IsEmpty())
             data = env;
     }
 
-    data.append(_T("/share/codeblocks"));
+    data.append(wxT_2(BRANDING_STANDARD_DATA_PATH));
 
     // Make sure the path to our resources is always an absolute path, because resource loading
     // would fail with a relative path if some part of the code changes the current working
@@ -585,7 +586,7 @@ bool CodeBlocksApp::OnInit()
 
     wxLog::EnableLogging(true);
 
-    SetAppName(_T("codeblocks"));
+    SetAppName(wxT_2(BRANDING_APP_LOWERCASE_NAME));
 
     s_Loading              = true;
     m_pBatchBuildDialog    = nullptr;
@@ -659,7 +660,7 @@ bool CodeBlocksApp::OnInit()
             DDEClient *client = new DDEClient;
             DDEConnection* connection = nullptr;
             wxLogNull ln; // own error checking implemented -> avoid debug warnings
-            connection = (DDEConnection *)client->MakeConnection(_T("localhost"), F(DDE_SERVICE, wxGetUserId().wx_str()), DDE_TOPIC);
+            connection = (DDEConnection *)client->MakeConnection(_T("localhost"), F(BRANDING_DDE_SERVICE, wxGetUserId().wx_str()), BRANDING_DDE_TOPIC);
 
             if (connection)
             {
@@ -1272,11 +1273,11 @@ int CodeBlocksApp::ParseCmdLine(MainFrame* handlerFrame, const wxString& CmdLine
             if (parser.Found(_T("no-log")) == false)
                 Manager::Get()->GetLogManager()->SetLog(new TextCtrlLogger, LogManager::app_log);
             if (parser.Found(_T("log-to-file")))
-                Manager::Get()->GetLogManager()->SetLog(new FileLogger(_T("codeblocks.log")), LogManager::app_log);
+                Manager::Get()->GetLogManager()->SetLog(new FileLogger(wxT_2(BRANDING_APP_LOG_FILENAME)), LogManager::app_log);
             if (m_HasDebugLog)
                 Manager::Get()->GetLogManager()->SetLog(new TextCtrlLogger, LogManager::debug_log);
             if (parser.Found(_T("debug-log-to-file")))
-                Manager::Get()->GetLogManager()->SetLog(new FileLogger(_T("codeblocks-debug.log")), LogManager::debug_log);
+                Manager::Get()->GetLogManager()->SetLog(new FileLogger(wxT_2(BRANDING_APP_DEBUG_LOG_FILENAME)), LogManager::debug_log);
         }
 
         // Always parse the debugger attach parameters.

@@ -14,12 +14,13 @@
     #include "cbplugin.h"
     #include "configmanager.h"
 #endif
+#include <branding.h>
 #include "appglobals.h"
 
 namespace appglobals
 {
-    const wxString AppVendor             = _T("Code::Blocks");
-    const wxString AppName               = _T("Code::Blocks");
+    const wxString AppVendor             = wxT_2(BRANDING_APP_NAME_FANCY);
+    const wxString AppName               = wxT_2(BRANDING_APP_NAME_FANCY);
 
 #if SVN_BUILD
     const wxString AppVersion            = _T("svn build");
@@ -37,7 +38,7 @@ namespace appglobals
                                                             static_cast<int>(PLUGIN_SDK_VERSION_RELEASE));
 
     const wxString AppUrl                = _T("http://www.codeblocks.org");
-    const wxString AppContactEmail       = _T("info@codeblocks.org");
+    const wxString AppContactEmail       = wxT_2(BRANDING_EMAIL_CONTACT);
 
 #if defined(__WXMSW__)
     const wxString AppPlatform           = _T("Windows");

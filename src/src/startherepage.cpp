@@ -25,6 +25,8 @@
     #include <configmanager.h>
 #endif
 
+#include <branding.h>
+
 #include "startherepage.h"
 #include "main.h"
 #include "appglobals.h"
@@ -34,6 +36,7 @@
 #include <wx/clipbrd.h>
 #include <wx/docview.h>
 #include <wx/wxhtml.h>
+#include <branding.h>
 
 const wxString g_StartHereTitle = _("Start here");
 int idWin = wxNewId();
@@ -288,8 +291,8 @@ bool StartHerePage::LinkClicked(const wxHtmlLinkInfo& link)
         return true;
     }
 
-    if (   href.IsSameAs(_T("http://www.codeblocks.org/"))
-        || href.StartsWith(_T("https://sourceforge.net/p/codeblocks/tickets")) )
+    if (   href.IsSameAs(wxT_2(BRANDING_URL_WEBSITE))
+        || href.StartsWith(wxT_2(BRANDING_URL_TICKETS_SITE)) )
     {
         wxTextDataObject* data = new wxTextDataObject(revInfo);
         if (wxTheClipboard->Open())

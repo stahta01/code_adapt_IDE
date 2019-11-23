@@ -6,6 +6,7 @@
 #ifndef ASSOCIATIONS_H
 #define ASSOCIATIONS_H
 
+#include <branding.h>
 #include "scrollingdialog.h"
 #include <wx/intl.h>
 #include <wx/string.h>
@@ -16,11 +17,11 @@
         #include <windows.h>
         #include <wincon.h>
     #endif
-    #define DDE_SERVICE    _T("CODEBLOCKS")
+    #define DDE_SERVICE    BRANDING_DDE_SERVICE
 #else
-    #define DDE_SERVICE    _T("/tmp/CODEBLOCKS%s.socket")
+    #define DDE_SERVICE    _T("/tmp/") + BRANDING_DDE_SERVICE + _T("%s.socket")
 #endif
-#define DDE_TOPIC    _T("CodeBlocksDDEServer")
+#define DDE_TOPIC    BRANDING_DDE_TOPIC
 #include <wx/ipc.h>
 
 class wxCheckListBox;
