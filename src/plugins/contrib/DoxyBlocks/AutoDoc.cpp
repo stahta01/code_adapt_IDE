@@ -21,15 +21,17 @@
  *
  *****************************************************************************/
 
-#include <sdk.h> // Code::Blocks SDK
+#include "sdk.h" // Code::Blocks SDK Pre-compiled Header
+
 #ifndef CB_PRECOMP
   #include <cbeditor.h>
   #include <configmanager.h>
   #include <editormanager.h>
-  #include <editorcolourset.h>
   #include <logmanager.h>
 #endif
 #include <wx/tokenzr.h>
+
+#include <editorcolourset.h>
 
 #include "DoxyBlocks.h"
 #include "Expressions.h"

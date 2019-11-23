@@ -20,8 +20,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *****************************************************************************/
+#include "sdk.h" // Code::Blocks SDK Pre-compiled Header
+
 #include "ConfigPanel.h"
-#include <sdk.h> // Code::Blocks SDK
 
 //(*InternalHeaders(ConfigPanel)
 #include <wx/intl.h>

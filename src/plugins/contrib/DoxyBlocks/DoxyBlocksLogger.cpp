@@ -20,13 +20,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *****************************************************************************/
-#include "DoxyBlocksLogger.h"
+
+#include "sdk.h" // Code::Blocks SDK Pre-compiled Header
 
 #include <cbplugin.h>
 #include <pluginmanager.h>
-#include <prep.h>
 
 #include <wx/sizer.h>
+
+#include "DoxyBlocksLogger.h"
 
 /*! \brief Update the window's settings.
  *
