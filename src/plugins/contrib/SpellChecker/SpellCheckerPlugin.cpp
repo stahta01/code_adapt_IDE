@@ -20,12 +20,12 @@
 #ifndef CB_PRECOMP
 #include <cbeditor.h>
 #include <configmanager.h>
-#include <editorcolourset.h>
 #include <editormanager.h>
 #endif
 #include <configurationpanel.h>
 #include <editor_hooks.h>
 #include <cbstyledtextctrl.h>
+#include <editorcolourset.h>
 #ifdef wxUSE_STATUSBAR
 #include <cbstatusbar.h>
 #endif

@@ -22,10 +22,10 @@
 #ifndef CB_PRECOMP
 #include <wx/dir.h>
 #include <logmanager.h>
-#include <macrosmanager.h>
 #endif
 
 #include <configmanager.h>
+#include <macrosmanager.h>
 
 #define CFG_SPELLCHECK_ENABLE_ONLINE_CHECK      _T("/SpellChecker/EnableOnlineChecker")
 #define CFG_SPELLCHECK_SPELL_TOOLTIPS_CHECK     _T("/SpellChecker/SpellTooltips")

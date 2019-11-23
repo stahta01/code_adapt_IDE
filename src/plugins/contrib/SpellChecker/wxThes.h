@@ -23,14 +23,6 @@
 //#define MAX_WD_LEN 200
 //#define MAX_LN_LEN 16384
 
-
-// For compilers that support precompilation, includes "wx/wx.h".
-#include <wx/wxprec.h>
-
-#ifndef WX_PRECOMP
-#include <wx/wx.h>
-#endif
-
 #include <wx/string.h>
 #include <map>
 #include <vector>

@@ -19,14 +19,7 @@
 #ifndef OnlineSpellChecker_h
 #define OnlineSpellChecker_h
 
-// For compilers that support precompilation, includes <wx/wx.h>
-#include <wx/wxprec.h>
-
 #include "cbeditor.h"
-
-#ifndef WX_PRECOMP
-#include <wx/wx.h>
-#endif
 
 class wxSpellCheckEngineInterface;
 class SpellCheckHelper;

@@ -20,12 +20,6 @@
 #ifndef SPELLCHECKER_H_INCLUDED
 #define SPELLCHECKER_H_INCLUDED
 
-// For compilers that support precompilation, includes <wx/wx.h>
-#include <wx/wxprec.h>
-
-#ifndef WX_PRECOMP
-#include <wx/wx.h>
-#endif
 
 #include <cbplugin.h> // for "class cbPlugin"
 class wxSpellCheckEngineInterface;

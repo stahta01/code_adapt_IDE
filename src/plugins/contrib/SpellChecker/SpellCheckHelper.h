@@ -19,13 +19,6 @@
 #ifndef SPELLCHECKHELPER_H
 #define SPELLCHECKHELPER_H
 
-// For compilers that support precompilation, includes "wx/wx.h".
-#include "wx/wxprec.h"
-
-#ifndef WX_PRECOMP
-#include "wx/wx.h"
-#endif
-
 
 #include <map>
 #include <set>
