@@ -12,7 +12,7 @@
 #include <wx/txtstrm.h>
 
 #include <configurationpanel.h>
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 #include <cbcolourmanager.h>
 #include <filefilters.h>
 #include "NassiPlugin.h"
