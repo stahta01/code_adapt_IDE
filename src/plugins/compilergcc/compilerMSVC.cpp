@@ -13,9 +13,9 @@
 #include <wx/intl.h>
 #include <wx/regex.h>
 #include <wx/config.h>
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     #include <wx/msw/registry.h>
-#endif // __WXMSW__
+#endif // __WINDOWS__
 
 CompilerMSVC::CompilerMSVC()
     : Compiler(_("Microsoft Visual C++ Toolkit 2003"), _T("msvctk"))
@@ -56,7 +56,7 @@ AutoDetectResult CompilerMSVC::AutoDetectInstallationDir()
         AddIncludeDir(m_MasterPath + sep + _T("include"));
         AddLibDir(m_MasterPath + sep + _T("lib"));
 
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
         // add include dirs for MS Platform SDK too
         wxRegKey key; // defaults to HKCR
         key.SetName(_T("HKEY_CURRENT_USER\\Software\\Microsoft\\Win32SDK\\Directories"));
@@ -87,7 +87,7 @@ AutoDetectResult CompilerMSVC::AutoDetectInstallationDir()
                 m_ExtraPaths.Add(dir);
             }
         }
-#endif // __WXMSW__
+#endif // __WINDOWS__
     }
 
     return wxFileExists(m_MasterPath + sep + _T("bin") + sep + m_Programs.C) ? adrDetected : adrGuessed;

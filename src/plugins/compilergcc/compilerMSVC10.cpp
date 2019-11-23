@@ -13,9 +13,9 @@
 #include <wx/intl.h>
 #include <wx/regex.h>
 #include <wx/config.h>
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     #include <wx/msw/registry.h>
-#endif // __WXMSW__
+#endif // __WINDOWS__
 
 CompilerMSVC10::CompilerMSVC10()
     : Compiler(_("Microsoft Visual C++ 2010"), _T("msvc10"))
@@ -78,7 +78,7 @@ AutoDetectResult CompilerMSVC10::AutoDetectInstallationDir()
         // we need to add the IDE path, as the compiler requires some DLL present there
         m_ExtraPaths.Add(idepath);
 
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
         wxRegKey key; // defaults to HKCR
         // try to detect Platform SDK (old versions)
         key.SetName(_T("HKEY_CURRENT_USER\\Software\\Microsoft\\Win32SDK\\Directories"));
@@ -125,7 +125,7 @@ AutoDetectResult CompilerMSVC10::AutoDetectInstallationDir()
                 key.Close();
             }
         }
-#endif // __WXMSW__
+#endif // __WINDOWS__
 
         // take a guess
         if (!sdkfound)
@@ -161,7 +161,7 @@ AutoDetectResult CompilerMSVC10::AutoDetectInstallationDir()
         AddLibDir(m_MasterPath + sep + _T("lib"));
         AddResourceIncludeDir(m_MasterPath + sep + _T("include"));
 
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
         // add extra paths for "Debugging tools" too
         key.SetName(_T("HKEY_CURRENT_USER\\Software\\Microsoft\\DebuggingTools"));
         if (key.Exists() && key.Open(wxRegKey::Read))
@@ -175,7 +175,7 @@ AutoDetectResult CompilerMSVC10::AutoDetectInstallationDir()
             }
         }
         key.Close();
-#endif // __WXMSW__
+#endif // __WINDOWS__
     }
 
     return wxFileExists(m_MasterPath + sep + _T("bin") + sep + m_Programs.C) ? adrDetected : adrGuessed;

@@ -20,7 +20,7 @@
 
 #include <configmanager.h>
 
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     #include <wx/msw/registry.h>
 #endif
 
@@ -56,7 +56,7 @@ AutoDetectResult CompilerGDC::AutoDetectInstallationDir()
             m_MasterPath = ini.Read(_T("/InstallSettings/InstallPath"), _T("C:\\MinGW"));
             if (!wxFileExists(m_MasterPath + sep + _T("bin") + sep + m_Programs.C))
             {
-#ifdef __WXMSW__ // for wxRegKey
+#ifdef __WINDOWS__ // for wxRegKey
                 // not found...
                 // look for dev-cpp installation
                 wxRegKey key; // defaults to HKCR

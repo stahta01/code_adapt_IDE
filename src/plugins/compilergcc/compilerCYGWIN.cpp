@@ -9,9 +9,9 @@
 
 #include "compilerCYGWIN.h"
 #include <wx/filefn.h>
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     #include <wx/msw/registry.h>
-#endif // __WXMSW__
+#endif // __WINDOWS__
 
 CompilerCYGWIN::CompilerCYGWIN()
     : CompilerMINGW(_("Cygwin GCC"), _T("cygwin"))
@@ -38,7 +38,7 @@ AutoDetectResult CompilerCYGWIN::AutoDetectInstallationDir()
 
     // look in registry for Cygwin
 
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     wxRegKey key; // defaults to HKCR
     key.SetName(_T("HKEY_LOCAL_MACHINE\\Software\\Cygwin\\setup"));
     if (key.Exists() && key.Open(wxRegKey::Read))
@@ -59,7 +59,7 @@ AutoDetectResult CompilerCYGWIN::AutoDetectInstallationDir()
                 validInstallationDir = true;
         }
     }
-#endif // __WXMSW__
+#endif // __WINDOWS__
 
     if (!validInstallationDir)
         return ret;

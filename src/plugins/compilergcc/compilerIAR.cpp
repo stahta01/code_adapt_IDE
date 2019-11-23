@@ -17,7 +17,7 @@
 #include <wx/fileconf.h>
 #include <wx/msgdlg.h>
 
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     #include <wx/msw/registry.h>
 #endif
 
@@ -44,7 +44,7 @@ AutoDetectResult CompilerIAR::AutoDetectInstallationDir()
     if (platform::windows)
     {
         m_MasterPath.Clear();
-#ifdef __WXMSW__ // for wxRegKey
+#ifdef __WINDOWS__ // for wxRegKey
         wxRegKey key;   // defaults to HKCR
         key.SetName(wxT("HKEY_LOCAL_MACHINE\\Software\\IAR Systems\\Installed Products"));
         if (key.Exists() && key.Open(wxRegKey::Read))
@@ -69,7 +69,7 @@ AutoDetectResult CompilerIAR::AutoDetectInstallationDir()
                 } while (key.GetNextKey(subkeyname, idx));
             }
         }
-#endif // __WXMSW__
+#endif // __WINDOWS__
         wxString env_path = wxGetenv(_T("ProgramFiles(x86)"));
         if (m_MasterPath.IsEmpty())
         {

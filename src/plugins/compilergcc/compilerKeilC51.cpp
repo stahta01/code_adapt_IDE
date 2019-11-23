@@ -16,7 +16,7 @@
 #include <wx/fileconf.h>
 #include <wx/msgdlg.h>
 
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     #include <wx/msw/registry.h>
 #endif
 
@@ -47,12 +47,12 @@ AutoDetectResult CompilerKeilC51::AutoDetectInstallationDir()
 {
     if (platform::windows)
     {
-#ifdef __WXMSW__ // for wxRegKey
+#ifdef __WINDOWS__ // for wxRegKey
         wxRegKey key;   // defaults to HKCR
         key.SetName(wxT("HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Keil \265Vision3")); // 'backslash265' is the mu character
         if (key.Exists() && key.Open(wxRegKey::Read)) // found; read it
             key.QueryValue(wxT("LastInstallDir"), m_MasterPath);
-#endif // __WXMSW__
+#endif // __WINDOWS__
 
         if (m_MasterPath.IsEmpty())
         {

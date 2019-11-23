@@ -17,9 +17,9 @@
 #include <wx/fileconf.h>
 #include <wx/msgdlg.h>
 
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     #include <wx/msw/registry.h>
-#endif // __WXMSW__
+#endif // __WINDOWS__
 
 CompilerLCC::CompilerLCC() :
     Compiler(_("LCC Compiler"), _T("lcc")),
@@ -59,7 +59,7 @@ AutoDetectResult CompilerLCC::AutoDetectInstallationDir()
 {
     wxString compiler; compiler << wxFILE_SEP_PATH << _T("bin") << wxFILE_SEP_PATH << m_Programs.C;
 
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     wxRegKey key; // defaults to HKCR
     wxString mpHKLM     = wxEmptyString;
     wxString mpHKCU     = wxEmptyString;
@@ -131,7 +131,7 @@ AutoDetectResult CompilerLCC::AutoDetectInstallationDir()
     else if (wxFileExists(mpCompiler + compiler))
         m_MasterPath = mpCompiler;
     else
-#endif // __WXMSW__
+#endif // __WINDOWS__
         m_MasterPath = _T("C:\\lcc"); // just a guess; the default installation dir
 
     if (!m_MasterPath.IsEmpty())
@@ -146,7 +146,7 @@ AutoDetectResult CompilerLCC::AutoDetectInstallationDir()
     return wxFileExists(m_MasterPath+compiler) ? adrDetected : adrGuessed;
 }
 
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
 bool CompilerLCC::IsValid()
 {
     if (!m_RegistryUpdated)
@@ -186,4 +186,4 @@ bool CompilerLCC::IsValid()
 
     return Compiler::IsValid();
 }
-#endif // __WXMSW__
+#endif // __WINDOWS__

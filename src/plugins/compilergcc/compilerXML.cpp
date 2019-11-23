@@ -8,9 +8,9 @@
 #include <wx/textfile.h>
 #include <wx/regex.h>
 #include <wx/xml/xml.h>
-#ifdef __WXMSW__ // for wxRegKey
+#ifdef __WINDOWS__ // for wxRegKey
     #include <wx/msw/registry.h>
-#endif // __WXMSW__
+#endif // __WINDOWS__
 
 #include "compilerXML.h"
 
@@ -154,7 +154,7 @@ AutoDetectResult CompilerXML::AutoDetectInstallationDir()
                     }
                 }
             }
-#ifdef __WXMSW__ // for wxRegKey
+#ifdef __WINDOWS__ // for wxRegKey
             else if (node->GetAttribute(wxT("registry"), &value))
             {
                 wxRegKey key;
@@ -168,7 +168,7 @@ AutoDetectResult CompilerXML::AutoDetectInstallationDir()
                     key.Close();
                 }
             }
-#endif // __WXMSW__
+#endif // __WINDOWS__
         }
         else if (node->GetName() == wxT("Add"))
         {

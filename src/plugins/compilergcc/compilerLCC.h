@@ -8,9 +8,9 @@ class CompilerLCC : public Compiler
     public:
         CompilerLCC();
         virtual ~CompilerLCC();
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
         virtual bool IsValid();
-#endif // __WXMSW__
+#endif // __WINDOWS__
         virtual void Reset();
         virtual AutoDetectResult AutoDetectInstallationDir();
     protected:
