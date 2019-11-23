@@ -43,7 +43,7 @@
 //-#else
 //-#endif
 
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "snippetitemdata.h"
 #include "codesnippetstreectrl.h"
 #include "codesnippetswindow.h"
