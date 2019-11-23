@@ -33,7 +33,7 @@
 #include "workspaceloader.h"
 
 #include <algorithm>
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 
 #include "projectloader.h"
 #include "autosave.h"
