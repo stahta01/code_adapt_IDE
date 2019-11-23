@@ -9,7 +9,7 @@
 #include <wx/dynarray.h>
 #include <wx/hashmap.h>
 #include <wx/intl.h>
-#include <wx/wxscintilla.h> // wxSCI_KEYWORDSET_MAX
+#include "ca/sci_defines.h" // wxSCI_KEYWORDSET_MAX
 #include "settings.h"
 #include "globals.h" // HighlightLanguage
 

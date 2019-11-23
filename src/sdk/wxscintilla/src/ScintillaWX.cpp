@@ -38,7 +38,7 @@
 
 #include <memory>
 
-#include "wx/wxscintilla.h"
+#include "ca/wxscintilla.h"
 
 #if !wxUSE_STD_CONTAINERS && !wxUSE_STD_IOSTREAM && !wxUSE_STD_STRING
     #include "wx/beforestd.h"

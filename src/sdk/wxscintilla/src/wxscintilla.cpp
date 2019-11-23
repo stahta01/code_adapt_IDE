@@ -44,7 +44,7 @@
 #endif
 
 #include "ScintillaWX.h"
-#include "wx/wxscintilla.h"
+#include "ca/wxscintilla.h"
 
 #ifdef SCI_NAMESPACE
 using namespace Scintilla;

@@ -42,7 +42,7 @@
 #include <algorithm>
 #include <string>
 
-#include "wx/wxscintilla.h"
+#include "ca/sci_defines.h"
 #include "filefilters.h"
 #include "tinywxuni.h"
 #include "filegroupsandmasks.h"

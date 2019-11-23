@@ -74,7 +74,7 @@
 #include "Scintilla.h"
 #include "FontQuality.h"
 
-#include "wx/wxscintilla.h"
+#include "ca/wxscintilla.h"
 
 #ifdef __WXMSW__
     #include <windows.h> // for GetDoubleClickTime

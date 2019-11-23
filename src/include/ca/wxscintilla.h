@@ -33,7 +33,7 @@
 #include <wx/defs.h>
 
 /* CodeAdapt begin */
-#include <ca/stc_defines.h>
+#include <ca/sci_defines.h>
 /* CodeAdapt end */
 
 /* C::B -> Don't forget to change version number here and in wxscintilla.cpp at the bottom */
