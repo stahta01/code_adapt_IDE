@@ -10,8 +10,9 @@ struct wxDigitData
 	bool comma;
 };
 
+#include "wxlcdwindowdef.h"
 
-class wxLCDWindow : public wxWindow
+class WXDLLIMPEXP_LCDWINDOW wxLCDWindow : public wxWindow
 {
 protected:
 	int mSegmentLen;
