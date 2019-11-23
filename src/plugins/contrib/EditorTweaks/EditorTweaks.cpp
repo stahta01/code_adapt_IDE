@@ -17,7 +17,7 @@
 #include <editor_hooks.h>
 #include <cbeditor.h>
 #include <editormanager.h>
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 
 
 // Register the plugin with Code::Blocks.
