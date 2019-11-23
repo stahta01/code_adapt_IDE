@@ -51,6 +51,7 @@ makefile.wat
 # CodeBlocks build files
 *.cbp
 *.layout
+*.depend
 update
 update30
 
@@ -66,5 +67,12 @@ Makefile
 
 # batch files
 *.bat
+
+# CodeBlocks temporary files and folders
+/src/.objs*
+/src/devel*
+/src/output*
+/src/plugins/contrib/SmartIndent/manifest.xml
+*build_log.html
 
 #
