@@ -30,7 +30,7 @@
     #include "logmanager.h"
 #endif
 
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "encodingdetector.h"
 #include "ca/assert.h"
 #include "editorcolourset.h"

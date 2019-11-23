@@ -21,7 +21,7 @@
     #include "sdk_events.h"
 #endif
 
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "ThreadSearch.h"
 #include "ThreadSearchView.h"
 #include "ThreadSearchCommon.h"
