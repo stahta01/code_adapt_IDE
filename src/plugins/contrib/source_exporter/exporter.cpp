@@ -22,7 +22,7 @@
 #include "RTFExporter.h"
 #include "ODTExporter.h"
 #include "PDFExporter.h"
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 
 static int idFileExportHTML = wxNewId();
 static int idFileExportRTF = wxNewId();
