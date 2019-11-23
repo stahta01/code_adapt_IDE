@@ -14,14 +14,6 @@
 #ifndef MouseSap_H
 #define MouseSap_H
 
-#if defined(__GNUG__) && !defined(__APPLE__)
-	#pragma interface "MouseSap.h"
-#endif
-
-#ifdef __BORLANDC__
-	#pragma hdrstop
-#endif
-
 #include <wx/arrstr.h>
 #include <wx/dynarray.h>
 #include <wx/event.h> // wxEvtHandler
