@@ -9,29 +9,32 @@
  **************************************************************/
 
 #include "sdk.h"
+#ifndef WX_PRECOMP
+    #include <wx/combobox.h>
+    #include <wx/statbox.h>
+    #include <wx/toolbar.h>
+#endif
 #include <wx/bitmap.h>
 #include <wx/bmpbuttn.h>
 #include <wx/statline.h>
 #ifndef CB_PRECOMP
-    #include <wx/combobox.h>
     #include <wx/menu.h>
     #include <wx/sizer.h>
     #include <wx/splitter.h>
     #include <wx/statbox.h>
     #include <wx/stattext.h>
     #include <wx/settings.h>
-    #include <wx/toolbar.h>
 
     #include "cbeditor.h"
     #include "configmanager.h"
-    #include "editorcolourset.h"
-    #include "infowindow.h"
     #include "logmanager.h"
 #endif
 
 #include "cbstyledtextctrl.h"
 #include "encodingdetector.h"
 #include "cbassert.h"
+#include "editorcolourset.h"
+#include "infowindow.h"
 #include "SearchInPanel.h"
 #include "DirectoryParamsPanel.h"
 #include "ThreadSearch.h"

@@ -16,11 +16,13 @@
  **************************************************************/
 
 #include "sdk.h"
+#ifndef WX_PRECOMP
+    #include <wx/combobox.h>
+    #include <wx/dirdlg.h>
+#endif
 #ifndef CB_PRECOMP
     #include <wx/button.h>
     #include <wx/checkbox.h>
-    #include <wx/combobox.h>
-    #include <wx/dirdlg.h>
     #include <wx/sizer.h>
     #include <wx/stattext.h>
 #endif

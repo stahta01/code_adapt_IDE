@@ -9,10 +9,12 @@
  **************************************************************/
 
 #include <sdk.h> // Code::Blocks SDK
-#ifndef CB_PRECOMP
+#ifndef WX_PRECOMP
     #include <wx/combobox.h>
-    #include <wx/menu.h>
     #include <wx/toolbar.h>
+#endif
+#ifndef CB_PRECOMP
+    #include <wx/menu.h>
     #include <wx/xrc/xmlres.h>
     #include "cbeditor.h"
     #include "configmanager.h"

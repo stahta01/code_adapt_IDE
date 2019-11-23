@@ -10,11 +10,13 @@
  **************************************************************/
 
 #include <sdk.h> // Code::Blocks SDK
+#ifndef WX_PRECOMP
+    #include <wx/statbox.h>
+    #include <wx/radiobox.h>
+#endif
 #ifndef CB_PRECOMP
     #include <wx/checkbox.h>
-    #include <wx/radiobox.h>
     #include <wx/sizer.h>
-    #include <wx/statbox.h>
     #include <wx/stattext.h>
     #include "configmanager.h"
 #endif

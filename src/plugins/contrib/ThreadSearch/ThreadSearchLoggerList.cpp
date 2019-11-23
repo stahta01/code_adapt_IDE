@@ -12,12 +12,13 @@
 #ifndef CB_PRECOMP
     // Required extra includes
     #include <configmanager.h>
-    #include <infowindow.h>
 #endif
 
 #include <wx/listctrl.h>
 #include <wx/dynarray.h>
 #include <wx/gdicmn.h>
+
+#include "infowindow.h"
 
 #include "ThreadSearch.h"
 #include "ThreadSearchView.h"
