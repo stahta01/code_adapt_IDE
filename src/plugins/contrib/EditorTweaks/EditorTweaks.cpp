@@ -16,7 +16,6 @@
 #include <logmanager.h>
 #include <editor_hooks.h>
 #include <cbeditor.h>
-#include <wx/wxscintilla.h>
 #include <editormanager.h>
 #include "cbstyledtextctrl.h"
 
