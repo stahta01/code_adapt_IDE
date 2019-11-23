@@ -24,7 +24,7 @@
 #endif
 #include <configurationpanel.h>
 #include <editor_hooks.h>
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 #include <editorcolourset.h>
 #ifdef wxUSE_STATUSBAR
 #include <cbstatusbar.h>

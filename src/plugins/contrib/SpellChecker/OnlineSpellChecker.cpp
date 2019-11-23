@@ -8,7 +8,7 @@
 #include <logmanager.h>
 #endif
 #include <editorcolourset.h>
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 
 #include "SpellCheckEngineInterface.h"
 #include "SpellCheckHelper.h"

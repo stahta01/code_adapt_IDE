@@ -22,7 +22,7 @@
 #include <logmanager.h>
 #endif
 
-#include <wx/wxscintilla.h>
+#include "ca/sci_defines.h"
 
 #include "SpellCheckHelper.h"
 #include "SpellCheckerPlugin.h"
