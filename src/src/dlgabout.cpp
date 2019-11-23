@@ -35,7 +35,7 @@
 #include "dlgabout.h" // class's header file
 #include "splashscreen.h"
 #include "licenses.h"
-#include "wx/wxscintilla.h"
+#include "ca/wxscintilla.h"
 
 // class constructor
 
