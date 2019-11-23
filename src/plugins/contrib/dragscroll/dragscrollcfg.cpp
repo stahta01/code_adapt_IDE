@@ -1,3 +1,5 @@
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
+
 #include "configmanager.h"
 #include "dragscrollcfg.h"
 

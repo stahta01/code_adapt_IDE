@@ -6,19 +6,15 @@
  * License:   GPL
  **************************************************************/
 
-#if defined(__GNUG__) && !defined(__APPLE__)
-	#pragma implementation "dragscroll.h"
-#endif
-
-
-#include <sdk.h>
-#ifndef CB_PRECOMP
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
+#ifndef WX_PRECOMP
     #include <wx/app.h>
+#endif
+#ifndef CB_PRECOMP
 	#include <wx/intl.h>
 	#include <wx/listctrl.h>
 	#include "configmanager.h"
 	#include "manager.h"
-	#include "personalitymanager.h"
 	#include "sdk_events.h" // EVT_APP_STARTUP_DONE
 #endif
 
@@ -32,6 +28,7 @@
 #include "logmanager.h"
 #include "loggers.h"
 #include "projectmanager.h"
+#include "personalitymanager.h"
 #include "editormanager.h"
 
 #include "startherepage.h"

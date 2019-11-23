@@ -12,8 +12,10 @@
  * License:   GPL
  **************************************************************/
 
- #include "dragscrollevent.h"
- #include "dragscroll.h"
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
+
+#include "dragscrollevent.h"
+#include "dragscroll.h"
 
 IMPLEMENT_DYNAMIC_CLASS(DragScrollEvent, wxCommandEvent)
 
