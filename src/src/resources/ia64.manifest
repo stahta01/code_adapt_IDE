@@ -12,7 +12,7 @@
                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <asmv1:assemblyIdentity type="win32"
-                          name="codeblocks.exe"
+                          name="codeadapt.exe"
                           version="1.0.0.1"
                           processorArchitecture="ia64"
                           publicKeyToken="0000000000000000" />

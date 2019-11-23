@@ -101,7 +101,7 @@ VS_VERSION_INFO    VERSIONINFO
       VALUE "InternalName",     "Code::Blocks\0"
       VALUE "LegalCopyright",   "Copyright (C) 2004-2018 Code::Blocks Team\0"
       VALUE "LegalTrademarks",  "All rights reserved.\0"
-      VALUE "OriginalFilename", "codeblocks.exe\0"
+      VALUE "OriginalFilename", "codeadapt.exe\0"
       VALUE "PrivateBuild",     "\0"
       VALUE "ProductName",      "Code::Blocks\0"
       VALUE "ProductVersion",   "17.12.0.1\0"
@@ -127,7 +127,7 @@ VS_VERSION_INFO    VERSIONINFO
   #endif
 
   #if defined(WX_CPU_AMD64)
-    #if defined(cbDPI_AWARE_ON)
+    #if defined(caDPI_AWARE_ON)
         wxMANIFEST_ID RT_MANIFEST "amd64_dpi_aware_on.manifest"
         #warning Manifest: amd64_dpi_aware_on.manifest
     #else
