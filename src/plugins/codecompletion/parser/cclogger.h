@@ -11,7 +11,7 @@
 
 #include <memory> // unique_ptr
 
-#include <cbassert.h>    // cbAssert
+#include <ca/assert.h>   // caAssert
 #include <logmanager.h>  // F()
 #include <prep.h>        // nullptr
 
@@ -159,13 +159,13 @@ private:
     #define CC_LOCKER_TRACK_TT_MTX_LOCK(M)      \
         do {                                    \
             auto result = M.Lock();             \
-            cbAssert(result==wxMUTEX_NO_ERROR); \
+            caAssert(result==wxMUTEX_NO_ERROR); \
         } while (false);
 
     #define CC_LOCKER_TRACK_TT_MTX_UNLOCK(M)    \
         do {                                    \
             auto result = M.Unlock();           \
-            cbAssert(result==wxMUTEX_NO_ERROR); \
+            caAssert(result==wxMUTEX_NO_ERROR); \
         } while (false);
 
     #define CC_LOCKER_TRACK_CBBT_MTX_LOCK    CC_LOCKER_TRACK_TT_MTX_LOCK

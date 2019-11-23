@@ -586,7 +586,7 @@ void Parser::OnAllThreadsDone(CodeBlocksEvent& event)
     }
 
     if (!m_TokenTree)
-        cbThrow(_T("m_TokenTree is a nullptr?!"));
+        caThrow(_T("m_TokenTree is a nullptr?!"));
 
     if (!m_IsParsing)
     {

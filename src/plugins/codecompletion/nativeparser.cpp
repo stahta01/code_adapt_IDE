@@ -18,7 +18,7 @@
     #include <wx/wfstream.h>
 
     #include <cbeditor.h>
-    #include <cbexception.h>
+    #include <ca/exception.h>
     #include <cbproject.h>
     #include <configmanager.h>
     #include <editormanager.h>

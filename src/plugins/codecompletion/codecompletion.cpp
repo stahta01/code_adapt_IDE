@@ -1472,7 +1472,7 @@ wxArrayString CodeCompletion::GetLocalIncludeDirs(cbProject* project, const wxAr
 
     if (!sysDirs.IsEmpty())
     {
-        cbAssert(m_CCEnableHeaders);
+        caAssert(m_CCEnableHeaders);
         // Create a worker thread associated with "sysDirs". Put it in a queue and run it.
         SystemHeadersThread* thread = new SystemHeadersThread(this, &m_SystemHeadersThreadCS,
                                                               m_SystemHeadersMap, sysDirs);

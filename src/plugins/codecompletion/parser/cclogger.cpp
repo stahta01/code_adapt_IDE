@@ -14,7 +14,7 @@
 #include <wx/utils.h> // wxNewId
 
 #include <logmanager.h> // F()
-#include <globals.h>    // cbC2U for cbAssert macro
+#include <globals.h>    // cbC2U for caAssert macro
 
 std::unique_ptr<CCLogger> CCLogger::s_Inst;
 
@@ -32,7 +32,7 @@ long           g_idCCDebugLogger      = wxNewId();
         {                                                            \
             f.AddLine(msg);                                          \
             bool exp = f.Write() && f.Close();                       \
-            cbAssert(exp);                                           \
+            caAssert(exp);                                           \
         }                                                            \
     }                                                                \
 
@@ -44,7 +44,7 @@ long           g_idCCDebugLogger      = wxNewId();
         {                                                            \
             f.AddLine(msg);                                          \
             bool exp = f.Write() && f.Close()                        \
-            cbAssert(exp);                                           \
+            caAssert(exp);                                           \
         }                                                            \
     }                                                                \
 
