@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
-#ifdef __WXMSW__
+#if defined(_WIN32) || defined(__WIN32__) || defined(__WINDOWS__)
     #include <windows.h>
     #include <conio.h>
     #define wait_key getch
@@ -40,7 +40,7 @@ bool hasSpaces(const char* str)
 
 int execute_command(char *cmdline)
 {
-#ifdef __WXMSW__
+#if defined(_WIN32) || defined(__WIN32__) || defined(__WINDOWS__)
     //Windows's system() seems to not be able to handle parentheses in
     //the path, so we have to launch the program a different way.
 
@@ -135,7 +135,7 @@ int main(int argc, char** argv)
     printf
     (
         "\nPress "
-#ifdef __WXMSW__
+#if defined(_WIN32) || defined(__WIN32__) || defined(__WINDOWS__)
         "any key"
 #else
         "ENTER"
