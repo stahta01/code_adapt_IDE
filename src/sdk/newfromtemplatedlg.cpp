@@ -29,7 +29,7 @@
     #include "manager.h"
 #endif
 #include "cbplugin.h"
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 
 #include <wx/listbook.h>
 #include <wx/radiobox.h>

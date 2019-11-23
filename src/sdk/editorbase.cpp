@@ -26,7 +26,7 @@
 #include "cbauibook.h"
 #include "cbplugin.h"
 
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 
 // needed for initialization of variables
 inline int editorbase_RegisterId(int id)

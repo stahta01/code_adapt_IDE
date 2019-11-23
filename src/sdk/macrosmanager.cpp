@@ -30,7 +30,7 @@
 #include "scripting/sqplus/sqplus.h"
 #include "scripting/bindings/scriptbindings.h"
 
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "macrosmanager.h"
 #include "cbworkspace.h"
 #include "compilerfactory.h"

@@ -36,7 +36,7 @@
 #endif
 #include "cbauibook.h"
 #include "cbplugin.h"
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "editorcolourset.h"
 #include "cbcolourmanager.h"
 #include "cbassert.h"

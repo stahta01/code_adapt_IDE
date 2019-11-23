@@ -25,7 +25,7 @@
 #include <wx/wfstream.h> // wxFileInputStream
 
 #include "cbcolourmanager.h"
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "filemanager.h"
 
 #include "editorcolourset.h"

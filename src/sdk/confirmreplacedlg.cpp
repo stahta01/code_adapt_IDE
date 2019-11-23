@@ -16,7 +16,7 @@
 
     #include "cbeditor.h"
 #endif
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 
 #include "confirmreplacedlg.h"
 

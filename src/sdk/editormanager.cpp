@@ -30,7 +30,7 @@
 #endif
 
 #include "annoyingdialog.h"
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "cbcolourmanager.h"
 #include "cbplugin.h"
 #include "filemanager.h"

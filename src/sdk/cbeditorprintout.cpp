@@ -16,7 +16,7 @@
     #include "logmanager.h"
     #include "cbeditor.h"
 #endif
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 
 #include "cbeditorprintout.h"
 #include "printing_types.h"

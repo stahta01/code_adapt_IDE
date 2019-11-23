@@ -32,7 +32,7 @@
 
 #include "annoyingdialog.h"
 #include "cbdebugger_interfaces.h"
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "cbplugin.h"
 #include "ccmanager.h"
 #include "debuggermanager.h"

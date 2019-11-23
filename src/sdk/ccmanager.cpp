@@ -30,7 +30,7 @@
 
 #include "cbcolourmanager.h"
 #include "cbplugin.h"
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "editor_hooks.h"
 #include "ccmanager.h"
 

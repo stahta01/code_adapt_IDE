@@ -15,7 +15,7 @@
     #include "configmanager.h"
     #include "editormanager.h"
 #endif
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "filemanager.h"
 #include "infowindow.h"
 

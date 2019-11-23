@@ -20,7 +20,7 @@
     #include <cbeditor.h>
     #include <globals.h>
 #endif
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include <compiler.h>
 #include <compilerfactory.h>
 

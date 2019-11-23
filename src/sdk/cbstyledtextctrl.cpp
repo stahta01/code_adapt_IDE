@@ -22,7 +22,7 @@
 #include "cbplugin.h"
 #include "ccmanager.h"
 #include "debuggermanager.h"
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 
 static const wxString s_leftBrace(_T("([{'\""));
 static const wxString s_rightBrace(_T(")]}'\""));
