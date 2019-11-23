@@ -32,7 +32,7 @@
 
 #include "cbstyledtextctrl.h"
 #include "encodingdetector.h"
-#include "cbassert.h"
+#include "ca/assert.h"
 #include "editorcolourset.h"
 #include "infowindow.h"
 #include "SearchInPanel.h"
@@ -997,7 +997,7 @@ wxString GetImagePrefix(bool toolbar, wxWindow *window)
     }
     else
     {
-        cbAssert(window != nullptr);
+        caAssert(window != nullptr);
         const int targetHeight = floor(16 * cbGetActualContentScaleFactor(*window));
         const int size = cbFindMinSize16to64(targetHeight);
         return ConfigManager::GetDataFolder()
