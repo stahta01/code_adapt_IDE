@@ -40,7 +40,7 @@
 #include <wx/tokenzr.h>
 #include "editarraystringdlg.h"
 #include "annoyingdialog.h"
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "compilercommandgenerator.h"
 #include "compiler.h"
 #include "compilerfactory.h"
