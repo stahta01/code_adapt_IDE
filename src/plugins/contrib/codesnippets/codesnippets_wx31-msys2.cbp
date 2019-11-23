@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Code Snippets wx3.1.x - MSys2" />
+		<Option default_target="Plugin - Win32" />
+		<Option compiler="msys2mingw-gcc" />
+		<Build>
+			<Target title="Plugin - Win32">
+				<Option output="../../../devel31_msys2/share/codeadapt/plugins/codesnippets.dll" prefix_auto="0" extension_auto="0" />
+				<Option working_dir="../../../devel31_msys2" />
+				<Option object_output="../../../.objs31_msys2/plugins/contrib/codesnippets/plugin/" />
+				<Option type="3" />
+				<Option compiler="msys2mingw-gcc" />
+				<Option parameters="--debug-log --multiple-instance -na -ns -nd -p debug" />
+				<Option host_application="../../../devel31_msys2/codeadapt.exe" />
+				<Option run_host_application_in_terminal="0" />
+				<Linker>
+					<Add library="codeadapt" />
+				</Linker>
+			</Target>
+			<Environment>
+				<Variable name="WX_CONFIG" value="wx-config --version=3.1 --prefix=$(MINGW_PREFIX)" />
+			</Environment>
+		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="Plugin - Win32;" />
+		</VirtualTargets>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-std=gnu++11" />
+			<Add option="-pipe" />
+			<Add option="-mthreads" />
+			<Add option="-fmessage-length=0" />
+			<Add option="-fexceptions" />
+			<Add option="`$(WX_CONFIG) --cflags`" />
+			<Add option="$(#CA_RELEASE_TYPE)" />
+			<Add option="$(#CA_PCH_TYPE)" />
+			<Add option="-Winvalid-pch" />
+			<Add option='-include &quot;sdk.h&quot;' />
+			<Add option="-DwxUSE_UNICODE" />
+			<Add option="-DBUILDING_PLUGIN" />
+			<Add option="-DNO_LOGGING" />
+			<Add directory="../../../include" />
+			<Add directory="../../../src" />
+			<Add directory="Search" />
+			<Add directory="." />
+			<Add directory="../../../include/mozilla_chardet" />
+			<Add directory="../../../include/mozilla_chardet/mfbt" />
+			<Add directory="../../../include/mozilla_chardet/nsprpub/pr/include" />
+			<Add directory="../../../include/mozilla_chardet/xpcom" />
+			<Add directory="../../../include/mozilla_chardet/xpcom/base" />
+			<Add directory="../../../include/mozilla_chardet/xpcom/glue" />
+		</Compiler>
+		<Linker>
+			<Add option="-mthreads" />
+			<Add option="`$(WX_CONFIG) --libs`" />
+			<Add library="codeadapt" />
+			<Add library="tinyxml" />
+			<Add directory="../../../devel31_msys2" />
+		</Linker>
+		<ExtraCommands>
+			<Add after="zip -j9 ../../../devel31_msys2/share/codeadapt/codesnippets.zip manifest.xml" />
+			<Add after="$CMD_MKDIR ../../../devel31_msys2/share/codeadapt/images/codesnippets" />
+			<Add after="$CMD_CP resources/*.png ../../../devel31_msys2/share/codeadapt/images/codesnippets/" />
+			<Mode after="always" />
+		</ExtraCommands>
+		<Unit filename="codesnippets.cpp" />
+		<Unit filename="codesnippets.h" />
+		<Unit filename="codesnippetstreectrl.cpp" />
+		<Unit filename="codesnippetstreectrl.h" />
+		<Unit filename="codesnippetswindow.cpp" />
+		<Unit filename="codesnippetswindow.h" />
+		<Unit filename="generic.Manifest" />
+		<Unit filename="generic.rc">
+			<Option compilerVar="WINDRES" />
+		</Unit>
+		<Unit filename="manifest.xml" />
+		<Unit filename="menuidentifiers.h" />
+		<Unit filename="resources/allsnippets.png" />
+		<Unit filename="resources/category.png" />
+		<Unit filename="resources/findf.png" />
+		<Unit filename="resources/findfdisabled.png" />
+		<Unit filename="resources/manifest.xml" />
+		<Unit filename="resources/options.png" />
+		<Unit filename="resources/optionsdisabled.png" />
+		<Unit filename="resources/snippet.png" />
+		<Unit filename="resources/stop.png" />
+		<Unit filename="resources/stopdisabled.png" />
+		<Unit filename="settingsdlg.cpp" />
+		<Unit filename="settingsdlg.h" />
+		<Unit filename="settingsdlgform.cpp" />
+		<Unit filename="settingsdlgform.h" />
+		<Unit filename="snippetitemdata.cpp" />
+		<Unit filename="snippetitemdata.h" />
+		<Unit filename="snippetproperty.cpp" />
+		<Unit filename="snippetproperty.h" />
+		<Unit filename="snippetpropertyform.cpp" />
+		<Unit filename="snippetpropertyform.h" />
+		<Unit filename="snippetsconfig.cpp">
+			<Option weight="40" />
+		</Unit>
+		<Unit filename="snippetsconfig.h">
+			<Option weight="40" />
+		</Unit>
+		<Unit filename="snippetsimages.cpp" />
+		<Unit filename="snippetsimages.h" />
+		<Unit filename="version.cpp" />
+		<Unit filename="version.h" />
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>

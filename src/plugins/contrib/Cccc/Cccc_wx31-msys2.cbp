@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Cccc wx3.1.x - MSys2" />
+		<Option pch_mode="0" />
+		<Option compiler="msys2mingw-gcc" />
+		<Build>
+			<Target title="default">
+				<Option output="../../../devel31_msys2/share/codeadapt/plugins/Cccc.dll" prefix_auto="0" extension_auto="0" />
+				<Option object_output="../../../.objs31_msys2/plugins/contrib/Cccc" />
+				<Option type="3" />
+				<Option compiler="msys2mingw-gcc" />
+				<Option parameters="--debug-log --multiple-instance -na -ns -nd -p debug" />
+				<Option host_application="../../../devel31_msys2/codeadapt.exe" />
+				<Option run_host_application_in_terminal="0" />
+				<Option projectCompilerOptionsRelation="0" />
+			</Target>
+			<Environment>
+				<Variable name="WX_CONFIG" value="wx-config --version=3.1 --prefix=$(MINGW_PREFIX)" />
+			</Environment>
+		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="default;" />
+		</VirtualTargets>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-std=gnu++11" />
+			<Add option="$(#CA_RELEASE_TYPE)" />
+			<Add option="$(#CA_PCH_TYPE)" />
+			<Add option="-mthreads" />
+			<Add option="-fexceptions" />
+			<Add option="`$(WX_CONFIG) --cflags`" />
+			<Add option="-DBUILDING_PLUGIN" />
+			<Add option="-DwxUSE_UNICODE" />
+			<Add directory="../../../include" />
+		</Compiler>
+		<Linker>
+			<Add option="-mthreads" />
+			<Add option="`$(WX_CONFIG) --libs`" />
+			<Add library="codeadapt" />
+			<Add directory="../../../devel31_msys2" />
+		</Linker>
+		<ExtraCommands>
+			<Add after="zip -j9 ../../../devel31_msys2/share/codeadapt/Cccc.zip resources/manifest.xml" />
+			<Mode after="always" />
+		</ExtraCommands>
+		<Unit filename="Cccc.cpp" />
+		<Unit filename="Cccc.h" />
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>

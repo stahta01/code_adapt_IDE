@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="EnvVars wx3.1.x - MSys2" />
+		<Option pch_mode="0" />
+		<Option default_target="default" />
+		<Option compiler="msys2mingw-gcc" />
+		<Build>
+			<Target title="default">
+				<Option output="../../../devel31_msys2/share/codeadapt/plugins/envvars.dll" prefix_auto="0" extension_auto="0" />
+				<Option object_output="../../../.objs31_msys2/plugins/contrib/envvars" />
+				<Option type="3" />
+				<Option compiler="msys2mingw-gcc" />
+				<Option parameters="--debug-log --multiple-instance -na -ns -nd -p debug" />
+				<Option host_application="../../../devel31_msys2/codeadapt.exe" />
+				<Option run_host_application_in_terminal="0" />
+				<Compiler>
+					<Add option="$(#CA_PCH_TYPE)" />
+				</Compiler>
+			</Target>
+			<Target title="no_pch">
+				<Option output="../../../devel31_msys2/share/codeadapt/plugins/envvars.dll" prefix_auto="0" extension_auto="0" />
+				<Option object_output="../../../.objs31_msys2/plugins/contrib/envvars" />
+				<Option type="3" />
+				<Option compiler="msys2mingw-gcc" />
+				<Option parameters="--debug-log --multiple-instance -na -ns -nd -p debug" />
+				<Option host_application="../../../devel31_msys2/codeadapt.exe" />
+				<Option run_host_application_in_terminal="0" />
+				<Compiler>
+					<Add option="-DNOPCH" />
+				</Compiler>
+			</Target>
+			<Environment>
+				<Variable name="WX_CONFIG" value="wx-config --version=3.1 --prefix=$(MINGW_PREFIX)" />
+			</Environment>
+		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="default;" />
+		</VirtualTargets>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-std=gnu++11" />
+			<Add option="$(#CA_RELEASE_TYPE)" />
+			<Add option="-mthreads" />
+			<Add option="-fexceptions" />
+			<Add option="`$(WX_CONFIG) --cflags`" />
+			<Add option="-DBUILDING_PLUGIN" />
+			<Add option="-DwxUSE_UNICODE" />
+			<Add directory="../../../include" />
+			<Add directory="../../../include/scripting/include" />
+			<Add directory="../../../include/scripting/sqplus" />
+			<Add directory="../../../include/scripting/bindings" />
+		</Compiler>
+		<Linker>
+			<Add option="-mthreads" />
+			<Add option="`$(WX_CONFIG) --libs`" />
+			<Add library="codeadapt" />
+			<Add library="tinyxml" />
+			<Add directory="../../../devel31_msys2" />
+		</Linker>
+		<ExtraCommands>
+			<Add after="zip -j9 ../../../devel31_msys2/share/codeadapt/envvars.zip manifest.xml *.xrc" />
+			<Mode after="always" />
+		</ExtraCommands>
+		<Unit filename="envvars.cpp" />
+		<Unit filename="envvars.h" />
+		<Unit filename="envvars.xrc" />
+		<Unit filename="envvars_cfgdlg.cpp" />
+		<Unit filename="envvars_cfgdlg.h" />
+		<Unit filename="envvars_common.cpp" />
+		<Unit filename="envvars_common.h" />
+		<Unit filename="envvars_prjoptdlg.cpp" />
+		<Unit filename="envvars_prjoptdlg.h" />
+		<Unit filename="manifest.xml" />
+		<Unit filename="project_settings.xrc" />
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Tools Plus Plugin wx3.1.x - MSys2" />
+		<Option compiler="msys2mingw-gcc" />
+		<Build>
+			<Target title="default">
+				<Option output="../../../devel31_msys2/share/codeadapt/plugins/ToolsPlus" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../../../.objs31_msys2/plugins/contrib/ToolsPlus" />
+				<Option type="3" />
+				<Option compiler="msys2mingw-gcc" />
+				<Option parameters="--debug-log --multiple-instance -na -ns -nd -p debug" />
+				<Option host_application="../../../devel31_msys2/codeadapt.exe" />
+				<Option run_host_application_in_terminal="0" />
+				<Linker>
+					<Add library="codeadapt" />
+					<Add library="gdi32" />
+					<Add directory="../../../devel31_msys2" />
+				</Linker>
+			</Target>
+			<Environment>
+				<Variable name="WX_CONFIG" value="wx-config --version=3.1 --prefix=$(MINGW_PREFIX)" />
+			</Environment>
+		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="default;" />
+		</VirtualTargets>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-std=gnu++11" />
+			<Add option="-pipe" />
+			<Add option="-mthreads" />
+			<Add option="-fmessage-length=0" />
+			<Add option="-fexceptions" />
+			<Add option="`$(WX_CONFIG) --cflags`" />
+			<Add option="$(#CA_RELEASE_TYPE)" />
+			<Add option="$(#CA_PCH_TYPE)" />
+			<Add option="-Winvalid-pch" />
+			<Add option='-include &quot;sdk.h&quot;' />
+			<Add option="-DwxUSE_UNICODE" />
+			<Add option="-DBUILDING_PLUGIN" />
+			<Add directory="../../../include" />
+			<Add directory="../../../include/mozilla_chardet" />
+			<Add directory="../../../include/mozilla_chardet/mfbt" />
+			<Add directory="../../../include/mozilla_chardet/nsprpub/pr/include" />
+			<Add directory="../../../include/mozilla_chardet/xpcom" />
+			<Add directory="../../../include/mozilla_chardet/xpcom/base" />
+			<Add directory="../../../include/mozilla_chardet/xpcom/glue" />
+		</Compiler>
+		<Linker>
+			<Add option="-mthreads" />
+			<Add option="`$(WX_CONFIG) --libs std,aui`" />
+		</Linker>
+		<ExtraCommands>
+			<Add after="zip -j9 ../../../devel31_msys2/share/codeadapt/ToolsPlus.zip manifest.xml" />
+			<Add after="$CMD_MKDIR ../../../devel31_msys2/share/codeadapt/images/settings" />
+			<Add after="$CMD_CP Resources/*.png ../../../devel31_msys2/share/codeadapt/images/settings/" />
+			<Mode after="always" />
+		</ExtraCommands>
+		<Unit filename="CmdConfigDialog.cpp" />
+		<Unit filename="CmdConfigDialog.h" />
+		<Unit filename="PipedProcessCtrl.cpp" />
+		<Unit filename="PipedProcessCtrl.h" />
+		<Unit filename="Resources/dialogs.fbp" />
+		<Unit filename="ShellCtrlBase.cpp" />
+		<Unit filename="ShellCtrlBase.h" />
+		<Unit filename="ToolsPlus.cpp" />
+		<Unit filename="ToolsPlus.h" />
+		<Unit filename="manifest.xml" />
+		<Unit filename="se_globals.cpp" />
+		<Unit filename="se_globals.h" />
+		<Unit filename="shellproperties.cpp" />
+		<Unit filename="shellproperties.h" />
+		<Extensions />
+	</Project>
+</CodeBlocks_project_file>

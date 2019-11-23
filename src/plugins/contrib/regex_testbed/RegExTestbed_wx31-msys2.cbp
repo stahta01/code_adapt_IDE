@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="RegExTestbed wx3.1.x - MSys2" />
+		<Option pch_mode="2" />
+		<Option default_target="default" />
+		<Option compiler="msys2mingw-gcc" />
+		<Build>
+			<Target title="default">
+				<Option output="../../../devel31_msys2/share/codeadapt/plugins/RegExTestbed" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../../../.objs31_msys2/plugins/contrib/regex_testbed" />
+				<Option external_deps="../../../devel31_msys2/libcodeadapt.a;" />
+				<Option type="3" />
+				<Option compiler="msys2mingw-gcc" />
+				<Option parameters="--debug-log --multiple-instance -na -ns -nd -p debug" />
+				<Option host_application="../../../devel31_msys2/codeadapt.exe" />
+				<Option run_host_application_in_terminal="0" />
+				<ExtraCommands>
+					<Add after="zip -j9 ../../../devel31_msys2/share/codeadapt/RegExTestbed.zip manifest.xml *.xrc" />
+					<Mode after="always" />
+				</ExtraCommands>
+			</Target>
+			<Environment>
+				<Variable name="WX_CONFIG" value="wx-config --version=3.1 --prefix=$(MINGW_PREFIX)" />
+			</Environment>
+		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="default;" />
+		</VirtualTargets>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-std=gnu++11" />
+			<Add option="-pipe" />
+			<Add option="-fmessage-length=0" />
+			<Add option="-fexceptions" />
+			<Add option="-mthreads" />
+			<Add option="`$(WX_CONFIG) --cflags`" />
+			<Add option="$(#CA_PCH_TYPE)" />
+			<Add option="$(#CA_RELEASE_TYPE)" />
+			<Add option="-DwxUSE_UNICODE" />
+			<Add option="-DBUILDING_PLUGIN" />
+			<Add option="-DSUPPORT_UTF8" />
+			<Add directory="../../../include" />
+		</Compiler>
+		<Linker>
+			<Add option="-Wl,--enable-auto-image-base" />
+			<Add option="-mthreads" />
+			<Add option="`$(WX_CONFIG) --libs`" />
+			<Add library="codeadapt" />
+			<Add directory="../../../devel31_msys2" />
+		</Linker>
+		<Unit filename="RegExTestbed.cpp" />
+		<Unit filename="RegExTestbed.h" />
+		<Unit filename="manifest.xml" />
+		<Unit filename="regexdlg.cpp" />
+		<Unit filename="regexdlg.h" />
+		<Extensions>
+			<wxsmith version="1">
+				<gui name="wxWidgets" src="" main="" init_handlers="necessary" language="CPP" />
+				<resources>
+					<wxScrollingDialog wxs="wxsmith/RegExDlg.wxs" src="regexdlg.cpp" hdr="regexdlg.h" xrc="regexdlg.xrc" fwddecl="0" i18n="1" name="RegExDlg" language="CPP" />
+				</resources>
+			</wxsmith>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

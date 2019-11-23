@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="wxSmith - wxAUI wx3.1.x - MSys2" />
+		<Option pch_mode="2" />
+		<Option compiler="msys2mingw-gcc" />
+		<Build>
+			<Target title="Windows">
+				<Option platforms="Windows;" />
+				<Option output="../../../devel31_msys2/share/codeadapt/plugins/wxSmithAui" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../../../.objs31_msys2/plugins/contrib/wxSmithAui" />
+				<Option external_deps="../../../devel31_msys2/wxsmithlib.dll;" />
+				<Option type="3" />
+				<Option compiler="msys2mingw-gcc" />
+				<Option parameters="--debug-log --multiple-instance -na -ns -nd -p debug" />
+				<Option host_application="../../../devel31_msys2/codeadapt.exe" />
+				<Option run_host_application_in_terminal="0" />
+				<Compiler>
+					<Add option="-std=gnu++11" />
+					<Add option="$(#CA_RELEASE_TYPE)" />
+					<Add option="$(#CA_PCH_TYPE)" />
+					<Add option="-Winvalid-pch" />
+					<Add option='-include &quot;sdk.h&quot;' />
+					<Add option="-pipe" />
+					<Add option="-mthreads" />
+					<Add option="-fmessage-length=0" />
+					<Add option="-fexceptions" />
+					<Add option="`$(WX_CONFIG) --cflags`" />
+				</Compiler>
+				<Linker>
+					<Add option="-Wl,--enable-auto-image-base" />
+					<Add option="-Wl,--add-stdcall-alias" />
+					<Add option="-mthreads" />
+					<Add option="`$(WX_CONFIG) --libs std,aui,propgrid`" />
+				</Linker>
+				<ExtraCommands>
+					<Add after="zip -j9 ../../../devel31_msys2/share/codeadapt/wxSmithAui.zip manifest.xml" />
+					<Mode after="always" />
+				</ExtraCommands>
+				<Environment>
+					<Variable name="WX_CONFIG" value="wx-config --version=3.1 --prefix=$(MINGW_PREFIX)" />
+				</Environment>
+			</Target>
+		</Build>
+		<VirtualTargets>
+			<Add alias="All" targets="Windows;" />
+		</VirtualTargets>
+		<Compiler>
+			<Add option="-DBUILDING_PLUGIN" />
+			<Add option="-DwxUSE_UNICODE" />
+			<Add directory="../../../include" />
+			<Add directory="../wxSmith" />
+		</Compiler>
+		<Linker>
+			<Add library="codeadapt" />
+			<Add library="wxsmithlib" />
+			<Add library="tinyxml" />
+			<Add directory="../../../devel31_msys2" />
+		</Linker>
+		<Unit filename="manifest.xml" />
+		<Unit filename="wxAuiManager/wxSmithAuiManager.h" />
+		<Unit filename="wxAuiManager/wxsAuiManager.cpp" />
+		<Unit filename="wxAuiManager/wxsAuiManager.h" />
+		<Unit filename="wxAuiManager/wxsAuiManagerParentQP.cpp" />
+		<Unit filename="wxAuiManager/wxsAuiManagerParentQP.h" />
+		<Unit filename="wxAuiManager/wxsAuiPaneInfoProperty.cpp" />
+		<Unit filename="wxAuiManager/wxsAuiPaneInfoProperty.h" />
+		<Unit filename="wxAuiNotebook/wxSmithAuiNotebook.cpp" />
+		<Unit filename="wxAuiNotebook/wxSmithAuiNotebook.h" />
+		<Unit filename="wxAuiNotebook/wxsAuiNotebook.cpp" />
+		<Unit filename="wxAuiNotebook/wxsAuiNotebook.h" />
+		<Unit filename="wxAuiToolBar/wxSmithAuiToolBar.cpp" />
+		<Unit filename="wxAuiToolBar/wxSmithAuiToolBar.h" />
+		<Unit filename="wxAuiToolBar/wxsAuiToolBar.cpp" />
+		<Unit filename="wxAuiToolBar/wxsAuiToolBar.h" />
+		<Unit filename="wxAuiToolBar/wxsAuiToolBarItem.cpp" />
+		<Unit filename="wxAuiToolBar/wxsAuiToolBarItem.h" />
+		<Unit filename="wxAuiToolBar/wxsAuiToolBarItemBase.cpp" />
+		<Unit filename="wxAuiToolBar/wxsAuiToolBarItemBase.h" />
+		<Unit filename="wxAuiToolBar/wxsAuiToolBarLabel.cpp" />
+		<Unit filename="wxAuiToolBar/wxsAuiToolBarLabel.h" />
+		<Unit filename="wxAuiToolBar/wxsAuiToolBarSeparator.cpp" />
+		<Unit filename="wxAuiToolBar/wxsAuiToolBarSeparator.h" />
+		<Unit filename="wxAuiToolBar/wxsAuiToolBarSpacer.cpp" />
+		<Unit filename="wxAuiToolBar/wxsAuiToolBarSpacer.h" />
+		<Unit filename="wxSmithAui.cpp" />
+		<Unit filename="wxSmithAui.h" />
+		<Extensions>
+			<lib_finder disable_auto="1" />
+			<wxsmith version="1">
+				<gui name="wxWidgets" src="" main="" init_handlers="necessary" language="CPP" />
+				<resources>
+					<wxPanel wxs="wxsmith/wxsAuiNotebookParentQP.wxs" src="wxAuiNotebook/wxsAuiNotebook.cpp" hdr="wxAuiNotebook/wxsAuiNotebook.cpp" fwddecl="0" i18n="1" name="wxsAuiNotebookParentQP" language="CPP" />
+					<wxPanel wxs="wxsmith/wxsAuiManagerParentQP.wxs" src="wxAuiManager/wxsAuiManagerParentQP.cpp" hdr="wxAuiManager/wxsAuiManagerParentQP.h" fwddecl="0" i18n="1" name="wxsAuiManagerParentQP" language="CPP" />
+				</resources>
+			</wxsmith>
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
