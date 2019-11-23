@@ -11,7 +11,9 @@
     #pragma hdrstop
 #endif
 
-#if wxUSE_STC
+/* CodeAdapt begin */
+// #if wxUSE_STC
+/* CodeAdapt end */
 
 #ifndef WX_PRECOMP
     #include "wx/math.h"
@@ -49,7 +51,7 @@
 
 #include "Platform.h"
 #include "PlatWX.h"
-#include "wx/stc/stc.h"
+#include "ca/wxstyledtextctrl.h"
 #include "wx/stc/private.h"
 
 #if defined(__WXMSW__) && wxUSE_GRAPHICS_DIRECT2D
@@ -3532,4 +3534,6 @@ wxWX2MBbuf wx2stc(const wxString& str)
 
 #endif
 
-#endif // wxUSE_STC
+/* CodeAdapt begin */
+// #endif // wxUSE_STC
+/* CodeAdapt end */

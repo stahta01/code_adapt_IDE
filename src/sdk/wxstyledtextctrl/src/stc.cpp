@@ -32,9 +32,11 @@
     #pragma hdrstop
 #endif
 
-#if wxUSE_STC
+/* CodeAdapt begin */
+// #if wxUSE_STC
 
-#include "wx/stc/stc.h"
+#include "ca/wxstyledtextctrl.h"
+/* CodeAdapt end */
 #include "wx/stc/private.h"
 
 #ifndef WX_PRECOMP
@@ -5756,4 +5758,6 @@ wxStyledTextEvent::wxStyledTextEvent(const wxStyledTextEvent& event):
     return wxVersionInfo("Scintilla", 3, 7, 2, "Scintilla 3.7.2");
 }
 
-#endif // wxUSE_STC
+/* CodeAdapt begin */
+// #endif // wxUSE_STC
+/* CodeAdapt end */

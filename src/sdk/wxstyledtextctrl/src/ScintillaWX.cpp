@@ -20,7 +20,9 @@
     #pragma hdrstop
 #endif
 
-#if wxUSE_STC
+/* CodeAdapt begin */
+// #if wxUSE_STC
+/* CodeAdapt end */
 
 #ifndef WX_PRECOMP
     #include "wx/scrolbar.h"
@@ -45,7 +47,7 @@
 
 #include "ScintillaWX.h"
 #include "ExternalLexer.h"
-#include "wx/stc/stc.h"
+#include "ca/wxstyledtextctrl.h"
 #include "wx/stc/private.h"
 #include "PlatWX.h"
 
@@ -1410,4 +1412,6 @@ sptr_t ScintillaWX::DirectFunction(
 //----------------------------------------------------------------------
 //----------------------------------------------------------------------
 
-#endif // wxUSE_STC
+/* CodeAdapt begin */
+// #endif // wxUSE_STC
+/* CodeAdapt end */

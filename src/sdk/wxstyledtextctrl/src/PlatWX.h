@@ -3,7 +3,9 @@
 
 #include "wx/defs.h"
 
-#if wxUSE_STC
+/* CodeAdapt begin */
+// #if wxUSE_STC
+/* CodeAdapt end */
 
 #include "wx/imaglist.h"
 #include "Platform.h"
@@ -225,6 +227,8 @@ private:
 
 #endif // wxUSE_GRAPHICS_DIRECT2D
 
-#endif // wxUSE_STC
+/* CodeAdapt begin */
+// #endif // wxUSE_STC
+/* CodeAdapt end */
 
 #endif // _SRC_STC_PLATWX_H_
