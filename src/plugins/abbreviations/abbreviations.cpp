@@ -20,7 +20,7 @@
 #include <editor_hooks.h>
 #include <sqplus.h>
 #include <sc_base_types.h>
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 #include <editorcolourset.h>
 
 // Register the plugin with Code::Blocks.

@@ -7,7 +7,7 @@
 #define ABBREVIATIONSCONFIGPANEL_H
 
 #include "abbreviations.h"
-#include <cbstyledtextctrl.h>
+#include <ca/styledtextctrl.h>
 
 #include <configurationpanel.h>
 
