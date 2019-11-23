@@ -48,7 +48,7 @@
 #include "environmentsettingsdlg.h"
 #include "cbcolourmanager.h"
 
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     #include "associations.h"
 #endif
 
@@ -119,7 +119,7 @@ EnvironmentSettingsDlg::EnvironmentSettingsDlg(wxWindow* parent, wxAuiDockArt* a
     // tab "General"
     XRCCTRL(*this, "chkShowSplash", wxCheckBox)->SetValue(cfg->ReadBool(_T("/environment/show_splash"), true));
     XRCCTRL(*this, "chkSingleInstance", wxCheckBox)->SetValue(cfg->ReadBool(_T("/environment/single_instance"), true));
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     static_cast<wxStaticBoxSizer*>(XRCCTRL(*this, "chkUseIPC", wxCheckBox)->GetContainingSizer())->GetStaticBox()->SetLabel(_("Dynamic Data Exchange (will take place after restart)"));
 #endif
     bool useIpc = cfg->ReadBool(_T("/environment/use_ipc"), true);
@@ -137,7 +137,7 @@ EnvironmentSettingsDlg::EnvironmentSettingsDlg(wxWindow* parent, wxAuiDockArt* a
 
     wxTextCtrl* txt = XRCCTRL(*this, "txtConsoleShell", wxTextCtrl);
     txt->SetValue(cfg->Read(_T("/console_shell"), DEFAULT_CONSOLE_SHELL));
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     // under win32, this option is not needed, so disable it
     txt->Enable(false);
 #endif
@@ -340,7 +340,7 @@ EnvironmentSettingsDlg::EnvironmentSettingsDlg(wxWindow* parent, wxAuiDockArt* a
     FillApplicationColours();
 
     // disable some windows-only settings, in other platforms
-#ifndef __WXMSW__
+#ifndef __WINDOWS__
     XRCCTRL(*this, "chkAssociations", wxCheckBox)->Enable(false);
     XRCCTRL(*this, "btnSetAssocs", wxButton)->Enable(false);
     XRCCTRL(*this, "btnManageAssocs", wxButton)->Enable(false);
@@ -448,7 +448,7 @@ void EnvironmentSettingsDlg::OnPageChanged(wxListbookEvent& event)
 
 void EnvironmentSettingsDlg::OnSetAssocs(cb_unused wxCommandEvent& event)
 {
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     Associations::SetCore();
     //cbMessageBox(_("Code::Blocks associated with C/C++ files."), _("Information"), wxICON_INFORMATION, this);
 #endif
@@ -456,7 +456,7 @@ void EnvironmentSettingsDlg::OnSetAssocs(cb_unused wxCommandEvent& event)
 
 void EnvironmentSettingsDlg::OnManageAssocs(cb_unused wxCommandEvent& event)
 {
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     ManageAssocsDialog dlg(this);
     PlaceWindow(&dlg);
     dlg.ShowModal();

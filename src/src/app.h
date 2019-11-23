@@ -174,7 +174,7 @@ class CodeBlocksApp : public wxApp
         void InitAssociations();
 
         bool m_DDE; // DDE enabled?
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
         bool m_Assocs; // associations check enabled
 #endif
         int m_BatchExitCode;

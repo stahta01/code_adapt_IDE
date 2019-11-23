@@ -7,17 +7,19 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/src/crashhandler.cpp $
  */
 
-#ifdef __WXMSW__
-#include "sdk.h"
-#ifndef CB_PRECOMP
-    #include <wx/filefn.h>
-    #include <wx/filename.h>
-    #include <wx/string.h>
-    #include "cbeditor.h"
-    #include "configmanager.h"
-    #include "editormanager.h"
-    #include "globals.h"
-#endif //CB_PRECOMP
+#include <wx/defs.h> // __WINDOWS__
+
+#ifdef __WINDOWS__
+
+#include <wx/msw/wrapwin.h> // Included because of weird include loop on building wxGTK/Win
+#include <wx/filefn.h>
+#include <wx/filename.h>
+#include <wx/string.h>
+#include "cbeditor.h"
+#include "configmanager.h"
+#include "editormanager.h"
+#include "globals.h"
+
 #include "cbstyledtextctrl.h"
 
 #include "crashhandler.h"
@@ -149,4 +151,4 @@ CrashHandler::~CrashHandler()
     }
 }
 
-#endif //(__WXMSW__)
+#endif // __WINDOWS__

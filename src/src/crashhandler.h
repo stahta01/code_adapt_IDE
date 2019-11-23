@@ -6,7 +6,9 @@
 #ifndef CRASH_HANDLER
 #define CRASH_HANDLER
 
-#ifdef __WXMSW__
+#include <wx/defs.h> // __WINDOWS__
+
+#ifdef __WINDOWS__
 
 #include <winnt.h>
 

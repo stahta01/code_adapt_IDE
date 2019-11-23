@@ -10,7 +10,7 @@
 #include "scrollingdialog.h"
 #include <wx/intl.h>
 #include <wx/string.h>
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     #include <wx/msw/registry.h>
     #include <shlobj.h> // for SHChangeNotify()
     #ifdef __CBDEBUG__

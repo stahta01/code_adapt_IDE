@@ -2387,7 +2387,7 @@ void ProjectManagerUI::OnRenameFile(cb_unused wxCommandEvent& event)
 
         if (name != new_name)
         {
-        #ifdef __WXMSW__
+        #ifdef __WINDOWS__
             // only overwrite files, if the names are the same, but with different cases
             if (!wxRenameFile(path + name, path + new_name, (name.Lower() == new_name.Lower())))
         #else

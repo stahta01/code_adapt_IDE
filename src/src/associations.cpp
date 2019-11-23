@@ -20,6 +20,12 @@
 #include <filefilters.h>
 #include <wx/checklst.h>
 
+#ifdef __WINDOWS__
+    #include <shlobj.h>          // SHCNE_ASSOCCHANGED
+    #include <wx/msw/registry.h> // wxRegKey
+    #include <wx/msw/wrapwin.h>  // GetModuleFileName
+#endif
+
 const Associations::Assoc knownTypes[] =
 {
 /*
@@ -84,8 +90,8 @@ unsigned int Associations::CountAssocs()
 
 void Associations::SetBatchBuildOnly()
 {
-    wxChar name[MAX_PATH] = {0};
-    GetModuleFileName(0L, name, MAX_PATH);
+    wxChar name[_MAX_PATH] = {0};
+    GetModuleFileName(0L, name, _MAX_PATH);
 
     ::DoSetAssociation(name, 0);
     ::DoSetAssociation(name, 1);

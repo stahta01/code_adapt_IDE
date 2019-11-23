@@ -69,7 +69,7 @@
 #define APP_PREFIX ""
 #endif
 
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
 #include "exchndl.h"         // Crash handler DLL -> includes windows.h, therefore
 #include <wx/msw/winundef.h> // ...include this header file on the NEXT LINE (wxWidgets docs say so)
 #endif
@@ -222,13 +222,13 @@ const wxCmdLineEntryDesc cmdLineDesc[] =
       wxCMD_LINE_VAL_NONE, wxCMD_LINE_OPTION_HELP },
     { wxCMD_LINE_SWITCH, CMD_ENTRY(""),   CMD_ENTRY("safe-mode"),             CMD_ENTRY("load in safe mode (all plugins will be disabled)"),
       wxCMD_LINE_VAL_NONE, wxCMD_LINE_PARAM_OPTIONAL },
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     { wxCMD_LINE_SWITCH, CMD_ENTRY("na"), CMD_ENTRY("no-check-associations"), CMD_ENTRY("don't perform any association checks"),
       wxCMD_LINE_VAL_NONE, wxCMD_LINE_PARAM_OPTIONAL },
     { wxCMD_LINE_SWITCH, CMD_ENTRY("nd"), CMD_ENTRY("no-dde"),                CMD_ENTRY("don't start a DDE server"),
       wxCMD_LINE_VAL_NONE, wxCMD_LINE_PARAM_OPTIONAL },
 #endif
-#ifndef __WXMSW__
+#ifndef __WINDOWS__
     { wxCMD_LINE_SWITCH, CMD_ENTRY("ni"), CMD_ENTRY("no-ipc"),                CMD_ENTRY("don't start an IPC server"),
       wxCMD_LINE_VAL_NONE, wxCMD_LINE_PARAM_OPTIONAL },
 #endif
@@ -433,7 +433,7 @@ bool CodeBlocksApp::LoadConfig()
 
 void CodeBlocksApp::InitAssociations()
 {
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("app"));
     if (m_Assocs && cfg->ReadBool(_T("/environment/check_associations"), true))
     {
@@ -465,7 +465,7 @@ void CodeBlocksApp::InitAssociations()
 
 void CodeBlocksApp::InitDebugConsole()
 {
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     #ifdef __CBDEBUG__
     // Remember to compile as a console application!
     AllocConsole();
@@ -480,7 +480,7 @@ void CodeBlocksApp::InitDebugConsole()
 
 void CodeBlocksApp::InitExceptionHandler()
 {
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     ExcHndlInit();
 #endif
 }
@@ -580,7 +580,7 @@ void CodeBlocksApp::InitLocale()
 
 bool CodeBlocksApp::OnInit()
 {
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     InitCommonControls();
 #endif
 
@@ -866,7 +866,7 @@ int CodeBlocksApp::OnExit()
     return m_Batch ? m_BatchExitCode : 0;
 }
 
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     inline void EnableLFH()
     {
         typedef BOOL  (WINAPI *HeapSetInformation_t)(HANDLE, HEAP_INFORMATION_CLASS, PVOID, SIZE_T);
@@ -985,11 +985,11 @@ int CodeBlocksApp::BatchJob()
     wxString title = _("Building '") + wxFileNameFromPath(wxString(argv[argc-1])) + _("' (target '")  + m_BatchTarget + _T("')");
     wxTaskBarIcon* tbIcon = new wxTaskBarIcon();
     tbIcon->SetIcon(
-            #ifdef __WXMSW__
+            #ifdef __WINDOWS__
                 wxICON(A_MAIN_ICON),
             #else
                 wxIcon(app_xpm),
-            #endif // __WXMSW__
+            #endif // __WINDOWS__
                 title);
 
     wxString bb_title = m_pBatchBuildDialog->GetTitle();
@@ -1133,7 +1133,7 @@ void CodeBlocksApp::OnTBIconLeftDown(wxTaskBarIconEvent& event)
 wxString CodeBlocksApp::GetAppPath() const
 {
     wxString base;
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     wxChar name[MAX_PATH] = {0};
     GetModuleFileName(0L, name, MAX_PATH);
     wxFileName fname(name);
@@ -1239,7 +1239,7 @@ int CodeBlocksApp::ParseCmdLine(MainFrame* handlerFrame, const wxString& CmdLine
             wxString val;
             parser.Found(_T("prefix"), &m_Prefix);
             parser.Found(_T("user-data-dir"), &m_UserDataDir);
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
             m_DDE = !parser.Found(_T("no-dde"));
             m_Assocs = !parser.Found(_T("no-check-associations"));
 #else

@@ -30,7 +30,7 @@
 #include "configurationpanel.h"
 #include "compilersettingsdlg.h"
 #include "appglobals.h"
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     #include "associations.h"
 #endif
 
@@ -207,7 +207,7 @@ void CompilerSettingsDlg::EndModal(int retCode)
     if (retCode == wxID_OK)
     {
         // tab "Batch builds"
-#ifdef __WXMSW__  /* TODO: remove preprocessor when Associations::SetXXX are supported on non-Windows platforms */
+#ifdef __WINDOWS__  /* TODO: remove preprocessor when Associations::SetXXX are supported on non-Windows platforms */
         ConfigManager *cfg = Manager::Get()->GetConfigManager(_T("app"));
         wxString bbargs = XRCCTRL(*this, "txtBatchBuildsCmdLine", wxTextCtrl)->GetValue();
         if (bbargs != cfg->Read(_T("/batch_build_args"), appglobals::DefaultBatchBuildArgs))
@@ -215,7 +215,7 @@ void CompilerSettingsDlg::EndModal(int retCode)
             cfg->Write(_T("/batch_build_args"), bbargs);
             Associations::SetBatchBuildOnly();
         }
-#endif //#ifdef __WXMSW__
+#endif //#ifdef __WINDOWS__
 
         // batch build plugins
         wxArrayString bbplugins;

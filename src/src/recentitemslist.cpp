@@ -35,7 +35,7 @@ RecentItemsList::RecentItemsList(const wxString &menuName, const wxString &confi
 void RecentItemsList::AddToHistory(const wxString& FileName)
 {
     wxString filename = FileName;
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     // for windows, look for case-insensitive matches
     // if found, don't add it
     wxString low = filename.Lower();

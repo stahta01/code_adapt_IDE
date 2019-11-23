@@ -613,11 +613,11 @@ MainFrame::MainFrame(wxWindow* parent)
     ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("app"));
     CreateIDE();
 
-#ifdef __WXMSW__
+#ifdef __WINDOWS__
     SetIcon(wxICON(A_MAIN_ICON));
 #else
     SetIcon(wxIcon(app_xpm));
-#endif // __WXMSW__
+#endif // __WINDOWS__
 
     // even it is possible that the statusbar is not visible at the moment, create the statusbar so the plugins can create their own fields on the it:
     DoCreateStatusBar();
