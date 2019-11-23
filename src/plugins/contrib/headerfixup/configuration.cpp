@@ -7,6 +7,8 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/contrib/headerfixup/configuration.cpp $
  */
 
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
+
 //(*InternalHeaders(Configuration)
 #include <wx/string.h>
 #include <wx/intl.h>

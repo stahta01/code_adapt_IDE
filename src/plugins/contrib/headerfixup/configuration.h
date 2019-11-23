@@ -6,11 +6,6 @@
 #ifndef CONFIGURATION_H
 #define CONFIGURATION_H
 
-#include <wx/wxprec.h>
-
-#ifdef __BORLANDC__
-#pragma hdrstop
-#endif
 
 //(*Headers(Configuration)
 #include <wx/sizer.h>

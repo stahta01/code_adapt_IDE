@@ -7,7 +7,7 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/contrib/headerfixup/fileanalysis.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
 #ifndef CB_PRECOMP
   #include "manager.h"
   #include "editormanager.h"

@@ -7,6 +7,8 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/contrib/headerfixup/protocol.cpp $
  */
 
+#include "sdk.h" // Code::Blocks Pre-compiled SDK
+
 #include "protocol.h"
 
 //(*InternalHeaders(Protocol)
