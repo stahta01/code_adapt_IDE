@@ -32,8 +32,6 @@
 	#include "manager.h"
 	#include "configmanager.h"
 	#include "projectmanager.h"
-	#include "personalitymanager.h"
-	#include "cbworkspace.h"
 	#include "cbproject.h"
 	#include "logmanager.h"
 	#include "editorbase.h"
@@ -49,6 +47,8 @@
 #include "codesnippetswindow.h"
 #include "snippetsconfig.h"
 #include "cbauibook.h"
+#include "cbworkspace.h"
+#include "personalitymanager.h"
 
 // ----------------------------------------------------------------------------
 namespace

@@ -39,7 +39,6 @@
         #include "editormanager.h"
         #include "logmanager.h"
         #include "globals.h"
-        #include "infowindow.h"
     #endif
 //-#else
 //-#endif
@@ -48,6 +47,7 @@
 #include "snippetitemdata.h"
 #include "codesnippetstreectrl.h"
 #include "codesnippetswindow.h"
+#include "infowindow.h"
 #include "snippetsconfig.h"
 #include "menuidentifiers.h"
 #include "snippetsconfig.h"
