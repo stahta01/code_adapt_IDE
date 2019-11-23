@@ -34,7 +34,7 @@
 
 #include "addtododlg.h"
 #include "asktypedlg.h"
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "editorcolourset.h"
 #include "todolist.h"
 #include "todolistview.h"

@@ -37,7 +37,7 @@
 
 #include <wx/progdlg.h>
 
-#include "cbstyledtextctrl.h"
+#include "ca/styledtextctrl.h"
 #include "encodingdetector.h"
 #include "editorcolourset.h"
 
