@@ -129,7 +129,7 @@ void MacrosManager::ClearProjectKeys()
     m_Macros[_T("LANGUAGE")]   = wxLocale::GetLanguageName(wxLocale::GetSystemLanguage());
     m_Macros[_T("ENCODING")]   = wxLocale::GetSystemEncodingName();
 
-    if (platform::windows)
+    if (platform::windows && !::clIsMSYSEnvironment())
     {
         m_Macros[_T("CMD_NULL")]  = _T("NUL");
 
@@ -144,14 +144,17 @@ void MacrosManager::ClearProjectKeys()
     }
     else
     {
+        if(::clIsMSYSEnvironment())
+            m_Macros[_T("PLATFORM")] = _T("msys");
+        else
+            m_Macros[_T("PLATFORM")] = _T("unix");
+
         m_Macros[_T("CMD_CP")]     = _T("cp --preserve=timestamps");
         m_Macros[_T("CMD_RM")]     = _T("rm");
         m_Macros[_T("CMD_MV")]     = _T("mv");
         m_Macros[_T("CMD_NULL")]   = _T("/dev/null");
         m_Macros[_T("CMD_MKDIR")]  = _T("mkdir -p");
         m_Macros[_T("CMD_RMDIR")]  = _T("rmdir");
-
-        m_Macros[_T("PLATFORM")] = _T("unix");
     }
 
     cbWorkspace* wksp = Manager::Get()->GetProjectManager()->GetWorkspace();
