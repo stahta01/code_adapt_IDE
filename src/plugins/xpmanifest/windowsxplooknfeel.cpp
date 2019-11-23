@@ -7,7 +7,7 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/xpmanifest/windowsxplooknfeel.cpp $
  */
 
-#include <sdk.h>
+#include "sdk.h"         // Precompiled Header needs to be the first include
 #ifndef CB_PRECOMP
 #include <wx/arrstr.h>
 #include <wx/file.h>
