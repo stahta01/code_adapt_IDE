@@ -17,8 +17,10 @@
 #include <wx/dcclient.h>
 #include <wx/thread.h>
 
+#include "wxleddef.h"
+
 /// Class to display a Led on the used dialogs page
-class wxLed : public wxWindow
+class WXDLLIMPEXP_LED wxLed : public wxWindow
 {
 	public :
         /** Constructor

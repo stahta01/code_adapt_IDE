@@ -7,8 +7,10 @@
 #include <wx/thread.h>
 #include <map>
 
+#include "wxleddef.h"
+
 /// Class to display a Led on the used dialogs page
-class wxStateLed : public wxWindow
+class WXDLLIMPEXP_LED wxStateLed : public wxWindow
 {
 	public :
         /** Constructor
