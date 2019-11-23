@@ -7,6 +7,9 @@
  **************************************************************/
 
 #include <wx/frame.h> // GetMenuBar
+#include <wx/filedlg.h>
+#include <wx/menu.h>
+
 #include "exporter.h"
 #include <configmanager.h>
 #include <manager.h>
