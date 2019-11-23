@@ -34,7 +34,6 @@
 
 #include "debuggermanager.h"
 #include "filefilters.h"
-#include <wx/wxscintilla.h>
 #include "editorcolourset.h"
 
 // Keep in sync with cbEditor.cpp:
