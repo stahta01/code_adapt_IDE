@@ -4,7 +4,7 @@
 #include <wx/process.h>
 #include <wx/aui/aui.h>
 
-#include <wx/wxscintilla.h>
+#include <ca/wxscintilla.h>
 
 #include "ShellCtrlBase.h"
 
