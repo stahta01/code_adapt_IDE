@@ -124,7 +124,7 @@
 					<Mode after="always" />
 				</ExtraCommands>
 			</Target>
-			<Target title="src">
+			<Target title="coreApp">
 				<Option output="devel31_msys2/codeadapt" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="devel31_msys2" />
 				<Option object_output=".objs31_msys2boot" />
@@ -247,8 +247,8 @@
 			</Environment>
 		</Build>
 		<VirtualTargets>
-			<Add alias="All" targets="AutoRevision;ConsoleRunner;Squirrel;Squirrel std lib;SqPlus;sdk;src;Compiler depslib;Compiler;" />
-			<Add alias="Core app &amp; plugins" targets="sdk;src;Compiler depslib;Compiler;" />
+			<Add alias="All" targets="AutoRevision;ConsoleRunner;Squirrel;Squirrel std lib;SqPlus;sdk;coreApp;Compiler depslib;Compiler;" />
+			<Add alias="Core app &amp; plugins" targets="sdk;coreApp;Compiler depslib;Compiler;" />
 			<Add alias="Third-party libs" targets="AutoRevision;ConsoleRunner;Squirrel;Squirrel std lib;SqPlus;Compiler depslib;" />
 		</VirtualTargets>
 		<Compiler>
@@ -265,7 +265,6 @@
 			<Add option="-DNOPCH" />
 			<Add option="-DwxUSE_UNICODE" />
 			<Add option="-DcaEDIT=0" />
-
 			<Add directory="$(TARGET_COMPILER_DIR)lib/wx/include/$(WX_TOOLKIT)-unicode-$(WX_VERSION)" />
 			<Add directory="$(TARGET_COMPILER_DIR)include/wx-$(WX_VERSION)" />
 		</Compiler>
@@ -273,16 +272,6 @@
 			<Add directory="devel31_msys2/lib" />
 			<Add directory="devel31_msys2" />
 		</Linker>
-		<ExtraCommands>
-			<Add before='cmd.exe /c echo &quot;GET_DATA_DIR: $(GET_DATA_DIR)&quot;' />
-			<Add before='cmd.exe /c echo &quot;GET_LOCAL_DATA_DIR: &quot; $(GET_LOCAL_DATA_DIR)' />
-			<Add before='cmd.exe /c echo &quot;GET_DOCUMENTS_DIR: &quot; $(GET_DOCUMENTS_DIR)' />
-			<Add before='cmd.exe /c echo &quot;GET_CONFIG_DIR: &quot; $(GET_CONFIG_DIR)' />
-			<Add before='cmd.exe /c echo &quot;GET_USER_CONFIG_DIR: &quot; $(GET_USER_CONFIG_DIR)' />
-			<Add before='cmd.exe /c echo &quot;GET_USER_DATA_DIR: &quot; $(GET_USER_DATA_DIR)' />
-			<Add before='cmd.exe /c echo &quot;GET_USER_LOCAL_DATA_DIR: $(GET_USER_LOCAL_DATA_DIR)&quot;' />
-			<Add before='cmd.exe /c echo &quot;GET_TEMP_DIR: &quot; $(GET_TEMP_DIR)' />
-		</ExtraCommands>
 		<Unit filename="build_tools/autorevision/autorevision.cpp">
 			<Option target="AutoRevision" />
 		</Unit>
@@ -801,7 +790,7 @@
 		</Unit>
 		<Unit filename="include/sdk.h">
 			<Option weight="1" />
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="include/sdk_common.h">
 			<Option target="sdk" />
@@ -1278,34 +1267,34 @@
 			<Option target="Compiler" />
 		</Unit>
 		<Unit filename="scripts/make_dist.script">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="scripts/plugin_find_broken_files.script">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="scripts/sample_plugin.script">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="scripts/startup.script">
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="scripts/tests/menu_test_plugin.script">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="scripts/tests/script_test_plugin.script">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="scripts/tests/test_base.script">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="scripts/tests/user_dialog_test_plugin.script">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="scripts/tests/wx_test.script">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="scripts/wx_help.script">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="sdk/annoyingdialog.cpp">
 			<Option target="sdk" />
@@ -1325,10 +1314,20 @@
 		<Unit filename="sdk/cbart_provider.cpp">
 			<Option target="sdk" />
 		</Unit>
+		<Unit filename="sdk/cbauibook.cpp">
+			<Option target="sdk" />
+		</Unit>
 		<Unit filename="sdk/cbcolourmanager.cpp">
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/cbdebugger_interfaces.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="sdk" />
+		</Unit>
+		<Unit filename="sdk/cbeditor.cpp">
+			<Option compile="0" />
+			<Option link="0" />
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/cbplugin.cpp">
@@ -1347,6 +1346,11 @@
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/cbworkspace.cpp">
+			<Option target="sdk" />
+		</Unit>
+		<Unit filename="sdk/ccmanager.cpp">
+			<Option compile="0" />
+			<Option link="0" />
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/compileoptionsbase.cpp">
@@ -1384,6 +1388,8 @@
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/debuggermanager.cpp">
+			<Option compile="0" />
+			<Option link="0" />
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/editarrayfiledlg.cpp">
@@ -1398,10 +1404,22 @@
 		<Unit filename="sdk/editor_hooks.cpp">
 			<Option target="sdk" />
 		</Unit>
+		<Unit filename="sdk/editorbase.cpp">
+			<Option target="sdk" />
+		</Unit>
 		<Unit filename="sdk/editorcolourset.cpp">
+			<Option compile="0" />
+			<Option link="0" />
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/editorlexerloader.cpp">
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="sdk" />
+		</Unit>
+		<Unit filename="sdk/editormanager.cpp">
+			<Option compile="0" />
+			<Option link="0" />
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/editpairdlg.cpp">
@@ -1429,6 +1447,8 @@
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/findreplacedlg.cpp">
+			<Option compile="0" />
+			<Option link="0" />
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/genericmultilinenotesdlg.cpp">
@@ -1585,6 +1605,8 @@
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/projectlayoutloader.cpp">
+			<Option compile="0" />
+			<Option link="0" />
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="sdk/projectloader.cpp">
@@ -1804,361 +1826,383 @@
 			<Option target="sdk" />
 		</Unit>
 		<Unit filename="src/app.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/app.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/appglobals.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/appglobals.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/associations.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/associations.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/backtracedlg.cpp">
-			<Option target="src" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/backtracedlg.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/batchbuild.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/breakpointsdlg.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/compilersettingsdlg.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/compilersettingsdlg.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/cpuregistersdlg.cpp">
-			<Option target="src" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/cpuregistersdlg.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/crashhandler.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/crashhandler.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/debugger_interface_creator.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/debuggermenu.cpp">
-			<Option target="src" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/debuggermenu.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/debuggersettingscommonpanel.cpp">
-			<Option target="src" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/debuggersettingscommonpanel.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/debuggersettingsdlg.cpp">
-			<Option target="src" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/debuggersettingsdlg.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/debuggersettingspanel.cpp">
-			<Option target="src" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/debuggersettingspanel.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/disassemblydlg.cpp">
-			<Option target="src" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/disassemblydlg.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/dlgabout.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/dlgabout.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/dlgaboutplugin.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/dlgaboutplugin.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/editkeywordsdlg.cpp">
-			<Option target="src" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/editkeywordsdlg.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/editorconfigurationdlg.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/environmentsettingsdlg.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/environmentsettingsdlg.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/examinememorydlg.cpp">
-			<Option target="src" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/examinememorydlg.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/find_replace.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/goto_file.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/goto_file.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/infopane.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/infopane.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/main.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/main.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/notebookstyles.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/notebookstyles.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/prefix.cpp">
 			<Option compile="0" />
 			<Option link="0" />
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/prefix.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/printdlg.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/printdlg.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/projectdepsdlg.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/projectdepsdlg.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/projectmanagerui.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/projectmanagerui.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/projectoptionsdlg.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/projectoptionsdlg.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/recentitemslist.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/recentitemslist.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/amd64.manifest">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/amd64_dpi_aware_on.manifest">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/app_compiler_settings.xrc">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/ask_assocs.xrc">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/debugger_menu.xrc">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/debugger_toolbar.xrc">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/disassembly.xrc">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/dlg_about.xrc">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/dlg_about_plugin.xrc">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/edit_keywords.xrc">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/editor_configuration.xrc">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/env_settings.xrc">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/ia64.manifest">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/main_menu.xrc">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/main_toolbar.xrc">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/manage_assocs.xrc">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/memdump.xrc">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/print_dialog.xrc">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/project_deps.xrc">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/project_options.xrc">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/resources.rc">
 			<Option compilerVar="WINDRES" />
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/scripting_settings.xrc">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/start_here/start_here.html">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/virtualbuildtargetsdlg.xrc">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/resources/x86.manifest">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/scriptconsole.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/scriptconsole.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/scriptingsettingsdlg.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/scriptingsettingsdlg.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/splashscreen.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/splashscreen.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/startherepage.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/startherepage.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/switcherdlg.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/switcherdlg.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/threadsdlg.cpp">
-			<Option target="src" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/threadsdlg.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/virtualbuildtargetsdlg.cpp">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/virtualbuildtargetsdlg.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/watchesdlg.cpp">
-			<Option target="src" />
+			<Option compile="0" />
+			<Option link="0" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="src/watchesdlg.h">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="tips.txt">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="tools/ConsoleRunner/main.cpp">
 			<Option target="ConsoleRunner" />
 		</Unit>
 		<Unit filename="wxsmith/BuildTargetPanel.wxs">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="wxsmith/CCDebugInfo.wxs">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="wxsmith/CompilerPanel.wxs">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="wxsmith/EmbeddedHtmlPanel.wxs">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="wxsmith/FilePathPanel.wxs">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="wxsmith/GenericSelectPath.wxs">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="wxsmith/GenericSingleChoiceList.wxs">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="wxsmith/InfoPanel.wxs">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="wxsmith/ProjectPathPanel.wxs">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="wxsmith/ScriptConsole.wxs">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="wxsmith/VirtualBuildTargetsDlg.wxs">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="wxsmith/databreakpointdlg.wxs">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="wxsmith/debuggersettingscommonpanel.wxs">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="wxsmith/debuggersettingsdlg.wxs">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="wxsmith/debuggersettingspanel.wxs">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Unit filename="wxsmith/goto_file.wxs">
-			<Option target="src" />
+			<Option target="coreApp" />
 		</Unit>
 		<Extensions>
 			<code_completion />
