@@ -9,12 +9,13 @@
 
 #include "sdk_precomp.h"
 
-#ifndef CB_PRECOMP
     #include "safedelete.h"
     #include "cbeditor.h"
     #include "configmanager.h"
+#if caEDIT
     #include "editormanager.h"
-#endif
+#endif // caEDIT
+
 #include "ca/styledtextctrl.h"
 #include "filemanager.h"
 #include "infowindow.h"
@@ -140,6 +141,7 @@ FileManager::~FileManager()
 
 LoaderBase* FileManager::Load(const wxString& file, bool reuseEditors)
 {
+#if caEDIT
     if (reuseEditors)
     {
         // if a file is opened in the editor, and the file get modified, we use the content of the
@@ -161,7 +163,7 @@ LoaderBase* FileManager::Load(const wxString& file, bool reuseEditors)
             }
         }
     }
-
+#endif // caEDIT
     if (file.StartsWith(_T("http://")))
     {
         URLLoader *ul = new URLLoader(file);

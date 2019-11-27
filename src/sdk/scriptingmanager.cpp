@@ -9,12 +9,13 @@
 
 #include <sdk_precomp.h>
 
-#ifndef CB_PRECOMP
     #include "scriptingmanager.h"
     #include "cbeditor.h"
     #include "ca/exception.h"
     #include "configmanager.h"
+#if caEDIT
     #include "editormanager.h"
+#endif // caEDIT
     #include "globals.h"
     #include "logmanager.h"
     #include "manager.h"
@@ -24,7 +25,6 @@
     #include <wx/file.h>
     #include <wx/filename.h>
     #include <wx/regex.h>
-#endif
 
 #include "crc32.h"
 #include "menuitemsmanager.h"
@@ -479,7 +479,9 @@ void ScriptingManager::OnScriptMenu(wxCommandEvent& event)
     if (wxGetKeyState(WXK_SHIFT))
     {
         wxString script = ConfigManager::LocateDataFile(mbs.scriptOrFunc, sdScriptsUser | sdScriptsGlobal);
+#if caEDIT
         Manager::Get()->GetEditorManager()->Open(script);
+#endif // caEDIT
         return;
     }
 

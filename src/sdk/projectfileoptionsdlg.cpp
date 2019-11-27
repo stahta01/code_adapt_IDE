@@ -12,9 +12,11 @@
     #include <wx/checklst.h>            // wxCheckListBox
     #include <wx/choice.h>
 #endif
-#ifndef CB_PRECOMP
+
     #include "cbproject.h"
+#if caEDIT
     #include "editormanager.h"
+#endif // caEDIT
     #include "logmanager.h"
     #include "projectmanager.h"
     #include <wx/xrc/xmlres.h>
@@ -26,7 +28,6 @@
     #include <wx/file.h>
     #include <wx/stattext.h>
     #include <wx/sizer.h>
-#endif
 
 #ifdef __WXMSW__
 // TODO: equivalent??? -> #include <errno.h>
@@ -239,7 +240,9 @@ void ProjectFileOptionsDlg::OnReadOnlyCheck(wxCommandEvent& event)
     // Update UI
     XRCCTRL(*this, "chkReadOnly", wxCheckBox)->SetValue(!m_FileName.IsFileWritable());
 
+#if caEDIT
     Manager::Get()->GetEditorManager()->CheckForExternallyModifiedFiles();
+#endif // caEDIT
 }
 
 void ProjectFileOptionsDlg::OnCompilerCombo(wxCommandEvent& event)
@@ -314,10 +317,15 @@ void ProjectFileOptionsDlg::FillGeneralProperties()
     if (!m_FileName.FileExists())
         return;
 
+#if caEDIT
     EditorColourSet* colour_set = Manager::Get()->GetEditorManager()->GetColourSet();
+#else
+    EditorColourSet* colour_set = nullptr;
+#endif // caEDIT
     if (!colour_set)
         return;
 
+#if caEDIT
     const HighlightLanguage& lang = colour_set->GetLanguageForFilename(m_FileNameStr);
     if (lang != HL_NONE)
     {
@@ -333,6 +341,7 @@ void ProjectFileOptionsDlg::FillGeneralProperties()
         XRCCTRL(*this, "staticCommentLines", wxStaticText)->SetLabel(wxString::Format(_T("%ld"), comment_lines));
         XRCCTRL(*this, "staticEmptyLines",   wxStaticText)->GetContainingSizer()->Layout();
     }
+#endif // caEDIT
     wxFile file(m_FileName.GetFullPath());
     if (file.IsOpened())
     {

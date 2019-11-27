@@ -14,7 +14,9 @@
 #include <manager.h>
 #include <logmanager.h>
 #include <configmanager.h>
+#if caEDIT
 #include <editormanager.h>
+#endif // caEDIT
 #include <projectmanager.h>
 #include <macrosmanager.h>
 #include <uservarmanager.h>
@@ -36,7 +38,9 @@ DECLARE_INSTANCE_TYPE(wxString);
 
 // C::B primitives and types
 DECLARE_INSTANCE_TYPE(ConfigManager);
+#if caEDIT
 DECLARE_INSTANCE_TYPE(EditorManager);
+#endif // caEDIT
 DECLARE_INSTANCE_TYPE(UserVariableManager);
 DECLARE_INSTANCE_TYPE(ScriptingManager);
 DECLARE_INSTANCE_TYPE(EditorBase);

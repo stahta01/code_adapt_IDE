@@ -8,18 +8,20 @@
  */
 
 #include <sdk_precomp.h>
-#ifndef CB_PRECOMP
+
     #include <settings.h>
     #include <manager.h>
     #include <logmanager.h>
     #include <configmanager.h>
+#if caEDIT
     #include <editormanager.h>
+#endif // caEDIT
     #include <projectmanager.h>
     #include <macrosmanager.h>
     #include <cbproject.h>
     #include <cbeditor.h>
     #include <globals.h>
-#endif
+
 #include "ca/styledtextctrl.h"
 #include <compiler.h>
 #include <compilerfactory.h>
@@ -101,6 +103,7 @@ namespace ScriptBindings
         }
         return sa.ThrowError("Invalid arguments to \"ConfigManager::Write\"");
     }
+#if caEDIT
     SQInteger EditorManager_GetBuiltinEditor(HSQUIRRELVM v)
     {
         StackHandler sa(v);
@@ -155,6 +158,7 @@ namespace ScriptBindings
         }
         return sa.ThrowError("Invalid arguments to \"EditorManager::Save\"");
     }
+#endif // caEDIT
     SQInteger cbProject_RemoveFile(HSQUIRRELVM v)
     {
         StackHandler sa(v);
@@ -754,6 +758,7 @@ namespace ScriptBindings
         return sa.ThrowError("Invalid arguments to \"ProjectManager::RebuildTree\"");
     }
 
+#if caEDIT
     SQInteger cbEditor_SetText(HSQUIRRELVM v)
     {
         StackHandler sa(v);
@@ -786,6 +791,7 @@ namespace ScriptBindings
         }
         return sa.ThrowError("Invalid arguments to \"cbEditor::GetText\"");
     }
+#endif // caEDIT
     SQInteger CompilerFactory_GetCompilerIndex(HSQUIRRELVM v)
     {
         StackHandler sa(v);
@@ -1078,6 +1084,7 @@ namespace ScriptBindings
                 func(&EditorBase::IsReadOnly, "IsReadOnly").
                 func(&EditorBase::HasSelection, "HasSelection");
 
+#if caEDIT
         SqPlus::SQClassDef<cbEditor>("cbEditor", "EditorBase").
                 func(&cbEditor::SetEditorTitle, "SetEditorTitle").
                 func(&cbEditor::GetProjectFile, "GetProjectFile").
@@ -1107,7 +1114,6 @@ namespace ScriptBindings
                 func(&cbEditor::GotoNextBreakpoint, "GotoNextBreakpoint").
                 func(&cbEditor::GotoPreviousBreakpoint, "GotoPreviousBreakpoint").
 
-
                 // these are not present in cbEditor; included to help scripts edit text
                 staticFuncVarArgs(&cbEditor_SetText, "SetText", "*").
                 staticFuncVarArgs(&cbEditor_GetText, "GetText", "*");
@@ -1131,6 +1137,7 @@ namespace ScriptBindings
                 func(&EditorManager::SaveActiveAs, "SaveActiveAs").
                 func(&EditorManager::SaveAll, "SaveAll");
         //        func(&EditorManager::ShowFindDialog, "ShowFindDialog");
+#endif // caEDIT
 
         SqPlus::SQClassDef<UserVariableManager>("UserVariableManager").
                 func(&UserVariableManager::Exists, "Exists");

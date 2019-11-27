@@ -11,17 +11,18 @@
 #ifndef WX_PRECOMP
     #include <wx/textdlg.h>         // wxGetPasswordFromUser
 #endif
-#ifndef CB_PRECOMP
+
     #include <wx/string.h>
     #include <globals.h>
     #include <settings.h>
     #include <manager.h>
     #include <logmanager.h>
     #include <configmanager.h>
+#if caEDIT
     #include <editormanager.h>
+#endif // caEDIT
     #include <projectmanager.h>
     #include <pluginmanager.h>
-#endif
 
 #include "sc_base_types.h"
 
@@ -55,10 +56,12 @@ namespace ScriptBindings
     {
         return Manager::Get()->GetProjectManager();
     }
+#if caEDIT
     EditorManager* getEM()
     {
         return Manager::Get()->GetEditorManager();
     }
+#endif // caEDIT
     ConfigManager* getCM()
     {
         return Manager::Get()->GetConfigManager(_T("scripts"));
@@ -215,7 +218,9 @@ namespace ScriptBindings
         SqPlus::RegisterGlobal(gReplaceMacros, "ReplaceMacros");
 
         SqPlus::RegisterGlobal(getPM, "GetProjectManager");
+#if caEDIT
         SqPlus::RegisterGlobal(getEM, "GetEditorManager");
+#endif // caEDIT
         SqPlus::RegisterGlobal(getCM, "GetConfigManager");
         SqPlus::RegisterGlobal(getUVM, "GetUserVariableManager");
         SqPlus::RegisterGlobal(getSM, "GetScriptingManager");

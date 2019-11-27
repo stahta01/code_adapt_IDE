@@ -27,7 +27,9 @@
 class wxFrame;
 class wxWindow;
 class ProjectManager;
+#if caEDIT
 class EditorManager;
+#endif // caEDIT
 class DebuggerManager;
 class LogManager;
 class PluginManager;
@@ -106,7 +108,9 @@ public:
      */
 
     ProjectManager*      GetProjectManager()                          const;
+#if caEDIT
     EditorManager*       GetEditorManager()                           const;
+#endif // caEDIT
     LogManager*          GetLogManager()                              const;
     PluginManager*       GetPluginManager()                           const;
     ToolsManager*        GetToolsManager()                            const;
@@ -223,7 +227,11 @@ public:
         if (instance == nullptr)
         {
             if (isShutdown == false)
+#if caEDIT
                 instance = new MgrT();
+#else
+                ;
+#endif // caEDIT
             else
                 logAssert(false && "Calling Get after the subsystem has been shutdown is an error!");
         }

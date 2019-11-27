@@ -9,21 +9,23 @@
 
 #include "sdk_precomp.h"
 
-#ifndef CB_PRECOMP
     #include <wx/xrc/xmlres.h>
     #include <wx/fs_zip.h>
     #include <wx/menu.h>
+    #include <wx/frame.h>
 
     #include "manager.h" // class's header file
     #include "sdk_events.h"
     #include "ca/exception.h"
     #include "projectmanager.h"
+#if caEDIT
     #include "editormanager.h"
+#endif // caEDIT
     #include "logmanager.h"
     #include "pluginmanager.h"
     #include "configmanager.h"
     #include "globals.h"
-#endif
+
 
 #include <wx/app.h>    // wxTheApp
 #include <wx/toolbar.h>
@@ -38,8 +40,10 @@
 
 #include "cbcolourmanager.h"
 #include "cbplugin.h"
+#if caEDIT
 #include "ccmanager.h"
 #include "debuggermanager.h"
+#endif // caEDIT
 #include "ca/assert.h"
 #include "toolsmanager.h"
 #include "templatemanager.h"
@@ -241,12 +245,18 @@ void Manager::Shutdown()
 
     ToolsManager::Free();
     TemplateManager::Free();
+#if caEDIT
     CCManager::Free();
+#endif // caEDIT
     PluginManager::Free();
+#if caEDIT
     DebuggerManager::Free();
+#endif // caEDIT
     ScriptingManager::Free();
     ProjectManager::Free();
+#if caEDIT
     EditorManager::Free();
+#endif // caEDIT
     PersonalityManager::Free();
     MacrosManager::Free();
     UserVariableManager::Free();
@@ -451,10 +461,12 @@ ProjectManager* Manager::GetProjectManager() const
     return ProjectManager::Get();
 }
 
+#if caEDIT
 EditorManager* Manager::GetEditorManager() const
 {
     return EditorManager::Get();
 }
+#endif // caEDIT
 
 LogManager* Manager::GetLogManager() const
 {
@@ -503,7 +515,11 @@ FileManager* Manager::GetFileManager() const
 
 DebuggerManager* Manager::GetDebuggerManager() const
 {
+#if caEDIT
     return DebuggerManager::Get();
+#else
+    return nullptr;
+#endif // caEDIT
 }
 
 ColourManager* Manager::GetColourManager() const
@@ -513,7 +529,11 @@ ColourManager* Manager::GetColourManager() const
 
 CCManager* Manager::GetCCManager() const
 {
+#if caEDIT
     return CCManager::Get();
+#else
+    return nullptr;
+#endif // caEDIT
 }
 
 bool Manager::LoadResource(const wxString& file)

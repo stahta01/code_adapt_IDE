@@ -9,7 +9,6 @@
 
 #include "sdk_precomp.h"
 
-#ifndef CB_PRECOMP
     #include <wx/frame.h> // wxFrame
     #include <wx/menu.h>
     #include <wx/process.h>
@@ -18,24 +17,26 @@
     #include "cbproject.h"
     #include "compiler.h" // GetSwitches
     #include "configmanager.h"
-    #include "debuggermanager.h"
     #include "editorcolourset.h"
+#if caEDIT
     #include "editormanager.h"
+#endif // caEDIT
     #include "logmanager.h"
     #include "manager.h"
     #include "projectbuildtarget.h"
     #include "projectmanager.h"
     #include "sdk_events.h"
-#endif
 
 #include <wx/toolbar.h>
 
 #include "annoyingdialog.h"
-#include "cbdebugger_interfaces.h"
 #include "ca/styledtextctrl.h"
 #include "cbplugin.h"
+#if caEDIT
+#include "cbdebugger_interfaces.h"
 #include "ccmanager.h"
 #include "debuggermanager.h"
+#endif // caEDIT
 #include "editor_hooks.h"
 #include "loggers.h"
 #include "ca/assert.h"
@@ -124,6 +125,8 @@ cbCompilerPlugin::cbCompilerPlugin()
 /////
 ///// cbDebuggerPlugin
 /////
+
+#if caEDIT
 
 cbDebuggerPlugin::cbDebuggerPlugin(const wxString &guiName, const wxString &settingsName) :
     m_pCompiler(nullptr),
@@ -986,6 +989,8 @@ void cbDebuggerPlugin::CancelValueTooltip(cb_unused CodeBlocksEvent& event)
 {
     Manager::Get()->GetDebuggerManager()->GetInterfaceFactory()->HideValueTooltip();
 }
+#endif // caEDIT
+
 /////
 ///// cbToolPlugin
 /////
@@ -1008,6 +1013,7 @@ cbMimePlugin::cbMimePlugin()
 ///// cbCodeCompletionPlugin
 /////
 
+#if caEDIT
 cbCodeCompletionPlugin::cbCodeCompletionPlugin()
 {
     m_Type = ptCodeCompletion;
@@ -1027,6 +1033,7 @@ bool cbCodeCompletionPlugin::IsProviderFor(cbEditor* ed)
 {
     return (Manager::Get()->GetCCManager()->GetProviderFor(ed) == this);
 }
+#endif // caEDIT
 
 /////
 ///// cbWizardPlugin
@@ -1041,6 +1048,7 @@ cbWizardPlugin::cbWizardPlugin()
 ///// cbSmartIndentPlugin
 /////
 
+#if caEDIT
 cbSmartIndentPlugin::cbSmartIndentPlugin()
 {
     m_Type = ptSmartIndent;
@@ -1358,3 +1366,4 @@ void cbSmartIndentPlugin::OnCCDoneEvent(CodeBlocksEvent& event)
         OnCCDone(ed);
     }
 }
+#endif // caEDIT

@@ -26,7 +26,9 @@
 
 #include "annoyingdialog.h"
 #include "cbplugin.h" // IsAttached
+#if caEDIT
 #include "ccmanager.h"
+#endif // caEDIT
 #include <wx/dirdlg.h>
 #include <wx/filedlg.h>
 #include <wx/html/htmlwin.h>
@@ -491,7 +493,9 @@ void PluginsConfigurationDlg::EndModal(int retCode)
     cfg->Write(_T("/install_globally"), XRCCTRL(*this, "chkInstallGlobally", wxCheckBox)->GetValue());
     cfg->Write(_T("/install_confirmation"), XRCCTRL(*this, "chkInstallConfirmation", wxCheckBox)->GetValue());
 
+#if caEDIT
     Manager::Get()->GetCCManager()->NotifyPluginStatus();
+#endif // caEDIT
 
     wxScrollingDialog::EndModal(retCode);
 }

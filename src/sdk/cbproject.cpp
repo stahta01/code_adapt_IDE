@@ -16,7 +16,7 @@
     #include <wx/choicdlg.h>
     #include <wx/filedlg.h>
 #endif
-#ifndef CB_PRECOMP
+
     #include <map>
 
     #include <wx/dir.h>
@@ -26,7 +26,9 @@
     #include "cbeditor.h"
     #include "cbtreectrl.h"
     #include "configmanager.h"
+#if caEDIT
     #include "editormanager.h"
+#endif // caEDIT
     #include "globals.h"
     #include "logmanager.h"
     #include "manager.h"
@@ -35,11 +37,12 @@
     #include "projectfile.h"
     #include "projectmanager.h"
     #include "sdk_events.h"
-#endif
 
 #include "cbplugin.h"
 #include "projectloader.h"
+#if caEDIT
 #include "projectlayoutloader.h"
+#endif // caEDIT
 #include "selecttargetdlg.h"
 #include "filegroupsandmasks.h"
 #include "filefilters.h"
@@ -609,6 +612,9 @@ bool cbProject::Save()
     return false;
 }
 
+#if !caEDIT
+bool cbProject::SaveLayout(){return true;}
+#else
 bool cbProject::SaveLayout()
 {
     if (m_Filename.IsEmpty())
@@ -622,7 +628,11 @@ bool cbProject::SaveLayout()
     ProjectLayoutLoader loader(this);
     return loader.Save(fname.GetFullPath());
 }
+#endif // caEDIT
 
+#if !caEDIT
+bool cbProject::LoadLayout(){return true;}
+#else
 bool cbProject::LoadLayout()
 {
     if (m_Filename.IsEmpty())
@@ -702,6 +712,7 @@ bool cbProject::LoadLayout()
 
     return result;
 }
+#endif // caEDIT
 
 void cbProject::BeginAddFiles()
 {
@@ -980,7 +991,9 @@ bool cbProject::RemoveFile(ProjectFile* pf)
     if (!pf)
         return false;
     m_ProjectFilesMap.erase(UnixFilename(pf->relativeFilename)); // remove from hashmap
+#if caEDIT
     Manager::Get()->GetEditorManager()->Close(pf->file.GetFullPath());
+#endif // caEDIT
 
     {
 		FilesList::iterator it = m_Files.find(pf);
@@ -1195,6 +1208,7 @@ ProjectFile* cbProject::GetFileByFilename(const wxString& filename, bool isRelat
 
 bool cbProject::QueryCloseAllFiles()
 {
+#if caEDIT
     FilesList::iterator it = m_Files.begin();
     while (it != m_Files.end())
     {
@@ -1207,6 +1221,9 @@ bool cbProject::QueryCloseAllFiles()
         }
     }
     return true;
+#else
+    return false;
+#endif // caEDIT
 }
 
 bool cbProject::CloseAllFiles(bool dontsave)
@@ -1216,6 +1233,7 @@ bool cbProject::CloseAllFiles(bool dontsave)
     if (!dontsave && !QueryCloseAllFiles())
             return false;
 
+#if caEDIT
     // now free the rest of the project files
     Manager::Get()->GetEditorManager()->HideNotebook();
     for (FilesList::iterator it = m_Files.begin(); it != m_Files.end(); ++it)
@@ -1230,11 +1248,14 @@ bool cbProject::CloseAllFiles(bool dontsave)
     Manager::Get()->GetEditorManager()->ShowNotebook();
 
     return true;
+#endif // caEDIT
+    return false;
 }
 
 bool cbProject::SaveAllFiles()
 {
     int count = m_Files.size();
+#if caEDIT
     FilesList::iterator it = m_Files.begin();
     while (it != m_Files.end())
     {
@@ -1242,6 +1263,7 @@ bool cbProject::SaveAllFiles()
         if (Manager::Get()->GetEditorManager()->Save(f->file.GetFullPath()))
             --count;
     }
+#endif // caEDIT
     return count == 0;
 }
 

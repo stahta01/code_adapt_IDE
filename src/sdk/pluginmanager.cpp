@@ -9,7 +9,6 @@
 
 #include "sdk_precomp.h"
 
-#ifndef CB_PRECOMP
     #include <wx/dir.h>
     #include <wx/filesys.h>
     #include <wx/intl.h>
@@ -21,13 +20,14 @@
     #include "logmanager.h"
     #include "macrosmanager.h"
     #include "manager.h"
+#if caEDIT
     #include "editormanager.h"
+#endif // caEDIT
     #include "configmanager.h"
     #include "personalitymanager.h"
     #include "scriptingmanager.h"
     #include "globals.h"
     #include "sdk_events.h"
-#endif
 
 #include <algorithm>
 

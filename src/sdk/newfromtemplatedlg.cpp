@@ -11,7 +11,7 @@
 #ifndef WX_PRECOMP
     #include <wx/choice.h>
 #endif
-#ifndef CB_PRECOMP
+
     #include <wx/button.h>
     #include <wx/imaglist.h>
     #include <wx/intl.h>
@@ -24,10 +24,12 @@
 
     #include "cbeditor.h"
     #include "configmanager.h"
+#if caEDIT
     #include "editormanager.h"
+#endif // caEDIT
     #include "globals.h"
     #include "manager.h"
-#endif
+
 #include "cbplugin.h"
 #include "ca/styledtextctrl.h"
 
@@ -365,6 +367,7 @@ void NewFromTemplateDlg::EditScript(const wxString& filename)
         script = ConfigManager::GetFolder(sdDataGlobal) + _T("/templates/wizard/") + filename;
     }
 
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->Open(script);
     if (ed)
     {
@@ -380,6 +383,7 @@ void NewFromTemplateDlg::EditScript(const wxString& filename)
         EndModal(wxID_CANCEL);
         return;
     }
+#endif // caEDIT
     cbMessageBox(_("Couldn't open script:\n") + script, _("Error"), wxICON_ERROR, this);
 }
 

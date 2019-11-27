@@ -9,7 +9,6 @@
 
 #include "sdk_precomp.h"
 
-#ifndef CB_PRECOMP
     #include <wx/datetime.h>
     #include <wx/dir.h>
     #include <wx/filename.h>
@@ -21,11 +20,12 @@
     #include "cbproject.h"
     #include "logmanager.h"
     #include "pluginmanager.h"
+#if caEDIT
     #include "editormanager.h"
+#endif // caEDIT
     #include "workspaceloader.h"
     #include "cbeditor.h"
     #include "globals.h"
-#endif
 
 #include <wx/progdlg.h>
 
@@ -464,7 +464,9 @@ bool ProjectManager::CloseProject(cbProject* project, bool dontsave, bool refres
     // the state of m_IsClosingProject.
     bool isClosingOtherProjects = m_IsClosingProject;
     m_IsClosingProject = true;
+#if caEDIT
     Manager::Get()->GetEditorManager()->UpdateProjectFiles(project);
+#endif // caEDIT
     project->SaveLayout();
 
     if (m_pWorkspace)
@@ -972,7 +974,9 @@ void ProjectManager::WorkspaceChanged()
     {
         CodeBlocksEvent event(cbEVT_WORKSPACE_CHANGED);
         Manager::Get()->GetPluginManager()->NotifyPlugins(event);
+#if caEDIT
         Manager::Get()->GetEditorManager()->GetNotebook()->MinimizeFreeSpace();
+#endif // caEDIT
     }
 }
 

@@ -9,14 +9,15 @@
 
 #include "sdk_precomp.h"
 
-#ifndef CB_PRECOMP
     #include <wx/arrstr.h>
     #include <wx/filename.h>
     #include <wx/listctrl.h>
     #include "manager.h"
+#if caEDIT
     #include "editormanager.h"
+#endif // caEDIT
     #include "cbeditor.h"
-#endif
+
 #include "ca/styledtextctrl.h"
 
 #include "searchresultslog.h"
@@ -77,6 +78,7 @@ void cbSearchResultsLog::SyncEditor(int selIndex)
     control->GetItem(li);
     long line = 0;
     li.m_text.ToLong(&line);
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->Open(file);
     if (!line || !ed)
         return;
@@ -88,6 +90,7 @@ void cbSearchResultsLog::SyncEditor(int selIndex)
     if (cbStyledTextCtrl* ctrl = ed->GetControl()) {
         ctrl->EnsureVisible(line);
     }
+#endif // caEDIT
 }
 
 void cbSearchResultsLog::OnDoubleClick(cb_unused wxCommandEvent& event)

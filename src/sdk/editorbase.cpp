@@ -9,19 +9,19 @@
 
 #include "sdk_precomp.h"
 
-#ifndef CB_PRECOMP
     #include <wx/filename.h>
     #include <wx/notebook.h>
     #include <wx/menu.h>
     #include "manager.h"
     #include "editorbase.h"
     #include "cbeditor.h"
+#if caEDIT
     #include "editormanager.h"
+#endif // caEDIT
     #include "pluginmanager.h"
     #include "cbproject.h" // FileTreeData
     #include "projectmanager.h" // ProjectsArray
     #include <wx/wfstream.h>
-#endif
 
 #include "cbauibook.h"
 #include "cbplugin.h"
@@ -104,8 +104,10 @@ wxString EditorBase::CreateUniqueFilename()
     {
         tmp.Clear();
         tmp << path << prefix << wxString::Format(_T("%d"), iter);
+#if caEDIT
         if (!Manager::Get()->GetEditorManager()->GetEditor(tmp) &&
                 !wxFileExists(path + tmp))
+#endif // caEDIT
         {
             return tmp;
         }
@@ -122,7 +124,9 @@ EditorBase::EditorBase(wxWindow* parent, const wxString& filename)
 {
     m_pData = new EditorBaseInternalData(this);
 
+#if caEDIT
     Manager::Get()->GetEditorManager()->AddCustomEditor(this);
+#endif // caEDIT
     InitFilename(filename);
     SetTitle(m_Shortname);
 }
@@ -131,7 +135,9 @@ EditorBase::~EditorBase()
 {
     if (!Manager::Get()->IsAppShuttingDown())
     {
+#if caEDIT
         Manager::Get()->GetEditorManager()->RemoveCustomEditor(this);
+#endif // caEDIT
 
         CodeBlocksEvent event(cbEVT_EDITOR_CLOSE);
         event.SetEditor(this);
@@ -149,7 +155,9 @@ const wxString& EditorBase::GetTitle()
 
 void EditorBase::SetTitle(const wxString& newTitle)
 {
+#if caEDIT
     m_WinTitle = newTitle;
+
     int mypage = Manager::Get()->GetEditorManager()->FindPageFromEditor(this);
     if (mypage != -1)
         Manager::Get()->GetEditorManager()->GetNotebook()->SetPageText(mypage, newTitle);
@@ -171,11 +179,14 @@ void EditorBase::SetTitle(const wxString& newTitle)
         nb->SetPageToolTip(idx, toolTip);
         Manager::Get()->GetEditorManager()->MarkReadOnly(idx, IsReadOnly() || (fname.FileExists() && !wxFile::Access(fname.GetFullPath(), wxFile::write)) );
     }
+#endif // caEDIT
 }
 
 void EditorBase::Activate()
 {
+#if caEDIT
     Manager::Get()->GetEditorManager()->SetActiveEditor(this);
+#endif // caEDIT
 }
 
 bool EditorBase::QueryClose()
@@ -214,13 +225,18 @@ bool EditorBase::IsBuiltinEditor() const
 
 bool EditorBase::ThereAreOthers() const
 {
+#if caEDIT
     return (Manager::Get()->GetEditorManager()->GetEditorsCount() > 1);
+#else
+    return false;
+#endif // caEDIT
 }
 
 wxMenu* EditorBase::CreateContextSubMenu(long id) // For context menus
 {
     wxMenu* menu = nullptr;
 
+#if caEDIT
     if (id == idSwitchTo)
     {
         menu = new wxMenu;
@@ -240,6 +256,7 @@ wxMenu* EditorBase::CreateContextSubMenu(long id) // For context menus
             menu = nullptr;
         }
     }
+#endif // caEDIT
     return menu;
 }
 
@@ -271,6 +288,7 @@ void EditorBase::BasicAddToContextMenu(wxMenu* popup, ModuleType type)
 
 void EditorBase::DisplayContextMenu(const wxPoint& position, ModuleType type)
 {
+#if caEDIT
     bool noeditor = (type != mtEditorManager);
     // noeditor:
     // True if context menu belongs to open files tree;
@@ -375,10 +393,12 @@ void EditorBase::DisplayContextMenu(const wxPoint& position, ModuleType type)
     // because it *will* invalidate 'this'
     if (m_pData->m_CloseMe)
         Manager::Get()->GetEditorManager()->Close(this);
+#endif // caEDIT
 }
 
 void EditorBase::OnContextMenuEntry(wxCommandEvent& event)
 {
+#if caEDIT
     // we have a single event handler for all popup menu entries
     // This was ported from cbEditor and used for the basic operations:
     // Switch to, close, save, etc.
@@ -437,6 +457,7 @@ void EditorBase::OnContextMenuEntry(wxCommandEvent& event)
         else if (id == idCPlusPlusCom)
             wxLaunchDefaultBrowser(wxString(_T("http://www.cplusplus.com/search.do?q="))                 << URLEncode(lastWord));
     }
+#endif // caEDIT
 }
 
 bool EditorBase::IsContextMenuOpened() const

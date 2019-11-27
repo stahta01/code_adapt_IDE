@@ -9,18 +9,18 @@
 
 #include "sdk_precomp.h"
 
-#ifndef CB_PRECOMP
     #include <wx/menu.h>
 
     #include "projectmanager.h"
+#if caEDIT
     #include "editormanager.h"
+#endif // caEDIT
     #include "logmanager.h"
     #include "manager.h"
     #include "cbproject.h"
     #include "cbeditor.h"
     #include "configmanager.h"
     #include "globals.h"
-#endif
 
 #include "branding.h"
 
@@ -187,6 +187,7 @@ void MacrosManager::ClearProjectKeys()
 
 wxString GetSelectedText()
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -204,7 +205,7 @@ wxString GetSelectedText()
             }
         }
     }
-
+#endif // caEDIT
     return wxEmptyString;
 }
 
@@ -239,6 +240,7 @@ void MacrosManager::RecalcVars(const cbProject* project, EditorBase* editor, con
             m_Macros.erase(it->first.Upper());
     }
 
+#if caEDIT
     if (editor)
     {
       // don't use pointer to editor here, because this might be the same,
@@ -260,6 +262,7 @@ void MacrosManager::RecalcVars(const cbProject* project, EditorBase* editor, con
           }
       }
     }
+#endif // caEDIT
 
     if (!project)
     {
@@ -552,7 +555,11 @@ void MacrosManager::ReplaceMacros(wxString& buffer, const ProjectBuildTarget* ta
     const cbProject* project = target
                              ? target->GetParentProject()
                              : Manager::Get()->GetProjectManager()->GetActiveProject();
+#if caEDIT
     EditorBase* editor = Manager::Get()->GetEditorManager()->GetActiveEditor();
+#else
+    EditorBase* editor = nullptr;
+#endif // caEDIT
 
     if (!target)
     {
