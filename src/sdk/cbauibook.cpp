@@ -13,16 +13,17 @@
     #include <wx/app.h>             // wxTheApp
     #include <wx/dcclient.h>        // wxClientDC
 #endif
-#ifndef CB_PRECOMP
+
     #include "cbeditor.h"
     #include "cbproject.h"
     #include "configmanager.h"
+#if caEDIT
     #include "editormanager.h"
+#endif // caEDIT
     #include "manager.h"
     #include "projectmanager.h"
 
     #include <wx/regex.h>
-#endif
 
 #include <wx/tooltip.h>
 #include <wx/wupdlock.h>
@@ -229,6 +230,7 @@ void cbAuiNotebook::GetPagesInTabCtrl(std::vector<wxWindow*> &result, wxWindow *
 
 void cbAuiNotebook::SetZoom(int zoom)
 {
+#if caEDIT
     // we only set zoom-factor for active (visible) tabs,
     // all others are set if system is idle
     UpdateTabControlsArray();
@@ -239,10 +241,12 @@ void cbAuiNotebook::SetZoom(int zoom)
             static_cast<cbEditor*>(win)->SetZoom(zoom);
     }
     m_SetZoomOnIdle = true;
+#endif // caEDIT
 }
 
 void cbAuiNotebook::OnIdle(cb_unused wxIdleEvent& event)
 {
+#if caEDIT
     if (m_SetZoomOnIdle)
     {
         m_SetZoomOnIdle = false;
@@ -254,6 +258,7 @@ void cbAuiNotebook::OnIdle(cb_unused wxIdleEvent& event)
                 static_cast<cbEditor*>(win)->SetZoom(zoom);
         }
     }
+#endif // caEDIT
 
     if (m_MinimizeFreeSpaceOnIdle)
     {
