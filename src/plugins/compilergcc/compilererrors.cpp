@@ -154,24 +154,28 @@ void CompilerErrors::DoGotoError(const CompileError& error)
         ProjectFile* f = project->GetFileByFilename(error.filename, !isAbsolute, true);
         if (f)
         {
+#if caEDIT
             ed = Manager::Get()->GetEditorManager()->Open(f->file.GetFullPath());
             if (ed)
             {
                 ed->SetProjectFile(f);
             }
+#endif // caEDIT
         }
         else
         {
             if(!isAbsolute) // this is always the case, except for system headers
                 filename.Prepend(project->GetCommonTopLevelPath());
-
+#if caEDIT
             ed = Manager::Get()->GetEditorManager()->Open(filename);
+#endif // caEDIT
         }
     }
 
     // if we reached here and ed is NULL, the filename in the output isn't relative
     // to the project root directory or doesn't belong to the project
 
+#if caEDIT
     // first check if we can open it directly...
     if (!ed)
         ed = Manager::Get()->GetEditorManager()->Open(error.filename);
@@ -222,10 +226,12 @@ void CompilerErrors::DoGotoError(const CompileError& error)
         ed->GotoLine(error.line - 1);
         ed->SetErrorLine(error.line - 1);
     }
+#endif // caEDIT
 }
 
 void CompilerErrors::DoClearErrorMarkFromAllEditors()
 {
+#if caEDIT
     EditorManager* edMan = Manager::Get()->GetEditorManager();
     for (int i = 0; i < edMan->GetEditorsCount(); ++i)
     {
@@ -233,6 +239,7 @@ void CompilerErrors::DoClearErrorMarkFromAllEditors()
         if (ed)
             ed->SetErrorLine(-1);
     }
+#endif // caEDIT
 }
 
 bool CompilerErrors::HasNextError() const

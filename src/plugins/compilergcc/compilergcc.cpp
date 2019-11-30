@@ -700,10 +700,12 @@ void CompilerGCC::Dispatcher(wxCommandEvent& event)
     else if (eventId == idMenuSettings)
         OnConfig(event);
 
+#if caEDIT
     // Return focus to current editor
     cbEditor* ed = 0;
     if ( (ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor()) )
         ed->GetControl()->SetFocus();
+#endif // caEDIT
 }
 
 void CompilerGCC::TextURL(wxTextUrlEvent& event)
@@ -838,6 +840,7 @@ void CompilerGCC::SetupEnvironment()
 
 bool CompilerGCC::StopRunningDebugger()
 {
+#if caEDIT
     cbDebuggerPlugin *dbg = Manager::Get()->GetDebuggerManager()->GetActiveDebugger();
     // is the debugger running?
     if (dbg && dbg->IsRunning())
@@ -863,6 +866,9 @@ bool CompilerGCC::StopRunningDebugger()
     }
 
     return true;
+#else
+    return false;
+#endif // caEDIT
 }
 
 void CompilerGCC::SaveOptions()
@@ -1013,6 +1019,7 @@ void CompilerGCC::PrepareCompileFilePM(wxFileName& file)
 
 void CompilerGCC::PrepareCompileFile(wxFileName& file)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -1032,6 +1039,7 @@ void CompilerGCC::PrepareCompileFile(wxFileName& file)
             CheckProject();
         }
     }
+#endif // caEDIT
 }
 
 bool CompilerGCC::CheckProject()
@@ -1878,8 +1886,10 @@ int CompilerGCC::Run(ProjectBuildTarget* target)
     bool commandIsQuoted = false; // remember if we quoted the command, avoid unneeded quotes, because they break execution with "konsole" under KDE
     if (!CheckProject())
     {
+#if caEDIT
         if (Manager::Get()->GetEditorManager()->GetActiveEditor())
             return RunSingleFile(Manager::Get()->GetEditorManager()->GetActiveEditor()->GetFilename());
+#endif // caEDIT
         return -1;
     }
     else
@@ -2395,7 +2405,9 @@ void CompilerGCC::BuildStateManagement()
 
     if (m_pBuildingProject != m_pLastBuildingProject || bt != m_pLastBuildingTarget)
     {
+#if caEDIT
         Manager::Get()->GetMacrosManager()->RecalcVars(m_pBuildingProject, Manager::Get()->GetEditorManager()->GetActiveEditor(), bt);
+#endif // caEDIT
         if (bt)
             SwitchCompiler(bt->GetCompilerID());
 
@@ -2799,9 +2811,11 @@ int CompilerGCC::DoBuild(const wxString& target, bool clean, bool build, bool cl
 
     if (!CheckProject())
     {
+#if caEDIT
         // no active project
         if (Manager::Get()->GetEditorManager()->GetActiveEditor())
             return CompileFile(Manager::Get()->GetEditorManager()->GetActiveEditor()->GetFilename());
+#endif // caEDIT
         return -1;
     }
 
@@ -3039,8 +3053,10 @@ int CompilerGCC::CompileFile(const wxString& file)
 
 int CompilerGCC::CompileFileWithoutProject(const wxString& file)
 {
+#if caEDIT
     // compile single file not belonging to a project
     Manager::Get()->GetEditorManager()->Save(file);
+#endif // caEDIT
 
     // switch to the default compiler
     SwitchCompiler(CompilerFactory::GetDefaultCompilerID());
@@ -3381,7 +3397,11 @@ void CompilerGCC::OnClearErrors(cb_unused wxCommandEvent& event)
 void CompilerGCC::OnUpdateUI(wxUpdateUIEvent& event)
 {
     cbProject* prj = Manager::Get()->GetProjectManager()->GetActiveProject();
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
+#else
+    cbEditor* ed = nullptr;
+#endif // caEDIT
     wxMenuBar* mbar = Manager::Get()->GetAppFrame()->GetMenuBar();
     bool running = IsRunning();
 
@@ -3976,10 +3996,12 @@ void CompilerGCC::OnJobEnd(size_t procIndex, int exitCode)
 
         m_RunAfterCompile = false;
 
+#if caEDIT
         // no matter what happened with the build, return the focus to the active editor
         cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinEditor(Manager::Get()->GetEditorManager()->GetActiveEditor());
         if (ed)
             ed->GetControl()->SetFocus();
+#endif // caEDIT
     }
 }
 

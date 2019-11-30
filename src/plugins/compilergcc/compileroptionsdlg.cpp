@@ -476,6 +476,7 @@ void CompilerOptionsDlg::DoFillCompilerPrograms()
     XRCCTRL(*this, "txtCPPcompiler", wxTextCtrl)->SetValue(progs.CPP);
     XRCCTRL(*this, "txtLinker", wxTextCtrl)->SetValue(progs.LD);
     XRCCTRL(*this, "txtLibLinker", wxTextCtrl)->SetValue(progs.LIB);
+#if caEDIT
     wxChoice *cmbDebugger = XRCCTRL(*this, "cmbDebugger", wxChoice);
     if (cmbDebugger)
     {
@@ -500,6 +501,7 @@ void CompilerOptionsDlg::DoFillCompilerPrograms()
             }
         }
     }
+#endif // caEDIT
 
     XRCCTRL(*this, "txtResComp", wxTextCtrl)->SetValue(progs.WINDRES);
     XRCCTRL(*this, "txtMake", wxTextCtrl)->SetValue(progs.MAKE);
