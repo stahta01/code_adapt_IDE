@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU General Public License, version 3
  * http://www.gnu.org/licenses/gpl-3.0.html
  *
- * $Revision: 11854 $
- * $Id: app.cpp 11854 2019-09-24 22:06:06Z bluehazzard $
+ * $Revision: 11903 $
+ * $Id: app.cpp 11903 2019-11-07 19:14:30Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/src/app.cpp $
  */
 
@@ -731,7 +731,10 @@ bool CodeBlocksApp::OnInit()
 #if wxCHECK_VERSION(3, 0, 0)
         {
             const double scalingFactor = frame->GetContentScaleFactor();
-            Manager::Get()->GetLogManager()->Log(wxString::Format(wxT("Initial scaling factor is %.3f"), scalingFactor));
+            const double actualScalingFactor = cbGetActualContentScaleFactor(*frame);
+            LogManager *log = Manager::Get()->GetLogManager();
+            log->Log(wxString::Format(wxT("Initial scaling factor is %.3f (actual: %.3f)"),
+                                      scalingFactor, actualScalingFactor));
         }
 #endif // wxCHECK_VERSION(3, 0, 0)
 

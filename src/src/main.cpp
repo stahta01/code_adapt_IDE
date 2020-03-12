@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU General Public License, version 3
  * http://www.gnu.org/licenses/gpl-3.0.html
  *
- * $Revision: 11866 $
- * $Id: main.cpp 11866 2019-09-29 16:10:16Z fuscated $
+ * $Revision: 11955 $
+ * $Id: main.cpp 11955 2020-01-30 23:14:18Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/src/main.cpp $
  */
 
@@ -631,7 +631,8 @@ MainFrame::MainFrame(wxWindow* parent)
 
     LoadWindowSize();
     ScanForPlugins();
-    CreateToolbars();
+    if (!Manager::IsBatchBuild())
+        CreateToolbars();
 
     Manager::Get()->GetCCManager();
 

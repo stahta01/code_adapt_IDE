@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU Lesser General Public License, version 3
  * http://www.gnu.org/licenses/lgpl-3.0.html
  *
- * $Revision: 11664 $
- * $Id: virtualbuildtargetsdlg.cpp 11664 2019-04-30 12:27:00Z mortenmacfly $
+ * $Revision: 11904 $
+ * $Id: virtualbuildtargetsdlg.cpp 11904 2019-11-07 19:14:33Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/src/virtualbuildtargetsdlg.cpp $
  */
 
@@ -179,8 +179,13 @@ void VirtualBuildTargetsDlg::OnRemoveClick(cb_unused wxCommandEvent& event)
         return;
     }
     m_pProject->RemoveVirtualBuildTarget(lstAliases->GetStringSelection());
-    lstAliases->Delete(lstAliases->GetSelection());
-    lstAliases->SetSelection(0);
+    int selection = lstAliases->GetSelection();
+    lstAliases->Delete(selection);
+    // Select the item after the deleted one. If there is none, select the previous item
+    // -1 is a valid value, meaning no selection
+    if (selection == int(lstAliases->GetCount()))
+        --selection;
+    lstAliases->SetSelection(selection);
     CheckTargets();
 }
 

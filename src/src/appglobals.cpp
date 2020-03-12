@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU General Public License, version 3
  * http://www.gnu.org/licenses/gpl-3.0.html
  *
- * $Revision: 11795 $
- * $Id: appglobals.cpp 11795 2019-07-21 16:54:28Z fuscated $
+ * $Revision: 11901 $
+ * $Id: appglobals.cpp 11901 2019-11-04 19:35:26Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/src/appglobals.cpp $
  */
 
@@ -66,6 +66,14 @@ namespace appglobals
     const wxString AppBuildTimestamp     = (  wxString(wxT(__DATE__)) + wxT(", ")
                                             + wxT(__TIME__) + wxT(" - wx")
                                             + wxString(wxT(wxVERSION_NUM_DOT_STRING))
+#if defined(__clang__)
+                                            + wxString::Format(wxT(" - clang %d.%d.%d"),
+                                                               __clang_major__, __clang_minor__, __clang_patchlevel__)
+#elif defined(__GNUC__)
+                                            + wxT(" - gcc ") + (wxString() << __GNUC__)
+                                            + wxT(".")       + (wxString() << __GNUC_MINOR__)
+                                            + wxT(".")       + (wxString() << __GNUC_PATCHLEVEL__)
+#endif
                                             + wxT(" (") + AppPlatform + wxT(", ")
                                             + AppWXAnsiUnicode + wxT(")") + bit_type );
 

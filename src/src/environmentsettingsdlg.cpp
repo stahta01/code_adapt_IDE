@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU General Public License, version 3
  * http://www.gnu.org/licenses/gpl-3.0.html
  *
- * $Revision: 11847 $
- * $Id: environmentsettingsdlg.cpp 11847 2019-09-08 22:38:06Z fuscated $
+ * $Revision: 11962 $
+ * $Id: environmentsettingsdlg.cpp 11962 2020-02-19 09:57:02Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/src/environmentsettingsdlg.cpp $
  */
 
@@ -249,7 +249,7 @@ EnvironmentSettingsDlg::EnvironmentSettingsDlg(wxWindow* parent, wxAuiDockArt* a
     XRCCTRL(*this, "choLayoutToToggle", wxChoice)->Enable(en);
 
     bool i18n = cfg->ReadBool(_T("/locale/enable"), false);
-        XRCCTRL(*this, "chkI18N", wxCheckBox)->SetValue(i18n);
+    XRCCTRL(*this, "chkI18N", wxCheckBox)->SetValue(i18n);
 
     wxString locPath = ConfigManager::GetDataFolder() + _T("/locale");
     if ( wxDirExists(locPath) )

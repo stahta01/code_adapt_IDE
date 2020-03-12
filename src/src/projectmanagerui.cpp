@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU General Public License, version 3
  * http://www.gnu.org/licenses/gpl-3.0.html
  *
- * $Revision: 11842 $
- * $Id: projectmanagerui.cpp 11842 2019-09-08 18:12:55Z fuscated $
+ * $Revision: 11898 $
+ * $Id: projectmanagerui.cpp 11898 2019-11-04 19:35:16Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/src/projectmanagerui.cpp $
  */
 
@@ -2623,6 +2623,7 @@ void ProjectManagerUI::CheckForExternallyModifiedProjects()
 {
     if (m_isCheckingForExternallyModifiedProjects) // for some reason, a mutex locker does not work???
         return;
+    wxStopWatch timer;
     m_isCheckingForExternallyModifiedProjects = true;
 
     // check also the projects (TO DO : what if we gonna reload while compiling/debugging)
@@ -2661,7 +2662,9 @@ void ProjectManagerUI::CheckForExternallyModifiedProjects()
                     if (win)
                         win->ReleaseMouse();
 
+                    timer.Pause();
                     ret = dlg.ShowModal();
+                    timer.Resume();
                     reloadAll = ret == crAll;
                 }
                 if (reloadAll || ret == crYes)
@@ -2672,6 +2675,14 @@ void ProjectManagerUI::CheckForExternallyModifiedProjects()
                     prj->Touch();
             }
         } // end for : idx : idxProject
+    }
+
+    long durationMS = timer.Time();
+    if (durationMS > 100)
+    {
+        LogManager *log = Manager::Get()->GetLogManager();
+        log->Log(F(wxT("Checking for externally modified projects took %.3lf seconds"),
+                   durationMS / 1000.0f));
     }
     m_isCheckingForExternallyModifiedProjects = false;
 }
