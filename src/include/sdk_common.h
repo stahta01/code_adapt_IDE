@@ -9,13 +9,13 @@
 //This file should be included only by sdk.h and sdk_precomp.h
 //It includes all the common and necessary header files for precompilation.
 
-#if defined(NOPCH)
-    #undef CB_PRECOMP
-#endif // NOPCH
+//#if defined(NOPCH)
+    //#undef CB_PRECOMP
+//#endif // NOPCH
 
-#if ( defined(CB_PRECOMP) && !defined(WX_PRECOMP) )
+#if ( defined(CB_PRECOMP) && !defined(WX_PRECOMP) && !defined(NOPCH))
     #define WX_PRECOMP
-#endif // CB_PRECOMP
+#endif
 
 // basic wxWidgets headers : this one itself will check for precompiled headers
 // and if so will include a list of wx headers, at the bottom we add some more headers
@@ -31,66 +31,25 @@
 
 #ifdef CB_PRECOMP
 
-    // some common wxWidgets headers
-    #include <wx/app.h>
-    #include <wx/arrstr.h>
-    #include <wx/bmpbuttn.h>
-    #include <wx/button.h>
-    #include <wx/checkbox.h>
-    #include <wx/checklst.h>
-    #include <wx/choice.h>
-    #include <wx/choicdlg.h>
-    #include <wx/colordlg.h>
-    #include <wx/combobox.h>
-    #include <wx/confbase.h>
-    #include <wx/datetime.h>
-    #include <wx/dcclient.h>
-    #include <wx/dialog.h>
-    #include <wx/dir.h>
-    #include <wx/dynarray.h>
-    #include <wx/event.h>
-    #include <wx/file.h>
-    #include <wx/filedlg.h>
-    #include <wx/filename.h>
-    #include <wx/font.h>
-    #include <wx/frame.h>
-    #include <wx/fs_zip.h>
-    #include <wx/hashmap.h>
-    #include <wx/image.h>
-    #include <wx/imaglist.h>
-    #include <wx/intl.h>
-    #include <wx/list.h>
-    #include <wx/listbox.h>
-    #include <wx/listctrl.h>
-    #include <wx/log.h>
-    #include <wx/menu.h>
-    #include <wx/menuitem.h>
-    #include <wx/msgdlg.h>
-    #include <wx/notebook.h>
-    #include <wx/panel.h>
-    #include <wx/print.h>
-    #include <wx/process.h>
-    #include <wx/radiobox.h>
-    #include <wx/radiobut.h>
-    #include <wx/regex.h>
-    #include <wx/sizer.h>
-    #include <wx/slider.h>
-    #include <wx/socket.h>
-    #include <wx/spinctrl.h>
-    #include <wx/splitter.h>
-    #include <wx/statbmp.h>
-    #include <wx/stattext.h>
-    #include <wx/string.h>
-    #include <wx/textdlg.h>
-    #include <wx/textctrl.h>
-    #include <wx/thread.h>
-    #include <wx/timer.h>
-    #include <wx/toolbar.h>
-    #include <wx/treectrl.h>
-    #include <wx/txtstrm.h>
-    #include <wx/utils.h>
-    #include <wx/wfstream.h>
-    #include <wx/xrc/xmlres.h>
+    // some common wxWidgets headers included by 20 or more core cpp files
+    #include <wx/button.h>              // included by 50+ core cpp files
+    #include <wx/checkbox.h>            // included by 31 core cpp files
+    #include <wx/filedlg.h>             // included by 26 core cpp files
+    #include <wx/intl.h>                // included by 50+ core cpp files
+    #include <wx/listbox.h>             // included by 21 core cpp files
+    #include <wx/menu.h>                // included by 39 core cpp files
+    #include <wx/msgdlg.h>              // included by 34 core cpp files
+    #include <wx/sizer.h>               // included by 28 core cpp files
+    #include <wx/stattext.h>            // included by 28 core cpp files
+    #include <wx/string.h>              // included by 50+ core cpp files
+    #include <wx/textctrl.h>            // included by 34 core cpp files
+    #include <wx/utils.h>               // included by 22 core cpp files
+    // wx headers not in wx/wx.h
+    #include <wx/dir.h>                 // included by 21 core cpp files
+    #include <wx/filename.h>            // included by 44 core cpp files
+    #include <wx/listctrl.h>            // included by 25 core cpp files
+    #include <wx/regex.h>               // included by 32 core cpp files
+    #include <wx/xrc/xmlres.h>          // included by 50+ core cpp files
 
 /*
  *  cbplugin.h removed because it changes too often.
