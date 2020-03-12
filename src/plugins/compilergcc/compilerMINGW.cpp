@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU General Public License, version 3
  * http://www.gnu.org/licenses/gpl-3.0.html
  *
- * $Revision: 11525 $
- * $Id: compilerMINGW.cpp 11525 2018-12-15 16:16:44Z fuscated $
+ * $Revision: 11938 $
+ * $Id: compilerMINGW.cpp 11938 2020-01-04 15:41:53Z mortenmacfly $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/compilergcc/compilerMINGW.cpp $
  */
 
@@ -173,7 +173,7 @@ void CompilerMINGW::SetVersionString()
 {
 //    Manager::Get()->GetLogManager()->DebugLog(_T("Compiler detection for compiler ID: '") + GetID() + _T("' (parent ID= '") + GetParentID() + _T("')"));
 
-    wxArrayString output, errors;
+    wxArrayString output;
     wxString sep = wxFileName::GetPathSeparator();
     wxString master_path = m_MasterPath;
     wxString compiler_exe = m_Programs.C;
@@ -223,16 +223,7 @@ void CompilerMINGW::SetVersionString()
 
 //    Manager::Get()->GetLogManager()->DebugLog(_T("Compiler version detection: Issuing command: ") + gcc_command);
 
-    int flags = wxEXEC_SYNC;
-#if wxCHECK_VERSION(3, 0, 0)
-    // Stop event-loop while wxExecute runs, to avoid a deadlock on startup,
-    // that occurs from time to time on wx3
-    flags |= wxEXEC_NOEVENTS;
-#else
-    flags |= wxEXEC_NODISABLE;
-#endif
-    long result = wxExecute(gcc_command + _T(" --version"), output, errors, flags );
-    if(result != 0)
+    if ( Execute(gcc_command + _T(" --version"), output) != 0 )
     {
 //        Manager::Get()->GetLogManager()->DebugLog(_T("Compiler version detection: Error executing command."));
     }
