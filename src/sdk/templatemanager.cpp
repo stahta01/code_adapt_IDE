@@ -16,21 +16,22 @@
     #include <wx/msgdlg.h>
     #include <wx/dir.h>
 
-    #include "templatemanager.h"
     #include "manager.h"
     #include "configmanager.h"
     #include "logmanager.h"
     #include "projectmanager.h"
     #include "cbproject.h"
     #include "globals.h"
-    #include "compilerfactory.h"
-    #include "cbplugin.h"
 #endif
 
 #include <wx/filedlg.h>
 #include <wx/textdlg.h>
 #include "filefilters.h"
+#include "cbplugin.h"
+#include "compiler.h"
+#include "compilerfactory.h"
 #include "newfromtemplatedlg.h"
+#include "templatemanager.h"
 
 template<> TemplateManager* Mgr<TemplateManager>::instance = nullptr;
 template<> bool  Mgr<TemplateManager>::isShutdown = false;

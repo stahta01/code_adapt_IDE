@@ -12,7 +12,6 @@
 #ifndef CB_PRECOMP
     #include "configmanager.h"
     #include "globals.h"
-    #include "personalitymanager.h"
     #include "cbexception.h"
     #include "logmanager.h"
     #include <wx/file.h>
@@ -34,6 +33,7 @@
 #endif
 
 #include "annoyingdialog.h"
+#include "personalitymanager.h"
 
 #if defined(__APPLE__) && defined(__MACH__)
 #include <sys/param.h>

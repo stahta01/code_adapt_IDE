@@ -14,6 +14,7 @@
     #include <settings.h>
 #endif
 
+#include <cbplugin.h>
 #include <filefilters.h>
 #include "sc_base_types.h"
 

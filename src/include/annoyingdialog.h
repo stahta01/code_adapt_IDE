@@ -8,10 +8,10 @@
 
 #include "settings.h"
 #include "scrollingdialog.h"
-#include <wx/string.h>
 #include <wx/artprov.h>
 
 class wxCheckBox;
+class wxString;
 
 /**
 Dialog that contains a "Don't annoy me" checkbox.

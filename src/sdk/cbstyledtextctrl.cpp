@@ -8,7 +8,6 @@
  */
 
 #include "sdk_precomp.h"
-#include "cbstyledtextctrl.h"
 #ifndef CB_PRECOMP
     #include <wx/gdicmn.h> // for wxPoint
     #include <wx/string.h>
@@ -20,8 +19,10 @@
 #endif
 
 #include "cbdebugger_interfaces.h"
+#include "cbplugin.h"
 #include "ccmanager.h"
 #include "debuggermanager.h"
+#include "cbstyledtextctrl.h"
 
 static const wxString s_leftBrace(_T("([{'\""));
 static const wxString s_rightBrace(_T(")]}'\""));

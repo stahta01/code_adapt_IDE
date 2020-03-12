@@ -22,10 +22,10 @@
     #include "manager.h"
     #include "configmanager.h"
     #include "pluginmanager.h"
-    #include "cbplugin.h" // IsAttached
 #endif
 
 #include "annoyingdialog.h"
+#include "cbplugin.h" // IsAttached
 #include "ccmanager.h"
 #include <wx/dirdlg.h>
 #include <wx/filedlg.h>

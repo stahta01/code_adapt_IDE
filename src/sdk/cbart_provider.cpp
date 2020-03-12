@@ -1,11 +1,11 @@
-#include "sdk.h"
-
-#include "cbart_provider.h"
+#include "sdk_precomp.h"
 
 #ifndef CB_PRECOMP
     #include "globals.h"
     #include "logmanager.h"
 #endif // CB_PRECOMP
+
+#include "cbart_provider.h"
 
 cbArtProvider::cbArtProvider(const wxString &prefix)
 {

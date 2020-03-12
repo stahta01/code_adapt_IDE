@@ -10,13 +10,14 @@
 #include "sdk_precomp.h"
 
 #ifndef CB_PRECOMP
-    #include "filemanager.h"
     #include "safedelete.h"
     #include "cbeditor.h"
+    #include "configmanager.h"
     #include "editormanager.h"
-    #include "infowindow.h"
 #endif
 #include "cbstyledtextctrl.h"
+#include "filemanager.h"
+#include "infowindow.h"
 
 #include <wx/url.h>
 #include <wx/encconv.h>

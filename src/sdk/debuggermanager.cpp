@@ -8,10 +8,16 @@
  */
 
 #include "sdk_precomp.h"
+#ifndef WX_PRECOMP
+    #include <wx/combobox.h>        // wxComboBox
+    #include <wx/bmpbuttn.h>        // wxBitmapButton
+    #include <wx/toolbar.h>
+#endif
 #ifndef CB_PRECOMP
+    #include <algorithm>
+    #include <vector>
+
     #include <wx/artprov.h>
-    #include <wx/bmpbuttn.h>
-    #include <wx/combobox.h>
     #include <wx/filedlg.h>
     #include <wx/frame.h>
     #include <wx/menu.h>
@@ -22,26 +28,25 @@
 
     #include "cbeditor.h"
     #include "cbexception.h"
-    #include "cbplugin.h"
-    #include "cbproject.h"
-    #include "compilerfactory.h"
+    #include <cbproject.h>
     #include "configmanager.h"
     #include "editormanager.h"
     #include "logmanager.h"
+    #include "manager.h"
     #include "projectmanager.h"
 #endif
 
-#include <algorithm>
 #include <sstream>
-#include <wx/toolbar.h>
-
-#include "debuggermanager.h"
 
 #include "annoyingdialog.h"
 #include "cbdebugger_interfaces.h"
+#include "cbplugin.h"
 #include "loggers.h"
-#include "manager.h"
 #include "cbassert.h"
+#include "compiler.h"
+#include "compilerfactory.h"
+
+#include "debuggermanager.h"
 
 cbWatch::cbWatch() :
     m_changed(true),

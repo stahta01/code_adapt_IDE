@@ -15,16 +15,13 @@
     #include <wx/process.h>
 
     #include "cbeditor.h"
-    #include "cbplugin.h"
     #include "cbproject.h"
     #include "compiler.h" // GetSwitches
     #include "configmanager.h"
     #include "debuggermanager.h"
     #include "editorcolourset.h"
     #include "editormanager.h"
-    #include "infowindow.h"
     #include "logmanager.h"
-    #include "macrosmanager.h"
     #include "manager.h"
     #include "projectbuildtarget.h"
     #include "projectmanager.h"
@@ -36,11 +33,14 @@
 #include "annoyingdialog.h"
 #include "cbdebugger_interfaces.h"
 #include "cbstyledtextctrl.h"
+#include "cbplugin.h"
 #include "ccmanager.h"
 #include "debuggermanager.h"
 #include "editor_hooks.h"
 #include "loggers.h"
 #include "cbassert.h"
+#include "infowindow.h"
+#include "macrosmanager.h" // ReplaceMacros
 
 #ifndef __WXMSW__
     #include <errno.h>

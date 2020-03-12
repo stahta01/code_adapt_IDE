@@ -6,18 +6,17 @@
 #ifndef X_DEBUGGER_MANAGER_H
 #define X_DEBUGGER_MANAGER_H
 
-#include <map>
 #include <vector>
 
-#include <wx/string.h>
-
-#include "prep.h"
+#include "prep.h"                   // cb::shared_ptr
 #include "settings.h"
 #include "manager.h"
-#include "configmanager.h"
+#include "configmanager.h"          // ConfigManagerWrapper
 
 class wxMenu;
+class wxPanel;
 class wxToolBar;
+class wxWindow;
 class cbBacktraceDlg;
 class cbBreakpointsDlg;
 class cbCPURegistersDlg;

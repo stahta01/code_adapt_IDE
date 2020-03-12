@@ -15,16 +15,16 @@
     #include <wx/menu.h>
     #include <wx/msgdlg.h>
 
-    #include "toolsmanager.h"
     #include "manager.h"
-    #include "macrosmanager.h"
     #include "configmanager.h"
     #include "logmanager.h"
-    #include "pipedprocess.h"
     #include "globals.h"
     #include "sdk_events.h"
 #endif
 
+#include "macrosmanager.h"
+#include "pipedprocess.h"
+#include "toolsmanager.h"
 #include <wx/mdi.h>
 #include <wx/listimpl.cpp>
 #include "configuretoolsdlg.h"

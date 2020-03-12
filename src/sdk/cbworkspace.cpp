@@ -15,13 +15,14 @@
     #include "manager.h"
     #include "configmanager.h"
     #include "logmanager.h"
-    #include "workspaceloader.h"
 
     #include <wx/intl.h>
 #endif
 
 #include <wx/filedlg.h>
 #include "filefilters.h"
+#include "cbworkspace.h"
+#include "workspaceloader.h"
 
 cbWorkspace::cbWorkspace(const wxString& filename) :
     m_IsOK(true),

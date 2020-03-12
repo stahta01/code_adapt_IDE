@@ -9,7 +9,6 @@
 #include "scrollingdialog.h"
 #include "globals.h"
 #include "pluginmanager.h"
-#include "cbplugin.h"
 
 class wxChoice;
 class wxListCtrl;

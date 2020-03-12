@@ -21,16 +21,8 @@
     #include "editormanager.h"
     #include "logmanager.h"
     #include "pluginmanager.h"
-    #include "toolsmanager.h"
-    #include "macrosmanager.h"
     #include "configmanager.h"
-    #include "scriptingmanager.h"
-    #include "templatemanager.h"
-    #include "personalitymanager.h"
-    #include "uservarmanager.h"
-    #include "filemanager.h"
     #include "globals.h"
-    #include "xtra_res.h" // our new ToolBarAddOn handler
 #endif
 
 #include <wx/app.h>    // wxTheApp
@@ -45,9 +37,18 @@
 #endif // PPRCESS_EVENT_PERFORMANCE_MEASURE
 
 #include "cbcolourmanager.h"
+#include "cbplugin.h"
 #include "ccmanager.h"
 #include "debuggermanager.h"
 #include "cbassert.h"
+#include "toolsmanager.h"
+#include "templatemanager.h"
+#include "scriptingmanager.h"
+#include "personalitymanager.h"
+#include "macrosmanager.h"
+#include "uservarmanager.h"
+#include "filemanager.h"
+#include "xtra_res.h" // our new ToolBarAddOn handler
 
 static Manager* s_ManagerInstance = nullptr;
 

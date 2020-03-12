@@ -8,29 +8,30 @@
  */
 
 #include "sdk_precomp.h"
-
+#ifndef WX_PRECOMP
+    #include <wx/choice.h>
+    #include <wx/textdlg.h>                 // wxTextEntryDialog
+#endif
 #ifndef CB_PRECOMP
-    #include "uservarmanager.h"
     #include "configmanager.h"
     #include "logmanager.h"
     #include "projectmanager.h"
     #include "macrosmanager.h"
     #include "manager.h"
     #include "cbexception.h"
-    #include "infowindow.h"
 
     #include <wx/button.h>
     #include "scrollingdialog.h"
     #include <wx/intl.h>
     #include <wx/xrc/xmlres.h>
     #include <wx/textctrl.h>
-    #include <wx/textdlg.h>
-    #include <wx/splitter.h>
-    #include <wx/choice.h>
     #include <wx/listbox.h>
 #endif
+#include <wx/splitter.h>
 
 #include "annoyingdialog.h"
+#include "infowindow.h"
+#include "uservarmanager.h"
 
 #if wxCHECK_VERSION(3, 0, 0)
 #include <wx/unichar.h>

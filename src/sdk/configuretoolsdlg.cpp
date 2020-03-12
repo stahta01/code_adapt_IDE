@@ -18,12 +18,12 @@
 
     #include "manager.h"
     #include "cbtool.h"
-    #include "toolsmanager.h"
     #include "globals.h"
 #endif
 
 #include "configuretoolsdlg.h"
 #include "edittooldlg.h"
+#include "toolsmanager.h"
 
 BEGIN_EVENT_TABLE(ConfigureToolsDlg, wxScrollingDialog)
     EVT_BUTTON(XRCID("btnAdd"),     ConfigureToolsDlg::OnAdd)

@@ -8,8 +8,10 @@
  */
 
 #include "sdk_precomp.h"
-
-#include "findreplacedlg.h"
+#ifndef WX_PRECOMP
+    #include <wx/combobox.h>
+    #include <wx/radiobox.h>
+#endif
 
 #include <algorithm>
 
@@ -17,10 +19,8 @@
     #include <wx/button.h>
     #include <wx/checkbox.h>
     #include <wx/choice.h>
-    #include <wx/combobox.h>
     #include <wx/intl.h>
     #include <wx/notebook.h>
-    #include <wx/radiobox.h>
     #include <wx/sizer.h>
     #include <wx/textctrl.h>
     #include <wx/xrc/xmlres.h>
@@ -31,6 +31,8 @@
     #include "globals.h"
     #include "projectmanager.h"
 #endif
+
+#include "findreplacedlg.h"
 
 #include "incremental_select_helper.h"
 

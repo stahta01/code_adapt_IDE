@@ -7,11 +7,11 @@
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/sdk/menuitemsmanager.cpp $
  */
 
+#include "sdk_precomp.h"
 #ifndef CB_PRECOMP
     #include <wx/frame.h> // GetMenuBar
 #endif
 
-#include "sdk_precomp.h"
 #include "manager.h"
 #include "menuitemsmanager.h"
 #include <wx/regex.h>

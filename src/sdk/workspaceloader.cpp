@@ -15,22 +15,19 @@
     #include <wx/intl.h>
     #include <wx/string.h>
 
-    #include "workspaceloader.h"
-
     #include "manager.h"
     #include "configmanager.h"
     #include "projectmanager.h"
     #include "logmanager.h"
     #include "cbproject.h"
     #include "globals.h"
-    #include "cbworkspace.h"
     #include "editormanager.h"
-    #include "cbauibook.h"
 #endif
 
-
-
 #include "annoyingdialog.h"
+#include "cbauibook.h"
+#include "cbworkspace.h"
+#include "workspaceloader.h"
 #include <tinyxml.h>
 #include "tinywxuni.h"
 

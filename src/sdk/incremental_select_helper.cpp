@@ -6,14 +6,14 @@
 
 #include "sdk_precomp.h"
 
-#include "incremental_select_helper.h"
-
 #ifndef CB_PRECOMP
     #include <wx/dialog.h>
     #include <wx/sizer.h>
     #include <wx/stattext.h>
     #include <wx/textctrl.h>
 #endif
+
+#include "incremental_select_helper.h"
 
 IncrementalSelectIterator::~IncrementalSelectIterator()
 {

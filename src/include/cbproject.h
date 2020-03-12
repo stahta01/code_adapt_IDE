@@ -6,15 +6,8 @@
 #ifndef CBPROJECT_H
 #define CBPROJECT_H
 
-#include <wx/datetime.h>
-#include <wx/dynarray.h>
-#include <wx/hashmap.h>
-#include <wx/treectrl.h>
-
 #include "settings.h"
 #include "misctreeitemdata.h"
-#include "compiletargetbase.h"
-#include "cbplugin.h"
 #include "projectbuildtarget.h"
 #include "projectmanager.h"
 

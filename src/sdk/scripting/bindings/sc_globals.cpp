@@ -8,9 +8,11 @@
  */
 
 #include <sdk_precomp.h>
+#ifndef WX_PRECOMP
+    #include <wx/textdlg.h>         // wxGetPasswordFromUser
+#endif
 #ifndef CB_PRECOMP
     #include <wx/string.h>
-    #include <wx/textdlg.h>
     #include <globals.h>
     #include <settings.h>
     #include <manager.h>

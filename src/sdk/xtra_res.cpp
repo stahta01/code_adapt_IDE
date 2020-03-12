@@ -10,13 +10,15 @@
 #include "sdk_precomp.h"
 
 #ifndef CB_PRECOMP
-    #include "xtra_res.h"
+    #include <wx/frame.h>
+
     #include "logmanager.h"
-    #include "scrollingdialog.h"
-    #include <wx/wx.h>
 #endif
 
 #include <wx/xml/xml.h>
+
+#include "scrollingdialog.h"
+#include "xtra_res.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // Name:        xh_toolb.cpp

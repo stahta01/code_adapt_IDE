@@ -4,10 +4,6 @@
 #include <wx/artprov.h>
 #include <unordered_map>
 
-#ifndef CB_PRECOMP
-    #include "manager.h"
-#endif // CB_PRECOMP
-
 /// Custom art provider used to make menu item and bitmap button icons look good on HiDPI displays.
 /// The size is set at the beginning of execution and cannot change. See Manager::GetImageSize. The
 /// requested size is ignored. Use <bitmap stock_id="XXX/YYY"/> in the xrc file to load images from

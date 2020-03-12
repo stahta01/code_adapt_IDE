@@ -8,10 +8,11 @@
  */
 
 #include "sdk_precomp.h"
-
+#ifndef WX_PRECOMP
+    #include <wx/choice.h>
+#endif
 #ifndef CB_PRECOMP
     #include <wx/button.h>
-    #include <wx/choice.h>
     #include <wx/imaglist.h>
     #include <wx/intl.h>
     #include <wx/listbox.h>
@@ -27,6 +28,7 @@
     #include "globals.h"
     #include "manager.h"
 #endif
+#include "cbplugin.h"
 #include "cbstyledtextctrl.h"
 
 #include <wx/listbook.h>

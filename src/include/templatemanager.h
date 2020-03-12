@@ -10,10 +10,6 @@
 #include "manager.h"
 #include <wx/event.h>
 
-#ifndef CB_PRECOMP
-    #include "globals.h"
-#endif
-
 //forward decls
 class wxMenuBar;
 class wxMenu;

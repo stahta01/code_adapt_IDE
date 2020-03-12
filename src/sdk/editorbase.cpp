@@ -24,6 +24,7 @@
 #endif
 
 #include "cbauibook.h"
+#include "cbplugin.h"
 
 #include "cbstyledtextctrl.h"
 

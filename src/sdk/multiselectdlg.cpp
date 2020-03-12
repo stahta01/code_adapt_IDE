@@ -8,10 +8,11 @@
  */
 
 #include "sdk_precomp.h"
-
+#ifndef WX_PRECOMP
+    #include <wx/checklst.h>            // wxCheckListBox
+#endif
 #ifndef CB_PRECOMP
     #include <wx/button.h>
-    #include <wx/checklst.h>
     #include <wx/msgdlg.h>
     #include <wx/stattext.h>
     #include <wx/xrc/xmlres.h>

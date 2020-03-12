@@ -19,13 +19,9 @@
 
     #include "cbeditor.h"
     #include "cbproject.h"
-    #include "compiler.h"
-    #include "compilerfactory.h"
     #include "configmanager.h"
     #include "editormanager.h" // class's header file
-    #include "filemanager.h"
     #include "logmanager.h"
-    #include "macrosmanager.h"
     #include "manager.h"
     #include "pluginmanager.h"
     #include "projectbuildtarget.h"
@@ -36,6 +32,11 @@
 #include "annoyingdialog.h"
 #include "cbstyledtextctrl.h"
 #include "cbcolourmanager.h"
+#include "cbplugin.h"
+#include "filemanager.h"
+#include "macrosmanager.h"
+#include "compiler.h"
+#include "compilerfactory.h"
 
 #include <wx/bmpbuttn.h>
 #include <wx/clipbrd.h>

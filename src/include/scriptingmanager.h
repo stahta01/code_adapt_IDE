@@ -9,10 +9,7 @@
 #include <map>
 #include <set>
 
-#ifndef CB_PRECOMP
-    #include "cbexception.h" // cbThrow
-    #include "globals.h" // cbC2U
-#endif
+#include "cbexception.h" // cbThrow
 
 #include "settings.h"
 #include "manager.h"

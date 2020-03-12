@@ -13,11 +13,12 @@
     #include <wx/filename.h>
 
     #include "compiletargetbase.h"
-    #include "compilerfactory.h"
     #include "globals.h"
     #include "logmanager.h" // Manager::Get()->GetLogManager()->DebugLog(F())
 #endif
 
+#include "compiler.h"
+#include "compilerfactory.h"
 #include "filefilters.h"
 
 CompileTargetBase::CompileTargetBase()

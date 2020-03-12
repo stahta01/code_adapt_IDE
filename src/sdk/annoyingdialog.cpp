@@ -8,6 +8,9 @@
  */
 
 #include "sdk_precomp.h"
+#ifndef WX_PRECOMP
+    #include <wx/string.h>
+#endif
 #ifndef CB_PRECOMP
     #include <wx/button.h>
     #include <wx/checkbox.h>

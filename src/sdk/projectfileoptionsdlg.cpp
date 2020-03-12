@@ -8,23 +8,22 @@
  */
 
 #include "sdk_precomp.h"
-
+#ifndef WX_PRECOMP
+    #include <wx/checklst.h>            // wxCheckListBox
+    #include <wx/choice.h>
+#endif
 #ifndef CB_PRECOMP
     #include "cbproject.h"
-    #include "compilerfactory.h"
     #include "editormanager.h"
-    #include "editorcolourset.h"
     #include "logmanager.h"
     #include "projectmanager.h"
     #include <wx/xrc/xmlres.h>
     #include <wx/intl.h>
-    #include <wx/choice.h>
-    #include <wx/checkbox.h>
     #include <wx/textctrl.h>
     #include <wx/button.h>
+    #include <wx/checkbox.h>
     #include <wx/filename.h>
     #include <wx/file.h>
-    #include <wx/checklst.h>
     #include <wx/stattext.h>
     #include <wx/sizer.h>
 #endif
@@ -35,6 +34,9 @@
 #include <errno.h>
 #endif
 
+#include "compiler.h"
+#include "compilerfactory.h"
+#include "editorcolourset.h"
 #include "projectfileoptionsdlg.h"
 #include <wx/slider.h>
 #include <wx/notebook.h>

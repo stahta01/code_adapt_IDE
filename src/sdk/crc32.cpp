@@ -17,6 +17,7 @@
 
     Yiannis Mandravellos <mandrav@codeblocks.org>
 */
+#include "sdk_precomp.h"
 
 #include <wx/string.h>
 #include <wx/file.h>

@@ -9,29 +9,26 @@
 
 #include "sdk_precomp.h"
 
-#ifndef wxUSE_CHOICEDLG
-    #define wxUSE_CHOICEDLG 1
+#ifndef WX_PRECOMP
+    #ifndef wxUSE_CHOICEDLG
+        #define wxUSE_CHOICEDLG 1
+    #endif
+    #include <wx/choicdlg.h>
+    #include <wx/filedlg.h>
 #endif
-
-#include <wx/choicdlg.h>
-#include <wx/filedlg.h>
-#include <wx/filename.h>
-
 #ifndef CB_PRECOMP
+    #include <map>
+
     #include <wx/dir.h>
+    #include <wx/filename.h>
 
     #include "cbproject.h" // class's header file
     #include "cbeditor.h"
     #include "cbtreectrl.h"
-    #include "compiler.h" // GetSwitches
-    #include "compilerfactory.h"
     #include "configmanager.h"
     #include "editormanager.h"
-    #include "filemanager.h"
     #include "globals.h"
-    #include "infowindow.h"
     #include "logmanager.h"
-    #include "macrosmanager.h"
     #include "manager.h"
     #include "pluginmanager.h"
     #include "projectbuildtarget.h"
@@ -40,16 +37,21 @@
     #include "sdk_events.h"
 #endif
 
-#include <map>
+#include "cbplugin.h"
 #include "projectloader.h"
 #include "projectlayoutloader.h"
 #include "selecttargetdlg.h"
 #include "filegroupsandmasks.h"
 #include "filefilters.h"
+#include "filemanager.h"
 #include "annoyingdialog.h"
 #include "genericmultilinenotesdlg.h"
 #include "compilercommandgenerator.h"
 #include "cbcolourmanager.h"
+#include "compiler.h" // GetSwitches
+#include "compilerfactory.h"
+#include "macrosmanager.h"
+#include "infowindow.h"
 
 // class constructor
 cbProject::cbProject(const wxString& filename) :

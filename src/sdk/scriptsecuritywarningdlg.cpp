@@ -8,17 +8,20 @@
  */
 
 #include "sdk_precomp.h"
-#include "scriptsecuritywarningdlg.h"
+#ifndef WX_PRECOMP
+    #include <wx/combobox.h>
+#endif
 
 #ifndef CB_PRECOMP
     #include <wx/button.h>
-    #include <wx/combobox.h>
     #include <wx/intl.h>
     #include <wx/settings.h>
     #include <wx/stattext.h>
     #include <wx/textctrl.h>
     #include <wx/xrc/xmlres.h>
 #endif // CB_PRECOMP
+
+#include "scriptsecuritywarningdlg.h"
 
 ScriptSecurityWarningDlg::ScriptSecurityWarningDlg(wxWindow* parent, const wxString& operation, const wxString& command)
 {

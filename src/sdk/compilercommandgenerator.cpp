@@ -8,18 +8,20 @@
  */
 
 #include "sdk_precomp.h"
+#ifndef CB_PRECOMP
+    #include <cbproject.h>
+    #include <configmanager.h>
+    #include <logmanager.h>
+#endif
 #include "compilercommandgenerator.h"
 
 #include <wx/intl.h>
 #include <wx/filename.h>
 
 #include "cbexception.h"
-#include "cbproject.h"
 #include "compilerfactory.h"
 #include "compiler.h"
 #include "manager.h"
-#include "configmanager.h"
-#include "logmanager.h"
 #include "macrosmanager.h"
 #include "scriptingmanager.h"
 #include "filefilters.h"

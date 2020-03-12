@@ -8,12 +8,13 @@
  */
 
 #include "sdk_precomp.h"
-#include "printing_types.h"
 
 #ifndef CB_PRECOMP
     #include "manager.h"
     #include "configmanager.h"
 #endif
+
+#include "printing_types.h"
 
 // NOTE (Tiwag#1#): 061012 global wxPrinter, used in cbeditorprintout
 //                  to get correct settings if changed in printer dialog

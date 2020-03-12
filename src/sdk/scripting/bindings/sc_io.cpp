@@ -8,9 +8,11 @@
  */
 
 #include <sdk_precomp.h>
+#ifndef CB_PRECOMP
+    #include <configmanager.h>
+#endif
 #include <manager.h>
 #include <macrosmanager.h>
-#include <configmanager.h>
 #include <annoyingdialog.h>
 
 #ifndef CB_PRECOMP

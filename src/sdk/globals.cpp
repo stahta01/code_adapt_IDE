@@ -8,10 +8,12 @@
  */
 
 #include "sdk_precomp.h"
-
+#ifndef WX_PRECOMP
+    #include <wx/dcmemory.h>            // wxMemoryDC
+    #include <wx/choicdlg.h>            // wxSingleChoiceDialog
+    #include <wx/textdlg.h>             // wxGetTextFromUserPromptStr
+#endif
 #ifndef CB_PRECOMP
-    #include <wx/choicdlg.h>
-    #include <wx/dcmemory.h>
     #include <wx/file.h>
     #include <wx/filename.h>
     #include <wx/filesys.h>
@@ -19,13 +21,9 @@
     #include <wx/imaglist.h>
     #include <wx/listctrl.h>
     #include <wx/menu.h>
-    #include <wx/textdlg.h>
-
-    #include "wx/wxscintilla.h"
 
     #include "cbexception.h"
     #include "configmanager.h" // ReadBool
-    #include "filemanager.h"
     #include "globals.h"
     #include "logmanager.h"
     #include "manager.h"
@@ -44,9 +42,11 @@
 #include <algorithm>
 #include <string>
 
+#include "wx/wxscintilla.h"
 #include "filefilters.h"
 #include "tinywxuni.h"
 #include "filegroupsandmasks.h"
+#include "filemanager.h"
 
 #ifndef __WXMSW__
     #include <unistd.h> // readlink

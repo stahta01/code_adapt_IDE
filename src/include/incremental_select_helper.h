@@ -7,15 +7,14 @@
 #ifndef INCREMENTALSELECTLISTBASE_H
 #define INCREMENTALSELECTLISTBASE_H
 
-#include "settings.h"
+#include <vector>
+
 #include <wx/dialog.h>
 #include <wx/string.h>
 #include <wx/event.h>
-#include <vector>
+#include <wx/listctrl.h>
 
-#ifndef CB_PRECOMP
-    #include <wx/listctrl.h>
-#endif // CB_PRECOMP
+#include "settings.h"
 
 class wxCommandEvent;
 class wxKeyEvent;

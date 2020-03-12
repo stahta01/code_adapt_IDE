@@ -10,18 +10,19 @@
 #include "sdk_precomp.h"
 
 #ifndef CB_PRECOMP
+    #include "cbproject.h"
     #include "projectfile.h"
     #include "projectbuildtarget.h"
-    #include "cbproject.h"
-    #include "compilerfactory.h"
     #include "manager.h"
     #include "projectmanager.h"
-    #include "macrosmanager.h"
     #include "globals.h"
 #endif
 
+#include "compiler.h"
+#include "compilerfactory.h"
 #include "projectfileoptionsdlg.h"
 #include "filefilters.h"
+#include "macrosmanager.h"
 
 ProjectFile::ProjectFile(cbProject* prj) :
     compile(false),

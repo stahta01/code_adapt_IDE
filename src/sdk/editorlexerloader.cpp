@@ -15,12 +15,12 @@
     #include "logmanager.h"
     #include <wx/dynarray.h>
     #include <wx/regex.h>
-    #include <wx/wxscintilla.h>
 #endif
 
 #include "editorcolourset.h"
 #include "editorlexerloader.h"
 #include "filemanager.h"
+#include <tinyxml.h>
 
 EditorLexerLoader::EditorLexerLoader(EditorColourSet* target)
     : m_pTarget(target)

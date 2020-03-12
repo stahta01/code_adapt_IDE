@@ -8,8 +8,6 @@
  */
 
 #include "sdk_precomp.h"
-#include "autodetectcompilers.h"
-
 #ifndef CB_PRECOMP
     #include <wx/button.h>
     #include <wx/filename.h>
@@ -19,15 +17,16 @@
     #include <wx/string.h>
     #include <wx/xrc/xmlres.h>
 
-    #include "compiler.h"
-    #include "compilerfactory.h"
     #include "configmanager.h"
     #include "manager.h"
-    #include "macrosmanager.h"
 #endif
 #include <wx/tooltip.h>
 
+#include "compiler.h"
+#include "compilerfactory.h"
 #include "infowindow.h"
+#include "macrosmanager.h"
+#include "autodetectcompilers.h"
 
 BEGIN_EVENT_TABLE(AutoDetectCompilers, wxScrollingDialog)
     EVT_UPDATE_UI(-1, AutoDetectCompilers::OnUpdateUI)

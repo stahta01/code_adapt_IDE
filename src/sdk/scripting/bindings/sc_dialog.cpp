@@ -10,17 +10,17 @@
 #include <sdk_precomp.h>
 
 #ifndef CB_PRECOMP
+    #include <wx/xrc/xmlres.h>
+
     #include <globals.h>
     #include <cbexception.h>
     #include <manager.h>
     #include <configmanager.h>
     #include <logmanager.h>
     #include <wx/string.h>
-    #include "scrollingdialog.h"
 #endif
 
-#include <wx/xrc/xmlres.h>
-
+#include "scrollingdialog.h"
 #include "sc_base_types.h"
 
 namespace ScriptBindings

@@ -12,20 +12,14 @@
 #ifndef CB_PRECOMP
     #include <wx/menu.h>
 
-    #include "cbworkspace.h"
     #include "projectmanager.h"
     #include "editormanager.h"
     #include "logmanager.h"
-    #include "macrosmanager.h"
-    #include "scriptingmanager.h"
     #include "manager.h"
     #include "cbproject.h"
     #include "cbeditor.h"
-    #include "uservarmanager.h"
     #include "configmanager.h"
     #include "globals.h"
-    #include "compilerfactory.h"
-    #include "compiler.h"
 #endif
 
 #include "branding.h"
@@ -37,6 +31,12 @@
 #include "scripting/bindings/scriptbindings.h"
 
 #include "cbstyledtextctrl.h"
+#include "macrosmanager.h"
+#include "cbworkspace.h"
+#include "compilerfactory.h"
+#include "compiler.h"
+#include "scriptingmanager.h"
+#include "uservarmanager.h"
 
 using namespace std;
 

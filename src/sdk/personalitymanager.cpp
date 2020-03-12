@@ -10,7 +10,6 @@
 #include "sdk_precomp.h"
 
 #ifndef CB_PRECOMP
-    #include "personalitymanager.h"
     #include "manager.h"
     #include "configmanager.h"
     #include <wx/intl.h>
@@ -19,6 +18,8 @@
 #endif
 
 #include <wx/arrstr.h>
+
+#include "personalitymanager.h"
 
 template<> PersonalityManager* Mgr<PersonalityManager>::instance = nullptr;
 template<> bool  Mgr<PersonalityManager>::isShutdown = false;

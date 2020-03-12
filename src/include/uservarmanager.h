@@ -10,10 +10,6 @@
 #include "manager.h"
 #include "cbexception.h"
 
-#ifndef CB_PRECOMP
-    #include "globals.h"
-#endif
-
 class DLLIMPORT UserVariableManager : public Mgr<UserVariableManager>
 {
         friend class Manager;

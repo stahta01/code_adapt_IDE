@@ -3,10 +3,10 @@
 #ifndef CB_PRECOMP
     #include <wx/file.h>
     #include <wx/string.h>
-    #include "filemanager.h"
     #include "manager.h"
 #endif
 
+#include "filemanager.h"
 #include "tinywxuni.h"
 #include <tinyxml.h>
 

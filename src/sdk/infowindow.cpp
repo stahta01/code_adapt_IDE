@@ -8,20 +8,22 @@
  */
 
 #include "sdk_precomp.h"
-
+#ifndef WX_PRECOMP
+    #include <wx/statbmp.h>             // wxStaticBitmap
+#endif
 #ifndef CB_PRECOMP
     #include <wx/intl.h>
     #include <wx/stattext.h>
     #include <wx/sizer.h>
     #include <wx/settings.h>
-    #include <wx/statbmp.h>
     #include <wx/panel.h>
     #include <wx/frame.h>
-    #include "infowindow.h"
+
     #include "manager.h"
     #include "logmanager.h"
 #endif
 
+#include "infowindow.h"
 #include <limits>
 #include <wx/display.h>
 

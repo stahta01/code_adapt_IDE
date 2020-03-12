@@ -16,12 +16,13 @@
     #include <editormanager.h>
     #include <projectmanager.h>
     #include <macrosmanager.h>
-    #include <compilerfactory.h>
     #include <cbproject.h>
     #include <cbeditor.h>
     #include <globals.h>
 #endif
 #include "cbstyledtextctrl.h"
+#include <compiler.h>
+#include <compilerfactory.h>
 
 #include "scriptbindings.h"
 #include <cbexception.h>

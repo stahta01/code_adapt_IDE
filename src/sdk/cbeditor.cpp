@@ -8,9 +8,10 @@
  */
 
 #include "sdk_precomp.h"
-
+#ifndef WX_PRECOMP
+    #include <wx/app.h>             // wxTheApp
+#endif
 #ifndef CB_PRECOMP
-    #include <wx/app.h>
     #include <wx/filedlg.h>
     #include <wx/filename.h>
     #include <wx/menu.h>
@@ -19,15 +20,11 @@
 
     #include "cbeditor.h" // class's header file
 
-    #include "cbauibook.h"
-    #include "cbplugin.h"
     #include "cbproject.h"
     #include "configmanager.h"
     #include "debuggermanager.h"
-    #include "editorcolourset.h"
     #include "editormanager.h"
     #include "globals.h"
-    #include "infowindow.h"
     #include "logmanager.h"
     #include "macrosmanager.h" // ReplaceMacros
     #include "manager.h"
@@ -37,7 +34,10 @@
     #include "projectmanager.h"
     #include "sdk_events.h"
 #endif
+#include "cbauibook.h"
+#include "cbplugin.h"
 #include "cbstyledtextctrl.h"
+#include "editorcolourset.h"
 #include "cbcolourmanager.h"
 #include "cbassert.h"
 
@@ -52,6 +52,7 @@
 #include "encodingdetector.h"
 #include "filefilters.h"
 #include "projectfileoptionsdlg.h"
+#include "infowindow.h"
 
 const wxString g_EditorModified = _T("*");
 
