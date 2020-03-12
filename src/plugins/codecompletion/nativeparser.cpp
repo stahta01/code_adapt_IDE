@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU General Public License, version 3
  * http://www.gnu.org/licenses/gpl-3.0.html
  *
- * $Revision: 11862 $
- * $Id: nativeparser.cpp 11862 2019-09-29 12:54:26Z fuscated $
+ * $Revision: 11898 $
+ * $Id: nativeparser.cpp 11898 2019-11-04 19:35:16Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/plugins/codecompletion/nativeparser.cpp $
  */
 
@@ -1085,6 +1085,7 @@ void NativeParser::UpdateClassBrowser()
 
 bool NativeParser::DoFullParsing(cbProject* project, ParserBase* parser)
 {
+    wxStopWatch timer;
     if (!parser)
         return false;
 
@@ -1148,6 +1149,10 @@ bool NativeParser::DoFullParsing(cbProject* project, ParserBase* parser)
 
     TRACE(_T("NativeParser::DoFullParsing: Leave"));
 
+    long time = timer.Time();
+    if (time >= 50)
+        Manager::Get()->GetLogManager()->Log(F(wxT("NativeParser::DoFullParsing took: %.3f seconds."),
+                                               time / 1000.0f));
     return true;
 }
 
