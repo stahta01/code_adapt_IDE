@@ -10,7 +10,7 @@
 #include "sdk_precomp.h"
 
 #ifndef CB_PRECOMP
-    #include "cbexception.h"
+    #include "ca/exception.h"
     #include "globals.h"
     #include "configmanager.h"
     #include <wx/log.h> // for wxSafeShowMessage()
@@ -18,17 +18,17 @@
 
 #include <wx/intl.h>
 
-cbException::cbException(const wxString& msg, const wxString& file, int line)
+caException::caException(const wxString& msg, const wxString& file, int line)
   : Message(msg),
     File(file),
     Line(line)
 {}
 
-cbException::~cbException()
+caException::~caException()
 {}
 
 
-void cbException::ShowErrorMessage(bool safe)
+void caException::ShowErrorMessage(bool safe)
 {
     wxString compilerVersion;
 #if defined(__clang__)

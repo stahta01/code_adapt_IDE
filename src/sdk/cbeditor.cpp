@@ -39,7 +39,7 @@
 #include "ca/styledtextctrl.h"
 #include "editorcolourset.h"
 #include "cbcolourmanager.h"
-#include "cbassert.h"
+#include "ca/assert.h"
 
 #include <stack>
 

@@ -10,7 +10,7 @@
 #include "sdk_precomp.h"
 
 #ifndef CB_PRECOMP
-    #include "cbexception.h"
+    #include "ca/exception.h"
     #include "compiler.h"
     #include "manager.h"
     #include "logmanager.h"
