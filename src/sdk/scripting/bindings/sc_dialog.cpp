@@ -13,7 +13,7 @@
     #include <wx/xrc/xmlres.h>
 
     #include <globals.h>
-    #include <cbexception.h>
+    #include <ca/exception.h>
     #include <manager.h>
     #include <configmanager.h>
     #include <logmanager.h>
@@ -38,7 +38,7 @@ namespace ScriptBindings
                 if (   !wxXmlResource::Get()->LoadDialog(this, parent, dlgName)
                     && !wxXmlResource::Get()->LoadObject(this, parent, dlgName,_T("wxScrollingDialog")) )
                 {
-                    cbThrow(wxEmptyString);
+                    caThrow(wxEmptyString);
                 }
             }
             ~XrcDialog() override{ }
@@ -95,7 +95,7 @@ namespace ScriptBindings
                 #endif
                 return ret;
             }
-            catch (cbException& e)
+            catch (caException& e)
             {
                 cbMessageBox(wxString::Format(_("Dialog \"%s\" not found...\n\nActual resource: \"%s\"\nOriginal resource: \"%s\""),
                                             dlgName.c_str(),

@@ -8,7 +8,7 @@
 
 #include "settings.h"
 #include "manager.h"
-#include "cbexception.h"
+#include "ca/exception.h"
 
 class DLLIMPORT UserVariableManager : public Mgr<UserVariableManager>
 {
@@ -36,7 +36,7 @@ class DLLIMPORT UserVariableManager : public Mgr<UserVariableManager>
 
         UserVariableManager& operator=(cb_unused const UserVariableManager& rhs) // prevent assignment operator
         {
-            cbThrow(_T("Can't assign a UserVariableManager* !!!"));
+            caThrow(_T("Can't assign a UserVariableManager* !!!"));
             return *this;
         }
     private:

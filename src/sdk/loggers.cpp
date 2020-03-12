@@ -12,7 +12,7 @@
     #include <wx/listctrl.h>
     #include <wx/textctrl.h>
     #include <wx/settings.h>
-    #include "cbexception.h"
+    #include "ca/exception.h"
     #include "manager.h"
     #include "configmanager.h"
 #endif
@@ -23,7 +23,7 @@
 
 #include "loggers.h"
 #include "cbcolourmanager.h"
-#include "cbassert.h"
+#include "ca/assert.h"
 
 // Helper function which blends a colour with the default window text colour,
 // so that text will be readable in bright and dark colour schemes
@@ -251,7 +251,7 @@ ListCtrlLogger::ListCtrlLogger(const wxArrayString& titles_in, const wxArrayInt&
     titles(titles_in),
     widths(widths_in)
 {
-    cbAssert(titles.GetCount() == widths.GetCount());
+    caAssert(titles.GetCount() == widths.GetCount());
 }
 
 ListCtrlLogger::~ListCtrlLogger()

@@ -11,7 +11,7 @@
 
 #ifndef CB_PRECOMP
     #include <globals.h>
-    #include <cbexception.h>
+    #include <ca/exception.h>
     #include <wx/string.h>
 #endif
 

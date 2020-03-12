@@ -3,8 +3,8 @@
  * http://www.gnu.org/licenses/lgpl-3.0.html
  */
 
-#ifndef CBEXCEPTION_H
-#define CBEXCEPTION_H
+#ifndef CA_EXCEPTION_H_INCLUDED
+#define CA_EXCEPTION_H_INCLUDED
 
 #include <wx/string.h>
 #include <wx/log.h> // for wxSafeShowMessage()
@@ -15,15 +15,15 @@
 @brief Code::Blocks error handling unit.
 
 One macros is defined to help error handling in Code::Blocks:
-cbThrow().
+caThrow().
 */
 
 /** @brief The base Code::Blocks exception object. */
-class DLLIMPORT cbException
+class DLLIMPORT caException
 {
     public:
-        cbException(const wxString& msg, const wxString& file, int line);
-        virtual ~cbException();
+        caException(const wxString& msg, const wxString& file, int line);
+        virtual ~caException();
 
         /** @brief Display exception error message.
           * @param safe If true, wxSafeShowMessage will be used to display the error,
@@ -38,9 +38,9 @@ class DLLIMPORT cbException
 };
 
 #if wxUSE_UNICODE
-    #define cbThrow(message) throw cbException(message, cbC2U(__FILE__), __LINE__)
+    #define caThrow(message) throw caException(message, cbC2U(__FILE__), __LINE__)
 #else
-    #define cbThrow(message) throw cbException(message, __FILE__, __LINE__)
+    #define caThrow(message) throw caException(message, __FILE__, __LINE__)
 #endif
 
-#endif // CBEXCEPTION_H
+#endif // CA_EXCEPTION_H_INCLUDED

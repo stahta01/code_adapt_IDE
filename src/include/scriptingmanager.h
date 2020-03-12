@@ -9,7 +9,7 @@
 #include <map>
 #include <set>
 
-#include "cbexception.h" // cbThrow
+#include "ca/exception.h" // caThrow
 
 #include "settings.h"
 #include "manager.h"
@@ -215,7 +215,7 @@ class DLLIMPORT ScriptingManager : public Mgr<ScriptingManager>, public wxEvtHan
         // needed for SqPlus bindings
         ScriptingManager& operator=(cb_unused const ScriptingManager& rhs) // prevent assignment operator
         {
-        	cbThrow(_T("Can't assign a ScriptingManager* !!!"));
+        	caThrow(_T("Can't assign a ScriptingManager* !!!"));
         	return *this;
 		}
     private:

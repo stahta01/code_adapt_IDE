@@ -17,7 +17,7 @@
     #include <wx/intl.h>
     #include <wx/sizer.h>
     #include <wx/stattext.h>
-    #include "cbexception.h"
+    #include "ca/exception.h"
     #include "configmanager.h"
     #include "manager.h"
     #include "logmanager.h"
@@ -159,7 +159,7 @@ void AnnoyingDialog::Init(const wxString &caption, const wxString &id, const wxS
         bTxt3 = b3.IsEmpty() ? wxString(_("&Cancel")) : b3;
     }
     else
-        cbThrow(wxString(_T("Fatal error:\nUndefined style in dialog ")) << caption);
+        caThrow(wxString(_T("Fatal error:\nUndefined style in dialog ")) << caption);
 
     wxSizer* buttonSizer = nullptr;
     if (style < ONE_BUTTON) // standard buttons? use wxStdDialogButtonSizer
@@ -228,7 +228,7 @@ void AnnoyingDialog::Init(const wxString &caption, const wxString &id, const wxS
 void AnnoyingDialog::OnButton(wxCommandEvent& event)
 {
     if(!m_CheckBox)
-        cbThrow(_T("Ow... null pointer."));
+        caThrow(_T("Ow... null pointer."));
 
     int id = event.GetId();
     // convert IDs from standard buttons to dReturnType

@@ -17,7 +17,7 @@
     #include "logmanager.h"
 #endif
 
-#include "cbassert.h"
+#include "ca/assert.h"
 
 IMPLEMENT_DYNAMIC_CLASS(CodeBlocksEvent, wxEvent)
 IMPLEMENT_DYNAMIC_CLASS(CodeBlocksDockEvent, wxEvent)
@@ -36,7 +36,7 @@ CodeBlocksLogEvent::CodeBlocksLogEvent(wxEventType commandType, Logger* logger_i
         if (Manager::Get()->GetLogManager()->FindIndex(logger) == LogManager::invalid_log)
         {
             logIndex = Manager::Get()->GetLogManager()->SetLog(logger);
-            cbAssert(logIndex != LogManager::invalid_log);
+            caAssert(logIndex != LogManager::invalid_log);
             Manager::Get()->GetLogManager()->Slot(logIndex).title = title;
             Manager::Get()->GetLogManager()->Slot(logIndex).icon = icon;
             return;

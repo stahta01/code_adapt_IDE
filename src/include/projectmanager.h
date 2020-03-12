@@ -11,7 +11,7 @@
 #include <wx/hashmap.h>
 #include <wx/treectrl.h>
 
-#include "cbexception.h"
+#include "ca/exception.h"
 #include "cbtreectrl.h"
 #include "globals.h" // DEFAULT_WORKSPACE
 #include "manager.h"
@@ -429,7 +429,7 @@ class DLLIMPORT ProjectManager : public Mgr<ProjectManager>, public wxEvtHandler
 
         ProjectManager& operator=(cb_unused const ProjectManager& rhs) // prevent assignment operator
         {
-            cbThrow(_T("Can't assign a ProjectManager* !!!"));
+            caThrow(_T("Can't assign a ProjectManager* !!!"));
             return *this;
         }
 

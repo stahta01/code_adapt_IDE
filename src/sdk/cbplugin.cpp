@@ -38,7 +38,7 @@
 #include "debuggermanager.h"
 #include "editor_hooks.h"
 #include "loggers.h"
-#include "cbassert.h"
+#include "ca/assert.h"
 #include "infowindow.h"
 #include "macrosmanager.h" // ReplaceMacros
 
@@ -270,7 +270,7 @@ cbDebuggerConfiguration& cbDebuggerPlugin::GetActiveConfig()
 
     DebuggerManager::RegisteredPlugins::iterator it = allPlugins.find(this);
     if (it == allPlugins.end())
-        cbAssert(false);
+        caAssert(false);
     cbDebuggerConfiguration *config = it->second.GetConfiguration(m_ActiveConfig);
     if (!config)
         return *it->second.GetConfigurations().front();

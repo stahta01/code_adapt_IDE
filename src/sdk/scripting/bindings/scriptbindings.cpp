@@ -25,7 +25,7 @@
 #include <compilerfactory.h>
 
 #include "scriptbindings.h"
-#include <cbexception.h>
+#include <ca/exception.h>
 #include "sc_base_types.h"
 
 namespace ScriptBindings
@@ -804,7 +804,7 @@ namespace ScriptBindings
     void RegisterBindings()
     {
         if (!SquirrelVM::GetVMPtr())
-            cbThrow(_T("Scripting engine not initialized!?"));
+            caThrow(_T("Scripting engine not initialized!?"));
 
         Register_wxTypes();
         Register_Constants();

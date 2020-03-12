@@ -14,7 +14,7 @@
 
 #include "settings.h"
 #include "manager.h"
-#include "cbexception.h" // cbThrow
+#include "ca/exception.h" // caThrow
 
 #include "printing_types.h"
 
@@ -62,7 +62,7 @@ class DLLIMPORT EditorManager : public Mgr<EditorManager>, public wxEvtHandler
     public:
         EditorManager& operator=(cb_unused const EditorManager& rhs) // prevent assignment operator
         {
-            cbThrow(_T("Can't assign an EditorManager* !!!"));
+            caThrow(_T("Can't assign an EditorManager* !!!"));
             return *this;
         }
 

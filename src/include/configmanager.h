@@ -86,7 +86,7 @@ enum SearchDirs
 };
 
 
-class CodeBlocksApp;
+class CodeAdaptApp;
 
 /* ------------------------------------------------------------------------------------------------------------------
 *  ConfigManager class
@@ -94,7 +94,7 @@ class CodeBlocksApp;
 class DLLIMPORT ConfigManager
 {
     friend class CfgMgrBldr;
-    friend class CodeBlocksApp;
+    friend class CodeAdaptApp;
 
     TiXmlDocument *doc;
     TiXmlElement* root;
@@ -123,7 +123,7 @@ class DLLIMPORT ConfigManager
     static bool has_alternate_user_data_path;
 
 protected:
-    //For use by the CodeBlocksApp when the --user-data-dir switch is set
+    //For use by the CodeAdaptApp when the --user-data-dir switch is set
     //all of the user config and user plugin data will be set relative to this path
     static bool SetUserDataFolder(const wxString &user_data_path);
 

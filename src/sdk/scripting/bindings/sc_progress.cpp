@@ -11,7 +11,7 @@
 
 #ifndef CB_PRECOMP
     #include <globals.h>
-    #include <cbexception.h>
+    #include <ca/exception.h>
     #include <wx/string.h>
 #endif
 
@@ -36,7 +36,7 @@ class ProgressDialog : public wxProgressDialog
 
         ProgressDialog& operator=(const ProgressDialog&)
         {
-            cbThrow(_T("ProgressDialog copy constructor should never be called!"));
+            caThrow(_T("ProgressDialog copy constructor should never be called!"));
         }
 
         bool DoUpdate(int value, const wxString& newmsg)

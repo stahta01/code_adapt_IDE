@@ -22,7 +22,7 @@
     #include <wx/listctrl.h>
     #include <wx/menu.h>
 
-    #include "cbexception.h"
+    #include "ca/exception.h"
     #include "configmanager.h" // ReadBool
     #include "globals.h"
     #include "logmanager.h"
@@ -1386,7 +1386,7 @@ cbChildWindowPlacement cbGetChildWindowPlacement(ConfigManager &appConfig)
 void PlaceWindow(wxTopLevelWindow *w, cbPlaceDialogMode mode, bool enforce)
 {
     if (!w)
-        cbThrow(_T("Passed NULL pointer to PlaceWindow."));
+        caThrow(_T("Passed NULL pointer to PlaceWindow."));
 
     int the_mode;
 

@@ -12,7 +12,7 @@
 #ifndef CB_PRECOMP
     #include "configmanager.h"
     #include "globals.h"
-    #include "cbexception.h"
+    #include "ca/exception.h"
     #include "logmanager.h"
     #include <wx/file.h>
     #include <wx/dir.h>
@@ -245,7 +245,7 @@ static void handleConfigError(TiXmlDocument &doc, const wxString &fileName, cons
     dlg.SetYesNoLabels(_("&Discard"), _("&Close"));
 #endif
     if (dlg.ShowModal() != wxID_YES)
-        cbThrow(message);
+        caThrow(message);
 
     doc.ClearError();
     doc.InsertEndChild(TiXmlDeclaration("1.0", "UTF-8", "yes"));
@@ -273,7 +273,7 @@ void CfgMgrBldr::SwitchTo(const wxString& fileName)
         docroot = doc->FirstChildElement(BRANDING_APP_CONFIG);
 
         if (!docroot)
-            cbThrow(wxT("Something really bad happened while reading the config file. Aborting!"));
+            caThrow(wxT("Something really bad happened while reading the config file. Aborting!"));
     }
 
     const char *vers = docroot->Attribute("version");
@@ -438,7 +438,7 @@ ConfigManager* CfgMgrBldr::GetConfigManager(const wxString& name_space)
 ConfigManager* CfgMgrBldr::Build(const wxString& name_space)
 {
     if (name_space.IsEmpty())
-        cbThrow(_T("You attempted to get a ConfigManager instance without providing a namespace."));
+        caThrow(_T("You attempted to get a ConfigManager instance without providing a namespace."));
 
     wxCriticalSectionLocker locker(cs);
     NamespaceMap::iterator it = namespaces.find(name_space);
@@ -464,7 +464,7 @@ ConfigManager* CfgMgrBldr::Build(const wxString& name_space)
         {
             wxString err(_("Fatal error parsing supplied configuration file.\nParser error message:\n"));
             err << wxString::Format(_T("%s\nAt row %d, column: %d."), cbC2U(doc->ErrorDesc()).c_str(), doc->ErrorRow(), doc->ErrorCol());
-            cbThrow(err);
+            caThrow(err);
         }
     }
 
@@ -477,7 +477,7 @@ ConfigManager* CfgMgrBldr::Build(const wxString& name_space)
     }
 
     if (!root) // now what!
-        cbThrow(_T("Unable to create namespace in document tree (actually not possible..?)"));
+        caThrow(_T("Unable to create namespace in document tree (actually not possible..?)"));
 
     ConfigManager *c = new ConfigManager(root);
     namespaces[name_space] = c;
@@ -609,7 +609,7 @@ inline wxString ConfigManager::GetUserDataFolder()
 #ifdef __WINDOWS__
     TCHAR buffer[MAX_PATH];
     if (!ConfigManager::has_alternate_user_data_path && ::GetEnvironmentVariable(_T("APPDATA"), buffer, MAX_PATH))
-        return wxString::Format(_T("%s\\CodeBlocks"), buffer);
+        return wxString::Format(wxString("%s\\") + wxT_2(BRANDING_APP_NAME), buffer);
     else
         return wxStandardPathsBase::Get().GetUserDataDir();
 #else
@@ -762,7 +762,7 @@ TiXmlElement* ConfigManager::AssertPath(wxString& path)
             localPath = localPath->Parent()->ToElement();
         else if (sub.GetChar(0) < _T('a') || sub.GetChar(0) > _T('z'))
         {
-            cbThrow(InvalidNameMessage(_T("subpath"), sub, localPath));
+            caThrow(InvalidNameMessage(_T("subpath"), sub, localPath));
         }
         else
         {
@@ -777,7 +777,7 @@ TiXmlElement* ConfigManager::AssertPath(wxString& path)
     to_upper(path);
 
     if (!path.IsEmpty() && (path.GetChar(0) < _T('A') || path.GetChar(0) > _T('Z')))
-        cbThrow(InvalidNameMessage(_T("key"), path, localPath));
+        caThrow(InvalidNameMessage(_T("key"), path, localPath));
 
     return localPath;
 }
@@ -815,7 +815,7 @@ void ConfigManager::DeleteAll()
     const wxString ns(cbC2U(root->Value()));
 
     if (!ns.IsSameAs(_T("app")))
-        cbThrow(_T("Illegal attempt to invoke DeleteAll()."));
+        caThrow(_T("Illegal attempt to invoke DeleteAll()."));
 
     wxCriticalSectionLocker(bld->cs);
     doc->RootElement()->Clear();

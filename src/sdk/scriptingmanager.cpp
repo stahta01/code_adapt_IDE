@@ -12,7 +12,7 @@
 #ifndef CB_PRECOMP
     #include "scriptingmanager.h"
     #include "cbeditor.h"
-    #include "cbexception.h"
+    #include "ca/exception.h"
     #include "configmanager.h"
     #include "editormanager.h"
     #include "globals.h"
@@ -95,7 +95,7 @@ ScriptingManager::ScriptingManager()
     SquirrelVM::Init((SquirrelInitFlags)(sqifAll & ~sqifIO));
 
     if (!SquirrelVM::GetVMPtr())
-        cbThrow(_T("Can't create scripting engine!"));
+        caThrow(_T("Can't create scripting engine!"));
 
     sq_setprintfunc(SquirrelVM::GetVMPtr(), ScriptsPrintFunc);
     sqstd_register_stringlib(SquirrelVM::GetVMPtr());

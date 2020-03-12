@@ -287,12 +287,12 @@ void Compiler::MakeValidID()
         newID.Prepend(_T("cb"));
 
     if (newID.IsEmpty()) // empty? wtf?
-        cbThrow(_T("Can't create a valid compiler ID for ") + m_Name);
+        caThrow(_T("Can't create a valid compiler ID for ") + m_Name);
     m_ID = newID.Lower();
 
     // check for unique ID
     if (!IsUniqueID(m_ID))
-        cbThrow(_T("Compiler ID already exists for ") + m_Name);
+        caThrow(_T("Compiler ID already exists for ") + m_Name);
     m_CompilerIDs.Add(m_ID);
 }
 

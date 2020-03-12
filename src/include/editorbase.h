@@ -13,7 +13,7 @@
 #include <wx/panel.h>
 #include "globals.h"
 #include "settings.h"
-#include "cbexception.h"
+#include "ca/exception.h"
 
 class wxMenu;
 class EditorBase;
@@ -36,7 +36,7 @@ class DLLIMPORT EditorBase : public wxPanel
 
         /** Don't use this. It throws an exception if you do. */
 
-        void operator=(cb_optional const EditorBase& rhs){ cbThrow(_T("Can't assign an EditorBase* !!!")); }
+        void operator=(cb_optional const EditorBase& rhs){ caThrow(_T("Can't assign an EditorBase* !!!")); }
 
         /** @brief Get the editor's filename (if applicable).
           *

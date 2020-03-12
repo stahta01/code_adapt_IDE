@@ -21,7 +21,7 @@
     #include "cbproject.h"
 #endif
 
-#include "cbassert.h"
+#include "ca/assert.h"
 
 #include <wx/filedlg.h>
 #include "selecttargetdlg.h"
@@ -78,7 +78,7 @@ SelectTargetDlg::SelectTargetDlg(wxWindow* parent, cbProject* project, int selec
     m_LastSelected(wxNOT_FOUND)
 {
     //ctor
-    cbAssert(m_pProject);
+    caAssert(m_pProject);
 
     wxXmlResource::Get()->LoadObject(this, parent, _T("dlgSelectTarget"), _T("wxScrollingDialog"));
 

@@ -25,7 +25,6 @@
     #include "workspaceloader.h"
     #include "cbeditor.h"
     #include "globals.h"
-    #include "cbexception.h"  // for cbassert
 #endif
 
 #include <wx/progdlg.h>

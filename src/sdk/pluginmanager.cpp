@@ -17,7 +17,7 @@
     #include <wx/string.h>
 
     #include "pluginmanager.h"
-    #include "cbexception.h"
+    #include "ca/exception.h"
     #include "logmanager.h"
     #include "macrosmanager.h"
     #include "manager.h"
@@ -1032,7 +1032,7 @@ bool PluginManager::LoadPlugin(const wxString& pluginName)
         {
             plug = pr.createProc();
         }
-        catch (cbException& exception)
+        catch (caException& exception)
         {
             exception.ShowErrorMessage(false);
             continue;
@@ -1108,7 +1108,7 @@ void PluginManager::LoadAllPlugins()
                 AttachPlugin(plug);
                 Manager::Get()->GetConfigManager(_T("plugins"))->Write(_T("/try_to_activate"), wxEmptyString, false);
             }
-            catch (cbException& exception)
+            catch (caException& exception)
             {
                 Manager::Get()->GetLogManager()->Log(_T("[failed]"));
                 exception.ShowErrorMessage(false);
@@ -1248,7 +1248,7 @@ int PluginManager::ExecutePlugin(const wxString& pluginName)
             {
                 return ((cbToolPlugin*)plug)->Execute();
             }
-            catch (cbException& exception)
+            catch (caException& exception)
             {
                 exception.ShowErrorMessage(false);
             }
@@ -1388,7 +1388,7 @@ void PluginManager::AskPluginsForModuleMenu(const ModuleType type, wxMenu* menu,
         {
             pair.second->BuildModuleMenu(type, menu, data);
         }
-        catch (cbException& exception)
+        catch (caException& exception)
         {
             exception.ShowErrorMessage(false);
         }

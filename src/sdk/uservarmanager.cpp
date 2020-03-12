@@ -18,7 +18,7 @@
     #include "projectmanager.h"
     #include "macrosmanager.h"
     #include "manager.h"
-    #include "cbexception.h"
+    #include "ca/exception.h"
 
     #include <wx/button.h>
     #include "scrollingdialog.h"
@@ -812,7 +812,7 @@ void UsrGlblMgrEditDialog::OnFS(wxCommandEvent& event)
     else if (id == XRCID("fs5"))
         c = m_Bin;
     else
-        cbThrow(_T("Encountered invalid button ID"));
+        caThrow(_T("Encountered invalid button ID"));
 
     wxString path = ChooseDirectory(this, _("Choose a location"), c->GetValue());
     if (!path.IsEmpty())

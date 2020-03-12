@@ -16,7 +16,7 @@
 
     #include "manager.h" // class's header file
     #include "sdk_events.h"
-    #include "cbexception.h"
+    #include "ca/exception.h"
     #include "projectmanager.h"
     #include "editormanager.h"
     #include "logmanager.h"
@@ -40,7 +40,7 @@
 #include "cbplugin.h"
 #include "ccmanager.h"
 #include "debuggermanager.h"
-#include "cbassert.h"
+#include "ca/assert.h"
 #include "toolsmanager.h"
 #include "templatemanager.h"
 #include "scriptingmanager.h"
@@ -179,7 +179,7 @@ Manager* Manager::Get(wxFrame *appWindow)
     if (appWindow)
     {
         if (Get()->m_pAppWindow)
-            cbThrow(_T("Illegal argument to Manager::Get()"));
+            caThrow(_T("Illegal argument to Manager::Get()"));
         else
         {
             Get()->m_pAppWindow = appWindow;
@@ -401,33 +401,33 @@ void Manager::AddonToolBar(wxToolBar* toolBar,wxString resid)
 
 void Manager::SetImageSize(int size, UIComponent component)
 {
-    cbAssert(component>=0 && component < UIComponent::Last);
+    caAssert(component>=0 && component < UIComponent::Last);
     m_ImageSizes[component] = size;
 
     if (component == UIComponent::Toolbars)
     {
-        cbAssert(m_ToolbarHandler);
+        caAssert(m_ToolbarHandler);
         m_ToolbarHandler->SetToolbarImageSize(size);
     }
 }
 
 int Manager::GetImageSize(UIComponent component) const
 {
-    cbAssert(component>=0 && component < UIComponent::Last);
-    cbAssert(m_ImageSizes[component] > 0);
+    caAssert(component>=0 && component < UIComponent::Last);
+    caAssert(m_ImageSizes[component] > 0);
     return m_ImageSizes[component];
 }
 
 void Manager::SetUIScaleFactor(double scaleFactor, UIComponent component)
 {
-    cbAssert(component>=0 && component < UIComponent::Last);
+    caAssert(component>=0 && component < UIComponent::Last);
     m_UIScaleFactor[component] = scaleFactor;
 }
 
 double Manager::GetUIScaleFactor(UIComponent component) const
 {
-    cbAssert(component>=0 && component < UIComponent::Last);
-    cbAssert(m_UIScaleFactor[component] >= 1.0);
+    caAssert(component>=0 && component < UIComponent::Last);
+    caAssert(m_UIScaleFactor[component] >= 1.0);
     return m_UIScaleFactor[component];
 }
 

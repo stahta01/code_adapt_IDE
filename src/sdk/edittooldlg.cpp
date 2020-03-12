@@ -19,7 +19,7 @@
     #include <wx/textctrl.h>
     #include <wx/xrc/xmlres.h>
 
-    #include "cbexception.h"
+    #include "ca/exception.h"
     #include "globals.h"
 #endif
 
@@ -38,7 +38,7 @@ EditToolDlg::EditToolDlg(wxWindow* parent, cbTool* tool)
     : m_Tool(tool)
 {
     if (!tool)
-        cbThrow(_T("Tool* parameter is mandatory in EditToolDlg()"));
+        caThrow(_T("Tool* parameter is mandatory in EditToolDlg()"));
 
     wxXmlResource::Get()->LoadObject(this, parent, _T("dlgEditTool"),_T("wxScrollingDialog"));
     XRCCTRL(*this, "wxID_OK", wxButton)->SetDefault();

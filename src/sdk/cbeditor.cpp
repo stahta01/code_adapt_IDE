@@ -2086,9 +2086,9 @@ void cbEditor::AutoComplete()
 
 void cbEditor::DoFoldAll(FoldMode fold)
 {
-    cbAssert(m_pControl);
+    caAssert(m_pControl);
     if (m_SplitType != stNoSplit)
-        cbAssert(m_pControl2);
+        caAssert(m_pControl2);
     cbStyledTextCtrl* ctrl = GetControl();
 
     ctrl->Colourise(0, -1); // the *most* important part!
@@ -2200,9 +2200,9 @@ void cbEditor::DoFoldBlockFromLine(int line, FoldMode fold, unsigned foldFlags)
     static_assert(int(cbEditor::FoldMode::expand) == wxSCI_FOLDACTION_EXPAND, "Must match");
     static_assert(int(cbEditor::FoldMode::toggle) == wxSCI_FOLDACTION_TOGGLE, "Must match");
 
-    cbAssert(m_pControl);
+    caAssert(m_pControl);
     if (m_SplitType != stNoSplit)
-        cbAssert(m_pControl2);
+        caAssert(m_pControl2);
     cbStyledTextCtrl* ctrl = GetControl();
     if (!ctrl)
         return;
@@ -2558,25 +2558,25 @@ void cbEditor::SetErrorLine(int line)
 
 void cbEditor::Undo()
 {
-    cbAssert(GetControl());
+    caAssert(GetControl());
     GetControl()->Undo();
 }
 
 void cbEditor::Redo()
 {
-    cbAssert(GetControl());
+    caAssert(GetControl());
     GetControl()->Redo();
 }
 
 void cbEditor::ClearHistory()
 {
-    cbAssert(GetControl());
+    caAssert(GetControl());
     GetControl()->EmptyUndoBuffer(Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/margin/use_changebar"), true));
 }
 
 void cbEditor::GotoNextChanged()
 {
-    cbAssert(GetControl());
+    caAssert(GetControl());
     cbStyledTextCtrl* p_Control = GetControl();
     int fromLine = p_Control->LineFromPosition(p_Control->GetCurrentPos());
     int toLine = p_Control->GetLineCount() - 1;
@@ -2595,7 +2595,7 @@ void cbEditor::GotoNextChanged()
 
 void cbEditor::GotoPreviousChanged()
 {
-    cbAssert(GetControl());
+    caAssert(GetControl());
     cbStyledTextCtrl* p_Control = GetControl();
     int fromLine = p_Control->LineFromPosition(p_Control->GetCurrentPos());
     int toLine = 0;
@@ -2614,50 +2614,50 @@ void cbEditor::GotoPreviousChanged()
 
 void cbEditor::SetChangeCollection(bool collectChange)
 {
-    cbAssert(GetControl());
+    caAssert(GetControl());
     GetControl()->SetChangeCollection(collectChange);
 }
 
 void cbEditor::Cut()
 {
-    cbAssert(GetControl());
+    caAssert(GetControl());
     GetControl()->Cut();
 }
 
 void cbEditor::Copy()
 {
-    cbAssert(GetControl());
+    caAssert(GetControl());
     GetControl()->Copy();
 }
 
 void cbEditor::Paste()
 {
-    cbAssert(GetControl());
+    caAssert(GetControl());
     GetControl()->Paste();
 }
 
 bool cbEditor::CanUndo() const
 {
-    cbAssert(GetControl());
+    caAssert(GetControl());
     return !IsReadOnly() && GetControl()->CanUndo();
 }
 
 bool cbEditor::CanRedo() const
 {
-    cbAssert(GetControl());
+    caAssert(GetControl());
     return !IsReadOnly() && GetControl()->CanRedo();
 }
 
 bool cbEditor::HasSelection() const
 {
-    cbAssert(GetControl());
+    caAssert(GetControl());
     cbStyledTextCtrl* control = GetControl();
     return control->GetSelectionStart() != control->GetSelectionEnd();
 }
 
 bool cbEditor::CanPaste() const
 {
-    cbAssert(GetControl());
+    caAssert(GetControl());
     if (platform::gtk)
         return !IsReadOnly();
 
@@ -2666,13 +2666,13 @@ bool cbEditor::CanPaste() const
 
 bool cbEditor::IsReadOnly() const
 {
-    cbAssert(GetControl());
+    caAssert(GetControl());
     return GetControl()->GetReadOnly();
 }
 
 void cbEditor::SetReadOnly(bool readonly)
 {
-    cbAssert(GetControl());
+    caAssert(GetControl());
     GetControl()->SetReadOnly(readonly);
 }
 

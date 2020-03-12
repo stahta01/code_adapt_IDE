@@ -27,7 +27,7 @@
     #include <wx/regex.h>
 
     #include "cbeditor.h"
-    #include "cbexception.h"
+    #include "ca/exception.h"
     #include <cbproject.h>
     #include "configmanager.h"
     #include "editormanager.h"
@@ -42,7 +42,7 @@
 #include "cbdebugger_interfaces.h"
 #include "cbplugin.h"
 #include "loggers.h"
-#include "cbassert.h"
+#include "ca/assert.h"
 #include "compiler.h"
 #include "compilerfactory.h"
 
@@ -703,7 +703,7 @@ inline void WriteActiveDebuggerConfig(const wxString &name, int configIndex)
 cbDebuggerConfiguration* DebuggerManager::PluginData::GetConfiguration(int index)
 {
     if (m_configurations.empty())
-        cbAssert(false);
+        caAssert(false);
     if (index >= static_cast<int>(m_configurations.size()))
         return nullptr;
     else
@@ -784,7 +784,7 @@ bool DebuggerManager::RegisterDebugger(cbDebuggerPlugin *plugin)
 
     // There should be at least one configuration for every plugin.
     // If this is not the case, something is wrong and should be fixed.
-    cbAssert(!it->second.GetConfigurations().empty());
+    caAssert(!it->second.GetConfigurations().empty());
 
     wxString activeDebuggerName;
     int activeConfig;
@@ -909,7 +909,7 @@ void DebuggerManager::RebuildAllConfigs()
 wxMenu* DebuggerManager::GetMenu()
 {
     wxMenuBar *menuBar = Manager::Get()->GetAppFrame()->GetMenuBar();
-    cbAssert(menuBar);
+    caAssert(menuBar);
     wxMenu *menu = NULL;
 
     int menu_pos = menuBar->FindMenu(_("&Debug"));
@@ -949,7 +949,7 @@ wxMenu* DebuggerManager::GetMenu()
 bool DebuggerManager::HasMenu() const
 {
     wxMenuBar *menuBar = Manager::Get()->GetAppFrame()->GetMenuBar();
-    cbAssert(menuBar);
+    caAssert(menuBar);
     int menu_pos = menuBar->FindMenu(_("&Debug"));
     return menu_pos != wxNOT_FOUND;
 }
@@ -1012,7 +1012,7 @@ void DebuggerManager::HideLogger()
 
 void DebuggerManager::SetInterfaceFactory(cbDebugInterfaceFactory *factory)
 {
-    cbAssert(!m_interfaceFactory);
+    caAssert(!m_interfaceFactory);
     m_interfaceFactory = factory;
 
     CreateWindows();
@@ -1201,7 +1201,7 @@ inline void RefreshBreakpoints(cb_unused const cbDebuggerPlugin* plugin)
 void DebuggerManager::SetActiveDebugger(cbDebuggerPlugin* activeDebugger, ConfigurationVector::const_iterator config)
 {
     RegisteredPlugins::const_iterator it = m_registered.find(activeDebugger);
-    cbAssert(it != m_registered.end());
+    caAssert(it != m_registered.end());
 
     m_useTargetsDefault = false;
     m_activeDebugger = activeDebugger;

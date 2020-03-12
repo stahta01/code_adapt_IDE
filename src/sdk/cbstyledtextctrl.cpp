@@ -70,7 +70,7 @@ cbStyledTextCtrl::~cbStyledTextCtrl()
 // Script binding support
 void cbStyledTextCtrl::operator=(const cbStyledTextCtrl& /*rhs*/)
 {
-    cbThrow(_T("Can't assign an cbStyledTextCtrl* !!!"));
+    caThrow(_T("Can't assign an cbStyledTextCtrl* !!!"));
 }
 
 // events

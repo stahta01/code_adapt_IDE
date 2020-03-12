@@ -18,7 +18,8 @@
 #include <wx/intl.h>
 #include <wx/filename.h>
 
-#include "cbexception.h"
+#include "ca/assert.h"
+#include "ca/exception.h"
 #include "compilerfactory.h"
 #include "compiler.h"
 #include "manager.h"
@@ -71,7 +72,7 @@ void CompilerCommandGenerator::Init(cbProject* project)
     // access the default compiler
     Compiler* compiler = CompilerFactory::GetDefaultCompiler();
     if (!compiler)
-        cbThrow(_T("Default compiler is invalid!"));
+        caThrow(_T("Default compiler is invalid!"));
 
     if (!project)
     {
@@ -228,7 +229,7 @@ void CompilerCommandGenerator::GenerateCommandLine(wxString&           macro,
 
 void CompilerCommandGenerator::GenerateCommandLine(Result &result, const Params &params)
 {
-    cbAssert(result.macro);
+    caAssert(result.macro);
 #ifdef command_line_generation
     wxString logFile = (params.pf ? params.pf->file.GetFullPath() : params.file);
     Manager::Get()->GetLogManager()->DebugLog(F(_T("GenerateCommandLine[0]: macro='%s', file='%s', object='%s', flat_object='%s', deps='%s'."),

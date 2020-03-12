@@ -20,8 +20,8 @@
 #include "settings.h"
 #include "sdk_events.h"
 #include "cbfunctor.h"
-#include "cbexception.h"
-#include "logassert.h"
+#include "ca/exception.h"
+#include "ca/logassert.h"
 
 // forward decls
 class wxFrame;
