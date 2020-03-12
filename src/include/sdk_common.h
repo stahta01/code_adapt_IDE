@@ -10,17 +10,21 @@
 //It includes all the common and necessary header files for precompilation.
 
 //#if defined(NOPCH)
-    //#undef CB_PRECOMP
+    //#undef caPRECOMP
 //#endif // NOPCH
 
-#if ( defined(CB_PRECOMP) && !defined(WX_PRECOMP) && !defined(NOPCH))
+#if defined(caPRECOMP) && !defined(caPRECOMP)
+    #define caPRECOMP
+#endif
+
+#if ( defined(caPRECOMP) && !defined(WX_PRECOMP) && !defined(NOPCH))
     #define WX_PRECOMP
 #endif
 
 // basic wxWidgets headers : this one itself will check for precompiled headers
 // and if so will include a list of wx headers, at the bottom we add some more headers
 // in the case of precompilation (note : some headers are in both lists)
-// so even if NO CB_PRECOMP we can still have WX_PRECOMP turned on in this "wxprec" header
+// so even if NO caPRECOMP we can still have WX_PRECOMP turned on in this "wxprec" header
 #include <wx/wxprec.h>
 
 #ifdef __BORLANDC__
@@ -29,7 +33,7 @@
 
 #include "prep.h" // this is deliberately not inside the #ifdef block
 
-#ifdef CB_PRECOMP
+#ifdef caPRECOMP
 
     // some common wxWidgets headers included by 20 or more core cpp files
     #include <wx/button.h>              // included by 50+ core cpp files
@@ -64,7 +68,7 @@
 
     #include "cbproject.h"            // included by 65 plugins cpp files
     #include "cbeditor.h"             // included by 65 plugins cpp files
-    #include "cbexception.h"          // included by editormanager.h
+    #include "ca/exception.h"         // included by editormanager.h
     #include "configmanager.h"        // included by 137 plugins cpp files
     #include "editorbase.h"           // included by cbeditor.h
     #include "editormanager.h"        // included by 79 plugins cpp files
@@ -76,6 +80,6 @@
     #include "projectmanager.h"       // included by cbproject.h
     #include "sdk_events.h"           // included by manager.h
     #include "settings.h"             // included by cbproject.h
-#endif // CB_PRECOMP
+#endif // caPRECOMP
 
 #endif // SDK_COMMON_H
