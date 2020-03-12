@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU Lesser General Public License, version 3
  * http://www.gnu.org/licenses/lgpl-3.0.html
  *
- * $Revision: 11718 $
- * $Id: cbeditor.cpp 11718 2019-06-09 15:28:00Z fuscated $
+ * $Revision: 11969 $
+ * $Id: cbeditor.cpp 11969 2020-02-23 13:33:14Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/sdk/cbeditor.cpp $
  */
 
@@ -1074,9 +1074,9 @@ void cbEditor::SetMarkerStyle(int marker, int markerType, wxColor fore, wxColor 
 
 void cbEditor::UnderlineFoldedLines(bool underline)
 {
-    m_pControl->SetFoldFlags(underline ? 16 : 0);
+    m_pControl->SetFoldFlags(underline ? wxSCI_FOLDFLAG_LINEAFTER_CONTRACTED : 0);
     if (m_pControl2)
-        m_pControl2->SetFoldFlags(underline ? 16 : 0);
+        m_pControl2->SetFoldFlags(underline ? wxSCI_FOLDFLAG_LINEAFTER_CONTRACTED : 0);
 }
 
 cbStyledTextCtrl* cbEditor::CreateEditor()
@@ -1090,7 +1090,7 @@ cbStyledTextCtrl* cbEditor::CreateEditor()
     control->UsePopUp(false);
 
     ConfigManager *config = Manager::Get()->GetConfigManager(_T("editor"));
-    wxString encodingName = config->Read(_T("/default_encoding"), wxEmptyString);
+    wxString encodingName = config->Read(_T("/default_encoding"), wxLocale::GetSystemEncodingName());
     m_pData->m_encoding = wxFontMapper::GetEncodingFromName(encodingName);
     if (m_pData->m_encoding == wxFONTENCODING_MAX && encodingName == wxT("default"))
         m_pData->m_encoding = wxFont::GetDefaultEncoding();
@@ -1362,6 +1362,8 @@ static void SetEditorTechnology(cbStyledTextCtrl *control, ConfigManager *config
         control->SetFontQuality(wxSCI_EFF_QUALITY_LCD_OPTIMIZED);
         break;
     }
+#else
+    (void)config;
 #endif // defined(__WXMSW__) && wxCHECK_VERSION(3, 1, 0)
 }
 
@@ -1680,7 +1682,7 @@ void cbEditor::InternalSetEditorStyleAfterFileOpen(cbStyledTextCtrl* control)
         control->SetProperty(_T("fold.compact"),      _T("0"));
         control->SetProperty(_T("fold.preprocessor"), mgr->ReadBool(_T("/folding/fold_preprocessor"), false) ? _T("1") : _T("0"));
 
-        control->SetFoldFlags(16);
+        control->SetFoldFlags(wxSCI_FOLDFLAG_LINEAFTER_CONTRACTED);
         control->SetMarginType(C_FOLDING_MARGIN, wxSCI_MARGIN_SYMBOL);
         control->SetMarginWidth(C_FOLDING_MARGIN, foldingMarginBaseWidth);
         // use "|" here or we might break plugins that use the margin (none at the moment)

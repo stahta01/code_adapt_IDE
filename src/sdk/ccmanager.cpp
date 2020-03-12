@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU Lesser General Public License, version 3
  * http://www.gnu.org/licenses/lgpl-3.0.html
  *
- * $Revision: 11822 $
- * $Id: ccmanager.cpp 11822 2019-08-01 22:04:41Z fuscated $
+ * $Revision: 11917 $
+ * $Id: ccmanager.cpp 11917 2019-11-16 13:00:40Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/sdk/ccmanager.cpp $
  */
 
@@ -314,8 +314,8 @@ CCManager::CCManager() :
         }
         // insert after Edit->Complete code
         edMenu->Insert(insertPos,     idShowTooltip,     _("Show tooltip\tShift-Alt-Space"));
-        edMenu->Insert(insertPos + 1, idCallTipNext,     _("Next call tip\tCtrl-N"));
-        edMenu->Insert(insertPos + 2, idCallTipPrevious, _("Previous call tip\tCtrl-P"));
+        edMenu->Insert(insertPos + 1, idCallTipNext,     _("Next call tip"));
+        edMenu->Insert(insertPos + 2, idCallTipPrevious, _("Previous call tip"));
     }
     mainFrame->Connect(idShowTooltip,     wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CCManager::OnMenuSelect), nullptr, this);
     mainFrame->Connect(idCallTipNext,     wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler(CCManager::OnMenuSelect), nullptr, this);

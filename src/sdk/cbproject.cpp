@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU Lesser General Public License, version 3
  * http://www.gnu.org/licenses/lgpl-3.0.html
  *
- * $Revision: 11884 $
- * $Id: cbproject.cpp 11884 2019-10-26 09:11:35Z fuscated $
+ * $Revision: 11905 $
+ * $Id: cbproject.cpp 11905 2019-11-09 12:05:32Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/sdk/cbproject.cpp $
  */
 
@@ -366,6 +366,8 @@ void cbProject::ClearAllProperties()
 
 void cbProject::Open()
 {
+    wxStopWatch timer;
+
     m_Loaded = false;
     m_ProjectFilesMap.clear();
     Delete(m_pExtensionsElement);
@@ -417,6 +419,11 @@ void cbProject::Open()
             m_LastModified = fname.GetModificationTime();
         }
     }
+
+    long time = timer.Time();
+    if (time >= 100)
+        Manager::Get()->GetLogManager()->Log(F(wxT("cbProject::Open took: %.3f seconds."),
+                                               time / 1000.0f));
 } // end of Open
 
 void cbProject::CalculateCommonTopLevelPath()
@@ -743,7 +750,7 @@ ProjectFile* cbProject::AddFile(int targetIndex, const wxString& filename, bool 
 /* NOTE (mandrav#1#): Calling GetFileByFilename() twice, is costly.
     Instead of searching for duplicate files when entering here,
     we 'll search before exiting.
-    The rationale is that by then, we 'll have the relative filename
+    The rationale is that by then, we'll have the relative filename
     in our own representation and this will make everything quicker
     (check GetFileByFilename implementation to understand why)...
 */
@@ -802,7 +809,7 @@ ProjectFile* cbProject::AddFile(int targetIndex, const wxString& filename, bool 
         Compiler* c = CompilerFactory::GetCompiler( GetCompilerID() );
         if (c)
         {
-            const CompilerTool* t = c->GetCompilerTool(isResource ? ctCompileResourceCmd : ctCompileObjectCmd, fname.GetExt());
+            const CompilerTool* t = c->GetCompilerTool(isResource ? ctCompileResourceCmd : ctCompileObjectCmd, ext);
             if (t && t->generatedFiles.GetCount())
                 GenFilesHackMap[c] = t;
         }
@@ -815,7 +822,7 @@ ProjectFile* cbProject::AddFile(int targetIndex, const wxString& filename, bool 
 
             if (c)
             {
-                const CompilerTool* t = c->GetCompilerTool(isResource ? ctCompileResourceCmd : ctCompileObjectCmd, fname.GetExt());
+                const CompilerTool* t = c->GetCompilerTool(isResource ? ctCompileResourceCmd : ctCompileObjectCmd, ext);
                 if (t && t->generatedFiles.GetCount())
                     GenFilesHackMap[c] = t;
             }
@@ -827,7 +834,7 @@ ProjectFile* cbProject::AddFile(int targetIndex, const wxString& filename, bool 
         Compiler* c = CompilerFactory::GetCompiler(m_Targets[targetIndex]->GetCompilerID());
         if (c)
         {
-            const CompilerTool* t = c->GetCompilerTool(isResource ? ctCompileResourceCmd : ctCompileObjectCmd, fname.GetExt());
+            const CompilerTool* t = c->GetCompilerTool(isResource ? ctCompileResourceCmd : ctCompileObjectCmd, ext);
             if (t && t->generatedFiles.GetCount())
                 GenFilesHackMap[c] = t;
         }
@@ -886,13 +893,18 @@ ProjectFile* cbProject::AddFile(int targetIndex, const wxString& filename, bool 
     fname.Normalize(wxPATH_NORM_DOTS | wxPATH_NORM_TILDE, projectBasePath);
 
     const wxString &fullFilename = realpath(fname.GetFullPath());
-    pf->file              = fullFilename;
-    pf->relativeFilename  = UnixFilename(local_filename);
+    pf->file = fullFilename;
+
+    // Make sure the relativeFilename is really relative to the project file.
+    // This is a bit slower but a bit more correct.
+    fname.MakeRelativeTo(projectBasePath);
+    const wxString &fixedRelativePath = fname.GetFullPath();
+    pf->relativeFilename = UnixFilename(fixedRelativePath);
 
     // now check if we have already added this file
     // if we have, return the existing file, but add the specified target
     ProjectFile* existing = GetFileByFilename(pf->relativeFilename, true, true);
-    if (existing == pf)
+    if (existing)
     {
         delete pf;
         if (targetIndex >= 0 && targetIndex < (int)m_Targets.GetCount())

@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU Lesser General Public License, version 3
  * http://www.gnu.org/licenses/lgpl-3.0.html
  *
- * $Revision: 11566 $
- * $Id: compilerfactory.cpp 11566 2019-02-09 20:04:59Z fuscated $
+ * $Revision: 11900 $
+ * $Id: compilerfactory.cpp 11900 2019-11-04 19:35:21Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/sdk/compilerfactory.cpp $
  */
 
@@ -41,10 +41,9 @@ Compiler* CompilerFactory::GetCompiler(size_t index)
 
 Compiler* CompilerFactory::GetCompiler(const wxString& id)
 {
-    const wxString lid = id.Lower();
     for (size_t i = 0; i < Compilers.GetCount(); ++i)
     {
-        if (Compilers[i]->GetID().IsSameAs(lid))
+        if (Compilers[i]->GetID().IsSameAs(id, false))
             return Compilers[i];
     }
     // try again using previous id format
@@ -52,7 +51,7 @@ Compiler* CompilerFactory::GetCompiler(const wxString& id)
     {
         wxString oldId = Compilers[i]->GetID();
         oldId.Replace(wxT("-"), wxEmptyString);
-        if (oldId.IsSameAs(lid))
+        if (oldId.IsSameAs(id, false))
             return Compilers[i];
     }
     return nullptr;

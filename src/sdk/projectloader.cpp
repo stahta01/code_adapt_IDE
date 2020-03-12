@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU Lesser General Public License, version 3
  * http://www.gnu.org/licenses/lgpl-3.0.html
  *
- * $Revision: 11883 $
- * $Id: projectloader.cpp 11883 2019-10-26 09:11:12Z fuscated $
+ * $Revision: 11906 $
+ * $Id: projectloader.cpp 11906 2019-11-09 12:05:35Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/sdk/projectloader.cpp $
  */
 
@@ -1155,15 +1155,6 @@ void ProjectLoader::DoUnitOptions(const TiXmlElement* parentNode, ProjectFile* f
         for (int i = 0; i < m_pProject->GetBuildTargetsCount(); ++i)
         {
             file->AddBuildTarget(m_pProject->GetBuildTarget(i)->GetTitle());
-        }
-
-        // use same targets for generated files
-        for (size_t n = 0; n < file->generatedFiles.size(); ++n)
-        {
-            for (int i = 0; i < m_pProject->GetBuildTargetsCount(); ++i)
-            {
-                file->generatedFiles[n]->AddBuildTarget(m_pProject->GetBuildTarget(i)->GetTitle());
-            }
         }
     }
 }

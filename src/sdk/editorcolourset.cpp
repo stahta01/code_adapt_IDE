@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU Lesser General Public License, version 3
  * http://www.gnu.org/licenses/lgpl-3.0.html
  *
- * $Revision: 11482 $
- * $Id: editorcolourset.cpp 11482 2018-09-29 12:20:40Z fuscated $
+ * $Revision: 11930 $
+ * $Id: editorcolourset.cpp 11930 2019-12-21 16:05:57Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/sdk/editorcolourset.cpp $
  */
 
@@ -542,7 +542,6 @@ void EditorColourSet::Apply(HighlightLanguage lang, cbStyledTextCtrl* control, b
 {
     if (!control)
         return;
-    control->StyleClearAll();
 
     if (lang == HL_NONE)
     {
@@ -551,22 +550,15 @@ void EditorColourSet::Apply(HighlightLanguage lang, cbStyledTextCtrl* control, b
         lang = m_PlainTextLexerID;
     }
 
-    // first load the default colours to all styles used by the actual lexer (ignoring some built-in styles)
+    // First we set the style for the "Default" style, then the call to StyleClearAll would
+    // replicate it to all the other styles.
     OptionSet& mset = m_Sets[lang];
     OptionColour* defaults = ::GetDefaultOption(mset);
-    control->SetLexer(mset.m_Lexers);
-    control->SetStyleBits(control->GetStyleBitsNeeded());
     if (defaults)
-    {
-        int countStyles = 1 << control->GetStyleBits();
-        // walk until countStyles, otherwise the background-colour is only set for characters,
-        // not for empty background
-        for (int i = 0; i <= countStyles; ++i)
-        {
-            if (i < 33 || (i > 39 && i < wxSCI_STYLE_MAX))
-                DoApplyStyle(control, i, defaults);
-        }
-    }
+        DoApplyStyle(control, wxSCI_STYLE_DEFAULT, defaults);
+    control->StyleClearAll();
+
+    control->SetLexer(mset.m_Lexers);
 
     // Calling StyleClearAll above clears the style for the line numbers, so we have to re-apply it.
     ColourManager *colours = Manager::Get()->GetColourManager();

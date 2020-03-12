@@ -2,8 +2,8 @@
  * This file is part of the Code::Blocks IDE and licensed under the GNU Lesser General Public License, version 3
  * http://www.gnu.org/licenses/lgpl-3.0.html
  *
- * $Revision: 11842 $
- * $Id: projectmanager.cpp 11842 2019-09-08 18:12:55Z fuscated $
+ * $Revision: 11898 $
+ * $Id: projectmanager.cpp 11898 2019-11-04 19:35:16Z fuscated $
  * $HeadURL: svn://svn.code.sf.net/p/codeblocks/code/trunk/src/sdk/projectmanager.cpp $
  */
 
@@ -172,6 +172,8 @@ void ProjectManager::SetProject(cbProject* project, bool refresh)
     else
         return; // already active
 
+    wxStopWatch timer;
+
     cbProject *oldActiveProject = m_pActiveProject;
     m_pActiveProject = project;
 
@@ -183,6 +185,11 @@ void ProjectManager::SetProject(cbProject* project, bool refresh)
     CodeBlocksEvent event(cbEVT_PROJECT_ACTIVATE);
     event.SetProject(m_pActiveProject);
     Manager::Get()->GetPluginManager()->NotifyPlugins(event);
+
+    long time = timer.Time();
+    if (time >= 50)
+        Manager::Get()->GetLogManager()->Log(F(wxT("ProjectManager::SetProject took: %.3f seconds."),
+                                               time / 1000.0f));
 }
 
 cbProject* ProjectManager::IsOpen(const wxString& filename)
@@ -213,6 +220,7 @@ cbProject* ProjectManager::IsOpen(const wxString& filename)
 
 cbProject* ProjectManager::LoadProject(const wxString& filename, bool activateIt)
 {
+    wxStopWatch timer;
     cbProject* result = nullptr;
     if (!wxFileExists(filename) || !BeginLoadingProject())
     {
@@ -277,6 +285,13 @@ cbProject* ProjectManager::LoadProject(const wxString& filename, bool activateIt
             // This is already done in the EndLoadingProject call.
             SetProject(result, false);
         }
+    }
+
+    long time = timer.Time();
+    if (time >= 100)
+    {
+        LogManager *log = Manager::Get()->GetLogManager();
+        log->Log(F(wxT("ProjectManager::LoadProject took: %.3f seconds."), time / 1000.0f));
     }
 
     return result;
@@ -385,6 +400,8 @@ cbProject* ProjectManager::NewProject(const wxString& filename)
 
 bool ProjectManager::CloseAllProjects(bool dontsave)
 {
+    wxStopWatch timer;
+
     if (!dontsave)
     {
         if (!m_ui->QueryCloseAllProjects())
@@ -413,6 +430,13 @@ bool ProjectManager::CloseAllProjects(bool dontsave)
         wxFileName::SetCwd(m_InitialDir);
     m_IsClosingProject = false;
     WorkspaceChanged();
+
+    long time = timer.Time();
+    if (time >= 100)
+    {
+        LogManager *log = Manager::Get()->GetLogManager();
+        log->Log(F(wxT("ProjectManager::CloseAllProjects took: %.3f seconds."), time / 1000.0f));
+    }
 
     return true;
 }
