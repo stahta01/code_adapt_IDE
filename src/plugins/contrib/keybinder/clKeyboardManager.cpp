@@ -22,20 +22,77 @@
 #include <wx/tokenzr.h>
 #include <wx/log.h>
 #include <wx/ffile.h>   //(2019/04/3)
+#include <wx/textfile.h>    //( 2019/10/26)
 
 #include "manager.h"
 #include "personalitymanager.h"
 #include "annoyingdialog.h" //(2019/04/27)
 
-#include "debugging.h" //(ICC 2019/05/3)
+#include "debugging.h" //(2019/05/3)
 #include "clKeyboardManager.h"
 #include "clKeyboardBindingConfig.h"
 
+namespace{
+    wxString sep = wxFileName::GetPathSeparator();
+    int frameKnt = 0;
+}
     //-int wxEVT_INIT_DONE = XRCID("wxEVT_INIT_DONE");
 
 BEGIN_EVENT_TABLE( clKeyboardManager, wxEvtHandler )
     //-EVT_MENU( wxEVT_INIT_DONE, clKeyboardManager::OnStartupCompleted )
 END_EVENT_TABLE()
+
+// ----------------------------------------------------------------------------
+void clKeyboardShortcut::Clear()
+// ----------------------------------------------------------------------------
+{
+    m_ctrl = false;
+    m_alt = false;
+    m_shift = false;
+    m_keyCode.Clear();
+}
+// ----------------------------------------------------------------------------
+wxString clKeyboardShortcut::ToString() const
+// ----------------------------------------------------------------------------
+{
+    // An accelerator must contain a key code
+    if(m_keyCode.IsEmpty()) {
+        return _T("");
+    }
+
+    wxString str;
+    if(m_ctrl) {
+        str << _T("Ctrl-");
+    }
+    if(m_alt) {
+        str << _T("Alt-");
+    }
+    if(m_shift) {
+        str << _T("Shift-");
+    }
+    str << m_keyCode;
+    return str;
+}
+// ----------------------------------------------------------------------------
+void clKeyboardShortcut::FromString(const wxString& accelString)
+// ----------------------------------------------------------------------------
+{
+    Clear();
+    wxArrayString tokens = ::wxStringTokenize(accelString, _T("-+"), wxTOKEN_STRTOK);
+    for(size_t i = 0; i < tokens.GetCount(); ++i) {
+        wxString token = tokens.Item(i);
+        token.MakeLower();
+        if(token == _T("shift")) {
+            m_shift = true;
+        } else if(token == _T("alt")) {
+            m_alt = true;
+        } else if(token == _T("ctrl")) {
+            m_ctrl = true;
+        } else {
+            m_keyCode = tokens.Item(i);
+        }
+    }
+}
 
 // ----------------------------------------------------------------------------
 clKeyboardManager::clKeyboardManager()
@@ -184,7 +241,12 @@ void clKeyboardManager::DoUpdateMenu(wxMenu* menu, MenuItemDataIntMap_t& accels,
             // remove the matches entry from the accels map
             accels.erase(where);
         }
-        //(2019/06/29) Linux: set accels in global table, else linux menu accels wont work
+
+        //(2019/06/29) Linux: set menu accels in global table, else linux menu accels wont work.
+        // If menu item with accelerator within the label,
+        // create accelerator corresponding to the specified string, return NULL if
+        // string couldn't be parsed or a pointer to be deleted by the caller.
+        // Otherwise, parse out flags and keycodes following the '/t' in the menu item label
         wxAcceleratorEntry* a = wxAcceleratorEntry::Create(item->GetItemLabel());
         if(a)
         {
@@ -208,10 +270,16 @@ void clKeyboardManager::DoUpdateFrame(wxFrame* frame, MenuItemDataIntMap_t& acce
         wxMenu* menu = menuBar->GetMenu(i);
         DoUpdateMenu(menu, accels, table);
     }
-
+    // table will now have all menu accels that contained menu label accelerators
+    // accel will be missing all accels found in the menu system, but retaining global accels
+    #if defined(LOGGING) //debug accelerator counts
+        size_t tableKnt = table.size();
+        size_t accelsKnt = accels.size();
+    #endif // defined LOGING
     if(!table.empty() || !accels.empty()) {
         wxAcceleratorEntry* entries = new wxAcceleratorEntry[table.size() + accels.size()];
-        // append the globals
+
+        // append to table, the globals retained in the accel table (not found as menu items)
         for(MenuItemDataIntMap_t::iterator iter = accels.begin(); iter != accels.end(); ++iter) {
             wxString dummyText;
             dummyText << iter->second.action << _T("\t") << iter->second.accel;
@@ -226,13 +294,20 @@ void clKeyboardManager::DoUpdateFrame(wxFrame* frame, MenuItemDataIntMap_t& acce
             }
         }
 
+        // move global accel entries from table to wxAcceleratorTable array
         for(size_t i = 0; i < table.size(); ++i) {
             entries[i] = table.at(i);
         }
 
+        #if defined(LOGGING)
+        DumpAccelerators(table.size(), entries, frame); //(2019/10/27)
+        #endif
+
+        // Set the wxAcceleratorTable for this frame
         wxAcceleratorTable acceleTable(table.size(), entries);
         frame->SetAcceleratorTable(acceleTable);
         wxDELETEA(entries);
+
     }
 }
 // ----------------------------------------------------------------------------
@@ -249,12 +324,12 @@ void clKeyboardManager::Initialize(bool isRefreshRequest)
     wxUnusedVar(isRefreshRequest);
     m_menuTable.clear();
 
-    // First, try to load accelerators from %appdata% keybindings.conf
+    // First, try to load accelerators from %appdata% cbkeybinder.conf
     //      containing merged default + user defined accerators
     // Second, try loading from default accerators in %appdata% + accerators.conf
 
     clKeyboardBindingConfig config;
-    if( not config.Exists()) //does keybindings.conf exist?
+    if( not config.Exists()) //does cbKeyBinder__.conf exist? eg. %appdata%\<personality>.cbKeyBinder<version>.conf
     {
         #if defined(LOGGING)
         LOGIT( _T("[%s]"), _("Keyboard manager: No configuration found - importing old settings"));
@@ -265,10 +340,8 @@ void clKeyboardManager::Initialize(bool isRefreshRequest)
         // GetDataDir()     == executable directory
         // ConfigManager::GetConfigFolder() is the right way to do it for CodeBlocks.
 
-        // Old accererator setting are in %appdata%
-        wxFileName fnOldSettings(wxStandardPaths::Get().GetTempDir(), _T("keyMnuAccels.conf"));
-        wxString personality = Manager::Get()->GetPersonalityManager()->GetPersonality();
-        fnOldSettings.SetName(personality + _T(".") + fnOldSettings.GetName());
+        // Old pre version 2.0 accererator setting are in temp dir (created from current menu structure + cbKeybinder10.ini)
+        wxFileName fnOldSettings(clKeyboardManager::Get()->GetTempKeyMnuAccelsFilename()); //(2020/02/25)
 
         wxFileName fnFileToLoad;
         bool canDeleteOldSettings(false);
@@ -281,7 +354,7 @@ void clKeyboardManager::Initialize(bool isRefreshRequest)
         else    // else use executable dir accerators.conf.default accerators
         {
             //-fnFileToLoad = fnDefaultOldSettings;
-            wxASSERT_MSG(0, wxT("clKeyboardManager::Initialize() missing accerators.conf file"));
+            wxASSERT_MSG(0, wxT("clKeyboardManager::Initialize() missing %temp%/<personality>keyMnuAccels_<pid>.conf file"));
         }
 
         if(fnFileToLoad.FileExists())
@@ -320,17 +393,21 @@ void clKeyboardManager::Initialize(bool isRefreshRequest)
             }
         }
     }
-    else //config exists: "keybindings.conf"
+    else //config exists: Load "%appdata%\<personality>cbKeybinder<ver>.conf"
     {
         config.Load();
         m_menuTable = config.GetBindings();
     }
 
-    // Load the default settings and add any new entries from accerators.conf
+    // ----------------------------------------------------------------------------
+    // Load the default settings from TempDir/<personality>.keyMnuAccels_pid.conf"));
+    // ----------------------------------------------------------------------------
     MenuItemDataMap_t defaultEntries = DoLoadDefaultAccelerators();
 
-    // Remove any map items nolonger matching the menu structure
-    for (MenuItemDataMap_t::iterator mapIter = m_menuTable.begin(); mapIter != m_menuTable.end(); ++mapIter)
+    // ----------------------------------------------------------------------------
+    // Remove any map items nolonger matching the current menu structure
+    // ----------------------------------------------------------------------------
+        for (MenuItemDataMap_t::iterator mapIter = m_menuTable.begin(); mapIter != m_menuTable.end(); ++mapIter)
     {
         mnuContinue:
         if (mapIter == m_menuTable.end()) break;
@@ -346,16 +423,18 @@ void clKeyboardManager::Initialize(bool isRefreshRequest)
             mapIter = m_menuTable.erase(mapIter);
             goto mnuContinue;
         }
-        else //remove the found map item if its label doesn't match menu structure label//(pecan 2019/05/18)
-        {   // Have matching map resoureID and menu structure resourceID (ie., menuItemID)
-            MenuItemDataMap_t::iterator mnuIter = defaultEntries.find(mapIter->first);
-            if (mnuIter == defaultEntries.end())
+        else // Have amatching map resoureID and menu structure resourceID (ie., menuItemID)
+        {    // Remove the found map item if its label doesn't match the menu structure label
+            MenuItemDataMap_t::iterator dftMnuIter = defaultEntries.find(mapIter->first);
+            if (dftMnuIter == defaultEntries.end())
                 continue;
             wxString mapParent = mapIter->second.parentMenu;
-            if (mapParent.empty()) continue; //skip global accelerators
-            wxString mnuParent = mnuIter->second.parentMenu;
-            if (mnuParent.empty()) continue; //skip global accelerators
-            if (mapParent.Lower() != mnuParent.Lower())
+            if (mapParent.empty()) continue; //skip .conf global accelerators
+            wxString dftMnuParent = dftMnuIter->second.parentMenu;
+            //- if (dftMnuParent.empty()) continue; // Comment out in order to check for mismatched menu id's to global accelerators id's //(2020/02/29)
+            // Cf.,This will allow a global to override an old menu item.This happends when a new build does not match the current .conf file //(pecan 2020/02/29)
+            // The non-matching .conf menu item has an incorrect id anyway.
+            if (mapParent.Lower() != dftMnuParent.Lower())
             {
                 #if defined(LOGGING)
                     wxString mapMnuID = mapIter->first;
@@ -368,12 +447,44 @@ void clKeyboardManager::Initialize(bool isRefreshRequest)
         }//endif else have matching resourceID
     }//endfor mapIter
 
-    // Add any new entries from accerators.conf (the menu structure)
-    std::for_each(defaultEntries.begin(), defaultEntries.end(), [&](const MenuItemDataMap_t::value_type& vdflt)
+    #if defined(LOGGING)
+        LogAccelerators(m_menuTable, _T("Log 1"));
+    #endif
+
+    // ----------------------------------------------------------------------------
+    // Add any new entries from %temp%/<personality>.keyMnuAccels_pid.conf (the current menu structure)
+    // ----------------------------------------------------------------------------
+    for (MenuItemDataMap_t::iterator dftMapIter = defaultEntries.begin(); dftMapIter != defaultEntries.end(); ++dftMapIter)
     {
         //-wxString vtValue = vdflt.first;         //The menu id number
-        if(m_menuTable.count(vdflt.first) == 0) {  //searches map for like shortcut string
-            m_menuTable.insert(vdflt);
+        if(m_menuTable.count(dftMapIter->first) == 0)   //searches conf map for like menu id
+        {   // add missing dft menu item
+            m_menuTable.insert(*dftMapIter);            // add missing dft menu item if not in menuTable
+            #if defined(LOGGING)
+                wxString vdfltMenuItem = dftMapIter->second.resourceID + _T("|") + dftMapIter->second.parentMenu + _T("|") + dftMapIter->second.accel;
+                LOGIT( _T("Initialize() adding missing menuItem[%s]"), vdfltMenuItem.wx_str());
+            #endif
+        }
+        else // found item by this ID, but is it the same label //(pecan 2020/02/27)
+        {
+            MenuItemData* pMenuItemData = &(dftMapIter->second);
+            // Find item in .conf matching resourceID and menuTitle
+            MenuItemData* pFoundMenuItemData = FindMenuTableEntryFor(m_menuTable, pMenuItemData);
+            if (not pFoundMenuItemData)
+            {   //Add missing default menu item to .conf
+                m_menuTable.insert(*dftMapIter);
+                #if defined(LOGGING)
+                    wxString vdfltMenuItem = dftMapIter->second.resourceID + _T("|") + dftMapIter->second.parentMenu + _T("|") + dftMapIter->second.accel;
+                    LOGIT( _T("Initialize() adding default menuItem[%s]"), vdfltMenuItem.wx_str());
+                #endif
+            }
+            #if defined(LOGGING)
+            else
+            {
+                wxString vdfltMenuItem = dftMapIter->second.resourceID + _T("|") + dftMapIter->second.parentMenu + _T("|") + dftMapIter->second.accel;
+                LOGIT( _T("Initialize() skipping already defined menuItem[%s]"), vdfltMenuItem.wx_str());
+            }
+            #endif
         }
         // ----------------------------------------------------------------------------
         // NO!no! don't overwrite past user changes; m_menuTable already has user keybinder.conf changes.
@@ -394,18 +505,30 @@ void clKeyboardManager::Initialize(bool isRefreshRequest)
         //-        mapIter->second.accel = vdflt.second.accel;
         //-    }
         //-}
-    });
+    };
+
+    #if defined(LOGGING)
+        LogAccelerators(m_menuTable, _T("MergedLog 2"));
+    #endif
 
     // Warn about duplicate shortcut entries (eg., (Print/PrevCallTip Ctrl-P) and (CC Search/Ctrl-Shift-.) have duplicates) //(2019/04/23)
     CheckForDuplicateAccels(m_menuTable);
 
+    // update the menu and global accelerators //(pecan 2020/02/29)
+    SetAccelerators(m_menuTable);
+
     // Store the correct configuration; globalTable is inserted into menuTable
     config.SetBindings(m_menuTable, m_globalTable).Save();
+
+    #if defined(LOGGING)
+        LogAccelerators(m_menuTable, _T("MenuLog 3"));
+        LogAccelerators(m_globalTable, _T("GlobalsLog 3"));
+    #endif
+\
 
     // And apply the changes
     Update();
 }
-
 // ----------------------------------------------------------------------------
 void clKeyboardManager::GetAllAccelerators(MenuItemDataMap_t& accels) const
 // ----------------------------------------------------------------------------
@@ -503,7 +626,6 @@ MenuItemDataMap_t::iterator clKeyboardManager::ExistsALikeAccel(MenuItemDataMap_
 
     MenuItemDataMap_t& accels = srcMap;
     if (srcMapIter == accels.end()) return accels.end();
-    //-if (srcMapIter->second.parentMenu.empty() ) return accels.end(); //skip global accelerators //(pecan 2019/05/5)-
 
     const wxString srcAccel = srcMapIter->second.accel;
     if(srcAccel.IsEmpty()) return accels.end();
@@ -565,11 +687,15 @@ void clKeyboardManager::CheckForDuplicateAccels(MenuItemDataMap_t& accelMap) con
             srcMenuLabel.Replace(_T("\t"), _T(" "));
             srcMenuLabel.Replace(_T("&"), _T(""));
             srcMenuLabel.Replace(_T("::"), _T("/"));
+            if (srcMenuLabel.Contains(_T("Code/Blocks")) ) //special case of "Code::Blocks" text in menu title
+                srcMenuLabel.Replace(_T("Code/Blocks"), _T("Code::Blocks"));
 
             wxString foundMenuLabel = foundIter->second.parentMenu;
             foundMenuLabel.Replace(_T("\t"), _T(" "));
             foundMenuLabel.Replace(_T("&"), _T(""));
             foundMenuLabel.Replace(_T("::"), _T("/"));
+            if (foundMenuLabel.Contains(_T("Code/Blocks")) ) //special case of "Code::Blocks" text in menu title
+                foundMenuLabel.Replace(_T("Code/Blocks"), _T("Code::Blocks"));
 
             long srcMenuID; srcIter->first.ToLong(&srcMenuID);
             long foundMenuID; foundIter->first.ToLong(&foundMenuID);
@@ -622,13 +748,16 @@ void clKeyboardManager::AddGlobalAccelerator(const wxString& resourceID,
 void clKeyboardManager::RestoreDefaults()
 // ----------------------------------------------------------------------------
 {
+    // FIXME (ph#): RestoreDefaults needs to be supported
     wxASSERT_MSG(0, wxT("RestoreDefaults not supported yet !"));
     return ;
 
     // Decide which file we want to load, take the user settings file first
-    wxFileName fnOldSettings(wxStandardPaths::Get().GetTempDir(), _T("keyMnuAccels.conf"));
+    // FIXME (ph#): This file was deleted at end of OnAppStartupDone()
+    //-wxFileName fnOldSettings(wxStandardPaths::Get().GetTempDir(), _T("keyMnuAccels.conf"));
     wxString personality = Manager::Get()->GetPersonalityManager()->GetPersonality();
-    fnOldSettings.SetName(personality + _T(".") + fnOldSettings.GetName());
+    //-fnOldSettings.SetName(personality + _T(".") + fnOldSettings.GetName());
+    wxFileName fnOldSettings(clKeyboardManager::Get()->GetTempKeyMnuAccelsFilename()); //(2020/02/25)
 
     wxFileName fnNewSettings(ConfigManager::GetConfigFolder(), _T("cbKeyBinder20.conf"));
     fnNewSettings.SetName(personality + _T(".") + fnNewSettings.GetName());
@@ -695,9 +824,7 @@ MenuItemDataMap_t clKeyboardManager::DoLoadDefaultAccelerators()
 // ----------------------------------------------------------------------------
 {
     MenuItemDataMap_t entries;
-    wxFileName fnDefaultOldSettings(wxStandardPaths::Get().GetTempDir(), _T("keyMnuAccels.conf"));
-    wxString personality = Manager::Get()->GetPersonalityManager()->GetPersonality();
-    fnDefaultOldSettings.SetName(personality + _T(".") + fnDefaultOldSettings.GetName());
+    wxFileName fnDefaultOldSettings(clKeyboardManager::Get()->GetTempKeyMnuAccelsFilename()); //(2020/02/25)
 
     if(fnDefaultOldSettings.FileExists())
     {
@@ -709,13 +836,12 @@ MenuItemDataMap_t clKeyboardManager::DoLoadDefaultAccelerators()
         for(size_t i = 0; i < lines.GetCount(); ++i)
         {
             wxArrayString parts = ::wxStringTokenize(lines.Item(i), _T("|"), wxTOKEN_RET_EMPTY);
-            //-if(parts.GetCount() < 3) continue; //(pecan 2019/04/27)
             if(parts.GetCount() < 2) continue;
             MenuItemData binding;
             binding.resourceID = parts.Item(0);
             binding.parentMenu = parts.Item(1);
-            if (parts.GetCount() > 2)               //(pecan 2019/04/27)
-            binding.action = parts.Item(2);
+            if (parts.GetCount() > 2)
+                binding.action = parts.Item(2);
             if(parts.GetCount() == 4) {
                 binding.accel = parts.Item(3);
             }
@@ -723,15 +849,6 @@ MenuItemDataMap_t clKeyboardManager::DoLoadDefaultAccelerators()
         }
     }
     return entries;
-}
-// ----------------------------------------------------------------------------
-void clKeyboardShortcut::Clear()
-// ----------------------------------------------------------------------------
-{
-    m_ctrl = false;
-    m_alt = false;
-    m_shift = false;
-    m_keyCode.Clear();
 }
 // ----------------------------------------------------------------------------
 wxString clKeyboardManager::KeyCodeToString(int keyCode) //(2019/02/25)
@@ -1008,44 +1125,69 @@ bool clKeyboardManager::ReadFileContent(const wxFileName& fn, wxString& data, co
     return file.ReadAll(&data, conv);
 }
 // ----------------------------------------------------------------------------
-void clKeyboardShortcut::FromString(const wxString& accelString)
+void clKeyboardManager::DumpAccelerators(size_t tableCount, wxAcceleratorEntry* pEntries, wxFrame* pFrame)
 // ----------------------------------------------------------------------------
 {
-    Clear();
-    wxArrayString tokens = ::wxStringTokenize(accelString, _T("-+"), wxTOKEN_STRTOK);
-    for(size_t i = 0; i < tokens.GetCount(); ++i) {
-        wxString token = tokens.Item(i);
-        token.MakeLower();
-        if(token == _T("shift")) {
-            m_shift = true;
-        } else if(token == _T("alt")) {
-            m_alt = true;
-        } else if(token == _T("ctrl")) {
-            m_ctrl = true;
-        } else {
-            m_keyCode = tokens.Item(i);
-        }
+
+    if (0 == tableCount) return;
+
+    wxString tmpDir = wxFileName::GetTempDir();
+    wxString txtFilename = tmpDir +sep +_T("KBGlobalsFrame_") + wxString::Format(_T("%d"),++frameKnt) + _T(".txt");
+    if (wxFileExists(txtFilename))
+        wxRemoveFile(txtFilename);
+    wxTextFile txtAccels(txtFilename);
+    txtAccels.Create();
+    txtAccels.AddLine(pFrame->GetTitle());
+
+    for (size_t ii = 0; ii < tableCount; ++ii)
+    {
+        //int flags;
+        //int keyCode;
+        //int command;
+        wxString strCommand;
+        wxString txtLine = wxString::Format(_T("accelEntry[%d] flags[%d] code[%d] id[%d]"),
+                        int(ii),
+                        pEntries[ii].GetFlags(),
+                        pEntries[ii].GetKeyCode(),
+                        pEntries[ii].GetCommand()    //numeric id
+                      );
+
+        strCommand = pEntries[ii].ToString();
+        txtLine += _T(" ") + strCommand;
+        txtAccels.AddLine(txtLine);
     }
+    txtAccels.Write();
+    txtAccels.Close();
+
 }
 // ----------------------------------------------------------------------------
-wxString clKeyboardShortcut::ToString() const
+void clKeyboardManager::LogAccelerators(MenuItemDataMap_t& menuTable, wxString title)
 // ----------------------------------------------------------------------------
 {
-    // An accelerator must contain a key code
-    if(m_keyCode.IsEmpty()) {
-        return _T("");
+    //LogAccelerator
+    #if defined(LOGGING)
+    wxString logTitle = title;
+    if (logTitle.Length() == 0)
+        logTitle = _T("MenuTable:");
+    LOGIT( _T("[%s]"), logTitle);
+    for (MenuItemDataMap_t::iterator mapIter = menuTable.begin(); mapIter != menuTable.end(); ++mapIter)
+    {
+        wxString mapAccel = mapIter->second.accel;
+        wxString mapParent = mapIter->second.parentMenu;
+        wxString mapMnuID = mapIter->first;
+        LOGIT( _T("[%s][%s][%s][%s]"), logTitle.wx_str(), mapMnuID.wx_str(), mapParent.wx_str(), mapAccel.wx_str());
     }
-
-    wxString str;
-    if(m_ctrl) {
-        str << _T("Ctrl-");
+    #endif
+}
+// ----------------------------------------------------------------------------
+MenuItemData* clKeyboardManager::FindMenuTableEntryFor(MenuItemDataMap_t& hashTable, MenuItemData* pMenuMapItem)
+// ----------------------------------------------------------------------------
+{
+    for (MenuItemDataMap_t::iterator mapIter = hashTable.begin(); mapIter != hashTable.end(); ++mapIter)
+    {
+        if ( (mapIter->second.resourceID == pMenuMapItem->resourceID)
+            and (mapIter->second.parentMenu == pMenuMapItem->parentMenu) )
+            return  &(mapIter->second);
     }
-    if(m_alt) {
-        str << _T("Alt-");
-    }
-    if(m_shift) {
-        str << _T("Shift-");
-    }
-    str << m_keyCode;
-    return str;
+    return nullptr;
 }

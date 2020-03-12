@@ -14,7 +14,7 @@
  #define LOGGING 1
  #undef LOGIT
  #define LOGIT wxLogMessage
- #define TRAP asm("int3")
+// #define TRAP asm("int3")
 #endif
 
 // ----------------------------------------------------------------------------

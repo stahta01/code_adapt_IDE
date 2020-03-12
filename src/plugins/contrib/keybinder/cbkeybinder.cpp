@@ -5,7 +5,7 @@
  * Copyright: (c) Pecan Heber etal.
  * License:   GPL
  **************************************************************/
-// RCS-ID:      $Id: cbkeybinder.cpp 11766 2019-07-02 20:24:22Z pecanh $
+// RCS-ID:      $Id: cbkeybinder.cpp 11974 2020-03-02 18:22:08Z pecanh $
 
 // The majority of this code was lifted from wxKeyBinder and
 // its "minimal.cpp" sample program
@@ -62,7 +62,7 @@ namespace
     #if wxVERSION_NUMBER < 3000
     int wxEVT_LISTBOOK_PAGE_CHANGED = wxEVT_COMMAND_LISTBOOK_PAGE_CHANGED; //wx2.8
     #endif // wxVERSION_NUMBER
-    int idKeyBinderRefresh = XRCID("idKeyBinderRefresh"); //(pecan 2019/04/26)
+    int idKeyBinderRefresh = XRCID("idKeyBinderRefresh");
     wxString sep = wxFileName::GetPathSeparator();
     inline bool wxFound(int result){return result != wxNOT_FOUND;}
 };
@@ -371,6 +371,15 @@ void cbKeyBinder::OnAppStartupDone(CodeBlocksEvent& event)
     m_AppStartupDone = true;
     m_KeyBinderRefreshRequested = false;
 
+    #if not defined(LOGGING) //remove menu scan file when not debugging //(2019/10/28)
+        wxString scanFile = GetTempOldFmtMnuScanFilename(); //(2020/02/25)
+        if (wxFileExists(scanFile) )
+            wxRemoveFile(scanFile);
+        // remove temp Accelerator .conf file //(pecan 2020/02/24)
+        wxFileName fnTempKeyMnuAccels(clKeyboardManager::Get()->GetTempKeyMnuAccelsFilename()); //(2020/02/25)
+        if (fnTempKeyMnuAccels.FileExists())
+            wxRemoveFile(fnTempKeyMnuAccels.GetFullPath());
+    #endif
     return;
 }
 // ----------------------------------------------------------------------------
@@ -386,7 +395,7 @@ void cbKeyBinder::OnAppStartShutdown(CodeBlocksEvent& event)
     #endif
 }
 // ----------------------------------------------------------------------------
-void cbKeyBinder::OnKeyBinderRefreshRequested(wxCommandEvent& event)    //(pecan 2019/04/26)
+void cbKeyBinder::OnKeyBinderRefreshRequested(wxCommandEvent& event)
 // ----------------------------------------------------------------------------
 {
     // a process has issued: wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, XRCID("idKeyBinderRefresh"))
@@ -420,6 +429,10 @@ wxString cbKeyBinder::GetPluginVersion()
 bool cbKeyBinder::CreateKeyBindDefaultFile(bool refresh)
 // ----------------------------------------------------------------------------
 {
+    // FIXME (ph#): Do we really need to used the old KeyBinder scan to create the new
+    // default keybindings or can we just use the routines like clKeyboardManager::DoUpdateMenu()
+    // to create the menuMap directly.
+
     // Create %temp%\<profile>.keyMnuAccels.conf default accelerators by:
     // 1) Scan the menu structure to create keyOldFmtMnuScan.ini as a comparison base.
     // 2) if no %appdata%\<personality>.cbKeyBinder20.conf, try to merge old plugins' cbKeyBinder10.ini file
@@ -445,9 +458,9 @@ bool cbKeyBinder::CreateKeyBindDefaultFile(bool refresh)
     // GetUserDataDir() returns ...\%appdata%\<thisAppName>
     // ConfigManager::GetConfigFolder() is the right way to do this.
 
+    // create temp file  <userPersonality>keyMnuAccels_<pid#>.conf
     // userPersonality comes from the CodeBlocks /p argument or else set to 'default'
-    wxFileName fnTempKeyMnuAccels(wxStandardPaths::Get().GetTempDir(), _T("keyMnuAccels.conf"));
-    fnTempKeyMnuAccels.SetName(GetUserPersonality() + _T(".") + fnTempKeyMnuAccels.GetName());
+    wxFileName fnTempKeyMnuAccels(clKeyboardManager::Get()->GetTempKeyMnuAccelsFilename()); //(2020/02/25)
 
     // cbKeyBinder20.conf == defaults key bindings + user key bindings (filename is prefixed with userPersonality.)
     wxFileName fnNewcbKeyBinderConf(ConfigManager::GetConfigFolder(), _T("cbKeyBinder20.conf"));
@@ -465,8 +478,8 @@ bool cbKeyBinder::CreateKeyBindDefaultFile(bool refresh)
 
     bool ok = false;
 
-    // Remove any stale %temp%\keyOldFmtMnuScan.ini or %temp%\keyMnuAccels.conf
-    wxFileName fnTempOldFmtMnuScan(wxStandardPaths::Get().GetTempDir(), _T("keyOldFmtMnuScan.ini"));
+    // Remove any stale %temp%\<personality>keyOldFmtMnuScan_<pid#>.ini or %temp%\<personality>keyMnuAccels_<pid#>.conf
+    wxFileName fnTempOldFmtMnuScan(GetTempOldFmtMnuScanFilename()); //(2020/02/25)
     if (fnTempOldFmtMnuScan.FileExists())
         wxRemoveFile(fnTempOldFmtMnuScan.GetFullPath());
     if (fnTempKeyMnuAccels.FileExists())
@@ -476,7 +489,7 @@ bool cbKeyBinder::CreateKeyBindDefaultFile(bool refresh)
     // Use KeyBinder menu walker to create old format .ini file of menu structure
     // ----------------------------------------------------------------------------
     // old format ...\tempDir\keyOldFmtMnuScan.ini will be converted to new codelite format keyMnuAccels.conf file
-    // we need this older format to compare against cbKeyBinder10.ini file to convert old user key bindings
+    // we need this older format to compare against cbKeyBinder10.ini file to convert/preserve old user key bindings
     if (not fnTempOldFmtMnuScan.FileExists())
     {
         // start the menu walker process
@@ -621,22 +634,22 @@ int cbKeyBinder::ConvertMenuScanToKeyMnuAcceratorsConf(wxString keybinderFile, w
     // return -1 on open error
     // returns number of non-matching menu items between menu structure and keybinder file
 
-    wxFileName fncbkb(keybinderFile);       // usually ...\%TEMP%\keyOldFmtMnuScan.ini
-    wxFileName fnclacc(acceleratorFile);    // usually ...\%TEMP%\<personality>.keyMnuAccel.conf
+    wxFileName fncbkbini(keybinderFile);       // usually ...\%TEMP%\keyOldFmtMnuScan_<pid>.ini
+    wxFileName fnclaccconf(acceleratorFile);    // usually ...\%TEMP%\<personality>.keyMnuAccel_<pid>.conf
 
-    if (not fncbkb.FileExists())
+    if (not fncbkbini.FileExists())
     {
         wxASSERT_MSG(0, wxT("ConvertMenuScanToKeyMnuAcceratorsConf() called, but file does not exist."));
         return false;
     }
     // remove old KeyMnuAccels.conf
-    if (fnclacc.FileExists())
-        wxRemoveFile(fnclacc.GetFullPath());
+    if (fnclaccconf.FileExists())
+        wxRemoveFile(fnclaccconf.GetFullPath());
 
-    wxTextFile txtkb(fncbkb.GetFullPath());
+    wxTextFile txtkb(fncbkbini.GetFullPath());
     txtkb.Open();
 
-    wxTextFile txtacc(fnclacc.GetFullPath());
+    wxTextFile txtacc(fnclaccconf.GetFullPath());
     if (not txtacc.Create() )
     {
         wxASSERT_MSG(0, wxT("ConvertMenuScanToKeyMnuAcceratorsConf() failed to create "+acceleratorFile) );
@@ -732,13 +745,13 @@ int cbKeyBinder::ConvertOldKeybinderIniToAcceratorsConf(wxString oldKeybinderFil
     }
 
     // Verify .conf which is usually at tempDir\<personality>.keyMnuAccels.conf
-    wxFileName fnclacc(newAcceleratorFile);
-    if (not fnclacc.FileExists())
+    wxFileName fnclaccconf(newAcceleratorFile);
+    if (not fnclaccconf.FileExists())
     {
-        wxASSERT_MSG(0, wxString::Format(wxT("ConvertKeybinderIni called, but %s file does not exist."), fnclacc.GetFullPath().wx_str()) );
+        wxASSERT_MSG(0, wxString::Format(wxT("ConvertKeybinderIni called, but %s file does not exist."), fnclaccconf.GetFullPath().wx_str()) );
         return -1;
     }
-    wxTextFile txtacc(fnclacc.GetFullPath());
+    wxTextFile txtacc(fnclaccconf.GetFullPath());
     if (not txtacc.Open())
     {
         wxASSERT_MSG(0, wxT("ConvertKeybinderIni failed to open " + newAcceleratorFile) );
@@ -750,7 +763,7 @@ int cbKeyBinder::ConvertOldKeybinderIniToAcceratorsConf(wxString oldKeybinderFil
         size_t lineKnt = txtkb.GetLineCount();
         LOGIT( _T("ConvertKeybinderIni Open input txtKB[%s]Lines[%u]"), fncbkb.GetFullPath().wx_str(), (unsigned)lineKnt);
         lineKnt = txtacc.GetLineCount();
-        LOGIT( _T("ConvertKeybinderIni Open output txtACC[%s] Lines[%u]"), fnclacc.GetFullPath().wx_str(), (unsigned)lineKnt);
+        LOGIT( _T("ConvertKeybinderIni Open output txtACC[%s] Lines[%u]"), fnclaccconf.GetFullPath().wx_str(), (unsigned)lineKnt);
     }
     #endif
 
@@ -919,7 +932,7 @@ bool cbKeyBinder::MergeAcceleratorTable(wxTextFile& textOutFile)
             vFlags += _T("Alt-");
         if (globalAccels[ii].GetFlags() & wxACCEL_SHIFT)
             vFlags += _T("Shift-");
-        LOGIT( _T("accelEntry[%d]flags[%s]code[%s],id[%d]"),
+        LOGIT( _T("global accelEntry[%d]flags[%s]code[%s],id[%d]"),
                     ii,
                     vFlags.wx_str(),
                     m_pKBMgr->KeyCodeToString(globalAccels[ii].GetKeyCode()).wx_str(),

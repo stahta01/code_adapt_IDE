@@ -8,7 +8,7 @@
 // Copyright:   (c) Aleksandras Gluchovas and (c) Francesco Montorsi
 // Licence:     wxWidgets licence
 /////////////////////////////////////////////////////////////////////////////
-// RCS-ID:      $Id: keybinder.cpp 11742 2019-06-15 18:02:22Z pecanh $
+// RCS-ID:      $Id: keybinder.cpp 11974 2020-03-02 18:22:08Z pecanh $
 
 // Modified Keybinder for CodeBlocks KeyBnder v2.0 2019/04/8
 
@@ -1964,7 +1964,9 @@ wxControl *wxKeyConfigPanel::GetMainCtrl() const
     return m_pCommandsList;
 }
 
+// ----------------------------------------------------------------------------
 wxString wxKeyConfigPanel::GetSelCmdStr() const
+// ----------------------------------------------------------------------------
 {
     wxTreeItemId id = GetSelCmdId();
 
@@ -2065,6 +2067,12 @@ void wxKeyConfigPanel::UpdateDesc()
 
         // an invalid command is selected ? clear this field...
         m_pDescLabel->SetLabel(wxT(""));
+        if (IsUsingTreeCtrl())
+        {
+            wxTreeItemId selection = m_pCommandsTree->GetSelection();
+            if (selection and (not m_pCommandsTree->ItemHasChildren(selection)) )
+                m_pDescLabel->SetLabel(wxT("GetSelCmd() failed for this tree item.")); //(pecan 2020/02/27)
+        }
     }
 }
 
@@ -2404,10 +2412,12 @@ void wxKeyConfigPanel::OnAssignKey(wxCommandEvent &)
     wxCmd *sel = GetSelCmd();
     if (not sel)
     {  //got null sel
-        wxLogDebug(wxT("KeyBinder:GetSelCmd() error in OnAssignKey()"));
-        //wxMessageBox(wxT("KeyBinding file corrupted. Please delete it.")); //+v0.4
-        wxMessageBox(_("KeyBinding file corrupted. Please delete\n")
-            );//-+ *pKeyConfigFilename); //(2019/03/1)
+        wxString cmdStr = GetSelCmdStr();
+        int actualMnuId = wxFindMenuItem(Manager::Get()->GetAppFrame()->GetMenuBar(), cmdStr);
+        wxString msg = wxString::Format(_T("KeyBinding error in OnAssignKey()\nid[%d] label[%s]\n"),
+                                        actualMnuId, cmdStr.wx_str());
+        wxLogDebug(msg);
+        wxMessageBox(msg);
         return;
     }
 
@@ -2422,7 +2432,7 @@ void wxKeyConfigPanel::OnAssignKey(wxCommandEvent &)
 
     // if the key bind was owned by other commands,
     // remove it from the old commands...
-    wxCmd *p = 0;                                                   //pecan 2006/4/10
+    wxCmd *p = 0;
     while ((p = m_kBinder.GetCmdBindTo(m_pKeyField->GetValue()) ))
     {
         // another command already owns this key bind...

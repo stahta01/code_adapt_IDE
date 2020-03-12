@@ -5,7 +5,7 @@
  * Copyright: (c) Pecan Heber
  * License:   GPL
  **************************************************************/
-// RCS-ID:      $Id: cbkeybinder.h 11766 2019-07-02 20:24:22Z pecanh $
+// RCS-ID:      $Id: cbkeybinder.h 11974 2020-03-02 18:22:08Z pecanh $
 
 #ifndef CBKEYBINDER_H
 #define CBKEYBINDER_H
@@ -31,7 +31,7 @@
 // Modified Keybinder for CodeBlocks KeyBnder v2.0
 
 // --Version-Rlease-Feature-Fix-------
-#define VERSION "2.0.07 2019/07/2"
+#define VERSION "2.0.11 2020/03/2"
 // -----------------------------------
 class wxKeyConfigPanel;
 class wxKeyProfileArray;
@@ -57,7 +57,7 @@ class cbKeyBinder : public cbPlugin
 		bool BuildToolBar(wxToolBar* toolBar);
 		void OnAttach();                    // fires when the plugin is attached to the application
 		void OnRelease(bool appShutDown);   // fires when the plugin is released from the application
-        void OnKeyBinderRefreshRequested(wxCommandEvent& event); //(pecan 2019/04/26)
+        void OnKeyBinderRefreshRequested(wxCommandEvent& event);
 
       #ifdef LOGGING
         // allocate wxLogWindow when debugging
@@ -93,10 +93,17 @@ class cbKeyBinder : public cbPlugin
         wxString FindAppPath(const wxString& argv0, const wxString& cwd, const wxString& appVariableName);
         wxString GetPluginVersion();
 
-        wxString GetStringsFromArray(const wxArrayString& array, const wxString& separator, bool SeparatorAtEnd);
+        wxString      GetStringsFromArray(const wxArrayString& array, const wxString& separator, bool SeparatorAtEnd);
         wxArrayString GetArrayFromStrings(const wxString& text, const wxString& separator, bool trimSpaces);
         int           FindLineInFileContaining(wxTextFile& txtFile, wxString& pattern);
 
+        wxString GetTempOldFmtMnuScanFilename()
+        {
+            wxFileName fnTempOldFmtMnuScan(wxStandardPaths::Get().GetTempDir(), _T("keyOldFmtMnuScan.ini"));
+            wxString pid_string = wxString::Format(_T("_%lu"), wxGetProcessId());
+            fnTempOldFmtMnuScan.SetName(fnTempOldFmtMnuScan.GetName() + pid_string);
+            return fnTempOldFmtMnuScan.GetFullPath();
+        }
 
         wxWindow*       pcbWindow;              //main app window
         wxListbook*     m_pConfigListbook;      // CBs Configuration panel wxListbook
@@ -107,8 +114,8 @@ class cbKeyBinder : public cbPlugin
         int             m_mode;
         bool            m_AppStartupDone;
         UsrConfigPanel* m_pUsrConfigPanel;
-        bool            m_KeyBinderRefreshRequested;        //(pecan 2019/04/26)
-        wxString        m_cbExeTimeStampstr;                //(pecan 2019/04/29)
+        bool            m_KeyBinderRefreshRequested;
+        wxString        m_cbExeTimeStampstr;
 
         clKeyboardManager* m_pKBMgr;
 
@@ -669,5 +676,24 @@ class cbKeyBinder : public cbPlugin
 //          2.0.07 2019/07/2
 //              Setting new accel in Linux will not work unless also set in global acceleratorTable
 //              Use ancient "cbKeyBinder10.ini" standalone when no <personality>.cbKeyBinder10.ini exists
+//          2.0.08 2019/10/16
+//              Remove duplicate key bindings displayed in config panel
+//              Sort key binding by parent menu before stowing into .conf file
+//          2.0.09 2020/01/31
+//              Special treatement for text "Code::Blocks" in menu label
+// ----------------------------------------------------------------------------
+//  Commit 2.0.10 2020/02/25
+//          Add "_pid#" to temporary filenames to avoid conflicts with linux permissions
+//          eg. createing files with root, then running as a user.
+// ----------------------------------------------------------------------------
+//  Commit 2.0.11 2020/03/02
+//          Check for mismatched menu id's to global accelerators id's
+//          Cf.,This will allow a global to override an old menu item.This happends when a new build does not match the current .conf file
+//          The non-matching .conf menu item has an incorrect id anyway.
 //
+//          When a .conf menu id matches a default( current structure) menu id, also make sure the menu path (parentMenu) also matches.
+//          It can mismatch when using a .conf configured from a previously built version of CodeBlocks on a newer build.
+//
+//          Set the global accelerators has table before Initilaize/Update() else globals are missed on the
+//          first invocation of KeyBinder/Configure.
 // ----------------------------------------------------------------------------

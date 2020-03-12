@@ -7,7 +7,7 @@
 // Copyright:   (c) Francesco Montorsi
 // Licence:     wxWidgets licence
 /////////////////////////////////////////////////////////////////////////////
-// RCS-ID:      $Id: menuutils.cpp 11742 2019-06-15 18:02:22Z pecanh $
+// RCS-ID:      $Id: menuutils.cpp 11957 2020-02-03 18:51:45Z pecanh $
 
 // menuutils for KeyBinder v2.0 2019/04/8
 #ifdef __GNUG__
@@ -135,9 +135,8 @@ int FindMenuDuplicateItems(wxMenu* pMenu, wxString& rStr, int& rCount)
 // ----------------------------------------------------------------------------
 wxString GetFullMenuPath(int id)
 // ----------------------------------------------------------------------------
-{//(2007/6/13)
-
-    // fetch the full menu path from via a menu id
+{
+    // fetch the full menu path from menu structure via a menu id
     // It will look like "File\\Open\\Recent Files"
     // or "" on failure
 

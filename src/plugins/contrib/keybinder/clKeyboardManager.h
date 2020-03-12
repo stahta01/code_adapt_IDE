@@ -171,11 +171,24 @@ public:
      */
     void RestoreDefaults();
 
-    bool ReadFileContent(const wxFileName& fn, wxString& data, const wxMBConv& conv = wxConvUTF8);           //(ICC 2019/04/3)
+    bool ReadFileContent(const wxFileName& fn, wxString& data, const wxMBConv& conv = wxConvUTF8);           //(2019/04/3)
     bool WriteFileContent(const wxFileName& fn, const wxString& content, const wxMBConv& conv = wxConvUTF8); //(2019/04/3)
 
     wxString KeyCodeToString(int keyCode);              //(2019/02/25)
     wxString NumpadKeyCodeToString(int keyCode);        //(2019/02/25)
+    void     DumpAccelerators(size_t tableCount, wxAcceleratorEntry* pEntries, wxFrame* pFrame); //(2019/10/27)
+    void     LogAccelerators(MenuItemDataMap_t& menuTable, wxString title);
+
+    MenuItemData* FindMenuTableEntryFor(MenuItemDataMap_t& hashTable, MenuItemData* pMenuMapItem);
+
+    wxString GetTempKeyMnuAccelsFilename() //(2020/02/25)
+    {
+        wxString userPersonality = Manager::Get()->GetPersonalityManager()->GetPersonality();
+        wxString pid_string = wxString::Format(_T("_%lu"), wxGetProcessId());
+        wxFileName fnTempKeyMnuAccels(wxStandardPaths::Get().GetTempDir(), _T("keyMnuAccels.conf"));
+        fnTempKeyMnuAccels.SetName(userPersonality + _T(".") + fnTempKeyMnuAccels.GetName() + pid_string);
+        return fnTempKeyMnuAccels.GetFullPath();
+    }
 
     private:
         DECLARE_EVENT_TABLE()
