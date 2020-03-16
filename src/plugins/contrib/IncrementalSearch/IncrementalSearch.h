@@ -70,7 +70,7 @@ private:
     void DoFocusToolbar();
     void HighlightText();
     void SearchText();
-    void DoSearch(int fromPos, int startPos=wxSCI_INVALID_POSITION, int endPos=wxSCI_INVALID_POSITION);
+    void DoSearch(int fromPos, int startPos=wxSTC_INVALID_POSITION, int endPos=wxSTC_INVALID_POSITION);
     void VerifyPosition();
     void SetRange();
 #ifndef __WXMSW__

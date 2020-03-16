@@ -6,7 +6,7 @@
 class SmartIndentCpp : public cbSmartIndentPlugin
 {
     public:
-        virtual void OnEditorHook(cbEditor* ed, wxScintillaEvent& event) const;
+        virtual void OnEditorHook(cbEditor* ed, wxStyledTextEvent& event) const;
 
     private:
         void DoSmartIndent(cbEditor *ed, const wxChar &ch)const;

@@ -152,13 +152,13 @@ void EditorLexerLoader::DoStyles(HighlightLanguage language, TiXmlElement* node)
                 case cbHIGHLIGHT_LINE:
                     foundActiveLine = true;
                     break;
-                case wxSCI_STYLE_BRACELIGHT:
+                case wxSTC_STYLE_BRACELIGHT:
                     foundMatchBrace = true;
                     break;
-                case wxSCI_STYLE_BRACEBAD:
+                case wxSTC_STYLE_BRACEBAD:
                     foundBraceError = true;
                     break;
-                case wxSCI_STYLE_INDENTGUIDE:
+                case wxSTC_STYLE_INDENTGUIDE:
                     foundIndentationGuide = true;
                     break;
                 }
@@ -188,17 +188,17 @@ void EditorLexerLoader::DoStyles(HighlightLanguage language, TiXmlElement* node)
     }
     if (!foundMatchBrace)
     {
-        m_pTarget->AddOption(language, wxT("Matching brace highlight"), wxSCI_STYLE_BRACELIGHT,
+        m_pTarget->AddOption(language, wxT("Matching brace highlight"), wxSTC_STYLE_BRACELIGHT,
                              wxColour(0, 0, 0), wxColour(128, 255, 255), true, false, false, true);
     }
     if (!foundBraceError)
     {
-        m_pTarget->AddOption(language, wxT("No matching brace highlight"), wxSCI_STYLE_BRACEBAD,
+        m_pTarget->AddOption(language, wxT("No matching brace highlight"), wxSTC_STYLE_BRACEBAD,
                              wxColour(255, 255, 255), wxColour(255, 0, 0), true, false, false, true);
     }
     if (!foundIndentationGuide)
     {
-        m_pTarget->AddOption(language, wxT("Indentation guide"), wxSCI_STYLE_INDENTGUIDE,
+        m_pTarget->AddOption(language, wxT("Indentation guide"), wxSTC_STYLE_INDENTGUIDE,
                              wxColour(55, 55, 55), wxNullColour, false, false, false, true);
     }
 }

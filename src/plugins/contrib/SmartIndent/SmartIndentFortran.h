@@ -4,12 +4,12 @@
 #include <cbplugin.h> // for "class cbSmartIndentPlugin"
 
 class cbEditor;
-class wxScintillaEvent;
+class wxStyledTextEvent;
 
 class SmartIndentFortran : public cbSmartIndentPlugin
 {
     public:
-        virtual void OnEditorHook(cbEditor* ed, wxScintillaEvent& event) const;
+        virtual void OnEditorHook(cbEditor* ed, wxStyledTextEvent& event) const;
 
     private:
         void DoBraceCompletion(cbStyledTextCtrl* control, const wxChar& ch) const;

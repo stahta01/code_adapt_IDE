@@ -19,7 +19,7 @@ namespace
     PluginRegistrant<SmartIndentLua> reg(wxT("SmartIndentLua"));
 }
 
-void SmartIndentLua::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) const
+void SmartIndentLua::OnEditorHook(cbEditor* ed, wxStyledTextEvent& event) const
 {
     // check if smart indent is enabled
     // check the event type and the currently set language
@@ -32,7 +32,7 @@ void SmartIndentLua::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) const
         return;
 
     wxEventType type = event.GetEventType();
-    if ( type != wxEVT_SCI_CHARADDED )
+    if ( type != wxEVT_STC_CHARADDED )
         return;
 
     cbStyledTextCtrl *stc = ed->GetControl();
@@ -55,7 +55,7 @@ void SmartIndentLua::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) const
     wxChar ch = event.GetKey();
 
     // indent
-    if ( (ch == wxT('\n')) || ( (stc->GetEOLMode() == wxSCI_EOL_CR) && (ch == wxT('\r')) ) )
+    if ( (ch == wxT('\n')) || ( (stc->GetEOLMode() == wxSTC_EOL_CR) && (ch == wxT('\r')) ) )
     {
         if (AutoIndentEnabled())
         {
@@ -80,7 +80,7 @@ bool SmartIndentLua::BraceIndent(cbStyledTextCtrl *stc, wxString &indent)const
 {
     if ( BraceSmartIndentEnabled() )
     {
-        int style = wxSCI_LUA_STRING;
+        int style = wxSTC_LUA_STRING;
 
         int brace_position = GetFirstBraceInLine(stc, style);
         return Indent(stc, indent, brace_position);

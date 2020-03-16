@@ -12,7 +12,7 @@
 #include <wx/checkbox.h>
 #include <cbdebugger_interfaces.h>
 
-class wxScintilla;
+class wxStyledTextCtrl;
 class cbStackFrame;
 
 class DisassemblyDlg : public wxPanel, public cbDisassemblyDlg
@@ -37,7 +37,7 @@ class DisassemblyDlg : public wxPanel, public cbDisassemblyDlg
         void OnMixedModeCB(wxCommandEvent &event);
         void OnAdjustLine(wxCommandEvent &event);
 
-        wxScintilla* m_pCode;
+        wxStyledTextCtrl* m_pCode;
         uint64_t m_LastActiveAddr;
         bool m_HasActiveAddr;
         wxString m_FrameFunction;

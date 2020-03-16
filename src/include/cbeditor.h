@@ -25,7 +25,7 @@ class EditorColourSet;
 class wxSplitterWindow;
 class LoaderBase;
 class cbStyledTextCtrl;
-class wxScintillaEvent;
+class wxStyledTextEvent;
 class wxBoxSizer;
 
 
@@ -265,9 +265,6 @@ class DLLIMPORT cbEditor : public EditorBase
         void Undo() override;
         void Redo() override;
         void ClearHistory() override;
-        void GotoNextChanged() override;
-        void GotoPreviousChanged() override;
-        void SetChangeCollection(bool collectChange) override;
         void Cut() override;
         void Copy() override;
         void Paste() override;
@@ -352,21 +349,21 @@ class DLLIMPORT cbEditor : public EditorBase
         void NotifyPlugins(wxEventType type, int intArg = 0, const wxString& strArg = wxEmptyString, int xArg = 0, int yArg = 0);
 
         // events
-        void OnMarginClick(wxScintillaEvent& event);
-        void OnEditorUpdateUI(wxScintillaEvent& event);
-        void OnEditorChange(wxScintillaEvent& event);
-        void OnEditorCharAdded(wxScintillaEvent& event);
-        void OnEditorDwellStart(wxScintillaEvent& event);
-        void OnEditorDwellEnd(wxScintillaEvent& event);
-        void OnEditorModified(wxScintillaEvent& event);
-        void OnUserListSelection(wxScintillaEvent& event);
-        void OnZoom(wxScintillaEvent& event);
+        void OnMarginClick(wxStyledTextEvent& event);
+        void OnEditorUpdateUI(wxStyledTextEvent& event);
+        void OnEditorChange(wxStyledTextEvent& event);
+        void OnEditorCharAdded(wxStyledTextEvent& event);
+        void OnEditorDwellStart(wxStyledTextEvent& event);
+        void OnEditorDwellEnd(wxStyledTextEvent& event);
+        void OnEditorModified(wxStyledTextEvent& event);
+        void OnUserListSelection(wxStyledTextEvent& event);
+        void OnZoom(wxStyledTextEvent& event);
         /** notify all the registered EditorHook functions
          * @param event indicates which event is received by the cbEditor
-         * You should bind OnScintillaEvent to every wxScintillaEvent events, either directly or
+         * You should bind OnScintillaEvent to every wxStyledTextEvent events, either directly or
          * indirectly, see cbEditor::ConnectEvents() for more details.
          */
-        void OnScintillaEvent(wxScintillaEvent& event);
+        void OnScintillaEvent(wxStyledTextEvent& event);
         void OnClose(wxCloseEvent& event);
 
         // one event handler for all popup menu entries

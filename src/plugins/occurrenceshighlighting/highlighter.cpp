@@ -42,29 +42,29 @@ Highlighter::~Highlighter()
     ClearAllIndications();
 }
 
-void Highlighter::Call(cbEditor* ctrl, wxScintillaEvent &event) const
+void Highlighter::Call(cbEditor* ctrl, wxStyledTextEvent &event) const
 {
     // return if this event is not fired from the active editor (is it possible that an editor which is not active fires an event?)
     if ( Manager::Get()->GetEditorManager()->GetActiveEditor() != ctrl  ) return;
 
     // check the event type if it is an update event
-    if ( event.GetEventType() == wxEVT_SCI_UPDATEUI ||
-         event.GetEventType() == wxEVT_SCI_PAINTED )
+    if ( event.GetEventType() == wxEVT_STC_UPDATEUI ||
+         event.GetEventType() == wxEVT_STC_PAINTED )
     {
         HighlightOccurrencesOfSelection(ctrl);
         OnEditorUpdateUI(ctrl);
     }
-    else if ( event.GetEventType() == wxEVT_SCI_MODIFIED)
+    else if ( event.GetEventType() == wxEVT_STC_MODIFIED)
     {
-        if(event.GetModificationType() & wxSCI_MOD_INSERTTEXT)
+        if(event.GetModificationType() & wxSTC_MOD_INSERTTEXT)
         {
             OnEditorChangeTextRange(ctrl, event.GetPosition(), event.GetPosition() + event.GetLength());
         }
-        else if (event.GetModificationType() & wxSCI_MOD_DELETETEXT)
+        else if (event.GetModificationType() & wxSTC_MOD_DELETETEXT)
         {
             OnEditorChangeTextRange(ctrl, event.GetPosition(), event.GetPosition());
         }
-        else if (event.GetModificationType() & wxSCI_MOD_CHANGESTYLE)
+        else if (event.GetModificationType() & wxSTC_MOD_CHANGESTYLE)
         {
             OnEditorChangeTextRange(ctrl, event.GetPosition(), event.GetPosition() + event.GetLength());
         }
@@ -136,7 +136,7 @@ static void SetupIndicator(cbStyledTextCtrl *control, int indicator, const wxCol
                            int alpha, int borderAlpha, bool overrideText)
 {
     control->IndicatorSetForeground(indicator, colour);
-    control->IndicatorSetStyle(indicator, wxSCI_INDIC_ROUNDBOX);
+    control->IndicatorSetStyle(indicator, wxSTC_INDIC_ROUNDBOX);
     control->IndicatorSetAlpha(indicator, alpha);
     control->IndicatorSetOutlineAlpha(indicator, borderAlpha);
     if (overrideText)
@@ -155,7 +155,7 @@ static void SetupIndicator(cbStyledTextCtrl *control, int indicator, const wxCol
 static void SetupTextIndicator(cbStyledTextCtrl *control, int indicator, const wxColor &colour)
 {
     control->IndicatorSetForeground(indicator, colour);
-    control->IndicatorSetStyle(indicator, wxSCI_INDIC_TEXTFORE);
+    control->IndicatorSetStyle(indicator, wxSTC_INDIC_TEXTFORE);
     control->IndicatorSetUnder(indicator, false);
 }
 
@@ -212,10 +212,10 @@ void Highlighter::DoSetIndications(cbEditor* ctrl)const
 
     int flag = 0;
     if (cfg->ReadBool(_T("/highlight_occurrence/case_sensitive_permanently"), true))
-        flag |= wxSCI_FIND_MATCHCASE;
+        flag |= wxSTC_FIND_MATCHCASE;
 
     if (cfg->ReadBool(_T("/highlight_occurrence/whole_word_permanently"), true))
-        flag |= wxSCI_FIND_WHOLEWORD;
+        flag |= wxSTC_FIND_WHOLEWORD;
 
     for (int i = 0; i < (int)m_InvalidatedRangesStart.GetCount(); i++)
     {
@@ -248,7 +248,7 @@ void Highlighter::DoSetIndications(cbEditor* ctrl)const
 
                 int endPos = 0; // we need this to work properly with multibyte characters
                 for ( int pos = stc->FindText(startpos, endpos, text, flag, &endPos);
-                    pos != wxSCI_INVALID_POSITION ;
+                    pos != wxSTC_INVALID_POSITION ;
                     pos = stc->FindText(pos+=text.Len(), endpos, text, flag, &endPos) )
                 {
                     if (overrideText)
@@ -359,11 +359,11 @@ void Highlighter::HighlightOccurrencesOfSelection(cbEditor* ctrl)const
         int flag = 0;
         if (cfg->ReadBool(_T("/highlight_occurrence/case_sensitive"), true))
         {
-            flag |= wxSCI_FIND_MATCHCASE;
+            flag |= wxSTC_FIND_MATCHCASE;
         }
         if (cfg->ReadBool(_T("/highlight_occurrence/whole_word"), true))
         {
-            flag |= wxSCI_FIND_WHOLEWORD;
+            flag |= wxSTC_FIND_WHOLEWORD;
         }
 
         // list all selections and sort them
@@ -381,7 +381,7 @@ void Highlighter::HighlightOccurrencesOfSelection(cbEditor* ctrl)const
         // search for every occurence
         int endPos = 0; // we need this to work properly with multibyte characters
         for ( int pos = control->FindText(0, eof, selectedText, flag, &endPos);
-            pos != wxSCI_INVALID_POSITION ;
+            pos != wxSTC_INVALID_POSITION ;
             pos = control->FindText(pos+=selectedText.Len(), eof, selectedText, flag, &endPos) )
         {
             // check if the found text is selected

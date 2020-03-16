@@ -267,7 +267,7 @@ extern DLLIMPORT wxString cbResolveSymLinkedDirPathRecursive(wxString dirpath);
 
 /** Reads settings if eolMode is -1
   * Expected input (defined in sdk/wxscintilla/include/wx/wxscintilla.h) is:
-  * wxSCI_EOL_CRLF=0, wxSCI_EOL_CR=1, or wxSCI_EOL_LF=2
+  * wxSTC_EOL_CRLF=0, wxSTC_EOL_CR=1, or wxSTC_EOL_LF=2
   */
 extern DLLIMPORT wxString GetEOLStr(int eolMode = -1);
 

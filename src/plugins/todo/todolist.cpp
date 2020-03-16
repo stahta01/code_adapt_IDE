@@ -406,9 +406,9 @@ void ToDoList::OnAddItem(cb_unused wxCommandEvent& event)
         // calculate insertion point by skipping next newline
         switch (control->GetEOLMode())
         {
-            case wxSCI_EOL_CRLF: crlfLen = 2; break;
-            case wxSCI_EOL_CR: // fall-though
-            case wxSCI_EOL_LF: // fall-though
+            case wxSTC_EOL_CRLF: crlfLen = 2; break;
+            case wxSTC_EOL_CR: // fall-though
+            case wxSTC_EOL_LF: // fall-though
             default:             crlfLen = 1; break;
         }
         if (idx > 0)

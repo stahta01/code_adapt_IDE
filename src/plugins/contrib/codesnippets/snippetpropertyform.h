@@ -51,7 +51,7 @@
 #define ID_FILESELECTBUTTON 1000
 #define ID_SNIPPETBUTTON 1001
 
-class wxScintilla;
+class wxStyledTextCtrl;
 /**
  * Class SnippetPropertyForm
  */
@@ -64,7 +64,7 @@ class SnippetPropertyForm : public wxScrollingDialog
 		wxStaticText*   m_ItemLabelStaticText;
 		wxTextCtrl*     m_ItemLabelTextCtrl;
 		wxStaticText*   m_SnippetStaticText;
-		wxScintilla*    m_SnippetEditCtrl;
+		wxStyledTextCtrl*    m_SnippetEditCtrl;
 		wxButton*       m_SnippetButton;
 		wxButton*       m_FileSelectButton;
 		wxStdDialogButtonSizer* m_sdbSizer1;

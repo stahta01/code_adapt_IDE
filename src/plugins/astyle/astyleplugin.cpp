@@ -304,20 +304,20 @@ bool AStylePlugin::FormatEditor( cbEditor *ed )
             ch = control->GetCharAt(findBracesPos);
             int style = control->GetStyleAt(findBracesPos);
             int lexer = control->GetLexer();
-            if (lexer == wxSCI_LEX_CPP)
+            if (lexer == wxSTC_LEX_CPP)
             {
-                if (   style == wxSCI_C_COMMENT           || style == wxSCI_C_COMMENTDOC
-                    || style == wxSCI_C_COMMENTDOCKEYWORD || style == wxSCI_C_COMMENTDOCKEYWORDERROR
-                    || style == wxSCI_C_COMMENTLINE       || style == wxSCI_C_COMMENTLINEDOC
-                    || style == wxSCI_C_STRING            || style == wxSCI_C_CHARACTER)
+                if (   style == wxSTC_C_COMMENT           || style == wxSTC_C_COMMENTDOC
+                    || style == wxSTC_C_COMMENTDOCKEYWORD || style == wxSTC_C_COMMENTDOCKEYWORDERROR
+                    || style == wxSTC_C_COMMENTLINE       || style == wxSTC_C_COMMENTLINEDOC
+                    || style == wxSTC_C_STRING            || style == wxSTC_C_CHARACTER)
                     continue;
             }
-            else if (lexer == wxSCI_LEX_D)
+            else if (lexer == wxSTC_LEX_D)
             {
-                if (   style == wxSCI_D_COMMENT           || style == wxSCI_D_COMMENTDOC
-                    || style == wxSCI_D_COMMENTDOCKEYWORD || style == wxSCI_D_COMMENTDOCKEYWORDERROR
-                    || style == wxSCI_D_COMMENTLINE       || style == wxSCI_D_COMMENTLINEDOC
-                    || style == wxSCI_D_STRING            || style == wxSCI_D_CHARACTER)
+                if (   style == wxSTC_D_COMMENT           || style == wxSTC_D_COMMENTDOC
+                    || style == wxSTC_D_COMMENTDOCKEYWORD || style == wxSTC_D_COMMENTDOCKEYWORDERROR
+                    || style == wxSTC_D_COMMENTLINE       || style == wxSTC_D_COMMENTLINEDOC
+                    || style == wxSTC_D_STRING            || style == wxSTC_D_CHARACTER)
                     continue;
             }
 

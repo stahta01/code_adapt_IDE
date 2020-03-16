@@ -115,7 +115,7 @@ public:
     virtual void CreateStatusField(cbStatusBar *bar);
 #endif
 
-    void OnEditorHook(cbEditor* editor, wxScintillaEvent& event);
+    void OnEditorHook(cbEditor* editor, wxStyledTextEvent& event);
 
 protected:
     /** Any descendent plugin should override this virtual method and

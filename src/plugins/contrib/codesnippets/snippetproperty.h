@@ -28,7 +28,7 @@
 #include <wx/treectrl.h>
 #include "snippetpropertyform.h"
 
-class wxScintilla;
+class wxStyledTextCtrl;
 
 #include "snippetitemdata.h"
 
@@ -55,7 +55,7 @@ class SnippetProperty : public SnippetPropertyForm
         void InvokeEditOnSnippetText();
         void InvokeEditOnSnippetFile();
 
-        wxScintilla* GetSnippetEditCtrl(){return m_SnippetEditCtrl;}
+        wxStyledTextCtrl* GetSnippetEditCtrl(){return m_SnippetEditCtrl;}
         wxTreeCtrl*  GetSnippetsTreeCtrl(){return m_pTreeCtrl;}
         wxString     GetSnippetString(){return m_pSnippetDataItem->GetSnippetString();}
         bool         IsSnippetFile(){return m_pSnippetDataItem->IsSnippetFile();}

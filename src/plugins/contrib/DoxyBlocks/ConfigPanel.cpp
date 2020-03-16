@@ -582,8 +582,8 @@ void ConfigPanel::Init()
  */
 void ConfigPanel::InitSTC(cbStyledTextCtrl *stc)
 {
-    stc->SetLexer(wxSCI_LEX_CPP);
-    stc->SetMarginType(0, wxSCI_MARGIN_NUMBER);
+    stc->SetLexer(wxSTC_LEX_CPP);
+    stc->SetMarginType(0, wxSTC_MARGIN_NUMBER);
     stc->SetMarginWidth(0, 32);
     stc->SetTabWidth(4);
     // Try to stop flickering.
@@ -607,7 +607,7 @@ void ConfigPanel::InitSTC(cbStyledTextCtrl *stc)
         EditorColourSet* colour_set = Manager::Get()->GetEditorManager()->GetColourSet();
         if (!colour_set)
             return;
-        stc->StyleSetFont(wxSCI_STYLE_DEFAULT, fnt);
+        stc->StyleSetFont(wxSTC_STYLE_DEFAULT, fnt);
         colour_set->Apply(colour_set->GetHighlightLanguage(wxT("C/C++")), stc, false, true);
     }
 }

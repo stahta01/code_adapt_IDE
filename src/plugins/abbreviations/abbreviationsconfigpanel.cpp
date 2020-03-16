@@ -73,7 +73,7 @@ void AbbreviationsConfigPanel::InitCompText()
         delete m_AutoCompTextControl;
     m_AutoCompTextControl = new cbStyledTextCtrl(this, wxID_ANY);
     m_AutoCompTextControl->SetTabWidth(4);
-    m_AutoCompTextControl->SetMarginType(0, wxSCI_MARGIN_NUMBER);
+    m_AutoCompTextControl->SetMarginType(0, wxSTC_MARGIN_NUMBER);
     m_AutoCompTextControl->SetMarginWidth(0, 32);
     m_AutoCompTextControl->SetViewWhiteSpace(1);
     m_AutoCompTextControl->SetMinSize(wxSize(50, 50));
@@ -101,7 +101,7 @@ void AbbreviationsConfigPanel::ApplyColours()
         }
         if (m_AutoCompTextControl)
         {
-            m_AutoCompTextControl->StyleSetFont(wxSCI_STYLE_DEFAULT, tmpFont);
+            m_AutoCompTextControl->StyleSetFont(wxSTC_STYLE_DEFAULT, tmpFont);
             colour_set->Apply(colour_set->GetHighlightLanguage(_T("C/C++")), m_AutoCompTextControl,
                               false, true);
         }

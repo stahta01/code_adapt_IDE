@@ -39,7 +39,7 @@
 
 // Keep in sync with cbEditor.cpp:
 #define DEBUG_MARKER     6
-#define DEBUG_STYLE      wxSCI_MARK_ARROW
+#define DEBUG_STYLE      wxSTC_MARK_ARROW
 
 BEGIN_EVENT_TABLE(DisassemblyDlg, wxPanel)
     EVT_BUTTON(XRCID("btnSave"), DisassemblyDlg::OnSave)
@@ -55,11 +55,11 @@ DisassemblyDlg::DisassemblyDlg(wxWindow* parent) :
     if (!wxXmlResource::Get()->LoadPanel(this, parent, _T("dlgDisassembly")))
         return;
 
-    m_pCode = new wxScintilla(this, wxID_ANY, wxDefaultPosition, wxSize(1,1));
+    m_pCode = new wxStyledTextCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(1,1));
     m_pCode->SetReadOnly(true);
     m_pCode->SetCaretWidth(0);
     m_pCode->SetMarginWidth(0, 0);
-    m_pCode->SetMarginType(1, wxSCI_MARGIN_SYMBOL);
+    m_pCode->SetMarginType(1, wxSTC_MARGIN_SYMBOL);
     m_pCode->SetMarginSensitive(1, 0);
     m_pCode->SetMarginMask(1, (1 << DEBUG_MARKER));
     m_pCode->MarkerDefine(DEBUG_MARKER, DEBUG_STYLE);
@@ -75,12 +75,12 @@ DisassemblyDlg::DisassemblyDlg(wxWindow* parent) :
         nfi.FromString(fontstring);
         font.SetNativeFontInfo(nfi);
     }
-    m_pCode->StyleSetFont(wxSCI_STYLE_DEFAULT, font);
+    m_pCode->StyleSetFont(wxSTC_STYLE_DEFAULT, font);
 
     EditorColourSet* colour_set = Manager::Get()->GetEditorManager()->GetColourSet();
     if (colour_set)
     {
-        HighlightLanguage lang = colour_set->GetHighlightLanguage(wxSCI_LEX_ASM);
+        HighlightLanguage lang = colour_set->GetHighlightLanguage(wxSTC_LEX_ASM);
         colour_set->Apply(lang, (cbStyledTextCtrl*)m_pCode, false, true);
     }
 

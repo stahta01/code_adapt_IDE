@@ -56,11 +56,11 @@
 
 const wxString g_EditorModified = _T("*");
 
-#define ERROR_STYLE      wxSCI_MARK_SMALLRECT
-#define BOOKMARK_STYLE   wxSCI_MARK_ARROW
-#define BREAKPOINT_STYLE wxSCI_MARK_CIRCLE
-#define DEBUG_STYLE      wxSCI_MARK_ARROW
-#define DEBUG_STYLE_HIGHLIGHT wxSCI_MARK_BACKGROUND
+#define ERROR_STYLE      wxSTC_MARK_SMALLRECT
+#define BOOKMARK_STYLE   wxSTC_MARK_ARROW
+#define BREAKPOINT_STYLE wxSTC_MARK_CIRCLE
+#define DEBUG_STYLE      wxSTC_MARK_ARROW
+#define DEBUG_STYLE_HIGHLIGHT wxSTC_MARK_BACKGROUND
 
 #define BREAKPOINT_OTHER_MARKER    1
 #define BREAKPOINT_DISABLED_MARKER 2
@@ -159,7 +159,7 @@ struct cbEditorInternalData
             int lineEnd = control->GetLineEndPosition(line);
             int i = lineEnd-1;
             wxChar ch = (wxChar)(control->GetCharAt(i));
-            if (control->GetLexer() == wxSCI_LEX_DIFF)
+            if (control->GetLexer() == wxSTC_LEX_DIFF)
                 lineStart++;
             while ((i >= lineStart) && ((ch == _T(' ')) || (ch == _T('\t'))))
             {
@@ -203,8 +203,8 @@ struct cbEditorInternalData
         {
             if (m_pOwner->m_pControl2 && both)
             {
-                int pixelWidth = m_pOwner->m_pControl->TextWidth(wxSCI_STYLE_LINENUMBER, _T("9"));
-                int pixelWidth2 = m_pOwner->m_pControl2->TextWidth(wxSCI_STYLE_LINENUMBER, _T("9"));
+                int pixelWidth = m_pOwner->m_pControl->TextWidth(wxSTC_STYLE_LINENUMBER, _T("9"));
+                int pixelWidth2 = m_pOwner->m_pControl2->TextWidth(wxSTC_STYLE_LINENUMBER, _T("9"));
 
                 if (cfg->ReadBool(_T("/margin/dynamic_width"), false))
                 {
@@ -249,7 +249,7 @@ struct cbEditorInternalData
                 else
                     pLineNumbersWidth = &m_lineNumbersWidth2;
 
-                int pixelWidth = control->TextWidth(wxSCI_STYLE_LINENUMBER, _T("9"));
+                int pixelWidth = control->TextWidth(wxSTC_STYLE_LINENUMBER, _T("9"));
 
                 if (cfg->ReadBool(_T("/margin/dynamic_width"), false))
                 {
@@ -298,7 +298,7 @@ struct cbEditorInternalData
     /// Call this only if the margin with marginId is enabled and is visible.
     void SetColumnWidth(int marginId, int baseWidth, int minWidth, bool both)
     {
-        const float pointSize = m_pOwner->m_pControl->StyleGetFont(wxSCI_STYLE_DEFAULT).GetPointSize();
+        const float pointSize = m_pOwner->m_pControl->StyleGetFont(wxSTC_STYLE_DEFAULT).GetPointSize();
         if (both)
         {
             const int width = CalcWidth(m_pOwner->m_pControl, baseWidth, minWidth, pointSize);
@@ -343,7 +343,7 @@ struct cbEditorInternalData
 
     void SetMarkerColumnWidth(bool both)
     {
-        const float pointSize = m_pOwner->m_pControl->StyleGetFont(wxSCI_STYLE_DEFAULT).GetPointSize();
+        const float pointSize = m_pOwner->m_pControl->StyleGetFont(wxSTC_STYLE_DEFAULT).GetPointSize();
         if (both)
         {
             SetMarkerWidth(m_pOwner->m_pControl, pointSize);
@@ -428,9 +428,9 @@ struct cbEditorInternalData
         }
 
         url = control->GetTextRange(startPos, endPos);
-        if (    (control->GetLexer() == wxSCI_LEX_CPP)
-            &&  (   (control->GetStyleAt(control->GetCurrentPos()) == wxSCI_C_STRING)
-                 || (control->GetStyleAt(control->GetCurrentPos()) == wxSCI_C_STRINGEOL) ) )
+        if (    (control->GetLexer() == wxSTC_LEX_CPP)
+            &&  (   (control->GetStyleAt(control->GetCurrentPos()) == wxSTC_C_STRING)
+                 || (control->GetStyleAt(control->GetCurrentPos()) == wxSTC_C_STRINGEOL) ) )
         {
             url.Replace(wxT("\\n"), wxT("\n"));
             url.Replace(wxT("\\r"), wxT("\r"));
@@ -673,8 +673,8 @@ BEGIN_EVENT_TABLE(cbEditor, EditorBase)
     EVT_MENU(idUnsplit, cbEditor::OnContextMenuEntry)
     EVT_MENU(idOpenUrl, cbEditor::OnContextMenuEntry)
 
-    EVT_SCI_ZOOM(-1, cbEditor::OnZoom)
-    EVT_SCI_ZOOM(-1, cbEditor::OnZoom)
+    EVT_STC_ZOOM(-1, cbEditor::OnZoom)
+    EVT_STC_ZOOM(-1, cbEditor::OnZoom)
 
 END_EVENT_TABLE()
 
@@ -721,12 +721,12 @@ static int DetectLineEnds(cbStyledTextCtrl* control)
     // initial EOL mode depend on OS
     if (platform::windows)
     {
-        eolMode =  wxSCI_EOL_CRLF;
+        eolMode =  wxSTC_EOL_CRLF;
         eolModeStr = _T("\"CR-LF\"");
     }
     else
     {
-        eolMode =  wxSCI_EOL_LF;
+        eolMode =  wxSTC_EOL_LF;
         eolModeStr = _T("\"LF\"");
     }
 
@@ -741,17 +741,17 @@ static int DetectLineEnds(cbStyledTextCtrl* control)
     // linesCRLF=5, linesCR=0 ), then we will use the initial EOL mode
     if ( (linesLF > linesCR) && (linesLF > linesCRLF) )
     {
-        eolMode = wxSCI_EOL_LF;
+        eolMode = wxSTC_EOL_LF;
         eolModeStr = _T("\"LF\"");
     }
     else if ( (linesCR > linesLF) && (linesCR > linesCRLF) )
     {
-        eolMode = wxSCI_EOL_CR;
+        eolMode = wxSTC_EOL_CR;
         eolModeStr = _T("\"CR\"");
     }
     else if ( (linesCRLF > linesLF) && (linesCRLF > linesCR))
     {
-        eolMode = wxSCI_EOL_CRLF;
+        eolMode = wxSTC_EOL_CRLF;
         eolModeStr = _T("\"CR-LF\"");
     }
 
@@ -1076,9 +1076,9 @@ void cbEditor::SetMarkerStyle(int marker, int markerType, wxColor fore, wxColor 
 
 void cbEditor::UnderlineFoldedLines(bool underline)
 {
-    m_pControl->SetFoldFlags(underline ? wxSCI_FOLDFLAG_LINEAFTER_CONTRACTED : 0);
+    m_pControl->SetFoldFlags(underline ? wxSTC_FOLDFLAG_LINEAFTER_CONTRACTED : 0);
     if (m_pControl2)
-        m_pControl2->SetFoldFlags(underline ? wxSCI_FOLDFLAG_LINEAFTER_CONTRACTED : 0);
+        m_pControl2->SetFoldFlags(underline ? wxSTC_FOLDFLAG_LINEAFTER_CONTRACTED : 0);
 }
 
 cbStyledTextCtrl* cbEditor::CreateEditor()
@@ -1097,8 +1097,8 @@ cbStyledTextCtrl* cbEditor::CreateEditor()
     if (m_pData->m_encoding == wxFONTENCODING_MAX && encodingName == wxT("default"))
         m_pData->m_encoding = wxFont::GetDefaultEncoding();
 
-    for (int marker = 0 ; marker <= wxSCI_MARKNUM_LASTUNUSED ; ++marker)
-        control->MarkerDefine(marker, wxSCI_MARK_EMPTY);
+//    for (int marker = 0 ; marker <= wxSTC_MARKNUM_LASTUNUSED ; ++marker)
+//        control->MarkerDefine(marker, wxSTC_MARK_EMPTY);
 
     return control;
 }
@@ -1107,14 +1107,14 @@ void cbEditor::ConnectEvents(cbStyledTextCtrl* stc)
 {
     wxWindowID stcID = stc->GetId();
     // dynamic events
-    Connect( stcID, wxEVT_SCI_MARGINCLICK,       wxScintillaEventHandler(cbEditor::OnMarginClick)       );
-    Connect( stcID, wxEVT_SCI_UPDATEUI,          wxScintillaEventHandler(cbEditor::OnEditorUpdateUI)    );
-    Connect( stcID, wxEVT_SCI_CHANGE,            wxScintillaEventHandler(cbEditor::OnEditorChange)      );
-    Connect( stcID, wxEVT_SCI_CHARADDED,         wxScintillaEventHandler(cbEditor::OnEditorCharAdded)   );
-    Connect( stcID, wxEVT_SCI_DWELLSTART,        wxScintillaEventHandler(cbEditor::OnEditorDwellStart)  );
-    Connect( stcID, wxEVT_SCI_DWELLEND,          wxScintillaEventHandler(cbEditor::OnEditorDwellEnd)    );
-    Connect( stcID, wxEVT_SCI_USERLISTSELECTION, wxScintillaEventHandler(cbEditor::OnUserListSelection) );
-    Connect( stcID, wxEVT_SCI_MODIFIED,          wxScintillaEventHandler(cbEditor::OnEditorModified)    );
+    Connect( stcID, wxEVT_STC_MARGINCLICK,       wxStyledTextEventHandler(cbEditor::OnMarginClick)       );
+    Connect( stcID, wxEVT_STC_UPDATEUI,          wxStyledTextEventHandler(cbEditor::OnEditorUpdateUI)    );
+    Connect( stcID, wxEVT_STC_CHANGE,            wxStyledTextEventHandler(cbEditor::OnEditorChange)      );
+    Connect( stcID, wxEVT_STC_CHARADDED,         wxStyledTextEventHandler(cbEditor::OnEditorCharAdded)   );
+    Connect( stcID, wxEVT_STC_DWELLSTART,        wxStyledTextEventHandler(cbEditor::OnEditorDwellStart)  );
+    Connect( stcID, wxEVT_STC_DWELLEND,          wxStyledTextEventHandler(cbEditor::OnEditorDwellEnd)    );
+    Connect( stcID, wxEVT_STC_USERLISTSELECTION, wxStyledTextEventHandler(cbEditor::OnUserListSelection) );
+    Connect( stcID, wxEVT_STC_MODIFIED,          wxStyledTextEventHandler(cbEditor::OnEditorModified)    );
 
     // Now bind all *other* scintilla events to a common function so that editor hooks
     // can be informed for them too.
@@ -1125,40 +1125,40 @@ void cbEditor::ConnectEvents(cbStyledTextCtrl* stc)
     // This will make sure that all editor hooks will be called when needed.
     int scintilla_events[] =
     {
-//        wxEVT_SCI_CHANGE,
-        wxEVT_SCI_STYLENEEDED,
-//        wxEVT_SCI_CHARADDED,
-        wxEVT_SCI_SAVEPOINTREACHED,
-        wxEVT_SCI_SAVEPOINTLEFT,
-        wxEVT_SCI_ROMODIFYATTEMPT,
-        wxEVT_SCI_DOUBLECLICK,
-//        wxEVT_SCI_UPDATEUI,
-//        wxEVT_SCI_MODIFIED,
-        wxEVT_SCI_MACRORECORD,
-//        wxEVT_SCI_MARGINCLICK,
-        wxEVT_SCI_NEEDSHOWN,
-        wxEVT_SCI_PAINTED,
-//        wxEVT_SCI_USERLISTSELECTION,
-//        wxEVT_SCI_DWELLSTART,
-//        wxEVT_SCI_DWELLEND,
-        wxEVT_SCI_START_DRAG,
-        wxEVT_SCI_DRAG_OVER,
-        wxEVT_SCI_DO_DROP,
-        wxEVT_SCI_ZOOM,
-        wxEVT_SCI_HOTSPOT_CLICK,
-        wxEVT_SCI_HOTSPOT_DCLICK,
-        wxEVT_SCI_CALLTIP_CLICK,
-        wxEVT_SCI_AUTOCOMP_SELECTION,
-//        wxEVT_SCI_INDICATOR_CLICK,
-//        wxEVT_SCI_INDICATOR_RELEASE,
-        wxEVT_SCI_AUTOCOMP_CANCELLED,
+//        wxEVT_STC_CHANGE,
+        wxEVT_STC_STYLENEEDED,
+//        wxEVT_STC_CHARADDED,
+        wxEVT_STC_SAVEPOINTREACHED,
+        wxEVT_STC_SAVEPOINTLEFT,
+        wxEVT_STC_ROMODIFYATTEMPT,
+        wxEVT_STC_DOUBLECLICK,
+//        wxEVT_STC_UPDATEUI,
+//        wxEVT_STC_MODIFIED,
+        wxEVT_STC_MACRORECORD,
+//        wxEVT_STC_MARGINCLICK,
+        wxEVT_STC_NEEDSHOWN,
+        wxEVT_STC_PAINTED,
+//        wxEVT_STC_USERLISTSELECTION,
+//        wxEVT_STC_DWELLSTART,
+//        wxEVT_STC_DWELLEND,
+        wxEVT_STC_START_DRAG,
+        wxEVT_STC_DRAG_OVER,
+        wxEVT_STC_DO_DROP,
+        wxEVT_STC_ZOOM,
+        wxEVT_STC_HOTSPOT_CLICK,
+        wxEVT_STC_HOTSPOT_DCLICK,
+        wxEVT_STC_CALLTIP_CLICK,
+        wxEVT_STC_AUTOCOMP_SELECTION,
+//        wxEVT_STC_INDICATOR_CLICK,
+//        wxEVT_STC_INDICATOR_RELEASE,
+        wxEVT_STC_AUTOCOMP_CANCELLED,
 
         -1 // to help enumeration of this array
     };
     int i = 0;
     while (scintilla_events[i] != -1)
     {
-        Connect( stcID, scintilla_events[i], wxScintillaEventHandler(cbEditor::OnScintillaEvent) );
+        Connect( stcID, scintilla_events[i], wxStyledTextEventHandler(cbEditor::OnScintillaEvent) );
         ++i;
     }
 }
@@ -1197,7 +1197,7 @@ void cbEditor::Split(cbEditor::SplitType split)
     InternalSetEditorStyleBeforeFileOpen(m_pControl2);
 
     // make sure basic settings of indicators (maybe set by plugins) are used for the new control
-    for (int i = 0; i < wxSCI_INDIC_MAX; ++i )
+    for (int i = 0; i < wxSTC_INDIC_MAX; ++i )
     {
         m_pControl2->IndicatorSetStyle(i, m_pControl->IndicatorGetStyle(i));
         m_pControl2->IndicatorSetUnder(i, m_pControl->IndicatorGetUnder(i));
@@ -1324,11 +1324,11 @@ inline void OverrideUseTabsPerLanguage(cbStyledTextCtrl *control)
     int lexer = control->GetLexer();
     switch (lexer)
     {
-        case wxSCI_LEX_PYTHON:
-        case wxSCI_LEX_YAML:
+        case wxSTC_LEX_PYTHON:
+        case wxSTC_LEX_YAML:
             control->SetUseTabs(false);
             break;
-        case wxSCI_LEX_MAKEFILE:
+        case wxSTC_LEX_MAKEFILE:
             control->SetUseTabs(true);
             break;
         default:
@@ -1343,25 +1343,25 @@ static void SetEditorTechnology(cbStyledTextCtrl *control, ConfigManager *config
 #if defined(__WXMSW__) && wxCHECK_VERSION(3, 1, 0)
     const int technology = config->ReadInt(wxT("/technology"), 0);
     if (technology == 1)
-        control->SetTechnology(wxSCI_TECHNOLOGY_DIRECTWRITE);
+        control->SetTechnology(wxSTC_TECHNOLOGY_DIRECTWRITE);
     else
-        control->SetTechnology(wxSCI_TECHNOLOGY_DEFAULT);
+        control->SetTechnology(wxSTC_TECHNOLOGY_DEFAULT);
 
     const int fontQuality = config->ReadInt(wxT("/font_quality"), 0);
     switch (fontQuality)
     {
     default:
     case 0:
-        control->SetFontQuality(wxSCI_EFF_QUALITY_DEFAULT);
+        control->SetFontQuality(wxSTC_EFF_QUALITY_DEFAULT);
         break;
     case 1:
-        control->SetFontQuality(wxSCI_EFF_QUALITY_NON_ANTIALIASED);
+        control->SetFontQuality(wxSTC_EFF_QUALITY_NON_ANTIALIASED);
         break;
     case 2:
-        control->SetFontQuality(wxSCI_EFF_QUALITY_ANTIALIASED);
+        control->SetFontQuality(wxSTC_EFF_QUALITY_ANTIALIASED);
         break;
     case 3:
-        control->SetFontQuality(wxSCI_EFF_QUALITY_LCD_OPTIMIZED);
+        control->SetFontQuality(wxSTC_EFF_QUALITY_LCD_OPTIMIZED);
         break;
     }
 #else
@@ -1455,9 +1455,9 @@ void cbEditor::InternalSetEditorStyleBeforeFileOpen(cbStyledTextCtrl* control)
 
     control->SetMouseDwellTime(1000);
 
-    int caretStyle = mgr->ReadInt(_T("/caret/style"), wxSCI_CARETSTYLE_LINE);
+    int caretStyle = mgr->ReadInt(_T("/caret/style"), wxSTC_CARETSTYLE_LINE);
     control->SetCaretStyle(caretStyle);
-    if (caretStyle == wxSCI_CARETSTYLE_LINE)
+    if (caretStyle == wxSTC_CARETSTYLE_LINE)
         control->SetCaretWidth(mgr->ReadInt(_T("/caret/width"), 1));
     else
         control->SetCaretWidth(1);
@@ -1476,21 +1476,21 @@ void cbEditor::InternalSetEditorStyleBeforeFileOpen(cbStyledTextCtrl* control)
     if (mgr->ReadBool(_T("/camel_case"), false))
     {
         // consider CamelCase for both: cursor movement with CTRL and selection with CTRL+SHIFT:
-        control->CmdKeyAssign(wxSCI_KEY_LEFT,  wxSCI_KEYMOD_CTRL,                   wxSCI_CMD_WORDPARTLEFT);
-        control->CmdKeyAssign(wxSCI_KEY_RIGHT, wxSCI_KEYMOD_CTRL,                   wxSCI_CMD_WORDPARTRIGHT);
-        control->CmdKeyAssign(wxSCI_KEY_LEFT,  wxSCI_KEYMOD_CTRL|wxSCI_KEYMOD_SHIFT, wxSCI_CMD_WORDPARTLEFTEXTEND);
-        control->CmdKeyAssign(wxSCI_KEY_RIGHT, wxSCI_KEYMOD_CTRL|wxSCI_KEYMOD_SHIFT, wxSCI_CMD_WORDPARTRIGHTEXTEND);
+        control->CmdKeyAssign(wxSTC_KEY_LEFT,  wxSTC_KEYMOD_CTRL,                   wxSTC_CMD_WORDPARTLEFT);
+        control->CmdKeyAssign(wxSTC_KEY_RIGHT, wxSTC_KEYMOD_CTRL,                   wxSTC_CMD_WORDPARTRIGHT);
+        control->CmdKeyAssign(wxSTC_KEY_LEFT,  wxSTC_KEYMOD_CTRL|wxSTC_KEYMOD_SHIFT, wxSTC_CMD_WORDPARTLEFTEXTEND);
+        control->CmdKeyAssign(wxSTC_KEY_RIGHT, wxSTC_KEYMOD_CTRL|wxSTC_KEYMOD_SHIFT, wxSTC_CMD_WORDPARTRIGHTEXTEND);
     }
     else // else set default "none CamelCase" key behavior (also default scintilla behaviour, see scintilla docs)
     {
-        control->CmdKeyAssign(wxSCI_KEY_LEFT,  wxSCI_KEYMOD_CTRL,                   wxSCI_CMD_WORDLEFT);
-        control->CmdKeyAssign(wxSCI_KEY_RIGHT, wxSCI_KEYMOD_CTRL,                   wxSCI_CMD_WORDRIGHT);
-        control->CmdKeyAssign(wxSCI_KEY_LEFT,  wxSCI_KEYMOD_CTRL|wxSCI_KEYMOD_SHIFT, wxSCI_CMD_WORDLEFTEXTEND);
-        control->CmdKeyAssign(wxSCI_KEY_RIGHT, wxSCI_KEYMOD_CTRL|wxSCI_KEYMOD_SHIFT, wxSCI_CMD_WORDRIGHTEXTEND);
+        control->CmdKeyAssign(wxSTC_KEY_LEFT,  wxSTC_KEYMOD_CTRL,                   wxSTC_CMD_WORDLEFT);
+        control->CmdKeyAssign(wxSTC_KEY_RIGHT, wxSTC_KEYMOD_CTRL,                   wxSTC_CMD_WORDRIGHT);
+        control->CmdKeyAssign(wxSTC_KEY_LEFT,  wxSTC_KEYMOD_CTRL|wxSTC_KEYMOD_SHIFT, wxSTC_CMD_WORDLEFTEXTEND);
+        control->CmdKeyAssign(wxSTC_KEY_RIGHT, wxSTC_KEYMOD_CTRL|wxSTC_KEYMOD_SHIFT, wxSTC_CMD_WORDRIGHTEXTEND);
     }
 
     control->SetUseTabs(mgr->ReadBool(_T("/use_tab"), false));
-    control->SetIndentationGuides(mgr->ReadBool(_T("/show_indent_guides"), false)?wxSCI_IV_LOOKBOTH:wxSCI_IV_NONE);
+    control->SetIndentationGuides(mgr->ReadBool(_T("/show_indent_guides"), false)?wxSTC_IV_LOOKBOTH:wxSTC_IV_NONE);
     control->SetTabIndents(mgr->ReadBool(_T("/tab_indents"), true));
     control->SetBackSpaceUnIndents(mgr->ReadBool(_T("/backspace_unindents"), true));
     control->SetWrapMode(mgr->ReadBool(_T("/word_wrap"), false));
@@ -1500,42 +1500,42 @@ void cbEditor::InternalSetEditorStyleBeforeFileOpen(cbStyledTextCtrl* control)
         // otherwise to the start/end of the entire line.
         // alt+home/end go to start/end of the entire line.
         // in unwrapped mode, there is no difference between home/end and alt+home/end
-        control->CmdKeyAssign(wxSCI_KEY_END,  wxSCI_KEYMOD_NORM,                  wxSCI_CMD_LINEENDWRAP);
-        control->CmdKeyAssign(wxSCI_KEY_END,  wxSCI_KEYMOD_ALT,                   wxSCI_CMD_LINEEND);
-        control->CmdKeyAssign(wxSCI_KEY_END,  wxSCI_KEYMOD_SHIFT,                 wxSCI_CMD_LINEENDWRAPEXTEND);
-        control->CmdKeyAssign(wxSCI_KEY_END,  wxSCI_KEYMOD_SHIFT|wxSCI_KEYMOD_ALT, wxSCI_CMD_LINEENDEXTEND);
+        control->CmdKeyAssign(wxSTC_KEY_END,  wxSTC_KEYMOD_NORM,                  wxSTC_CMD_LINEENDWRAP);
+        control->CmdKeyAssign(wxSTC_KEY_END,  wxSTC_KEYMOD_ALT,                   wxSTC_CMD_LINEEND);
+        control->CmdKeyAssign(wxSTC_KEY_END,  wxSTC_KEYMOD_SHIFT,                 wxSTC_CMD_LINEENDWRAPEXTEND);
+        control->CmdKeyAssign(wxSTC_KEY_END,  wxSTC_KEYMOD_SHIFT|wxSTC_KEYMOD_ALT, wxSTC_CMD_LINEENDEXTEND);
 
         // if user wants "Home" key to set cursor to the very beginning of line
         if (mgr->ReadBool(_T("/simplified_home"), false))
         {
-            control->CmdKeyAssign(wxSCI_KEY_HOME,wxSCI_KEYMOD_NORM,wxSCI_CMD_HOMEWRAP);
-            control->CmdKeyAssign(wxSCI_KEY_HOME,wxSCI_KEYMOD_ALT,wxSCI_CMD_HOME);
-            control->CmdKeyAssign(wxSCI_KEY_HOME,wxSCI_KEYMOD_SHIFT,wxSCI_CMD_HOMEWRAPEXTEND);
-            control->CmdKeyAssign(wxSCI_KEY_HOME,wxSCI_KEYMOD_SHIFT|wxSCI_KEYMOD_ALT,wxSCI_CMD_HOMEEXTEND);
+            control->CmdKeyAssign(wxSTC_KEY_HOME,wxSTC_KEYMOD_NORM,wxSTC_CMD_HOMEWRAP);
+            control->CmdKeyAssign(wxSTC_KEY_HOME,wxSTC_KEYMOD_ALT,wxSTC_CMD_HOME);
+            control->CmdKeyAssign(wxSTC_KEY_HOME,wxSTC_KEYMOD_SHIFT,wxSTC_CMD_HOMEWRAPEXTEND);
+            control->CmdKeyAssign(wxSTC_KEY_HOME,wxSTC_KEYMOD_SHIFT|wxSTC_KEYMOD_ALT,wxSTC_CMD_HOMEEXTEND);
         }
         else // else set default "Home" key behaviour
         {
-            control->CmdKeyAssign(wxSCI_KEY_HOME,wxSCI_KEYMOD_NORM,wxSCI_CMD_VCHOMEWRAP);
-            control->CmdKeyAssign(wxSCI_KEY_HOME,wxSCI_KEYMOD_ALT,wxSCI_CMD_VCHOME);
-            control->CmdKeyAssign(wxSCI_KEY_HOME,wxSCI_KEYMOD_SHIFT,wxSCI_CMD_VCHOMEWRAPEXTEND);
-            control->CmdKeyAssign(wxSCI_KEY_HOME,wxSCI_KEYMOD_SHIFT|wxSCI_KEYMOD_ALT,wxSCI_CMD_VCHOMEEXTEND);
+            control->CmdKeyAssign(wxSTC_KEY_HOME,wxSTC_KEYMOD_NORM,wxSTC_CMD_VCHOMEWRAP);
+            control->CmdKeyAssign(wxSTC_KEY_HOME,wxSTC_KEYMOD_ALT,wxSTC_CMD_VCHOME);
+            control->CmdKeyAssign(wxSTC_KEY_HOME,wxSTC_KEYMOD_SHIFT,wxSTC_CMD_VCHOMEWRAPEXTEND);
+            control->CmdKeyAssign(wxSTC_KEY_HOME,wxSTC_KEYMOD_SHIFT|wxSTC_KEYMOD_ALT,wxSTC_CMD_VCHOMEEXTEND);
         }
     }
     else
     {   // in word wrap mode, home/end keys goto start/end of the entire line. alt+home/end goes to wrap points
-        control->CmdKeyAssign(wxSCI_KEY_END,  wxSCI_KEYMOD_ALT,                   wxSCI_CMD_LINEENDWRAP);
-        control->CmdKeyAssign(wxSCI_KEY_END,  wxSCI_KEYMOD_SHIFT|wxSCI_KEYMOD_ALT, wxSCI_CMD_LINEENDWRAPEXTEND);
+        control->CmdKeyAssign(wxSTC_KEY_END,  wxSTC_KEYMOD_ALT,                   wxSTC_CMD_LINEENDWRAP);
+        control->CmdKeyAssign(wxSTC_KEY_END,  wxSTC_KEYMOD_SHIFT|wxSTC_KEYMOD_ALT, wxSTC_CMD_LINEENDWRAPEXTEND);
 
         // if user wants "Home" key to set cursor to the very beginning of line
         if (mgr->ReadBool(_T("/simplified_home"), false))
         {
-            control->CmdKeyAssign(wxSCI_KEY_HOME,wxSCI_KEYMOD_ALT,wxSCI_CMD_HOMEWRAP);
-            control->CmdKeyAssign(wxSCI_KEY_HOME,wxSCI_KEYMOD_SHIFT|wxSCI_KEYMOD_ALT,wxSCI_CMD_HOMEWRAPEXTEND);
+            control->CmdKeyAssign(wxSTC_KEY_HOME,wxSTC_KEYMOD_ALT,wxSTC_CMD_HOMEWRAP);
+            control->CmdKeyAssign(wxSTC_KEY_HOME,wxSTC_KEYMOD_SHIFT|wxSTC_KEYMOD_ALT,wxSTC_CMD_HOMEWRAPEXTEND);
         }
         else // else set default "Home" key behaviour
         {
-            control->CmdKeyAssign(wxSCI_KEY_HOME,wxSCI_KEYMOD_ALT,wxSCI_CMD_VCHOMEWRAP);
-            control->CmdKeyAssign(wxSCI_KEY_HOME,wxSCI_KEYMOD_SHIFT|wxSCI_KEYMOD_ALT,wxSCI_CMD_VCHOMEWRAPEXTEND);
+            control->CmdKeyAssign(wxSTC_KEY_HOME,wxSTC_KEYMOD_ALT,wxSTC_CMD_VCHOMEWRAP);
+            control->CmdKeyAssign(wxSTC_KEY_HOME,wxSTC_KEYMOD_SHIFT|wxSTC_KEYMOD_ALT,wxSTC_CMD_VCHOMEWRAPEXTEND);
         }
     }
     control->SetViewEOL(mgr->ReadBool(_T("/show_eol"), false));
@@ -1544,22 +1544,22 @@ void cbEditor::InternalSetEditorStyleBeforeFileOpen(cbStyledTextCtrl* control)
     const int caretBuffer = mgr->ReadInt(wxT("/caret_buffer"), 2);
     if (caretBuffer == 0)
     {
-        control->SetYCaretPolicy(wxSCI_CARET_EVEN, 0); // default
-        control->SetVisiblePolicy(wxSCI_CARET_EVEN, 0); // default
+        control->SetYCaretPolicy(wxSTC_CARET_EVEN, 0); // default
+        control->SetVisiblePolicy(wxSTC_CARET_EVEN, 0); // default
     }
     else if (caretBuffer > 0 && caretBuffer <= 10)
     {
         // margin of N lines at top/bottom
-        control->SetYCaretPolicy(wxSCI_CARET_SLOP | wxSCI_CARET_STRICT | wxSCI_CARET_EVEN,
+        control->SetYCaretPolicy(wxSTC_CARET_SLOP | wxSTC_CARET_STRICT | wxSTC_CARET_EVEN,
                                  caretBuffer);
-        control->SetVisiblePolicy(wxSCI_CARET_SLOP | wxSCI_CARET_STRICT | wxSCI_CARET_EVEN,
+        control->SetVisiblePolicy(wxSTC_CARET_SLOP | wxSTC_CARET_STRICT | wxSTC_CARET_EVEN,
                                   caretBuffer);
     }
     else
     {
         // centred mode
-        control->SetYCaretPolicy(wxSCI_CARET_STRICT | wxSCI_CARET_EVEN, 4);
-        control->SetVisiblePolicy(wxSCI_CARET_STRICT | wxSCI_CARET_EVEN, 4);
+        control->SetYCaretPolicy(wxSTC_CARET_STRICT | wxSTC_CARET_EVEN, 4);
+        control->SetVisiblePolicy(wxSTC_CARET_STRICT | wxSTC_CARET_EVEN, 4);
     }
 
     // gutter
@@ -1567,7 +1567,7 @@ void cbEditor::InternalSetEditorStyleBeforeFileOpen(cbStyledTextCtrl* control)
     control->SetEdgeColour(colours->GetColour(wxT("editor_gutter")));
     control->SetEdgeColumn(mgr->ReadInt(_T("/gutter/column"), 80));
 
-    control->StyleSetFont(wxSCI_STYLE_DEFAULT, font);
+    control->StyleSetFont(wxSTC_STYLE_DEFAULT, font);
     control->StyleClearAll();
 
     control->SetTabWidth(mgr->ReadInt(_T("/tab_size"), 4));
@@ -1575,7 +1575,7 @@ void cbEditor::InternalSetEditorStyleBeforeFileOpen(cbStyledTextCtrl* control)
     // margin for bookmarks, breakpoints etc.
     // FIXME: how to display a mark with an offset???
     control->SetMarginWidth(C_MARKER_MARGIN, 16);
-    control->SetMarginType(C_MARKER_MARGIN, wxSCI_MARGIN_SYMBOL);
+    control->SetMarginType(C_MARKER_MARGIN, wxSTC_MARGIN_SYMBOL);
     control->SetMarginSensitive(C_MARKER_MARGIN, mgr->ReadBool(_T("/margin_1_sensitive"), true));
     // use "|" here or we might break plugins that use the margin (like browsemarks)
     control->SetMarginMask(C_MARKER_MARGIN,
@@ -1606,24 +1606,7 @@ void cbEditor::InternalSetEditorStyleBeforeFileOpen(cbStyledTextCtrl* control)
     control->MarkerDefine(ERROR_MARKER, ERROR_STYLE);
     control->MarkerSetBackground(ERROR_MARKER, wxColour(0xFF, 0x00, 0x00));
 
-    // changebar margin
-    if (mgr->ReadBool(_T("/margin/use_changebar"), true))
-    {
-        control->SetMarginWidth(C_CHANGEBAR_MARGIN, changeBarMarginBaseWidth);
-        control->SetMarginType(C_CHANGEBAR_MARGIN,  wxSCI_MARGIN_SYMBOL);
-        // use "|" here or we might break plugins that use the margin (none at the moment)
-        control->SetMarginMask(C_CHANGEBAR_MARGIN,
-                               control->GetMarginMask(C_CHANGEBAR_MARGIN)
-                               | (1 << wxSCI_MARKNUM_CHANGEUNSAVED)
-                               | (1 << wxSCI_MARKNUM_CHANGESAVED) );
-
-        control->MarkerDefine(wxSCI_MARKNUM_CHANGEUNSAVED, wxSCI_MARK_FULLRECT);
-        control->MarkerSetBackground(wxSCI_MARKNUM_CHANGEUNSAVED, wxColour(0xFF, 0xE6, 0x04));
-        control->MarkerDefine(wxSCI_MARKNUM_CHANGESAVED, wxSCI_MARK_FULLRECT);
-        control->MarkerSetBackground(wxSCI_MARKNUM_CHANGESAVED,   wxColour(0x04, 0xFF, 0x50));
-    }
-    else
-        control->SetMarginWidth(C_CHANGEBAR_MARGIN, 0);
+    control->SetMarginWidth(C_CHANGEBAR_MARGIN, 0);
 
     // NOTE: duplicate line in editorconfigurationdlg.cpp (ctor)
     control->SetScrollWidthTracking(      mgr->ReadBool(_T("/margin/scroll_width_tracking"), false));
@@ -1634,11 +1617,11 @@ void cbEditor::InternalSetEditorStyleBeforeFileOpen(cbStyledTextCtrl* control)
 
     unsigned virtualSpace = 0;
     if (mgr->ReadBool(_T("/selection/use_rect_vspace"), false))
-        virtualSpace |= wxSCI_VS_RECTANGULARSELECTION;
+        virtualSpace |= wxSTC_VS_RECTANGULARSELECTION;
     if (mgr->ReadBool(_T("/selection/use_vspace"), false))
-        virtualSpace |= wxSCI_VS_USERACCESSIBLE;
+        virtualSpace |= wxSTC_VS_USERACCESSIBLE;
     if (!virtualSpace)
-        virtualSpace = wxSCI_VS_NONE; // Just in case wxSCI_VS_NONE != 0
+        virtualSpace = wxSTC_VS_NONE; // Just in case wxSTC_VS_NONE != 0
     control->SetVirtualSpaceOptions(virtualSpace);
 }
 
@@ -1651,7 +1634,7 @@ void cbEditor::InternalSetEditorStyleAfterFileOpen(cbStyledTextCtrl* control)
     ConfigManager* mgr = Manager::Get()->GetConfigManager(_T("editor"));
 
     // set the EOL, fall back value: Windows takes CR+LF, other platforms LF only
-    int eolMode = mgr->ReadInt(_T("/eol/eolmode"), platform::windows ? wxSCI_EOL_CRLF : wxSCI_EOL_LF);
+    int eolMode = mgr->ReadInt(_T("/eol/eolmode"), platform::windows ? wxSTC_EOL_CRLF : wxSTC_EOL_LF);
 
     if (eolMode == 3) //auto detect the EOL
         eolMode = DetectLineEnds(control);
@@ -1684,15 +1667,14 @@ void cbEditor::InternalSetEditorStyleAfterFileOpen(cbStyledTextCtrl* control)
         control->SetProperty(_T("fold.compact"),      _T("0"));
         control->SetProperty(_T("fold.preprocessor"), mgr->ReadBool(_T("/folding/fold_preprocessor"), false) ? _T("1") : _T("0"));
 
-        control->SetFoldFlags(wxSCI_FOLDFLAG_LINEAFTER_CONTRACTED);
-        control->SetMarginType(C_FOLDING_MARGIN, wxSCI_MARGIN_SYMBOL);
+        control->SetFoldFlags(wxSTC_FOLDFLAG_LINEAFTER_CONTRACTED);
+        control->SetMarginType(C_FOLDING_MARGIN, wxSTC_MARGIN_SYMBOL);
         control->SetMarginWidth(C_FOLDING_MARGIN, foldingMarginBaseWidth);
         // use "|" here or we might break plugins that use the margin (none at the moment)
         control->SetMarginMask(C_FOLDING_MARGIN,
                                  control->GetMarginMask(C_FOLDING_MARGIN)
-                               | (  wxSCI_MASK_FOLDERS
-                                  - (  (1 << wxSCI_MARKNUM_CHANGEUNSAVED)
-                                     | (1 << wxSCI_MARKNUM_CHANGESAVED))) );
+                               | wxSTC_MASK_FOLDERS
+                              );
         control->SetMarginSensitive(C_FOLDING_MARGIN, 1);
     }
     else
@@ -1703,7 +1685,7 @@ void cbEditor::InternalSetEditorStyleAfterFileOpen(cbStyledTextCtrl* control)
     control->SetProperty(_T("highlight.wxsmith"), mgr->ReadBool(_T("/highlight_wxsmith"), true) ? _T("1") : _T("0"));
 
     // line numbering
-    control->SetMarginType(C_LINE_MARGIN, wxSCI_MARGIN_NUMBER);
+    control->SetMarginType(C_LINE_MARGIN, wxSTC_MARGIN_NUMBER);
 
     // As a final step colourise the document. This make sure that style and folding information is
     // set on every line/character of the editor. If Colourise is called earlier restoring the
@@ -1857,8 +1839,8 @@ bool cbEditor::Open(bool detectEncoding)
 #endif
 
     m_pControl->InsertText(0, enc.GetWxStr());
-    m_pControl->EmptyUndoBuffer(mgr->ReadBool(_T("/margin/use_changebar"), true));
-    m_pControl->SetModEventMask(wxSCI_MODEVENTMASKALL);
+    m_pControl->EmptyUndoBuffer();
+    m_pControl->SetModEventMask(wxSTC_MODEVENTMASKALL);
 
     // mark the file read-only, if applicable
     bool read_only = !wxFile::Access(m_Filename.c_str(), wxFile::write);
@@ -2099,7 +2081,7 @@ void cbEditor::DoFoldAll(FoldMode fold)
         for (int line = 0; line < count; ++line)
         {
             const int level = ctrl->GetFoldLevel(line);
-            if ((level & wxSCI_FOLDLEVELHEADERFLAG) == 0)
+            if ((level & wxSTC_FOLDLEVELHEADERFLAG) == 0)
                 continue;
 
             if (m_pData->mFoldingLimit)
@@ -2111,7 +2093,7 @@ void cbEditor::DoFoldAll(FoldMode fold)
                 // must be enabled of course. Unfolding will not be affected.
                 if (isExpanded && (fold == FoldMode::contract || fold == FoldMode::toggle))
                 {
-                    int levelNumber = (level & wxSCI_FOLDLEVELNUMBERMASK) - wxSCI_FOLDLEVELBASE;
+                    int levelNumber = (level & wxSTC_FOLDLEVELNUMBERMASK) - wxSTC_FOLDLEVELBASE;
                     if (levelNumber > m_pData->mFoldingLimitLevel - 1)
                         continue;
                 }
@@ -2149,9 +2131,9 @@ void cbEditor::DoFoldAll(FoldMode fold)
                 parentFolds.pop();
 
             const int level = ctrl->GetFoldLevel(line);
-            if ((level & wxSCI_FOLDLEVELHEADERFLAG) == 0)
+            if ((level & wxSTC_FOLDLEVELHEADERFLAG) == 0)
                 continue;
-            const int levelNumber = (level & wxSCI_FOLDLEVELNUMBERMASK) - wxSCI_FOLDLEVELBASE;
+            const int levelNumber = (level & wxSTC_FOLDLEVELNUMBERMASK) - wxSTC_FOLDLEVELBASE;
             if (m_pData->mFoldingLimit)
             {
                 // Apply folding level limit.
@@ -2196,9 +2178,9 @@ void cbEditor::DoFoldBlockFromLine(int line, FoldMode fold, unsigned foldFlags)
 {
     // Use static asserts to verify the constants are the same, because we don't want to include
     // wxscintilla.h in cbeditor.h. This code is here, because we want the Foldmode to be private.
-    static_assert(int(cbEditor::FoldMode::contract) == wxSCI_FOLDACTION_CONTRACT, "Must match");
-    static_assert(int(cbEditor::FoldMode::expand) == wxSCI_FOLDACTION_EXPAND, "Must match");
-    static_assert(int(cbEditor::FoldMode::toggle) == wxSCI_FOLDACTION_TOGGLE, "Must match");
+    static_assert(int(cbEditor::FoldMode::contract) == wxSTC_FOLDACTION_CONTRACT, "Must match");
+    static_assert(int(cbEditor::FoldMode::expand) == wxSTC_FOLDACTION_EXPAND, "Must match");
+    static_assert(int(cbEditor::FoldMode::toggle) == wxSTC_FOLDACTION_TOGGLE, "Must match");
 
     caAssert(m_pControl);
     if (m_SplitType != stNoSplit)
@@ -2212,7 +2194,7 @@ void cbEditor::DoFoldBlockFromLine(int line, FoldMode fold, unsigned foldFlags)
 
     int foldLine;
     int level = ctrl->GetFoldLevel(line);
-    if (level & wxSCI_FOLDLEVELHEADERFLAG)
+    if (level & wxSTC_FOLDLEVELHEADERFLAG)
         foldLine = line;
     else
     {
@@ -2255,46 +2237,46 @@ void cbEditor::SetFoldingIndicator(int id)
     // Arrow
     if (id == 0)
     {
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDEROPEN,    wxSCI_MARK_ARROWDOWN,  f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDER,        wxSCI_MARK_ARROW,      f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDERSUB,     wxSCI_MARK_BACKGROUND, f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDERTAIL,    wxSCI_MARK_BACKGROUND, f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDEREND,     wxSCI_MARK_ARROW,      f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDEROPENMID, wxSCI_MARK_ARROWDOWN,  f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDERMIDTAIL, wxSCI_MARK_BACKGROUND, f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDEROPEN,    wxSTC_MARK_ARROWDOWN,  f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDER,        wxSTC_MARK_ARROW,      f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDERSUB,     wxSTC_MARK_BACKGROUND, f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDERTAIL,    wxSTC_MARK_BACKGROUND, f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDEREND,     wxSTC_MARK_ARROW,      f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDEROPENMID, wxSTC_MARK_ARROWDOWN,  f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDERMIDTAIL, wxSTC_MARK_BACKGROUND, f, b);
     }
     // Circle
     else if (id == 1)
     {
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDEROPEN,    wxSCI_MARK_CIRCLEMINUS,          f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDER,        wxSCI_MARK_CIRCLEPLUS,           f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDERSUB,     wxSCI_MARK_VLINE,                f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDERTAIL,    wxSCI_MARK_LCORNERCURVE,         f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDEREND,     wxSCI_MARK_CIRCLEPLUSCONNECTED,  f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDEROPENMID, wxSCI_MARK_CIRCLEMINUSCONNECTED, f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDERMIDTAIL, wxSCI_MARK_TCORNER,              f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDEROPEN,    wxSTC_MARK_CIRCLEMINUS,          f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDER,        wxSTC_MARK_CIRCLEPLUS,           f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDERSUB,     wxSTC_MARK_VLINE,                f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDERTAIL,    wxSTC_MARK_LCORNERCURVE,         f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDEREND,     wxSTC_MARK_CIRCLEPLUSCONNECTED,  f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDEROPENMID, wxSTC_MARK_CIRCLEMINUSCONNECTED, f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDERMIDTAIL, wxSTC_MARK_TCORNER,              f, b);
     }
     // Square
     else if (id == 2)
     {
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDEROPEN,    wxSCI_MARK_BOXMINUS,          f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDER,        wxSCI_MARK_BOXPLUS,           f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDERSUB,     wxSCI_MARK_VLINE,             f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDERTAIL,    wxSCI_MARK_LCORNER,           f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDEREND,     wxSCI_MARK_BOXPLUSCONNECTED,  f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDEROPENMID, wxSCI_MARK_BOXMINUSCONNECTED, f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDERMIDTAIL, wxSCI_MARK_TCORNER,           f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDEROPEN,    wxSTC_MARK_BOXMINUS,          f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDER,        wxSTC_MARK_BOXPLUS,           f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDERSUB,     wxSTC_MARK_VLINE,             f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDERTAIL,    wxSTC_MARK_LCORNER,           f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDEREND,     wxSTC_MARK_BOXPLUSCONNECTED,  f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDEROPENMID, wxSTC_MARK_BOXMINUSCONNECTED, f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDERMIDTAIL, wxSTC_MARK_TCORNER,           f, b);
     }
     // Simple
     else if (id == 3)
     {
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDEROPEN,    wxSCI_MARK_MINUS,      f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDER,        wxSCI_MARK_PLUS,       f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDERSUB,     wxSCI_MARK_BACKGROUND, f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDERTAIL,    wxSCI_MARK_BACKGROUND, f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDEREND,     wxSCI_MARK_PLUS,       f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDEROPENMID, wxSCI_MARK_MINUS,      f, b);
-        SetMarkerStyle(wxSCI_MARKNUM_FOLDERMIDTAIL, wxSCI_MARK_BACKGROUND, f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDEROPEN,    wxSTC_MARK_MINUS,      f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDER,        wxSTC_MARK_PLUS,       f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDERSUB,     wxSTC_MARK_BACKGROUND, f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDERTAIL,    wxSTC_MARK_BACKGROUND, f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDEREND,     wxSTC_MARK_PLUS,       f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDEROPENMID, wxSTC_MARK_MINUS,      f, b);
+        SetMarkerStyle(wxSTC_MARKNUM_FOLDERMIDTAIL, wxSTC_MARK_BACKGROUND, f, b);
     }
 }
 
@@ -2352,9 +2334,13 @@ bool cbEditor::GotoTokenPosition(int line, const wxString& tokenName)
         return false;
 
     int tokenPos = control->FindText(startPos, endPos, tokenName,
-                                     wxSCI_FIND_WHOLEWORD | wxSCI_FIND_MATCHCASE, nullptr);
-    if (tokenPos != wxSCI_INVALID_POSITION)
-        control->SetSelectionInt(tokenPos, tokenPos + tokenName.Len());
+                                     wxSTC_FIND_WHOLEWORD | wxSTC_FIND_MATCHCASE, nullptr);
+    if (tokenPos != wxSTC_INVALID_POSITION)
+    {
+        // control->SetSelectionInt(tokenPos, tokenPos + tokenName.Len());
+        control->SetSelectionStart(tokenPos + tokenName.Len());
+        control->SetSelectionEnd(tokenPos);
+    }
     else
         control->GotoPos(startPos); // fall back, point the cursor to it
 
@@ -2571,51 +2557,7 @@ void cbEditor::Redo()
 void cbEditor::ClearHistory()
 {
     caAssert(GetControl());
-    GetControl()->EmptyUndoBuffer(Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/margin/use_changebar"), true));
-}
-
-void cbEditor::GotoNextChanged()
-{
-    caAssert(GetControl());
-    cbStyledTextCtrl* p_Control = GetControl();
-    int fromLine = p_Control->LineFromPosition(p_Control->GetCurrentPos());
-    int toLine = p_Control->GetLineCount() - 1;
-    if (fromLine == toLine)
-        fromLine = 0;
-    else
-        fromLine++;
-
-    int newLine = p_Control->FindChangedLine(fromLine, toLine);
-    if (newLine != wxSCI_INVALID_POSITION)
-    {
-        p_Control->GotoLine(newLine);
-        p_Control->MakeNearbyLinesVisible(p_Control->GetCurrentLine());
-    }
-}
-
-void cbEditor::GotoPreviousChanged()
-{
-    caAssert(GetControl());
-    cbStyledTextCtrl* p_Control = GetControl();
-    int fromLine = p_Control->LineFromPosition(p_Control->GetCurrentPos());
-    int toLine = 0;
-    if (fromLine == toLine)
-        fromLine = p_Control->GetLineCount() - 1;
-    else
-        fromLine--;
-
-    int newLine = p_Control->FindChangedLine(fromLine, toLine);
-    if (newLine != wxSCI_INVALID_POSITION)
-    {
-        p_Control->GotoLine(newLine);
-        p_Control->MakeNearbyLinesVisible(p_Control->GetCurrentLine());
-    }
-}
-
-void cbEditor::SetChangeCollection(bool collectChange)
-{
-    caAssert(GetControl());
-    GetControl()->SetChangeCollection(collectChange);
+    GetControl()->EmptyUndoBuffer();
 }
 
 void cbEditor::Cut()
@@ -2747,13 +2689,13 @@ void cbEditor::GotoMatchingBrace()
     int matchingBrace = control->BraceMatch(control->GetCurrentPos());
 
     // if we haven't found it, we 'll search at pos-1 too
-    if (matchingBrace == wxSCI_INVALID_POSITION)
+    if (matchingBrace == wxSTC_INVALID_POSITION)
         matchingBrace = control->BraceMatch(control->GetCurrentPos() - 1);
     else
         ++matchingBrace; // to keep the caret on the same side of the brace
 
     // else look for a matching preprocessor command
-    if (matchingBrace == wxSCI_INVALID_POSITION)
+    if (matchingBrace == wxSTC_INVALID_POSITION)
     {
         wxRegEx ppIf(wxT("^[ \t]*#[ \t]*if"));
         wxRegEx ppElse(wxT("^[ \t]*#[ \t]*el"));
@@ -2802,7 +2744,7 @@ void cbEditor::GotoMatchingBrace()
     }
 
     // now, we either found it or not
-    if (matchingBrace != wxSCI_INVALID_POSITION)
+    if (matchingBrace != wxSTC_INVALID_POSITION)
     {
         // move to the actual position
         control->GotoPos(matchingBrace);
@@ -2819,7 +2761,7 @@ void cbEditor::HighlightBraces()
     ////// BRACES HIGHLIGHTING ///////
     int currPos = control->GetCurrentPos();
     int newPos = control->BraceMatch(currPos);
-    if (newPos == wxSCI_INVALID_POSITION)
+    if (newPos == wxSTC_INVALID_POSITION)
     {
         if (currPos > 0)
             currPos--;
@@ -2829,7 +2771,7 @@ void cbEditor::HighlightBraces()
     if (ch == _T('{') || ch == _T('[') || ch == _T('(') ||
         ch == _T('}') || ch == _T(']') || ch == _T(')'))
     {
-        if (newPos != wxSCI_INVALID_POSITION)
+        if (newPos != wxSTC_INVALID_POSITION)
         {
             control->BraceHighlight(currPos, newPos);
             const int currColum = control->GetColumn(currPos);
@@ -3118,7 +3060,7 @@ void cbEditor::Print(bool selectionOnly, PrintColourMode pcm, bool line_numbers)
     int oldEdgeMode = control->GetEdgeMode();
 
     // print line numbers?
-    control->SetMarginType(C_LINE_MARGIN, wxSCI_MARGIN_NUMBER);
+    control->SetMarginType(C_LINE_MARGIN, wxSTC_MARGIN_NUMBER);
     if (!line_numbers)
     {
         control->SetPrintMagnification(-1);
@@ -3130,21 +3072,21 @@ void cbEditor::Print(bool selectionOnly, PrintColourMode pcm, bool line_numbers)
         control->SetMarginWidth(C_LINE_MARGIN, 1);
     }
     // never print the gutter line
-    control->SetEdgeMode(wxSCI_EDGE_NONE);
+    control->SetEdgeMode(wxSTC_EDGE_NONE);
 
     switch (pcm)
     {
         case pcmAsIs:
-            control->SetPrintColourMode(wxSCI_PRINT_NORMAL);
+            control->SetPrintColourMode(wxSTC_PRINT_NORMAL);
             break;
         case pcmBlackAndWhite:
-            control->SetPrintColourMode(wxSCI_PRINT_BLACKONWHITE);
+            control->SetPrintColourMode(wxSTC_PRINT_BLACKONWHITE);
             break;
         case pcmColourOnWhite:
-            control->SetPrintColourMode(wxSCI_PRINT_COLOURONWHITE);
+            control->SetPrintColourMode(wxSTC_PRINT_COLOURONWHITE);
             break;
         case pcmInvertColours:
-            control->SetPrintColourMode(wxSCI_PRINT_INVERTLIGHT);
+            control->SetPrintColourMode(wxSTC_PRINT_INVERTLIGHT);
             break;
         default:
             break;
@@ -3195,7 +3137,7 @@ void cbEditor::OnContextMenuEntry(wxCommandEvent& event)
     else if (id == idRedo)
         control->Redo();
     else if (id == idClearHistory)
-        control->EmptyUndoBuffer(Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/margin/use_changebar"), true));
+        control->EmptyUndoBuffer();
     else if (id == idCut)
         control->Cut();
     else if (id == idCopy)
@@ -3311,7 +3253,7 @@ void cbEditor::OnContextMenuEntry(wxCommandEvent& event)
     //Manager::Get()->GetLogManager()->DebugLog(_T("Leaving OnContextMenuEntry"));
 }
 
-void cbEditor::OnMarginClick(wxScintillaEvent& event)
+void cbEditor::OnMarginClick(wxStyledTextEvent& event)
 {
     switch (event.GetMargin())
     {
@@ -3337,7 +3279,7 @@ void cbEditor::OnMarginClick(wxScintillaEvent& event)
     OnScintillaEvent(event);
 }
 
-void cbEditor::OnEditorUpdateUI(wxScintillaEvent& event)
+void cbEditor::OnEditorUpdateUI(wxStyledTextEvent& event)
 {
     if (Manager::Get()->GetEditorManager()->GetActiveEditor() == this)
     {
@@ -3347,13 +3289,13 @@ void cbEditor::OnEditorUpdateUI(wxScintillaEvent& event)
     OnScintillaEvent(event);
 }
 
-void cbEditor::OnEditorChange(wxScintillaEvent& event)
+void cbEditor::OnEditorChange(wxStyledTextEvent& event)
 {
     SetModified(m_pControl->GetModify());
     OnScintillaEvent(event);
 }
 
-void cbEditor::OnEditorCharAdded(wxScintillaEvent& event)
+void cbEditor::OnEditorCharAdded(wxStyledTextEvent& event)
 {
     // if message manager is auto-hiding, this will close it if not needed open
 //    Manager::Get()->GetLogManager()->Close();
@@ -3365,7 +3307,7 @@ void cbEditor::OnEditorCharAdded(wxScintillaEvent& event)
         const wxChar ch = event.GetKey();
         cbStyledTextCtrl* control = GetControl();
         // auto indent
-        if ( (ch == _T('\n')) || ( (control->GetEOLMode() == wxSCI_EOL_CR) && (ch == _T('\r')) ) )
+        if ( (ch == _T('\n')) || ( (control->GetEOLMode() == wxSTC_EOL_CR) && (ch == _T('\r')) ) )
         {
             const int pos = control->GetCurrentPos();
             const int currLine = control->LineFromPosition(pos);
@@ -3423,7 +3365,7 @@ void cbEditor::AutoIndentDone()
     m_autoIndentDone = true;
 }
 
-void cbEditor::OnEditorDwellStart(wxScintillaEvent& event)
+void cbEditor::OnEditorDwellStart(wxStyledTextEvent& event)
 {
     if ( !wxTheApp->IsActive() )
         return;
@@ -3446,29 +3388,29 @@ void cbEditor::OnEditorDwellStart(wxScintillaEvent& event)
     int pos = control->PositionFromPoint(ptClient);
     int style = control->GetStyleAt(pos);
     NotifyPlugins(cbEVT_EDITOR_TOOLTIP, style, wxEmptyString, ptClient.x, ptClient.y);
-    wxScintillaEvent newEvent(event);
+    wxStyledTextEvent newEvent(event);
     newEvent.SetX(ptClient.x);
     newEvent.SetY(ptClient.y);
     OnScintillaEvent(event);
 }
 
-void cbEditor::OnEditorDwellEnd(wxScintillaEvent& event)
+void cbEditor::OnEditorDwellEnd(wxStyledTextEvent& event)
 {
     NotifyPlugins(cbEVT_EDITOR_TOOLTIP_CANCEL);
     OnScintillaEvent(event);
 }
 
-void cbEditor::OnEditorModified(wxScintillaEvent& event)
+void cbEditor::OnEditorModified(wxStyledTextEvent& event)
 {
 //    wxString txt = _T("OnEditorModified(): ");
 //    int flags = event.GetModificationType();
-//    if (flags & wxSCI_MOD_CHANGEMARKER) txt << _T("wxSCI_MOD_CHANGEMARKER, ");
-//    if (flags & wxSCI_MOD_INSERTTEXT) txt << _T("wxSCI_MOD_INSERTTEXT, ");
-//    if (flags & wxSCI_MOD_DELETETEXT) txt << _T("wxSCI_MOD_DELETETEXT, ");
-//    if (flags & wxSCI_MOD_CHANGEFOLD) txt << _T("wxSCI_MOD_CHANGEFOLD, ");
-//    if (flags & wxSCI_PERFORMED_USER) txt << _T("wxSCI_PERFORMED_USER, ");
-//    if (flags & wxSCI_MOD_BEFOREINSERT) txt << _T("wxSCI_MOD_BEFOREINSERT, ");
-//    if (flags & wxSCI_MOD_BEFOREDELETE) txt << _T("wxSCI_MOD_BEFOREDELETE, ");
+//    if (flags & wxSTC_MOD_CHANGEMARKER) txt << _T("wxSTC_MOD_CHANGEMARKER, ");
+//    if (flags & wxSTC_MOD_INSERTTEXT) txt << _T("wxSTC_MOD_INSERTTEXT, ");
+//    if (flags & wxSTC_MOD_DELETETEXT) txt << _T("wxSTC_MOD_DELETETEXT, ");
+//    if (flags & wxSTC_MOD_CHANGEFOLD) txt << _T("wxSTC_MOD_CHANGEFOLD, ");
+//    if (flags & wxSTC_PERFORMED_USER) txt << _T("wxSTC_PERFORMED_USER, ");
+//    if (flags & wxSTC_MOD_BEFOREINSERT) txt << _T("wxSTC_MOD_BEFOREINSERT, ");
+//    if (flags & wxSTC_MOD_BEFOREDELETE) txt << _T("wxSTC_MOD_BEFOREDELETE, ");
 //    txt << _T("pos=")
 //        << wxString::Format(_T("%d"), event.GetPosition())
 //        << _T(", line=")
@@ -3480,8 +3422,8 @@ void cbEditor::OnEditorModified(wxScintillaEvent& event)
     // whenever event.GetLinesAdded() != 0, we must re-set breakpoints for lines greater
     // than LineFromPosition(event.GetPosition())
     int linesAdded = event.GetLinesAdded();
-    bool isAdd = event.GetModificationType() & wxSCI_MOD_INSERTTEXT;
-    bool isDel = event.GetModificationType() & wxSCI_MOD_DELETETEXT;
+    bool isAdd = event.GetModificationType() & wxSTC_MOD_INSERTTEXT;
+    bool isDel = event.GetModificationType() & wxSTC_MOD_DELETETEXT;
     if ((isAdd || isDel) && linesAdded != 0)
     {
         // whether to show line-numbers or not is handled in SetLineNumberColWidth() now
@@ -3515,8 +3457,8 @@ void cbEditor::OnEditorModified(wxScintillaEvent& event)
     // If we remove the folding-point (the brace or whatever) from a folded block,
     // we have to make the hidden lines visible, otherwise, they
     // will no longer be reachable, until the editor is closed and reopened again
-    if (   (event.GetModificationType() & wxSCI_MOD_CHANGEFOLD)
-        && (event.GetFoldLevelPrev() & wxSCI_FOLDLEVELHEADERFLAG) )
+    if (   (event.GetModificationType() & wxSTC_MOD_CHANGEFOLD)
+        && (event.GetFoldLevelPrev() & wxSTC_FOLDLEVELHEADERFLAG) )
     {
         cbStyledTextCtrl* control = GetControl();
         int line = event.GetLine();
@@ -3529,7 +3471,7 @@ void cbEditor::OnEditorModified(wxScintillaEvent& event)
     OnScintillaEvent(event);
 } // end of OnEditorModified
 
-void cbEditor::OnUserListSelection(wxScintillaEvent& event)
+void cbEditor::OnUserListSelection(wxStyledTextEvent& event)
 {
     OnScintillaEvent(event);
 }
@@ -3543,17 +3485,17 @@ void cbEditor::DoIndent()
 {
     cbStyledTextCtrl* control = GetControl();
     if (control)
-        control->SendMsg(wxSCI_CMD_TAB);
+        control->SendMsg(wxSTC_CMD_TAB);
 }
 
 void cbEditor::DoUnIndent()
 {
     cbStyledTextCtrl* control = GetControl();
     if (control)
-        control->SendMsg(wxSCI_CMD_BACKTAB);
+        control->SendMsg(wxSTC_CMD_BACKTAB);
 }
 
-void cbEditor::OnZoom(wxScintillaEvent& event)
+void cbEditor::OnZoom(wxStyledTextEvent& event)
 {
     ConfigManager* mgr =  Manager::Get()->GetConfigManager(_T("editor"));
 
@@ -3603,38 +3545,38 @@ void cbEditor::SetZoom(int zoom, bool both)
 }
 
 // generic scintilla event handler
-void cbEditor::OnScintillaEvent(wxScintillaEvent& event)
+void cbEditor::OnScintillaEvent(wxStyledTextEvent& event)
 {
 //  wxString txt;
 //    wxEventType type = event.GetEventType();
-//  if (type == wxEVT_SCI_CHANGE) txt << _T("wxEVT_SCI_CHANGE");
-//  else if (type == wxEVT_SCI_STYLENEEDED) txt << _T("wxEVT_SCI_STYLENEEDED");
-//  else if (type == wxEVT_SCI_CHARADDED) txt << _T("wxEVT_SCI_CHARADDED");
-//  else if (type == wxEVT_SCI_SAVEPOINTREACHED) txt << _T("wxEVT_SCI_SAVEPOINTREACHED");
-//  else if (type == wxEVT_SCI_SAVEPOINTLEFT) txt << _T("wxEVT_SCI_SAVEPOINTLEFT");
-//  else if (type == wxEVT_SCI_ROMODIFYATTEMPT) txt << _T("wxEVT_SCI_ROMODIFYATTEMPT");
-//  else if (type == wxEVT_SCI_KEY) txt << _T("wxEVT_SCI_KEY");
-//  else if (type == wxEVT_SCI_DOUBLECLICK) txt << _T("wxEVT_SCI_DOUBLECLICK");
-//  else if (type == wxEVT_SCI_UPDATEUI) txt << _T("wxEVT_SCI_UPDATEUI");
-//  else if (type == wxEVT_SCI_MODIFIED) txt << _T("wxEVT_SCI_MODIFIED");
-//  else if (type == wxEVT_SCI_MACRORECORD) txt << _T("wxEVT_SCI_MACRORECORD");
-//  else if (type == wxEVT_SCI_MARGINCLICK) txt << _T("wxEVT_SCI_MARGINCLICK");
-//  else if (type == wxEVT_SCI_NEEDSHOWN) txt << _T("wxEVT_SCI_NEEDSHOWN");
-//  else if (type == wxEVT_SCI_PAINTED) txt << _T("wxEVT_SCI_PAINTED");
-//  else if (type == wxEVT_SCI_USERLISTSELECTION) txt << _T("wxEVT_SCI_USERLISTSELECTION");
-//  else if (type == wxEVT_SCI_URIDROPPED) txt << _T("wxEVT_SCI_URIDROPPED");
-//  else if (type == wxEVT_SCI_DWELLSTART) txt << _T("wxEVT_SCI_DWELLSTART");
-//  else if (type == wxEVT_SCI_DWELLEND) txt << _T("wxEVT_SCI_DWELLEND");
-//  else if (type == wxEVT_SCI_START_DRAG) txt << _T("wxEVT_SCI_START_DRAG");
-//  else if (type == wxEVT_SCI_DRAG_OVER) txt << _T("wxEVT_SCI_DRAG_OVER");
-//  else if (type == wxEVT_SCI_DO_DROP) txt << _T("wxEVT_SCI_DO_DROP");
-//  else if (type == wxEVT_SCI_ZOOM) txt << _T("wxEVT_SCI_ZOOM");
-//  else if (type == wxEVT_SCI_HOTSPOT_CLICK) txt << _T("wxEVT_SCI_HOTSPOT_CLICK");
-//  else if (type == wxEVT_SCI_HOTSPOT_DCLICK) txt << _T("wxEVT_SCI_HOTSPOT_DCLICK");
-//  else if (type == wxEVT_SCI_CALLTIP_CLICK) txt << _T("wxEVT_SCI_CALLTIP_CLICK");
-//  else if (type == wxEVT_SCI_AUTOCOMP_SELECTION) txt << _T("wxEVT_SCI_AUTOCOMP_SELECTION");
-//  else if (type == wxEVT_SCI_INDICATOR_CLICK) txt << _T("wxEVT_SCI_INDICATOR_CLICK");
-//  else if (type == wxEVT_SCI_INDICATOR_RELEASE) txt << _T("wxEVT_SCI_INDICATOR_RELEASE");
+//  if (type == wxEVT_STC_CHANGE) txt << _T("wxEVT_STC_CHANGE");
+//  else if (type == wxEVT_STC_STYLENEEDED) txt << _T("wxEVT_STC_STYLENEEDED");
+//  else if (type == wxEVT_STC_CHARADDED) txt << _T("wxEVT_STC_CHARADDED");
+//  else if (type == wxEVT_STC_SAVEPOINTREACHED) txt << _T("wxEVT_STC_SAVEPOINTREACHED");
+//  else if (type == wxEVT_STC_SAVEPOINTLEFT) txt << _T("wxEVT_STC_SAVEPOINTLEFT");
+//  else if (type == wxEVT_STC_ROMODIFYATTEMPT) txt << _T("wxEVT_STC_ROMODIFYATTEMPT");
+//  else if (type == wxEVT_STC_KEY) txt << _T("wxEVT_STC_KEY");
+//  else if (type == wxEVT_STC_DOUBLECLICK) txt << _T("wxEVT_STC_DOUBLECLICK");
+//  else if (type == wxEVT_STC_UPDATEUI) txt << _T("wxEVT_STC_UPDATEUI");
+//  else if (type == wxEVT_STC_MODIFIED) txt << _T("wxEVT_STC_MODIFIED");
+//  else if (type == wxEVT_STC_MACRORECORD) txt << _T("wxEVT_STC_MACRORECORD");
+//  else if (type == wxEVT_STC_MARGINCLICK) txt << _T("wxEVT_STC_MARGINCLICK");
+//  else if (type == wxEVT_STC_NEEDSHOWN) txt << _T("wxEVT_STC_NEEDSHOWN");
+//  else if (type == wxEVT_STC_PAINTED) txt << _T("wxEVT_STC_PAINTED");
+//  else if (type == wxEVT_STC_USERLISTSELECTION) txt << _T("wxEVT_STC_USERLISTSELECTION");
+//  else if (type == wxEVT_STC_URIDROPPED) txt << _T("wxEVT_STC_URIDROPPED");
+//  else if (type == wxEVT_STC_DWELLSTART) txt << _T("wxEVT_STC_DWELLSTART");
+//  else if (type == wxEVT_STC_DWELLEND) txt << _T("wxEVT_STC_DWELLEND");
+//  else if (type == wxEVT_STC_START_DRAG) txt << _T("wxEVT_STC_START_DRAG");
+//  else if (type == wxEVT_STC_DRAG_OVER) txt << _T("wxEVT_STC_DRAG_OVER");
+//  else if (type == wxEVT_STC_DO_DROP) txt << _T("wxEVT_STC_DO_DROP");
+//  else if (type == wxEVT_STC_ZOOM) txt << _T("wxEVT_STC_ZOOM");
+//  else if (type == wxEVT_STC_HOTSPOT_CLICK) txt << _T("wxEVT_STC_HOTSPOT_CLICK");
+//  else if (type == wxEVT_STC_HOTSPOT_DCLICK) txt << _T("wxEVT_STC_HOTSPOT_DCLICK");
+//  else if (type == wxEVT_STC_CALLTIP_CLICK) txt << _T("wxEVT_STC_CALLTIP_CLICK");
+//  else if (type == wxEVT_STC_AUTOCOMP_SELECTION) txt << _T("wxEVT_STC_AUTOCOMP_SELECTION");
+//  else if (type == wxEVT_STC_INDICATOR_CLICK) txt << _T("wxEVT_STC_INDICATOR_CLICK");
+//  else if (type == wxEVT_STC_INDICATOR_RELEASE) txt << _T("wxEVT_STC_INDICATOR_RELEASE");
 //    Manager::Get()->GetLogManager()->DebugLog(txt);
 
     // call any hooked functors

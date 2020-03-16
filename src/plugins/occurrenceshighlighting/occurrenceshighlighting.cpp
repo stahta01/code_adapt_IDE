@@ -348,7 +348,7 @@ void OccurrencesHighlighting::RemoveSelected()
     m_pHighlighter->TextsChanged();
 }
 
-void OccurrencesHighlighting::OnEditorHook(cbEditor* editor, wxScintillaEvent& event)
+void OccurrencesHighlighting::OnEditorHook(cbEditor* editor, wxStyledTextEvent& event)
 {
     m_pHighlighter->Call(editor, event);
 }

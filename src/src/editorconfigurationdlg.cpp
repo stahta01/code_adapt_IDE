@@ -104,7 +104,6 @@ EditorConfigurationDlg::EditorConfigurationDlg(wxWindow* parent)
     m_Lang(HL_NONE),
     m_DefCodeFileType(0),
     m_ThemeModified(false),
-    m_EnableChangebar(false),
     m_pImageList(nullptr)
 {
     wxXmlResource::Get()->LoadObject(this, parent, _T("dlgConfigureEditor"),_T("wxScrollingDialog"));
@@ -123,8 +122,6 @@ EditorConfigurationDlg::EditorConfigurationDlg(wxWindow* parent)
     XRCCTRL(*this, "chkUseTab",                   wxCheckBox)->SetValue(cfg->ReadBool(_T("/use_tab"),                    false));
     m_EnableScrollWidthTracking = cfg->ReadBool(_T("/margin/scroll_width_tracking"), false);
     XRCCTRL(*this, "chkScrollWidthTracking",      wxCheckBox)->SetValue(m_EnableScrollWidthTracking);
-    m_EnableChangebar = cfg->ReadBool(_T("/margin/use_changebar"), true);
-    XRCCTRL(*this, "chkUseChangebar",             wxCheckBox)->SetValue(m_EnableChangebar);
     XRCCTRL(*this, "chkShowIndentGuides",         wxCheckBox)->SetValue(cfg->ReadBool(_T("/show_indent_guides"),         false));
     XRCCTRL(*this, "chkBraceSmartIndent",         wxCheckBox)->SetValue(cfg->ReadBool(_T("/brace_smart_indent"),         true));
     XRCCTRL(*this, "chkSelectionBraceCompletion", wxCheckBox)->SetValue(cfg->ReadBool(_T("/selection_brace_completion"), false));
@@ -178,14 +175,14 @@ EditorConfigurationDlg::EditorConfigurationDlg(wxWindow* parent)
     XRCCTRL(*this, "chkEnsureFinalEOL",      wxCheckBox)->SetValue(cfg->ReadBool(_T("/eol/ensure_final_line_end"),       true));
     XRCCTRL(*this, "chkEnsureConsistentEOL", wxCheckBox)->SetValue(cfg->ReadBool(_T("/eol/ensure_consistent_line_ends"), false));
     // NOTE: duplicate line in cbeditor.cpp (CreateEditor)
-    XRCCTRL(*this, "cmbEOLMode",             wxChoice)->SetSelection(cfg->ReadInt(_T("/eol/eolmode"),                  platform::windows ? wxSCI_EOL_CRLF : wxSCI_EOL_LF)); // Windows takes CR+LF, other platforms LF only
+    XRCCTRL(*this, "cmbEOLMode",             wxChoice)->SetSelection(cfg->ReadInt(_T("/eol/eolmode"),                  platform::windows ? wxSTC_EOL_CRLF : wxSTC_EOL_LF)); // Windows takes CR+LF, other platforms LF only
 
     //caret
     wxColour caretColour = Manager::Get()->GetColourManager()->GetColour(wxT("editor_caret"));
-    int caretStyle = cfg->ReadInt(_T("/caret/style"), wxSCI_CARETSTYLE_LINE);
+    int caretStyle = cfg->ReadInt(_T("/caret/style"), wxSTC_CARETSTYLE_LINE);
     XRCCTRL(*this, "lstCaretStyle",  wxChoice)->SetSelection(caretStyle);
     XRCCTRL(*this, "spnCaretWidth",  wxSpinCtrl)->SetValue(cfg->ReadInt(_T("/caret/width"), 1));
-    XRCCTRL(*this, "spnCaretWidth",  wxSpinCtrl)->Enable(caretStyle == wxSCI_CARETSTYLE_LINE);
+    XRCCTRL(*this, "spnCaretWidth",  wxSpinCtrl)->Enable(caretStyle == wxSTC_CARETSTYLE_LINE);
     XRCCTRL(*this, "btnCaretColour", wxButton)->SetBackgroundColour(caretColour);
     XRCCTRL(*this, "slCaretPeriod",  wxSlider)->SetValue(cfg->ReadInt(_T("/caret/period"), 500));
 
@@ -394,7 +391,7 @@ void EditorConfigurationDlg::CreateColoursSample()
         m_TextColourControl = new cbStyledTextCtrl(this, wxID_ANY);
 
         m_TextColourControl->SetTabWidth(4);
-        m_TextColourControl->SetMarginType(0, wxSCI_MARGIN_NUMBER);
+        m_TextColourControl->SetMarginType(0, wxSTC_MARGIN_NUMBER);
         m_TextColourControl->SetMarginWidth(0, 32);
         m_TextColourControl->SetMinSize(wxSize(50,50));
         m_TextColourControl->SetMarginWidth(1, 0);
@@ -415,7 +412,7 @@ void EditorConfigurationDlg::CreateColoursSample()
     m_TextColourControl->SetCaretLineVisible(hightlightCaretLine);
 
     const bool showIndentGuides = XRCCTRL(*this, "chkShowIndentGuides", wxCheckBox)->GetValue();
-    m_TextColourControl->SetIndentationGuides(showIndentGuides ? wxSCI_IV_LOOKBOTH : wxSCI_IV_NONE);
+    m_TextColourControl->SetIndentationGuides(showIndentGuides ? wxSTC_IV_LOOKBOTH : wxSTC_IV_NONE);
 
     m_TextColourControl->MarkerDeleteAll(2);
     m_TextColourControl->MarkerDeleteAll(3);
@@ -453,7 +450,7 @@ void EditorConfigurationDlg::ApplyColours()
     {
         wxFont fnt = XRCCTRL(*this, "lblEditorFont", wxStaticText)->GetFont();
 
-        m_TextColourControl->StyleSetFont(wxSCI_STYLE_DEFAULT,fnt);
+        m_TextColourControl->StyleSetFont(wxSTC_STYLE_DEFAULT,fnt);
         m_Theme->Apply(m_Lang, m_TextColourControl, false, true);
     }
 }
@@ -572,7 +569,7 @@ void EditorConfigurationDlg::UpdateSampleFont(bool askForNewFont)
 
 void EditorConfigurationDlg::OnCaretStyle(cb_unused wxCommandEvent& event)
 {
-    XRCCTRL(*this, "spnCaretWidth", wxSpinCtrl)->Enable(XRCCTRL(*this, "lstCaretStyle", wxChoice)->GetSelection() == wxSCI_CARETSTYLE_LINE);
+    XRCCTRL(*this, "spnCaretWidth", wxSpinCtrl)->Enable(XRCCTRL(*this, "lstCaretStyle", wxChoice)->GetSelection() == wxSTC_CARETSTYLE_LINE);
 }
 
 void EditorConfigurationDlg::LoadThemes()
@@ -1135,25 +1132,6 @@ void EditorConfigurationDlg::EndModal(int retCode)
         //scrollbar
         cfg->Write(_T("/margin/scroll_width_tracking"),    XRCCTRL(*this, "chkScrollWidthTracking", wxCheckBox)->GetValue());
 
-        //changebar
-        bool enableChangebar = XRCCTRL(*this, "chkUseChangebar", wxCheckBox)->GetValue();
-        cfg->Write(_T("/margin/use_changebar"), enableChangebar);
-        if (enableChangebar != m_EnableChangebar)
-        {
-            EditorManager *em = Manager::Get()->GetEditorManager();
-            for (int idx = 0; idx<em->GetEditorsCount(); ++idx)
-            {
-                cbEditor *ed = em->GetBuiltinEditor(em->GetEditor(idx));
-                if(ed)
-                {
-                    // if we enable changeCollection, we also have to empty Undo-Buffer, to avoid inconsistences,
-                    // if we disable it, there is no need to do that
-                    enableChangebar?
-                        ed->ClearHistory():
-                        ed->SetChangeCollection(false);
-                }
-            }
-        }
         // default code : first update what's in the current txtCtrl,
         // and then write them all to the config file (even if unmodified)
         int sel = XRCCTRL(*this, "cmbDefCodeFileType", wxChoice)->GetSelection();

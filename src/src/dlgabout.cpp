@@ -35,7 +35,7 @@
 #include "dlgabout.h" // class's header file
 #include "splashscreen.h"
 #include "licenses.h"
-#include "ca/wxscintilla.h"
+#include <ca/wxstyledtextctrl.h>
 
 // class constructor
 
@@ -134,7 +134,7 @@ dlgAbout::dlgAbout(wxWindow* parent)
         "\n"
         "All contributors that provided patches.\n"
         "The wxWidgets project (http://www.wxwidgets.org).\n"
-        "wxScintilla (http://sourceforge.net/projects/wxscintilla).\n"
+        "wxStyledTextCtrl (http://sourceforge.net/projects/wxscintilla).\n"
         "TinyXML parser (http://www.grinninglizard.com/tinyxml).\n"
         "Squirrel scripting language (http://www.squirrel-lang.org).\n"
         "The GNU Software Foundation (http://www.gnu.org).\n"
@@ -143,7 +143,7 @@ dlgAbout::dlgAbout(wxWindow* parent)
     txtLicense->SetValue(LICENSE_GPL);
 
 #if wxCHECK_VERSION(3, 0, 0)
-    const wxVersionInfo scintillaVersion = wxScintilla::GetLibraryVersionInfo();
+    const wxVersionInfo scintillaVersion = wxStyledTextCtrl::GetLibraryVersionInfo();
     const wxString scintillaStr = wxString::Format(wxT("%d.%d.%d"),
                                                    scintillaVersion.GetMajor(),
                                                    scintillaVersion.GetMinor(),

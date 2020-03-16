@@ -31,7 +31,7 @@ class OnlineSpellChecker
 public:
     OnlineSpellChecker(wxSpellCheckEngineInterface* pSpellChecker, SpellCheckHelper* pSpellHelp);
     virtual ~OnlineSpellChecker();
-    virtual void Call(cbEditor* ctrl, wxScintillaEvent& event) const;
+    virtual void Call(cbEditor* ctrl, wxStyledTextEvent& event) const;
 
     int GetIndicator() const;
     const wxColor GetIndicatorColor() const;

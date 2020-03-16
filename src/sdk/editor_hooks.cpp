@@ -32,35 +32,35 @@
 static wxString GetScintillaEventName(wxEventType type)
 {
     wxString name;
-    if (type == wxEVT_SCI_CHANGE)                  name = _T("wxEVT_SCI_CHANGE");
-    else if (type == wxEVT_SCI_STYLENEEDED)        name = _T("wxEVT_SCI_STYLENEEDED");
-    else if (type == wxEVT_SCI_CHARADDED)          name = _T("wxEVT_SCI_CHARADDED");
-    else if (type == wxEVT_SCI_SAVEPOINTREACHED)   name = _T("wxEVT_SCI_SAVEPOINTREACHED");
-    else if (type == wxEVT_SCI_SAVEPOINTLEFT)      name = _T("wxEVT_SCI_SAVEPOINTLEFT");
-    else if (type == wxEVT_SCI_ROMODIFYATTEMPT)    name = _T("wxEVT_SCI_ROMODIFYATTEMPT");
-    else if (type == wxEVT_SCI_KEY)                name = _T("wxEVT_SCI_KEY");
-    else if (type == wxEVT_SCI_DOUBLECLICK)        name = _T("wxEVT_SCI_DOUBLECLICK");
-    else if (type == wxEVT_SCI_UPDATEUI)           name = _T("wxEVT_SCI_UPDATEUI");
-    else if (type == wxEVT_SCI_MODIFIED)           name = _T("wxEVT_SCI_MODIFIED");
-    else if (type == wxEVT_SCI_MACRORECORD)        name = _T("wxEVT_SCI_MACRORECORD");
-    else if (type == wxEVT_SCI_MARGINCLICK)        name = _T("wxEVT_SCI_MARGINCLICK");
-    else if (type == wxEVT_SCI_NEEDSHOWN)          name = _T("wxEVT_SCI_NEEDSHOWN");
-    else if (type == wxEVT_SCI_PAINTED)            name = _T("wxEVT_SCI_PAINTED");
-    else if (type == wxEVT_SCI_USERLISTSELECTION)  name = _T("wxEVT_SCI_USERLISTSELECTION");
-    else if (type == wxEVT_SCI_URIDROPPED)         name = _T("wxEVT_SCI_URIDROPPED");
-    else if (type == wxEVT_SCI_DWELLSTART)         name = _T("wxEVT_SCI_DWELLSTART");
-    else if (type == wxEVT_SCI_DWELLEND)           name = _T("wxEVT_SCI_DWELLEND");
-    else if (type == wxEVT_SCI_START_DRAG)         name = _T("wxEVT_SCI_START_DRAG");
-    else if (type == wxEVT_SCI_DRAG_OVER)          name = _T("wxEVT_SCI_DRAG_OVER");
-    else if (type == wxEVT_SCI_DO_DROP)            name = _T("wxEVT_SCI_DO_DROP");
-    else if (type == wxEVT_SCI_ZOOM)               name = _T("wxEVT_SCI_ZOOM");
-    else if (type == wxEVT_SCI_HOTSPOT_CLICK)      name = _T("wxEVT_SCI_HOTSPOT_CLICK");
-    else if (type == wxEVT_SCI_HOTSPOT_DCLICK)     name = _T("wxEVT_SCI_HOTSPOT_DCLICK");
-    else if (type == wxEVT_SCI_CALLTIP_CLICK)      name = _T("wxEVT_SCI_CALLTIP_CLICK");
-    else if (type == wxEVT_SCI_AUTOCOMP_SELECTION) name = _T("wxEVT_SCI_AUTOCOMP_SELECTION");
-    else if (type == wxEVT_SCI_INDICATOR_CLICK)    name = _T("wxEVT_SCI_INDICATOR_CLICK");
-    else if (type == wxEVT_SCI_INDICATOR_RELEASE)  name = _T("wxEVT_SCI_INDICATOR_RELEASE");
-    else name = _T("unknown wxEVT_SCI_EVENT");
+    if (type == wxEVT_STC_CHANGE)                  name = _T("wxEVT_STC_CHANGE");
+    else if (type == wxEVT_STC_STYLENEEDED)        name = _T("wxEVT_STC_STYLENEEDED");
+    else if (type == wxEVT_STC_CHARADDED)          name = _T("wxEVT_STC_CHARADDED");
+    else if (type == wxEVT_STC_SAVEPOINTREACHED)   name = _T("wxEVT_STC_SAVEPOINTREACHED");
+    else if (type == wxEVT_STC_SAVEPOINTLEFT)      name = _T("wxEVT_STC_SAVEPOINTLEFT");
+    else if (type == wxEVT_STC_ROMODIFYATTEMPT)    name = _T("wxEVT_STC_ROMODIFYATTEMPT");
+    else if (type == wxEVT_STC_KEY)                name = _T("wxEVT_STC_KEY");
+    else if (type == wxEVT_STC_DOUBLECLICK)        name = _T("wxEVT_STC_DOUBLECLICK");
+    else if (type == wxEVT_STC_UPDATEUI)           name = _T("wxEVT_STC_UPDATEUI");
+    else if (type == wxEVT_STC_MODIFIED)           name = _T("wxEVT_STC_MODIFIED");
+    else if (type == wxEVT_STC_MACRORECORD)        name = _T("wxEVT_STC_MACRORECORD");
+    else if (type == wxEVT_STC_MARGINCLICK)        name = _T("wxEVT_STC_MARGINCLICK");
+    else if (type == wxEVT_STC_NEEDSHOWN)          name = _T("wxEVT_STC_NEEDSHOWN");
+    else if (type == wxEVT_STC_PAINTED)            name = _T("wxEVT_STC_PAINTED");
+    else if (type == wxEVT_STC_USERLISTSELECTION)  name = _T("wxEVT_STC_USERLISTSELECTION");
+    else if (type == wxEVT_STC_URIDROPPED)         name = _T("wxEVT_STC_URIDROPPED");
+    else if (type == wxEVT_STC_DWELLSTART)         name = _T("wxEVT_STC_DWELLSTART");
+    else if (type == wxEVT_STC_DWELLEND)           name = _T("wxEVT_STC_DWELLEND");
+    else if (type == wxEVT_STC_START_DRAG)         name = _T("wxEVT_STC_START_DRAG");
+    else if (type == wxEVT_STC_DRAG_OVER)          name = _T("wxEVT_STC_DRAG_OVER");
+    else if (type == wxEVT_STC_DO_DROP)            name = _T("wxEVT_STC_DO_DROP");
+    else if (type == wxEVT_STC_ZOOM)               name = _T("wxEVT_STC_ZOOM");
+    else if (type == wxEVT_STC_HOTSPOT_CLICK)      name = _T("wxEVT_STC_HOTSPOT_CLICK");
+    else if (type == wxEVT_STC_HOTSPOT_DCLICK)     name = _T("wxEVT_STC_HOTSPOT_DCLICK");
+    else if (type == wxEVT_STC_CALLTIP_CLICK)      name = _T("wxEVT_STC_CALLTIP_CLICK");
+    else if (type == wxEVT_STC_AUTOCOMP_SELECTION) name = _T("wxEVT_STC_AUTOCOMP_SELECTION");
+    else if (type == wxEVT_STC_INDICATOR_CLICK)    name = _T("wxEVT_STC_INDICATOR_CLICK");
+    else if (type == wxEVT_STC_INDICATOR_RELEASE)  name = _T("wxEVT_STC_INDICATOR_RELEASE");
+    else name = _T("unknown wxEVT_STC_EVENT");
 
     return name;
 }
@@ -106,7 +106,7 @@ bool EditorHooks::HasRegisteredHooks()
     return s_HookFunctorsMap.size() != 0;
 }
 
-void EditorHooks::CallHooks(cbEditor* editor, wxScintillaEvent& event)
+void EditorHooks::CallHooks(cbEditor* editor, wxStyledTextEvent& event)
 {
     for (HookFunctorsMap::iterator it = s_HookFunctorsMap.begin(); it != s_HookFunctorsMap.end(); ++it)
     {
@@ -151,7 +151,7 @@ namespace EditorHooks
     cbSmartIndentEditorHookFunctor::cbSmartIndentEditorHookFunctor(cbSmartIndentPlugin *plugin):
     m_plugin(plugin){}
 
-    void cbSmartIndentEditorHookFunctor::Call(cbEditor *editor, wxScintillaEvent &event) const
+    void cbSmartIndentEditorHookFunctor::Call(cbEditor *editor, wxStyledTextEvent &event) const
     {
         m_plugin->OnEditorHook(editor, event);
     }

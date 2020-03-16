@@ -106,7 +106,7 @@
 #include "JumpTracker.h"
 
 //#define BROWSETRACKER_MARKER        9
-//#define BROWSETRACKER_MARKER_STYLE  wxSCI_MARK_DOTDOTDOT
+//#define BROWSETRACKER_MARKER_STYLE  wxSTC_MARK_DOTDOTDOT
 // ----------------------------------------------------------------------------
 //  Globals
 // ----------------------------------------------------------------------------
@@ -1528,7 +1528,7 @@ void BrowseTracker::OnEditorActivated(CodeBlocksEvent& event)
                 int marginMask = control->GetMarginMask(1);
                 control->SetMarginMask( 1, marginMask | (1<<GetBrowseMarkerId()) );
                 control->MarkerDefine( GetBrowseMarkerId(), GetBrowseMarkerStyle() );
-                // the following stmt seems to do nothing for wxSCI_MARK_DOTDOTDOT
+                // the following stmt seems to do nothing for wxSTC_MARK_DOTDOTDOT
                 control->MarkerSetBackground( GetBrowseMarkerId(), wxColour(0xA0, 0xA0, 0xFF));
                 #if defined(LOGGING)
                     //LOGIT( _T("BT UserStyle[%d]MarkerId[%d]MarkerStyle[%d]"),m_UserMarksStyle,GetBrowseMarkerId(), GetBrowseMarkerStyle());
@@ -2321,20 +2321,20 @@ void BrowseTracker::OnProjectLoadingHook(cbProject* project, TiXmlElement* /*ele
     }
 }//OnProjectLoadingHook
 // ----------------------------------------------------------------------------
-void BrowseTracker::OnEditorEventHook(cbEditor* pcbEditor, wxScintillaEvent& event)
+void BrowseTracker::OnEditorEventHook(cbEditor* pcbEditor, wxStyledTextEvent& event)
 // ----------------------------------------------------------------------------
 {
     // Rebuild the BrowseMarks array if user deletes/adds editor lines
 
 //    wxString txt = _T("OnEditorModified(): ");
 //    int flags = event.GetModificationType();
-//    if (flags & wxSCI_MOD_CHANGEMARKER) txt << _T("wxSCI_MOD_CHANGEMARKER, ");
-//    if (flags & wxSCI_MOD_INSERTTEXT) txt << _T("wxSCI_MOD_INSERTTEXT, ");
-//    if (flags & wxSCI_MOD_DELETETEXT) txt << _T("wxSCI_MOD_DELETETEXT, ");
-//    if (flags & wxSCI_MOD_CHANGEFOLD) txt << _T("wxSCI_MOD_CHANGEFOLD, ");
+//    if (flags & wxSTC_MOD_CHANGEMARKER) txt << _T("wxSTC_MOD_CHANGEMARKER, ");
+//    if (flags & wxSTC_MOD_INSERTTEXT) txt << _T("wxSTC_MOD_INSERTTEXT, ");
+//    if (flags & wxSTC_MOD_DELETETEXT) txt << _T("wxSTC_MOD_DELETETEXT, ");
+//    if (flags & wxSTC_MOD_CHANGEFOLD) txt << _T("wxSTC_MOD_CHANGEFOLD, ");
 //    if (flags & wxSCI_PERFORMED_USER) txt << _T("wxSCI_PERFORMED_USER, ");
-//    if (flags & wxSCI_MOD_BEFOREINSERT) txt << _T("wxSCI_MOD_BEFOREINSERT, ");
-//    if (flags & wxSCI_MOD_BEFOREDELETE) txt << _T("wxSCI_MOD_BEFOREDELETE, ");
+//    if (flags & wxSTC_MOD_BEFOREINSERT) txt << _T("wxSTC_MOD_BEFOREINSERT, ");
+//    if (flags & wxSTC_MOD_BEFOREDELETE) txt << _T("wxSTC_MOD_BEFOREDELETE, ");
 //    txt << _T("pos=")
 //        << wxString::Format(_T("%d"), event.GetPosition())
 //        << _T(", line=")
@@ -2348,15 +2348,15 @@ void BrowseTracker::OnEditorEventHook(cbEditor* pcbEditor, wxScintillaEvent& eve
     if (not IsBrowseMarksEnabled())
         return;
 
-    //if ( event.GetEventType() != wxEVT_SCI_MODIFIED )
-    if ( event.GetEventType() == wxEVT_SCI_MODIFIED )
+    //if ( event.GetEventType() != wxEVT_STC_MODIFIED )
+    if ( event.GetEventType() == wxEVT_STC_MODIFIED )
     {
         // Whenever event.GetLinesAdded() != 0, we must re-set BrowseMarks for lines greater
         // than LineFromPosition(event.GetPosition())
 
         int linesAdded = event.GetLinesAdded();
-        bool isAdd = event.GetModificationType() & wxSCI_MOD_INSERTTEXT;
-        bool isDel = event.GetModificationType() & wxSCI_MOD_DELETETEXT;
+        bool isAdd = event.GetModificationType() & wxSTC_MOD_INSERTTEXT;
+        bool isDel = event.GetModificationType() & wxSTC_MOD_DELETETEXT;
         if ((isAdd || isDel) && linesAdded != 0)
         {
             #if defined(LOGGING)
@@ -2365,24 +2365,24 @@ void BrowseTracker::OnEditorEventHook(cbEditor* pcbEditor, wxScintillaEvent& eve
             // rebuild BrowseMarks from scintilla marks
             RebuildBrowse_Marks( pcbEditor, isAdd );
         }//if
-    }//wxEVT_SCI_MODIFIED
+    }//wxEVT_STC_MODIFIED
 
-    // wxSCI_MOD_CHANGEMARKER is an extremely expensive call. It's called
+    // wxSTC_MOD_CHANGEMARKER is an extremely expensive call. It's called
     // for each line during a file load, and for every change to every
     // margin marker in the known cosmos. So here we allow a "one shot only"
     // to catch the marker changed by a margin context menu.
     // cf: CloneBookMarkFromEditor() and OnMarginContextMenu()
-    if ( event.GetEventType() == wxEVT_SCI_MODIFIED )
+    if ( event.GetEventType() == wxEVT_STC_MODIFIED )
     do{
         if ( m_OnEditorEventHookIgnoreMarkerChanges )
             break;
         int flags = event.GetModificationType();
-        if (flags & wxSCI_MOD_CHANGEMARKER )
+        if (flags & wxSTC_MOD_CHANGEMARKER )
         {
             m_OnEditorEventHookIgnoreMarkerChanges = true;
             int line = event.GetLine();
             #if defined(LOGGING)
-            //LOGIT( _T("BT wxSCI_MOD_CHANGEMARKER line[%d]"), line );
+            //LOGIT( _T("BT wxSTC_MOD_CHANGEMARKER line[%d]"), line );
             #endif
             CloneBookMarkFromEditor( line );
         }
@@ -2415,7 +2415,7 @@ void BrowseTracker::OnMarginContextMenu(wxContextMenuEvent& event)
 // ----------------------------------------------------------------------------
 {
     // User has invoked the context menu. Set a flag to allow
-    // OnEditorEventHook wxSCI_MOD_CHANGEMARKER overhead
+    // OnEditorEventHook wxSTC_MOD_CHANGEMARKER overhead
     // If the user clicked withing the number margins, the hook
     // will see it, do its thing, then turn the overhead off.
     // If the user does not change the a marker, the hook will not turn

@@ -6,7 +6,7 @@
 #ifndef CBSTYLEDTEXTCTRL_H_INCLUDED
 #define CBSTYLEDTEXTCTRL_H_INCLUDED
 
-#include "ca/wxscintilla.h"
+#include "ca/wxstyledtextctrl.h"
 #include <wx/longlong.h>
 #include "settings.h" // DLLIMPORT
 
@@ -18,7 +18,7 @@ class wxFocusEvent;
 class wxMouseEvent;
 class wxPoint;
 
-class DLLIMPORT cbStyledTextCtrl : public wxScintilla
+class DLLIMPORT cbStyledTextCtrl : public wxStyledTextCtrl
 {
     public:
         cbStyledTextCtrl(wxWindow* pParent, int id, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = 0);

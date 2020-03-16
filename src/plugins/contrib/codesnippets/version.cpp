@@ -80,7 +80,7 @@ AppVersion::~AppVersion()
 //          26) Added Drag inward to edit control
 //          27) Fixed DragnDrop overwriting instead of inserting.
 //          28) Changed property editor to wxScintill from wxTextCtrl
-//          29) Corrected wxScintilla/Edit horizontal scroll length
+//          29) Corrected wxStyledTextCtrl/Edit horizontal scroll length
 //          30) Set scintilla defaults as close to CodeBlccks defaults as possible
 //          31) Position child windows as close to parent as wxWidgets allows
 //          32) Fixed edit dlg buttons to align center horizontal

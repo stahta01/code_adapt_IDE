@@ -213,7 +213,7 @@ class BrowseTracker : public cbPlugin
 		void OnEditorActivated(CodeBlocksEvent& event);
         void OnEditorOpened(CodeBlocksEvent& event);
         void OnEditorClosed(CodeBlocksEvent& event);
-        void OnEditorEventHook(cbEditor* pControl, wxScintillaEvent& event);
+        void OnEditorEventHook(cbEditor* pControl, wxStyledTextEvent& event);
         void OnMarginContextMenu(wxContextMenuEvent& event);
 
         void OnProjectOpened(CodeBlocksEvent& event);

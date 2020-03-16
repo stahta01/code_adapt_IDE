@@ -168,15 +168,6 @@ class DLLIMPORT EditorBase : public wxPanel
         /** Clear Undo- (and Changebar-) history */
         virtual void ClearHistory(){}
 
-        /** Goto next changed line */
-        virtual void GotoNextChanged(){}
-
-        /** Goto previous changed line */
-        virtual void GotoPreviousChanged(){}
-
-        /** Enable or disable changebar */
-        virtual void SetChangeCollection(cb_optional bool collectChange){}
-
         /** Cut selected text/object to clipboard. */
         virtual void Cut(){}
 

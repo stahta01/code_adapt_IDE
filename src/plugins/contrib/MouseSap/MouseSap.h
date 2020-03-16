@@ -44,7 +44,7 @@ class MMSapEvents;
 class MouseSapCfg;
 class wxLogWindow;
 class wxObject;
-class wxScintillaEvent;
+class wxStyledTextEvent;
 class cbStyledTextCtrl;
 
 // ----------------------------------------------------------------------------
@@ -91,7 +91,7 @@ class MouseSap : public cbPlugin
         wxString  FindAppPath(const wxString& argv0, const wxString& cwd, const wxString& appVariableName);
         void      OnWindowOpen(wxEvent& event);
         void      OnWindowClose(wxEvent& event);
-        void      OnEditorEventHook(cbEditor* pcbEditor, wxScintillaEvent& event);
+        void      OnEditorEventHook(cbEditor* pcbEditor, wxStyledTextEvent& event);
 
 
         wxString        m_ConfigFolder;

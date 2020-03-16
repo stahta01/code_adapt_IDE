@@ -19,14 +19,14 @@ namespace
     PluginRegistrant<SmartIndentPascal> reg(wxT("SmartIndentPascal"));
 }
 
-void SmartIndentPascal::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) const
+void SmartIndentPascal::OnEditorHook(cbEditor* ed, wxStyledTextEvent& event) const
 {
     if (!ed) return;
 
     // check the event type and the currently set language
     // if it is not a CharAdded event or the language is not Pascal return
     wxEventType type = event.GetEventType();
-    if ( type != wxEVT_SCI_CHARADDED ) return;
+    if ( type != wxEVT_STC_CHARADDED ) return;
 
     cbStyledTextCtrl* stc = ed->GetControl();
     if ( !stc ) return;
@@ -41,7 +41,7 @@ void SmartIndentPascal::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) cons
     ed->AutoIndentDone(); // we are responsible.
 
     wxChar ch = event.GetKey();
-    if ( (ch == wxT('\n')) || ( (stc->GetEOLMode() == wxSCI_EOL_CR) && (ch == wxT('\r')) ) )
+    if ( (ch == wxT('\n')) || ( (stc->GetEOLMode() == wxSTC_EOL_CR) && (ch == wxT('\r')) ) )
         DoIndent(ed, langname);   // indent because \n added
     else if ( ch != wxT(' ') )
         DoUnIndent(ed, langname); // un-indent because not a newline added

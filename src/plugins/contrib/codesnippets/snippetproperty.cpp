@@ -124,7 +124,7 @@ void SnippetProperty::InitSnippetProperty(wxTreeCtrl* pTree, wxTreeItemId itemId
 
 	wxColour txtBackground = m_ItemLabelTextCtrl->GetBackgroundColour();
     //m_SnippetEditCtrl->SetBackgroundColour(txtBackground);
-    m_SnippetEditCtrl->StyleSetBackground (wxSCI_STYLE_DEFAULT, txtBackground);
+    m_SnippetEditCtrl->StyleSetBackground (wxSTC_STYLE_DEFAULT, txtBackground);
     m_SnippetEditCtrl->StyleClearAll();
 
 	// Get the item

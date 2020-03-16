@@ -19,7 +19,7 @@ namespace
     PluginRegistrant<SmartIndentHDL> reg(wxT("SmartIndentHDL"));
 }
 
-void SmartIndentHDL::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) const
+void SmartIndentHDL::OnEditorHook(cbEditor* ed, wxStyledTextEvent& event) const
 {
     // check if smart indent is enabled
     // check the event type and the currently set language
@@ -32,7 +32,7 @@ void SmartIndentHDL::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) const
         return;
 
     wxEventType type = event.GetEventType();
-    if ( type != wxEVT_SCI_CHARADDED )
+    if ( type != wxEVT_STC_CHARADDED )
         return;
 
     cbStyledTextCtrl *stc = ed->GetControl();
@@ -46,7 +46,7 @@ void SmartIndentHDL::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) const
     ed->AutoIndentDone(); // we are responsible.
 
     wxChar ch = event.GetKey();
-    if ( (ch == wxT('\n')) || ( (stc->GetEOLMode() == wxSCI_EOL_CR) && (ch == wxT('\r')) ) )
+    if ( (ch == wxT('\n')) || ( (stc->GetEOLMode() == wxSTC_EOL_CR) && (ch == wxT('\r')) ) )
         DoIndent(ed, langname);   // indent because \n added
     else if ( ch != wxT(' ') )
         DoUnIndent(ed, langname); // un-indent because not a newline added
@@ -87,7 +87,7 @@ int SmartIndentHDL::FindBlockStartVHDL(cbEditor* ed, int position, wxString bloc
 
     do
     {
-        pos = stc->FindText(pos, 0, block, wxSCI_FIND_WHOLEWORD);
+        pos = stc->FindText(pos, 0, block, wxSTC_FIND_WHOLEWORD);
         if ( pos != -1 )
         {
             if (  GetLastNonCommentWord(ed, pos, 1).Lower().IsSameAs( wxT("end") ) )

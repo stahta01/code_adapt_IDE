@@ -86,9 +86,9 @@ bool SpellCheckHelper::IsEscapeSequenceStart(wxChar ch, wxString langname, int s
 {
     //Manager::Get()->GetLogManager()->Log(wxString(_T("check if '")) + ch +_T("' is an escape in \"")+langname + wxString::Format(_T("\" at style %d"), style));
     if (   langname == _T("C/C++")
-            && (   (style == wxSCI_C_STRING)
-                   || (style == wxSCI_C_CHARACTER)
-                   || (style == wxSCI_C_STRINGEOL) ) )
+            && (   (style == wxSTC_C_STRING)
+                   || (style == wxSTC_C_CHARACTER)
+                   || (style == wxSTC_C_STRINGEOL) ) )
     {
         return ch == _T('\\');
     }

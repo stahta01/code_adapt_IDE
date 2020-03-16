@@ -27,22 +27,22 @@ OnlineSpellChecker::~OnlineSpellChecker()
     ClearAllIndications();
 }
 
-void OnlineSpellChecker::Call(cbEditor* ctrl, wxScintillaEvent& event) const
+void OnlineSpellChecker::Call(cbEditor* ctrl, wxStyledTextEvent& event) const
 {
     // return if this event is not fired from the active editor (is it possible that an editor which is not active fires an event?)
     if ( Manager::Get()->GetEditorManager()->GetActiveEditor() != ctrl  )
         return;
 
     // check the event type if it is an update event
-    if ( event.GetEventType() == wxEVT_SCI_UPDATEUI )
+    if ( event.GetEventType() == wxEVT_STC_UPDATEUI )
         OnEditorUpdateUI(ctrl);
-    else if ( event.GetEventType() == wxEVT_SCI_MODIFIED)
+    else if ( event.GetEventType() == wxEVT_STC_MODIFIED)
     {
-        if      (event.GetModificationType() & wxSCI_MOD_INSERTTEXT)
+        if      (event.GetModificationType() & wxSTC_MOD_INSERTTEXT)
             OnEditorChangeTextRange(ctrl, event.GetPosition(), event.GetPosition() + event.GetLength());
-        else if (event.GetModificationType() & wxSCI_MOD_DELETETEXT)
+        else if (event.GetModificationType() & wxSTC_MOD_DELETETEXT)
             OnEditorChangeTextRange(ctrl, event.GetPosition(), event.GetPosition());
-        else if (event.GetModificationType() & wxSCI_MOD_CHANGESTYLE)
+        else if (event.GetModificationType() & wxSTC_MOD_CHANGESTYLE)
             OnEditorChangeTextRange(ctrl, event.GetPosition(), event.GetPosition() + event.GetLength());
     }
 }
@@ -153,7 +153,7 @@ void OnlineSpellChecker::DoSetIndications(cbEditor* ctrl) const
     stc->SetIndicatorCurrent(GetIndicator());
     if (m_oldCtrl != ctrl)
     {
-        stc->IndicatorSetStyle(GetIndicator(), wxSCI_INDIC_SQUIGGLE);
+        stc->IndicatorSetStyle(GetIndicator(), wxSTC_INDIC_SQUIGGLE);
         stc->IndicatorSetForeground(GetIndicator(), GetIndicatorColor() );
 #ifndef wxHAVE_RAW_BITMAP
         // If wxWidgets is build without rawbitmap-support, the indicators become opaque
@@ -166,7 +166,7 @@ void OnlineSpellChecker::DoSetIndications(cbEditor* ctrl) const
     {
         if (m_oldCtrl != ctrl)
         {
-            stcr->IndicatorSetStyle(GetIndicator(), wxSCI_INDIC_SQUIGGLE);
+            stcr->IndicatorSetStyle(GetIndicator(), wxSTC_INDIC_SQUIGGLE);
             stcr->IndicatorSetForeground(GetIndicator(), GetIndicatorColor() );
 #ifndef wxHAVE_RAW_BITMAP
             stcr->IndicatorSetUnder(GetIndicator(),true);
@@ -286,7 +286,7 @@ void OnlineSpellChecker::DissectWordAndCheck(cbStyledTextCtrl* stc, int wordstar
                     {
                         int endPos = 0;
                         const int startPos = stc->FindText(wordstart + a, wordend, word.Mid(a, b - a),
-                                                           wxSCI_FIND_MATCHCASE, &endPos);
+                                                           wxSTC_FIND_MATCHCASE, &endPos);
                         if (startPos != wxNOT_FOUND)
                             stc->IndicatorFillRange(startPos, endPos - startPos);
                     }
@@ -316,7 +316,7 @@ void OnlineSpellChecker::DissectWordAndCheck(cbStyledTextCtrl* stc, int wordstar
             if (isMultibyte) // not perfect, so only try if necessary
             {
                 int endPos = 0;
-                const int startPos = stc->FindText(wordstart + a, wordend, spellcheck, wxSCI_FIND_MATCHCASE, &endPos);
+                const int startPos = stc->FindText(wordstart + a, wordend, spellcheck, wxSTC_FIND_MATCHCASE, &endPos);
                 if (startPos != wxNOT_FOUND)
                     stc->IndicatorFillRange(startPos, endPos - startPos);
             }

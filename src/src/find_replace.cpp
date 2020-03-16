@@ -61,7 +61,7 @@ struct cbFindReplaceData
 
     cbFindReplaceData()
     {
-        eolMode = wxSCI_EOL_LF;
+        eolMode = wxSTC_EOL_LF;
         fixEOLs = false;
     }
 };
@@ -78,15 +78,15 @@ void cbFindReplaceData::ConvertEOLs(int newmode)
         const wxChar* eol_to = eol_lf;
         switch(eolMode)
         {
-            case wxSCI_EOL_CR: eol_from = eol_cr; break;
-            case wxSCI_EOL_CRLF: eol_from = eol_crlf; break;
+            case wxSTC_EOL_CR: eol_from = eol_cr; break;
+            case wxSTC_EOL_CRLF: eol_from = eol_crlf; break;
             default: ;
         }
         switch(newmode)
         {
-            case wxSCI_EOL_CR: eol_to = eol_cr; break;
-            case wxSCI_EOL_CRLF: eol_to = eol_crlf; break;
-            default: newmode = wxSCI_EOL_LF;
+            case wxSTC_EOL_CR: eol_to = eol_cr; break;
+            case wxSTC_EOL_CRLF: eol_to = eol_crlf; break;
+            default: newmode = wxSTC_EOL_LF;
         }
         findText.Replace(eol_from, eol_to, true);
         replaceText.Replace(eol_from, eol_to, true);
@@ -226,7 +226,7 @@ int FindReplace::ShowFindDialog(bool replace, bool explicitly_find_in_files)
     m_LastFindReplaceData->end = 0;
     m_LastFindReplaceData->findText = dlg->GetFindString();
     m_LastFindReplaceData->replaceText = dlg->GetReplaceString();
-    m_LastFindReplaceData->eolMode = wxSCI_EOL_LF;
+    m_LastFindReplaceData->eolMode = wxSTC_EOL_LF;
     m_LastFindReplaceData->multiLine = dlg->GetMultiLine();
     m_LastFindReplaceData->fixEOLs = dlg->GetFixEOLs();
     m_LastFindReplaceData->startFile = dlg->GetStartFile();
@@ -437,9 +437,7 @@ int FindReplace::Replace(cbStyledTextCtrl* control, cbFindReplaceData* data)
             // As all the file's lines are affected, we disable change history for this step.
 
             control->BeginUndoAction();
-            control->SetChangeCollection(false);
             control->ConvertEOLs(eolMode);
-            control->SetChangeCollection(true);
             control->EndUndoAction();
         }
     }
@@ -448,16 +446,16 @@ int FindReplace::Replace(cbStyledTextCtrl* control, cbFindReplaceData* data)
     CalculateFindReplaceStartEnd(control, data, true);
 
     if (data->matchWord)
-        flags |= wxSCI_FIND_WHOLEWORD;
+        flags |= wxSTC_FIND_WHOLEWORD;
     if (data->startWord)
-        flags |= wxSCI_FIND_WORDSTART;
+        flags |= wxSTC_FIND_WORDSTART;
     if (data->matchCase)
-        flags |= wxSCI_FIND_MATCHCASE;
+        flags |= wxSTC_FIND_MATCHCASE;
     if (data->regEx)
     {
-        flags |= wxSCI_FIND_REGEXP;
+        flags |= wxSTC_FIND_REGEXP;
         if (Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/use_posix_style_regexes"), false))
-            flags |= wxSCI_FIND_POSIX;
+            flags |= wxSTC_FIND_POSIX;
         #ifdef wxHAS_REGEX_ADVANCED
         advRegex = Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/use_advanced_regexes"), false);
         #endif
@@ -674,7 +672,7 @@ int FindReplace::Replace(cbStyledTextCtrl* control, cbFindReplaceData* data)
     else
         msg.Printf(_("Replaced %i of %i matches"), replacecount, foundcount);
     cbMessageBox(msg, _("Result"), wxICON_INFORMATION);
-    control->SetSCIFocus(true);
+    control->SetSTCFocus(true);
 
     return pos;
 }
@@ -789,16 +787,16 @@ int FindReplace::ReplaceInFiles(cbFindReplaceData* data)
     bool advRegexNewLinePolicy =! data->IsMultiLine();
     int flags = 0;
     if (data->matchWord)
-        flags |= wxSCI_FIND_WHOLEWORD;
+        flags |= wxSTC_FIND_WHOLEWORD;
     if (data->startWord)
-        flags |= wxSCI_FIND_WORDSTART;
+        flags |= wxSTC_FIND_WORDSTART;
     if (data->matchCase)
-        flags |= wxSCI_FIND_MATCHCASE;
+        flags |= wxSTC_FIND_MATCHCASE;
     if (data->regEx)
     {
-        flags |= wxSCI_FIND_REGEXP;
+        flags |= wxSTC_FIND_REGEXP;
         if (Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/use_posix_style_regexes"), false))
-            flags |= wxSCI_FIND_POSIX;
+            flags |= wxSTC_FIND_POSIX;
         #ifdef wxHAS_REGEX_ADVANCED
         advRegex = Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/use_advanced_regexes"), false);
         #endif
@@ -920,9 +918,7 @@ int FindReplace::ReplaceInFiles(cbFindReplaceData* data)
             if (IsMultiLine && data->fixEOLs)
             {
                 control->BeginUndoAction(); //undo
-                control->SetChangeCollection(false);
                 control->ConvertEOLs(eolMode);
-                control->SetChangeCollection(true);
                 control->EndUndoAction();
             }
         }
@@ -1130,16 +1126,16 @@ int FindReplace::Find(cbStyledTextCtrl* control, cbFindReplaceData* data)
     CalculateFindReplaceStartEnd(control, data);
 
     if (data->matchWord)
-        flags |= wxSCI_FIND_WHOLEWORD;
+        flags |= wxSTC_FIND_WHOLEWORD;
     if (data->startWord)
-        flags |= wxSCI_FIND_WORDSTART;
+        flags |= wxSTC_FIND_WORDSTART;
     if (data->matchCase)
-        flags |= wxSCI_FIND_MATCHCASE;
+        flags |= wxSTC_FIND_MATCHCASE;
     if (data->regEx)
     {
-        flags |= wxSCI_FIND_REGEXP;
+        flags |= wxSTC_FIND_REGEXP;
         if (Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/use_posix_style_regexes"), false))
-            flags |= wxSCI_FIND_POSIX;
+            flags |= wxSTC_FIND_POSIX;
         #ifdef wxHAS_REGEX_ADVANCED
         advRegex = Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/use_advanced_regexes"), false);
         #endif
@@ -1279,7 +1275,7 @@ int FindReplace::Find(cbStyledTextCtrl* control, cbFindReplaceData* data)
                 wxString msg;
                 msg.Printf(_("Not found: %s"), data->findText.c_str());
                 cbMessageBox(msg, _("Result"), wxICON_INFORMATION);
-                control->SetSCIFocus(true);
+                control->SetSTCFocus(true);
                 wrapAroundNotification = false;
                 break; // done
             }
@@ -1541,7 +1537,7 @@ int FindReplace::FindInFiles(cbFindReplaceData* data)
             cbMessageBox(msg, _("Result"), wxICON_INFORMATION);
             cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
             if (ed)
-                ed->GetControl()->SetSCIFocus(true);
+                ed->GetControl()->SetSTCFocus(true);
         }
         else
         {
@@ -1593,7 +1589,7 @@ int FindReplace::FindNext(bool goingDown, cbStyledTextCtrl* control, cbFindRepla
             data->end = 0;
             data->findText = control->GetSelectedText();
             data->replaceText = wxEmptyString;
-            data->eolMode = wxSCI_EOL_LF;
+            data->eolMode = wxSTC_EOL_LF;
             data->multiLine = false;
             data->fixEOLs = false;
             data->startFile = false;

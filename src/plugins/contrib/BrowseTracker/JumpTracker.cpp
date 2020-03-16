@@ -243,7 +243,7 @@ void JumpTracker::OnEditorUpdateEvent(CodeBlocksEvent& event)
 
     wxString edFilename = ed->GetFilename();
     cbStyledTextCtrl* edstc = ed->GetControl();
-    if(edstc->GetCurrentLine() == wxSCI_INVALID_POSITION)
+    if(edstc->GetCurrentLine() == wxSTC_INVALID_POSITION)
         return;
 
     long edLine = edstc->GetCurrentLine();
@@ -326,7 +326,7 @@ void JumpTracker::OnEditorActivated(CodeBlocksEvent& event)
     #endif
 
     cbStyledTextCtrl* edstc = cbed->GetControl();
-    if(edstc->GetCurrentLine() == wxSCI_INVALID_POSITION)
+    if(edstc->GetCurrentLine() == wxSTC_INVALID_POSITION)
         return;
 
     long edPosn = edstc->GetCurrentPos();
@@ -369,7 +369,7 @@ void JumpTracker::OnEditorDeactivated(CodeBlocksEvent& event)
     #endif
 
     cbStyledTextCtrl* edstc = cbed->GetControl();
-    if(edstc->GetCurrentLine() == wxSCI_INVALID_POSITION)
+    if(edstc->GetCurrentLine() == wxSTC_INVALID_POSITION)
         return;
 
     long edPosn = edstc->GetCurrentPos();

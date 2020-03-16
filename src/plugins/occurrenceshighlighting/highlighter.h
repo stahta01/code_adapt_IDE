@@ -20,7 +20,7 @@ class Highlighter
     public:
         Highlighter(std::set<wxString> &texts);
         virtual ~Highlighter();
-        void Call(cbEditor*, wxScintillaEvent&) const;
+        void Call(cbEditor*, wxStyledTextEvent&) const;
 
         void TextsChanged() const;
 

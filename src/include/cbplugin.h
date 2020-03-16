@@ -370,7 +370,7 @@ class PLUGIN_EXPORT cbCompilerPlugin: public cbPlugin
 };
 
 
-class wxScintillaEvent;
+class wxStyledTextEvent;
 
 struct cbDebuggerFeature
 {
@@ -950,7 +950,7 @@ class PLUGIN_EXPORT cbCodeCompletionPlugin : public cbPlugin
         /** @brief Callback for inserting the selected autocomplete entry into the editor.
           *
           * The default implementation executes (wx)Scintilla's insert. Override and call
-          * @c ed->GetControl()->AutoCompCancel() for different @c wxEVT_SCI_AUTOCOMP_SELECTION behaviour.
+          * @c ed->GetControl()->AutoCompCancel() for different @c wxEVT_STC_AUTOCOMP_SELECTION behaviour.
           *
           * @param token The CCToken corresponding to the selected entry.
           * @param ed The editor to operate in.
@@ -1069,7 +1069,7 @@ class cbSmartIndentPlugin : public cbPlugin
           * Please check if this is the right smartIndent mechanism first:
           * Don't indent for languages you don't know.
           */
-        virtual void OnEditorHook(cbEditor* editor, wxScintillaEvent& event) const = 0;
+        virtual void OnEditorHook(cbEditor* editor, wxStyledTextEvent& event) const = 0;
 
         /** This is called after a code completion operation finishes.
           *

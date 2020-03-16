@@ -4,12 +4,12 @@
 #include <cbplugin.h> // for "class cbSmartIndentPlugin"
 
 class cbEditor;
-class wxScintillaEvent;
+class wxStyledTextEvent;
 
 class SmartIndentPascal : public cbSmartIndentPlugin
 {
     public:
-        virtual void OnEditorHook(cbEditor* ed, wxScintillaEvent& event) const;
+        virtual void OnEditorHook(cbEditor* ed, wxStyledTextEvent& event) const;
 
     private:
         void DoIndent  (cbEditor* ed, const wxString& langname) const;

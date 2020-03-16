@@ -19,7 +19,7 @@ namespace
     PluginRegistrant<SmartIndentPython> reg(wxT("SmartIndentPython"));
 }
 
-void SmartIndentPython::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) const
+void SmartIndentPython::OnEditorHook(cbEditor* ed, wxStyledTextEvent& event) const
 {
     // check if smart indent is enabled
     // check the event type and the currently set language
@@ -32,7 +32,7 @@ void SmartIndentPython::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) cons
         return;
 
     wxEventType type = event.GetEventType();
-    if ( type != wxEVT_SCI_CHARADDED )
+    if ( type != wxEVT_STC_CHARADDED )
         return;
 
     cbStyledTextCtrl* stc = ed->GetControl();
@@ -54,7 +54,7 @@ void SmartIndentPython::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) cons
     const wxChar ch = event.GetKey();
 
     // indent
-    if ( (ch == wxT('\n')) || ( (stc->GetEOLMode() == wxSCI_EOL_CR) && (ch == wxT('\r')) ) )
+    if ( (ch == wxT('\n')) || ( (stc->GetEOLMode() == wxSTC_EOL_CR) && (ch == wxT('\r')) ) )
     {
         if (AutoIndentEnabled())
         {

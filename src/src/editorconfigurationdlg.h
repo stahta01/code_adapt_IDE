@@ -79,7 +79,6 @@ class EditorConfigurationDlg : public wxScrollingDialog
         bool m_ThemeModified;
         ConfigurationPanelsArray m_PluginPanels;
         wxString m_FontString; // This is to store font data temporarily
-        bool m_EnableChangebar; // remember whether changebar was enabled or not
         bool m_EnableScrollWidthTracking; // remember whether scrollbarwidthtracking was enabled or not
         MenuIDToLanguageOption m_MenuIDToLanguageOption;
         wxImageList* m_pImageList;

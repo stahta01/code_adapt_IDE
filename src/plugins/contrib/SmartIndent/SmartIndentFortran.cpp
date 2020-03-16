@@ -19,7 +19,7 @@ namespace
     PluginRegistrant<SmartIndentFortran> reg(wxT("SmartIndentFortran"));
 }
 
-void SmartIndentFortran::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) const
+void SmartIndentFortran::OnEditorHook(cbEditor* ed, wxStyledTextEvent& event) const
 {
     // check if smart indent is enabled
     // check the event type and the currently set language
@@ -32,7 +32,7 @@ void SmartIndentFortran::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) con
         return;
 
     wxEventType type = event.GetEventType();
-    if ( type != wxEVT_SCI_CHARADDED )
+    if ( type != wxEVT_STC_CHARADDED )
         return;
 
     cbStyledTextCtrl* stc = ed->GetControl();
@@ -47,7 +47,7 @@ void SmartIndentFortran::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) con
     const int pos = stc->GetCurrentPos();
     wxChar ch = event.GetKey();
 
-    if ( (ch == _T('\n')) || ( (stc->GetEOLMode() == wxSCI_EOL_CR) && (ch == _T('\r')) ) )
+    if ( (ch == _T('\n')) || ( (stc->GetEOLMode() == wxSTC_EOL_CR) && (ch == _T('\r')) ) )
     {
         const bool autoIndent = AutoIndentEnabled();
 

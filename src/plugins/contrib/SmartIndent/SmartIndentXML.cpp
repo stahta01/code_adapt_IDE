@@ -21,7 +21,7 @@ namespace
     PluginRegistrant<SmartIndentXML> reg(wxT("SmartIndentXML"));
 }
 
-void SmartIndentXML::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) const
+void SmartIndentXML::OnEditorHook(cbEditor* ed, wxStyledTextEvent& event) const
 {
     // check if smart indent is enabled
     // check the event type and the currently set language
@@ -34,7 +34,7 @@ void SmartIndentXML::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) const
         return;
 
     wxEventType type = event.GetEventType();
-    if ( type != wxEVT_SCI_CHARADDED )
+    if ( type != wxEVT_STC_CHARADDED )
         return;
 
     cbStyledTextCtrl* stc = ed->GetControl();
@@ -42,7 +42,7 @@ void SmartIndentXML::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) const
         return;
 
     const int lexer = stc->GetLexer();
-    if (lexer != wxSCI_LEX_XML && lexer != wxSCI_LEX_HTML)
+    if (lexer != wxSTC_LEX_XML && lexer != wxSTC_LEX_HTML)
         return;
 
     ed->AutoIndentDone(); // we are responsible
@@ -124,14 +124,14 @@ void SmartIndentXML::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) const
                 stc->InsertText(pos, wxT("]]>"));
         }
         // embedded languages
-        else if (complQuote && curSty >= wxSCI_HJ_START && curSty <= wxSCI_HPHP_OPERATOR && !stc->IsString(curSty))
+        else if (complQuote && curSty >= wxSTC_HJ_START && curSty <= wxSTC_HPHP_OPERATOR && !stc->IsString(curSty))
         {
             stc->DoBraceCompletion(ch);
         }
     }
     // indent
     if (   AutoIndentEnabled()
-        && ( (ch == wxT('\n')) || ((stc->GetEOLMode() == wxSCI_EOL_CR) && (ch == wxT('\r'))) ) )
+        && ( (ch == wxT('\n')) || ((stc->GetEOLMode() == wxSTC_EOL_CR) && (ch == wxT('\r'))) ) )
     {
         wxString indent = ed->GetLineIndentString(currLine - 1);
         stc->BeginUndoAction();
@@ -170,7 +170,7 @@ void SmartIndentXML::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) const
                     }
                 }
             }
-            else if (stc->GetStyleAt(pos) >= wxSCI_HJ_START && stc->GetStyleAt(pos) <= wxSCI_HPHP_OPERATOR)
+            else if (stc->GetStyleAt(pos) >= wxSTC_HJ_START && stc->GetStyleAt(pos) <= wxSTC_HPHP_OPERATOR)
             {
                 // embedded language, indent braces
                 const wxString lineSuffix = stc->GetLine(currLine).Strip(wxString::both);
@@ -187,7 +187,7 @@ void SmartIndentXML::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) const
                 // align attributes
                 for (int i = stc->PositionFromLine(currLine - 1); i < stc->GetLineEndPosition(currLine - 1); ++i)
                 {
-                    if (stc->GetStyleAt(i) == wxSCI_H_ATTRIBUTE || stc->GetStyleAt(i) == wxSCI_H_ATTRIBUTEUNKNOWN)
+                    if (stc->GetStyleAt(i) == wxSTC_H_ATTRIBUTE || stc->GetStyleAt(i) == wxSTC_H_ATTRIBUTEUNKNOWN)
                     {
                         Indent(stc, indent, i - stc->PositionFromLine(currLine - 1));
                         if (stc->GetLineEndPosition(currLine) > pos + 2 && wxIsspace(stc->GetCharAt(pos)))

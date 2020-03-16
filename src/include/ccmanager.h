@@ -15,7 +15,7 @@ class wxHtmlLinkEvent;
 class wxHtmlWindow;
 class wxListEvent;
 class wxListView;
-class wxScintillaEvent;
+class wxStyledTextEvent;
 
 /** Code Completion Plugin Manager
  *
@@ -72,7 +72,7 @@ class DLLIMPORT CCManager : public Mgr<CCManager>, wxEvtHandler
         /** Let CCManager know that a change (e.g. active lexer is switched) may invalidate cached active ccPlugin. */
         void NotifyPluginStatus();
 
-        /** If for some reason you *need* to use wxScintilla::AutoCompShow(), call this instead so CCManager does not step on you. */
+        /** If for some reason you *need* to use wxStyledTextCtrl::AutoCompShow(), call this instead so CCManager does not step on you. */
         void InjectAutoCompShow(int lenEntered, const wxString& itemList);
 
         /** Used by cbStyledTextCtrl to process ArrowUp and ArrowDown key press.
@@ -104,7 +104,7 @@ class DLLIMPORT CCManager : public Mgr<CCManager>, wxEvtHandler
          * This is used so that we know some specific chars were entered, then we can decide
          * whether it time to show a calltip or suggestion list.
          */
-        void OnEditorHook(cbEditor* ed, wxScintillaEvent& event);
+        void OnEditorHook(cbEditor* ed, wxStyledTextEvent& event);
 
         /** Mouse hover event. */
         void OnEditorTooltip(CodeBlocksEvent& event);

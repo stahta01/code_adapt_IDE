@@ -17,7 +17,7 @@
 
 class cbEditor;
 class cbSmartIndentPlugin;
-class wxScintillaEvent;
+class wxStyledTextEvent;
 
 /** Provides static functions to add hooks to the editor modification operations. */
 namespace EditorHooks
@@ -27,7 +27,7 @@ namespace EditorHooks
     {
         public:
             virtual ~HookFunctorBase(){}
-            virtual void Call(cbEditor*, wxScintillaEvent&) const = 0;
+            virtual void Call(cbEditor*, wxStyledTextEvent&) const = 0;
 
 #ifdef EDITOR_HOOK_PERFORMANCE_MEASURE
             virtual const char* GetTypeName() const = 0;
@@ -47,15 +47,15 @@ namespace EditorHooks
       * EditorHooks::UnregisterHook(id, true);
       *
       * Member functions used as hook callbacks must have the following signature:
-      * void YourFunctionName(cbEditor*, wxScintillaEvent&)
+      * void YourFunctionName(cbEditor*, wxStyledTextEvent&)
       */
     template<class T> class HookFunctor : public HookFunctorBase
     {
         public:
-            typedef void (T::*Func)(cbEditor*, wxScintillaEvent&);
+            typedef void (T::*Func)(cbEditor*, wxStyledTextEvent&);
             HookFunctor(T* obj, Func func) : m_pObj(obj), m_pFunc(func)
             { ; }
-            void Call(cbEditor* editor, wxScintillaEvent& event) const override
+            void Call(cbEditor* editor, wxStyledTextEvent& event) const override
             {
                 if (m_pObj && m_pFunc)
                     (m_pObj->*m_pFunc)(editor, event);
@@ -93,9 +93,9 @@ namespace EditorHooks
     /** Call all registered hooks using the supplied parameters.
       * This is called by ProjectLoader.
       * @param editor The editor in question.
-      * @param event Parameter (wxScintilla event) to provide to the registered hook
+      * @param event Parameter (wxStyledTextCtrl event) to provide to the registered hook
       */
-    extern DLLIMPORT void CallHooks(cbEditor* editor, wxScintillaEvent& event);
+    extern DLLIMPORT void CallHooks(cbEditor* editor, wxStyledTextEvent& event);
 
     /** Provides a HookFunctor which redirects the Call() of a cbSmartIndentPlugin
       * so only the interface of cbSmartIndentPlugin has to be implemented for a new language.
@@ -111,7 +111,7 @@ namespace EditorHooks
               * @param editor The editor that is active and whose content is changed
               * @param event  The wxScintilla event fired to react accordingly (see cbEditor::CreateEditor, namely scintilla_events)
               */
-            void Call(cbEditor* editor, wxScintillaEvent& event) const override;
+            void Call(cbEditor* editor, wxStyledTextEvent& event) const override;
 
 #ifdef EDITOR_HOOK_PERFORMANCE_MEASURE
             virtual const char* GetTypeName() const

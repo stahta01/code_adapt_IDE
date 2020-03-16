@@ -37,7 +37,7 @@ class wxPanel;
 class wxMouseEvent;
 class wxCommandEvent;
 class wxSplitterEvent;
-class wxScintillaEvent;
+class wxStyledTextEvent;
 class wxContextMenuEvent;
 class wxSplitterWindow;
 class wxStaticBoxSizer;
@@ -245,7 +245,7 @@ public:
     void OnQuickOptions(wxCommandEvent &event);
     void OnQuickOptionsUpdateUI(wxUpdateUIEvent &event);
 
-    void OnMarginClick(wxScintillaEvent& event);
+    void OnMarginClick(wxStyledTextEvent& event);
     void OnContextMenu(wxContextMenuEvent& event);
     void OnLoggerClick      (const wxString& file, long line);  // Called by ThreadSearchLoggerBase derived instance
                                                                 // when user clicks on a search result

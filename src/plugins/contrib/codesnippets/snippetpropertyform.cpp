@@ -67,7 +67,7 @@ SnippetPropertyForm::SnippetPropertyForm( wxWindow* parent, int id, wxString tit
 
     // create wxscintilla edit control
     //-m_SnippetEditCtrl = new Edit(this, ID_DEFAULT, wxDefaultPosition, wxDefaultSize, 0);//|wxHSCROLL|wxNO_BORDER|wxVSCROLL|wxTE_MULTILINE  );
-    m_SnippetEditCtrl = new wxScintilla(this, ID_DEFAULT, wxDefaultPosition, wxDefaultSize, 0);//|wxHSCROLL|wxNO_BORDER|wxVSCROLL|wxTE_MULTILINE  );
+    m_SnippetEditCtrl = new wxStyledTextCtrl(this, ID_DEFAULT, wxDefaultPosition, wxDefaultSize, 0);//|wxHSCROLL|wxNO_BORDER|wxVSCROLL|wxTE_MULTILINE  );
 	bSizer1->Add( m_SnippetEditCtrl, 1, wxALL|wxEXPAND, 5 );
 
 	sbSizer->Add( bSizer1, 1, wxEXPAND, 5 );

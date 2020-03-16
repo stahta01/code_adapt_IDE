@@ -116,7 +116,7 @@ void BrowseMarks::SetBrowseMarksStyle( int userStyle )
     int marginMask = pControl->GetMarginMask(1);
     pControl->SetMarginMask( 1, marginMask | (1 << GetBrowseMarkerId()) );
     pControl->MarkerDefine( GetBrowseMarkerId(), GetBrowseMarkerStyle() );
-    // the following stmt seems to do nothing for wxSCI_MARK_DOTDOTDOT
+    // the following stmt seems to do nothing for wxSTC_MARK_DOTDOTDOT
     pControl->MarkerSetBackground( GetBrowseMarkerId(), wxColour(0xA0, 0xA0, 0xFF));
     #if defined(LOGGING)
     LOGIT( _T("BT BrowseMarks::UserStyle[%d]MarkerId[%d]MarkerStyle[%d]"),userStyle,GetBrowseMarkerId(), GetBrowseMarkerStyle() );

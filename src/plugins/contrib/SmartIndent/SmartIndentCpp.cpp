@@ -20,7 +20,7 @@ namespace
 {
     PluginRegistrant<SmartIndentCpp> reg(_T("SmartIndentCpp"));
 }
-void SmartIndentCpp::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) const
+void SmartIndentCpp::OnEditorHook(cbEditor* ed, wxStyledTextEvent& event) const
 {
 
     // check if smart indent is enabled
@@ -34,7 +34,7 @@ void SmartIndentCpp::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) const
         return;
 
     wxEventType type = event.GetEventType();
-    if ( type != wxEVT_SCI_CHARADDED )
+    if ( type != wxEVT_STC_CHARADDED )
         return;
 
     cbStyledTextCtrl* stc = ed->GetControl();
@@ -46,7 +46,7 @@ void SmartIndentCpp::OnEditorHook(cbEditor* ed, wxScintillaEvent& event) const
         return;
 
     wxString langname = colour_set->GetLanguageName(ed->GetLanguage());
-    if ( langname != wxT("D") && (stc->GetLexer() != wxSCI_LEX_CPP || langname == wxT("Hitachi asm")))
+    if ( langname != wxT("D") && (stc->GetLexer() != wxSTC_LEX_CPP || langname == wxT("Hitachi asm")))
         return;
 
     ed->AutoIndentDone(); // we are responsible.
@@ -87,7 +87,7 @@ void SmartIndentCpp::DoSmartIndent(cbEditor* ed, const wxChar &ch)const
 
     const int pos = stc->GetCurrentPos();
     // indent
-    if ( (ch == _T('\n')) || ( (stc->GetEOLMode() == wxSCI_EOL_CR) && (ch == _T('\r')) ) )
+    if ( (ch == _T('\n')) || ( (stc->GetEOLMode() == wxSTC_EOL_CR) && (ch == _T('\r')) ) )
     {
         stc->BeginUndoAction();
         // new-line: adjust indentation
@@ -347,7 +347,7 @@ void SmartIndentCpp::DoSmartIndent(cbEditor* ed, const wxChar &ch)const
     else if (ch == _T('}'))
     {
         bool smartIndent = Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/smart_indent"), true);
-        if ( smartIndent && ( (stc->GetLexer() == wxSCI_LEX_CPP) || (stc->GetLexer() == wxSCI_LEX_D) ) )
+        if ( smartIndent && ( (stc->GetLexer() == wxSTC_LEX_CPP) || (stc->GetLexer() == wxSTC_LEX_D) ) )
         {
             stc->BeginUndoAction();
             // undo block indentation, if needed
@@ -380,7 +380,7 @@ void SmartIndentCpp::DoSmartIndent(cbEditor* ed, const wxChar &ch)const
     else if (ch == _T(':'))
     {
         bool smartIndent = Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/smart_indent"), true);
-        if (smartIndent && stc->GetLexer() == wxSCI_LEX_CPP && !autoUnIndent)
+        if (smartIndent && stc->GetLexer() == wxSTC_LEX_CPP && !autoUnIndent)
         {
             const int curLine = stc->GetCurrentLine();
             const int li_pos = stc->GetLineIndentPosition(curLine);
@@ -456,10 +456,10 @@ bool SmartIndentCpp::BraceIndent(cbStyledTextCtrl *stc, wxString &indent)const
     if ( BraceSmartIndentEnabled() )
     {
         int style = 0;
-        if (stc->GetLexer() == wxSCI_LEX_CPP)
-            style = wxSCI_C_STRING;
-        else // wxSCI_LEX_D
-            style = wxSCI_D_STRING;
+        if (stc->GetLexer() == wxSTC_LEX_CPP)
+            style = wxSTC_C_STRING;
+        else // wxSTC_LEX_D
+            style = wxSTC_D_STRING;
 
         int brace_position = GetFirstBraceInLine(stc, style);
         return Indent(stc, indent, brace_position);
@@ -565,7 +565,7 @@ void SmartIndentCpp::DoBraceCompletion(cbStyledTextCtrl* control, const wxChar& 
     int style = control->GetStyleAt(pos);
 
     // match preprocessor commands
-    if ( (ch == _T('\n')) || ( (control->GetEOLMode() == wxSCI_EOL_CR) && (ch == _T('\r')) ) )
+    if ( (ch == _T('\n')) || ( (control->GetEOLMode() == wxSTC_EOL_CR) && (ch == _T('\r')) ) )
     {
         wxRegEx ppIf(wxT("^[ \t]*#[ \t]*if"));
         wxRegEx ppElse(wxT("^[ \t]*#[ \t]*el"));

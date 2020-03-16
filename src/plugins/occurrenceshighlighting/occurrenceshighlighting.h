@@ -42,7 +42,7 @@ class OccurrencesHighlighting : public cbPlugin
         void OnRemove(wxCommandEvent &event);
         void OnPanelPopupMenu(wxContextMenuEvent &event);
 
-        void OnEditorHook(cbEditor* editor, wxScintillaEvent& event);
+        void OnEditorHook(cbEditor* editor, wxStyledTextEvent& event);
         void OnEditorEvent(CodeBlocksEvent& event);
     private:
         wxString GetWordAtCaret()const;

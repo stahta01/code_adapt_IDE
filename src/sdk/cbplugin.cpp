@@ -203,7 +203,7 @@ wxString cbDebuggerPlugin::GetEditorWordAtCaret(const wxPoint* mousePosition)
             int startPos = stc->GetSelectionStart();
             int endPos = stc->GetSelectionEnd();
             int mousePos = stc->PositionFromPointClose(mousePosition->x, mousePosition->y);
-            if (mousePos == wxSCI_INVALID_POSITION)
+            if (mousePos == wxSTC_INVALID_POSITION)
                 return wxEmptyString;
             else if (startPos <= mousePos && mousePos <= endPos)
                 return selected_text;
@@ -1233,9 +1233,9 @@ int cbSmartIndentPlugin::FindBlockStart(cbStyledTextCtrl* stc, int position, wxS
     int pb, pe;
     int lvl = 0;
 
-    int flags = wxSCI_FIND_WHOLEWORD;
+    int flags = wxSTC_FIND_WHOLEWORD;
     if ( CaseSensitive )
-        flags |= wxSCI_FIND_MATCHCASE;
+        flags |= wxSTC_FIND_MATCHCASE;
 
     do
     {

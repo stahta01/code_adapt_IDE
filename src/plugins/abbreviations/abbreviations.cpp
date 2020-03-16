@@ -285,9 +285,9 @@ void Abbreviations::DoAutoComplete(cbEditor* ed)
         // replace any other macros in the generated code
         Manager::Get()->GetMacrosManager()->ReplaceMacros(code);
         // match current EOL mode
-        if (control->GetEOLMode() == wxSCI_EOL_CRLF)
+        if (control->GetEOLMode() == wxSTC_EOL_CRLF)
             code.Replace(wxT("\n"), wxT("\r\n"));
-        else if (control->GetEOLMode() == wxSCI_EOL_CR)
+        else if (control->GetEOLMode() == wxSTC_EOL_CR)
             code.Replace(wxT("\n"), wxT("\r"));
         // add the text
         control->InsertText(curPos, code);
@@ -469,7 +469,7 @@ void Abbreviations::SaveAutoCompleteConfig()
     }
 }
 
-void Abbreviations::EditorEventHook(cbEditor* editor, wxScintillaEvent& event)
+void Abbreviations::EditorEventHook(cbEditor* editor, wxStyledTextEvent& event)
 {
     cbStyledTextCtrl* control = editor->GetControl();
 
@@ -479,7 +479,7 @@ void Abbreviations::EditorEventHook(cbEditor* editor, wxScintillaEvent& event)
         return;
     }
 
-    if (event.GetEventType() == wxEVT_SCI_AUTOCOMP_SELECTION)
+    if (event.GetEventType() == wxEVT_STC_AUTOCOMP_SELECTION)
     {
         const wxString& itemText = event.GetText();
         int curPos = control->GetCurrentPos();
@@ -499,7 +499,7 @@ void Abbreviations::EditorEventHook(cbEditor* editor, wxScintillaEvent& event)
         event.SetText(wxEmptyString);
         event.SetEventType(wxEVT_NULL);
     }
-    else // here should be: else if (event.GetEventType() == wxEVT_SCI_AUTOCOMP_CANCELLED)
+    else // here should be: else if (event.GetEventType() == wxEVT_STC_AUTOCOMP_CANCELLED)
     {    // but is this event doesn't occur.
         m_IsAutoCompVisible = control->AutoCompActive();
     }

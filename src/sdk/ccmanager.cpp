@@ -45,10 +45,10 @@ namespace CCManagerHelper
             ptB += delta;
     }
 
-    // wxScintilla::FindColumn seems to be broken; re-implement:
+    // wxStyledTextCtrl::FindColumn seems to be broken; re-implement:
     // Find the position of a column on a line taking into account tabs and
     // multi-byte characters. If beyond end of line, return line end position.
-    inline int FindColumn(int line, int column, wxScintilla* stc)
+    inline int FindColumn(int line, int column, wxStyledTextCtrl* stc)
     {
         int lnEnd = stc->GetLineEndPosition(line);
         for (int pos = stc->PositionFromLine(line); pos < lnEnd; ++pos)
@@ -60,7 +60,7 @@ namespace CCManagerHelper
     }
 
     // test if an editor position is displayed
-    inline bool IsPosVisible(int pos, wxScintilla* stc)
+    inline bool IsPosVisible(int pos, wxStyledTextCtrl* stc)
     {
         const int dist = stc->VisibleFromDocLine(stc->LineFromPosition(pos)) - stc->GetFirstVisibleLine();
         return !(dist < 0 || dist > stc->LinesOnScreen()); // caret is off screen
@@ -257,10 +257,10 @@ END_EVENT_TABLE()
 
 // class constructor
 CCManager::CCManager() :
-    m_AutocompPosition(wxSCI_INVALID_POSITION),
-    m_CallTipActive(wxSCI_INVALID_POSITION),
+    m_AutocompPosition(wxSTC_INVALID_POSITION),
+    m_CallTipActive(wxSTC_INVALID_POSITION),
     m_LastAutocompIndex(wxNOT_FOUND),
-    m_LastTipPos(wxSCI_INVALID_POSITION),
+    m_LastTipPos(wxSTC_INVALID_POSITION),
     m_WindowBound(0),
     m_OwnsAutocomp(true),
     m_CallTipTimer(this, idCallTipTimer),
@@ -277,7 +277,7 @@ CCManager::CCManager() :
     const wxString alChars = wxT(".:<>\"#/"); // default set
     m_AutoLaunchChars[nullptr] = std::set<wxChar>(alChars.begin(), alChars.end());
 
-    m_LastACLaunchState.init(wxSCI_INVALID_POSITION, wxSCI_INVALID_POSITION, 0);
+    m_LastACLaunchState.init(wxSTC_INVALID_POSITION, wxSTC_INVALID_POSITION, 0);
 
     // init documentation popup
     m_pPopup = new UnfocusablePopupWindow(Manager::Get()->GetAppFrame());
@@ -367,7 +367,7 @@ cbCodeCompletionPlugin* CCManager::GetProviderFor(cbEditor* ed)
 
     m_pLastEditor = ed;
     m_pLastCCPlugin = nullptr;
-    m_LastACLaunchState.caretStart = wxSCI_INVALID_POSITION;
+    m_LastACLaunchState.caretStart = wxSTC_INVALID_POSITION;
     const PluginsArray& pa = Manager::Get()->GetPluginManager()->GetCodeCompletionOffers();
     for (size_t i = 0; i < pa.GetCount(); ++i)
     {
@@ -448,7 +448,7 @@ bool CCManager::ProcessArrow(int key)
     if (!ed)
         return wasProcessed;
     cbStyledTextCtrl* stc = ed->GetControl();
-    if (stc->CallTipActive() && m_CallTipActive != wxSCI_INVALID_POSITION && m_CallTips.size() > 1)
+    if (stc->CallTipActive() && m_CallTipActive != wxSTC_INVALID_POSITION && m_CallTips.size() > 1)
     {
         if (key == WXK_DOWN)
             AdvanceTip(Next);
@@ -526,17 +526,17 @@ void CCManager::OnCompleteCode(CodeBlocksEvent& event)
 
     if (m_AutocompTokens.size() == 1 && cfg->ReadBool(wxT("/auto_select_single"), false))
     {
-        // Using stc->AutoCompSetChooseSingle() does not send wxEVT_SCI_AUTOCOMP_SELECTION,
+        // Using stc->AutoCompSetChooseSingle() does not send wxEVT_STC_AUTOCOMP_SELECTION,
         // so manually emulate the behaviour.
 
         if (!stc->CallTipActive() && !stc->AutoCompActive())
-            m_CallTipActive = wxSCI_INVALID_POSITION;
+            m_CallTipActive = wxSTC_INVALID_POSITION;
 
         m_OwnsAutocomp = true;
         m_LastACLaunchState.init(tknEnd, tknStart, stc->GetZoom());
         m_LastAutocompIndex = 0;
 
-        wxScintillaEvent autoCompFinishEvt(wxEVT_SCI_AUTOCOMP_SELECTION);
+        wxStyledTextEvent autoCompFinishEvt(wxEVT_STC_AUTOCOMP_SELECTION);
         autoCompFinishEvt.SetText(m_AutocompTokens.front().displayName);
 
         OnEditorHook(ed, autoCompFinishEvt);
@@ -549,9 +549,9 @@ void CCManager::OnCompleteCode(CodeBlocksEvent& event)
     TokenSorter sortFunctor(isPureAlphabetical, isCaseSensitive);
     std::sort(m_AutocompTokens.begin(), m_AutocompTokens.end(), sortFunctor);
     if (isPureAlphabetical)
-        stc->AutoCompSetOrder(wxSCI_ORDER_PRESORTED);
+        stc->AutoCompSetOrder(wxSTC_ORDER_PRESORTED);
     else
-        stc->AutoCompSetOrder(wxSCI_ORDER_CUSTOM);
+        stc->AutoCompSetOrder(wxSTC_ORDER_CUSTOM);
     wxString items;
     // experimentally, the average length per token seems to be 23 for the main CC plugin
     items.Alloc(m_AutocompTokens.size() * 20); // TODO: measure performance
@@ -566,7 +566,7 @@ void CCManager::OnCompleteCode(CodeBlocksEvent& event)
     items.RemoveLast();
 
     if (!stc->CallTipActive() && !stc->AutoCompActive())
-        m_CallTipActive = wxSCI_INVALID_POSITION;
+        m_CallTipActive = wxSTC_INVALID_POSITION;
 
     stc->AutoCompSetIgnoreCase(!isCaseSensitive);
     stc->AutoCompSetMaxHeight(14);
@@ -603,7 +603,7 @@ void CCManager::OnDeactivateApp(CodeBlocksEvent& event)
             wxCommandEvent pendingCancel(cbEVT_DEFERRED_CALLTIP_CANCEL);
             AddPendingEvent(pendingCancel);
         }
-        m_CallTipActive = wxSCI_INVALID_POSITION;
+        m_CallTipActive = wxSTC_INVALID_POSITION;
     }
     event.Skip();
 }
@@ -618,7 +618,7 @@ void CCManager::OnDeactivateEd(CodeBlocksEvent& event)
         cbStyledTextCtrl* stc = ed->GetControl();
         if (stc->CallTipActive())
             stc->CallTipCancel();
-        m_CallTipActive = wxSCI_INVALID_POSITION;
+        m_CallTipActive = wxSTC_INVALID_POSITION;
     }
     event.Skip();
 }
@@ -701,13 +701,13 @@ void CCManager::OnEditorTooltip(CodeBlocksEvent& event)
     int pos = stc->PositionFromPointClose(event.GetX(), event.GetY());
     if (!ccPlugin || pos < 0 || pos >= stc->GetLength())
     {
-        if (stc->CallTipActive() && event.GetExtraLong() == 0 && m_CallTipActive == wxSCI_INVALID_POSITION)
-            static_cast<wxScintilla*>(stc)->CallTipCancel();
+        if (stc->CallTipActive() && event.GetExtraLong() == 0 && m_CallTipActive == wxSTC_INVALID_POSITION)
+            static_cast<wxStyledTextCtrl*>(stc)->CallTipCancel();
         return;
     }
 
     int hlStart, hlEnd, argsPos;
-    hlStart = hlEnd = argsPos = wxSCI_INVALID_POSITION;
+    hlStart = hlEnd = argsPos = wxSTC_INVALID_POSITION;
     bool allowCallTip = true;
     const std::vector<cbCodeCompletionPlugin::CCToken>& tokens = ccPlugin->GetTokenAt(pos, ed, allowCallTip);
     std::set<wxString> uniqueTips;
@@ -733,7 +733,7 @@ void CCManager::OnEditorTooltip(CodeBlocksEvent& event)
                     || (hlEnd < static_cast<int>(tips[0].Length()) - 1 && (tips[0][hlEnd] == wxT('_') || wxIsalpha(tips[0][hlEnd]))) )
                 {
                     i = hlEnd;
-                    hlStart = hlEnd = wxSCI_INVALID_POSITION;
+                    hlStart = hlEnd = wxSTC_INVALID_POSITION;
                 }
                 else
                     break;
@@ -761,21 +761,21 @@ void CCManager::OnEditorTooltip(CodeBlocksEvent& event)
     }
     if (tips.empty())
     {
-        if (stc->CallTipActive() && event.GetExtraLong() == 0 && m_CallTipActive == wxSCI_INVALID_POSITION)
-            static_cast<wxScintilla*>(stc)->CallTipCancel();
+        if (stc->CallTipActive() && event.GetExtraLong() == 0 && m_CallTipActive == wxSTC_INVALID_POSITION)
+            static_cast<wxStyledTextCtrl*>(stc)->CallTipCancel();
     }
     else
     {
         DoShowTips(tips, stc, pos, argsPos, hlStart, hlEnd);
         event.SetExtraLong(1);
     }
-    m_CallTipActive = wxSCI_INVALID_POSITION;
+    m_CallTipActive = wxSTC_INVALID_POSITION;
 }
 
-void CCManager::OnEditorHook(cbEditor* ed, wxScintillaEvent& event)
+void CCManager::OnEditorHook(cbEditor* ed, wxStyledTextEvent& event)
 {
     wxEventType evtType = event.GetEventType();
-    if (evtType == wxEVT_SCI_CHARADDED)
+    if (evtType == wxEVT_STC_CHARADDED)
     {
         const wxChar ch = event.GetKey();
         CCPluginCharMap::const_iterator ctChars = m_CallTipChars.find(GetProviderFor(ed));
@@ -787,7 +787,7 @@ void CCManager::OnEditorHook(cbEditor* ed, wxScintillaEvent& event)
         {
             int tooltipMode = Manager::Get()->GetConfigManager(wxT("ccmanager"))->ReadInt(wxT("/tooltip_mode"), 1);
             if (   tooltipMode != 3 // keybound only
-                || m_CallTipActive != wxSCI_INVALID_POSITION )
+                || m_CallTipActive != wxSTC_INVALID_POSITION )
             {
                 wxCommandEvent pendingShow(cbEVT_DEFERRED_CALLTIP_SHOW);
                 AddPendingEvent(pendingShow);
@@ -819,17 +819,17 @@ void CCManager::OnEditorHook(cbEditor* ed, wxScintillaEvent& event)
             }
         }
     }
-    else if (evtType == wxEVT_SCI_UPDATEUI)
+    else if (evtType == wxEVT_STC_UPDATEUI)
     {
-        if (event.GetUpdated() & (wxSCI_UPDATE_V_SCROLL|wxSCI_UPDATE_H_SCROLL))
+        if (event.GetUpdated() & (wxSTC_UPDATE_V_SCROLL|wxSTC_UPDATE_H_SCROLL))
         {
             cbStyledTextCtrl* stc = ed->GetControl();
             if (stc->CallTipActive())
             {
-                // force to call the wxScintilla::CallTipCancel to avoid the smart indent condition check
+                // force to call the wxStyledTextCtrl::CallTipCancel to avoid the smart indent condition check
                 // @see cbStyledTextCtrl::CallTipCancel() for the details
-                static_cast<wxScintilla*>(stc)->CallTipCancel();
-                if (m_CallTipActive != wxSCI_INVALID_POSITION && CCManagerHelper::IsPosVisible(m_CallTipActive, stc))
+                static_cast<wxStyledTextCtrl*>(stc)->CallTipCancel();
+                if (m_CallTipActive != wxSTC_INVALID_POSITION && CCManagerHelper::IsPosVisible(m_CallTipActive, stc))
                     m_CallTipTimer.Start(SCROLL_REFRESH_DELAY, wxTIMER_ONE_SHOT);
             }
             else if (m_CallTipTimer.IsRunning())
@@ -839,7 +839,7 @@ void CCManager::OnEditorHook(cbEditor* ed, wxScintillaEvent& event)
                 else
                 {
                     m_CallTipTimer.Stop();
-                    m_CallTipActive = wxSCI_INVALID_POSITION;
+                    m_CallTipActive = wxSTC_INVALID_POSITION;
                 }
             }
             if (m_AutoLaunchTimer.IsRunning())
@@ -858,18 +858,18 @@ void CCManager::OnEditorHook(cbEditor* ed, wxScintillaEvent& event)
             }
         }
     }
-    else if (evtType == wxEVT_SCI_MODIFIED)
+    else if (evtType == wxEVT_STC_MODIFIED)
     {
-        if (event.GetModificationType() & wxSCI_PERFORMED_UNDO)
+        if (event.GetModificationType() & wxSTC_PERFORMED_UNDO)
         {
             cbStyledTextCtrl* stc = ed->GetControl();
-            if (m_CallTipActive != wxSCI_INVALID_POSITION && stc->GetCurrentPos() >= m_CallTipActive)
+            if (m_CallTipActive != wxSTC_INVALID_POSITION && stc->GetCurrentPos() >= m_CallTipActive)
                 m_CallTipTimer.Start(CALLTIP_REFRESH_DELAY, wxTIMER_ONE_SHOT);
             else
-                static_cast<wxScintilla*>(stc)->CallTipCancel();
+                static_cast<wxStyledTextCtrl*>(stc)->CallTipCancel();
         }
     }
-    else if (evtType == wxEVT_SCI_AUTOCOMP_SELECTION)
+    else if (evtType == wxEVT_STC_AUTOCOMP_SELECTION)
     {
         DoHidePopup();
         cbCodeCompletionPlugin* ccPlugin = GetProviderFor(ed);
@@ -887,9 +887,9 @@ void CCManager::OnEditorHook(cbEditor* ed, wxScintillaEvent& event)
             CallSmartIndentCCDone(ed);
         }
     }
-    else if (evtType == wxEVT_SCI_AUTOCOMP_CANCELLED)
+    else if (evtType == wxEVT_STC_AUTOCOMP_CANCELLED)
         DoHidePopup();
-    else if (evtType == wxEVT_SCI_CALLTIP_CLICK)
+    else if (evtType == wxEVT_STC_CALLTIP_CLICK)
     {
         switch (event.GetPosition())
         {
@@ -947,7 +947,7 @@ void CCManager::OnShowCallTip(CodeBlocksEvent& event)
         return;
 
     int pos = stc->GetCurrentPos();
-    int argsPos = wxSCI_INVALID_POSITION;
+    int argsPos = wxSTC_INVALID_POSITION;
     // save the current tip shown text for later recalling
     wxString curTip;
     // check whether m_CurCallTip is invalid(point to the end of m_CallTips)
@@ -967,7 +967,7 @@ void CCManager::OnShowCallTip(CodeBlocksEvent& event)
         {
             wxString tip;
             int hlStart, hlEnd;
-            hlStart = hlEnd = wxSCI_INVALID_POSITION;
+            hlStart = hlEnd = wxSTC_INVALID_POSITION;
             for (CallTipVec::const_iterator itr = m_CallTips.begin();
                  itr != m_CallTips.end(); ++itr)
             {
@@ -1022,10 +1022,10 @@ void CCManager::OnShowCallTip(CodeBlocksEvent& event)
     }
     else
     {
-        if (m_CallTipActive != wxSCI_INVALID_POSITION)
+        if (m_CallTipActive != wxSTC_INVALID_POSITION)
         {
-            static_cast<wxScintilla*>(stc)->CallTipCancel();
-            m_CallTipActive = wxSCI_INVALID_POSITION;
+            static_cast<wxStyledTextCtrl*>(stc)->CallTipCancel();
+            m_CallTipActive = wxSTC_INVALID_POSITION;
         }
         // Make m_CurCallTip to be valid iterator, pointing to the end.
         m_CurCallTip = m_CallTips.end();
@@ -1084,7 +1084,7 @@ void CCManager::OnAutocompleteHide(wxShowEvent& event)
     wxObject* evtObj = event.GetEventObject();
     if (evtObj)
         static_cast<wxWindow*>(evtObj)->Disconnect(wxEVT_SHOW, wxShowEventHandler(CCManager::OnAutocompleteHide), nullptr, this);
-    if (m_CallTipActive != wxSCI_INVALID_POSITION && !m_AutoLaunchTimer.IsRunning())
+    if (m_CallTipActive != wxSTC_INVALID_POSITION && !m_AutoLaunchTimer.IsRunning())
         m_CallTipTimer.Start(CALLTIP_REFRESH_DELAY, wxTIMER_ONE_SHOT);
 }
 
@@ -1104,7 +1104,7 @@ void CCManager::OnDeferredCallTipCancel(wxCommandEvent& WXUNUSED(event))
 {
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
-        static_cast<wxScintilla*>(ed->GetControl())->CallTipCancel();
+        static_cast<wxStyledTextCtrl*>(ed->GetControl())->CallTipCancel();
 }
 
 #ifdef __WXMSW__
@@ -1152,7 +1152,7 @@ void CCManager::OnTimer(wxTimerEvent& event)
             evt.SetInt(FROM_TIMER);
             Manager::Get()->ProcessEvent(evt);
         }
-        m_AutocompPosition = wxSCI_INVALID_POSITION;
+        m_AutocompPosition = wxSTC_INVALID_POSITION;
     }
     else if (event.GetId() == idAutocompSelectTimer) // m_AutocompSelectTimer
     {
@@ -1191,7 +1191,7 @@ void CCManager::OnMenuSelect(wxCommandEvent& event)
         Manager::Get()->ProcessEvent(evt);
         return;
     }
-    if (m_CallTips.empty() || m_CallTipActive == wxSCI_INVALID_POSITION)
+    if (m_CallTips.empty() || m_CallTipActive == wxSTC_INVALID_POSITION)
         return;
     if (!ed->GetControl()->CallTipActive())
         return;
@@ -1224,7 +1224,7 @@ void CCManager::DoBufferedCC(cbStyledTextCtrl* stc)
     }
     items.RemoveLast();
     if (!stc->CallTipActive())
-        m_CallTipActive = wxSCI_INVALID_POSITION;
+        m_CallTipActive = wxSTC_INVALID_POSITION;
     // display
     stc->AutoCompShow(m_LastACLaunchState.caretStart - m_LastACLaunchState.tokenStart, items);
     m_OwnsAutocomp = true;
@@ -1334,7 +1334,7 @@ void CCManager::DoUpdateCallTip(cbEditor* ed)
     while (wxIsspace(stc->GetCharAt(lnStart)))
         ++lnStart;
 #ifdef __WXMSW__
-    m_LastTipPos = wxSCI_INVALID_POSITION; // Windows hack to fix display update
+    m_LastTipPos = wxSTC_INVALID_POSITION; // Windows hack to fix display update
 #endif // __WXMSW__
     DoShowTips(tips, stc, std::max(pos, lnStart), m_CallTipActive, hlStart + offset, hlEnd + offset);
 }
@@ -1342,8 +1342,8 @@ void CCManager::DoUpdateCallTip(cbEditor* ed)
 void CCManager::DoShowTips(const wxStringVec& tips, cbStyledTextCtrl* stc, int pos, int argsPos, int hlStart, int hlEnd)
 {
     int maxLines = std::max(stc->LinesOnScreen() / 4, 5);
-    int marginWidth = stc->GetMarginWidth(wxSCI_MARGIN_SYMBOL) + stc->GetMarginWidth(wxSCI_MARGIN_NUMBER);
-    int maxWidth = (stc->GetSize().x - marginWidth) / stc->TextWidth(wxSCI_STYLE_LINENUMBER, wxT("W")) - 1;
+    int marginWidth = stc->GetMarginWidth(wxSTC_MARGIN_SYMBOL) + stc->GetMarginWidth(wxSTC_MARGIN_NUMBER);
+    int maxWidth = (stc->GetSize().x - marginWidth) / stc->TextWidth(wxSTC_STYLE_LINENUMBER, wxT("W")) - 1;
     maxWidth = std::min(std::max(60, maxWidth), 135);
     wxString tip;
     int lineCount = 0;
@@ -1406,7 +1406,7 @@ void CCManager::DoShowTips(const wxStringVec& tips, cbStyledTextCtrl* stc, int p
     // try to show the tip at the start of the token/arguments, or at the margin if we are scrolled right
     // an offset of 2 helps deal with the width of the folding bar (TODO: does an actual calculation exist?)
     int line = stc->LineFromPosition(pos);
-    if (argsPos == wxSCI_INVALID_POSITION)
+    if (argsPos == wxSTC_INVALID_POSITION)
         argsPos = stc->WordStartPosition(pos, true);
     else
         argsPos = std::min(CCManagerHelper::FindColumn(line, stc->GetColumn(argsPos), stc), stc->WordStartPosition(pos, true));

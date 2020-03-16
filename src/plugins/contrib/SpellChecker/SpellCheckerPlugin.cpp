@@ -842,7 +842,7 @@ void SpellCheckerPlugin::OnEditorTooltip(CodeBlocksEvent& event)
     //       horizontal scrolling is accounted for by PointFromPosition().x
     const int offset = tipWidth + pos + 1 - lnStart -
                        (stc->GetSize().x - stc->PointFromPosition(lnStart).x) /
-                       stc->TextWidth(wxSCI_STYLE_LINENUMBER, _T("W"));
+                       stc->TextWidth(wxSTC_STYLE_LINENUMBER, _T("W"));
     if (offset > 0)
         pos -= offset;
     if (pos < lnStart) // do not go to previous line if tip is wider than editor
@@ -853,7 +853,7 @@ void SpellCheckerPlugin::OnEditorTooltip(CodeBlocksEvent& event)
     event.Skip();
 }
 
-void SpellCheckerPlugin::OnEditorHook(cbEditor* editor, wxScintillaEvent& event)
+void SpellCheckerPlugin::OnEditorHook(cbEditor* editor, wxStyledTextEvent& event)
 {
     m_pOnlineChecker->Call(editor, event);
 }

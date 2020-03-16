@@ -33,7 +33,7 @@ std::map<int, std::set<int> > cbStyledTextCtrl::StringLexerStyles;
 std::map<int, std::set<int> > cbStyledTextCtrl::PreprocessorLexerStyles;
 std::map<int, std::set<int> > cbStyledTextCtrl::CommentLexerStyles;
 
-BEGIN_EVENT_TABLE(cbStyledTextCtrl, wxScintilla)
+BEGIN_EVENT_TABLE(cbStyledTextCtrl, wxStyledTextCtrl)
     EVT_CONTEXT_MENU(cbStyledTextCtrl::OnContextMenu)
     EVT_KILL_FOCUS  (cbStyledTextCtrl::OnKillFocus)
     EVT_MIDDLE_DOWN (cbStyledTextCtrl::OnMouseMiddleDown)
@@ -44,11 +44,11 @@ BEGIN_EVENT_TABLE(cbStyledTextCtrl, wxScintilla)
 END_EVENT_TABLE()
 
 cbStyledTextCtrl::cbStyledTextCtrl(wxWindow* pParent, int id, const wxPoint& pos, const wxSize& size, long style) :
-    wxScintilla(pParent, id, pos, size, style),
+    wxStyledTextCtrl(pParent, id, pos, size, style),
     m_pParent(pParent),
     m_lastFocusTime(0L),
-    m_bracePosition(wxSCI_INVALID_POSITION),
-    m_lastPosition(wxSCI_INVALID_POSITION),
+    m_bracePosition(wxSTC_INVALID_POSITION),
+    m_lastPosition(wxSTC_INVALID_POSITION),
     m_tabSmartJump(false)
 {
     //ctor
@@ -101,9 +101,10 @@ void cbStyledTextCtrl::OnContextMenu(wxContextMenuEvent& event)
     {
         if ( EditorBase* pParent = dynamic_cast<EditorBase*>(m_pParent) )
         {
-            // To prevent generating EVT_MOUSE_CAPTURE_LOST.
-            if (HaveMouseCapture())
-                SetMouseCapture(false);
+
+//            // To prevent generating EVT_MOUSE_CAPTURE_LOST.
+//            if (HaveMouseCapture())
+//                SetMouseCapture(false);
 
             const bool is_right_click = event.GetPosition() != wxDefaultPosition;
             const wxPoint mp(is_right_click ? event.GetPosition() : wxDefaultPosition);
@@ -123,7 +124,7 @@ void cbStyledTextCtrl::OnMouseMiddleDown(wxMouseEvent& event)
 
         int pos = PositionFromPoint(wxPoint(event.GetX(), event.GetY()));
 
-        if (pos == wxSCI_INVALID_POSITION)
+        if (pos == wxSTC_INVALID_POSITION)
             return;
 
         int start = GetSelectionStart();
@@ -161,7 +162,7 @@ void cbStyledTextCtrl::OnKeyDown(wxKeyEvent& event)
         {
             if (m_tabSmartJump && event.GetModifiers() == wxMOD_NONE)
             {
-                if (!AutoCompActive() && m_bracePosition != wxSCI_INVALID_POSITION)
+                if (!AutoCompActive() && m_bracePosition != wxSTC_INVALID_POSITION)
                 {
                     m_lastPosition = GetCurrentPos();
                     GotoPos(m_bracePosition);
@@ -190,10 +191,10 @@ void cbStyledTextCtrl::OnKeyDown(wxKeyEvent& event)
                         DeleteBack();
                     }
                 }
-                else if (m_lastPosition != wxSCI_INVALID_POSITION && event.ControlDown())
+                else if (m_lastPosition != wxSTC_INVALID_POSITION && event.ControlDown())
                 {
                     GotoPos(m_lastPosition);
-                    m_lastPosition = wxSCI_INVALID_POSITION;
+                    m_lastPosition = wxSTC_INVALID_POSITION;
                     return;
                 }
             }
@@ -266,7 +267,7 @@ void cbStyledTextCtrl::OnKeyUp(wxKeyEvent& event)
             if (index != wxNOT_FOUND && (wxChar)GetCharAt(GetCurrentPos()) == s_rightBrace.GetChar(index))
             {
                 const int pos = GetCurrentPos();
-                if (pos != wxSCI_INVALID_POSITION)
+                if (pos != wxSTC_INVALID_POSITION)
                 {
                     m_tabSmartJump = true;
                     m_bracePosition = pos;
@@ -327,7 +328,7 @@ bool cbStyledTextCtrl::IsComment(int style)
 void cbStyledTextCtrl::CallTipCancel()
 {
     if (!m_tabSmartJump)
-        wxScintilla::CallTipCancel();
+        wxStyledTextCtrl::CallTipCancel();
 }
 
 bool cbStyledTextCtrl::IsBraceShortcutActive()
@@ -419,7 +420,7 @@ void cbStyledTextCtrl::SetSelectionVoid(int startPos, int endPos)
 bool cbStyledTextCtrl::AllowTabSmartJump()
 {
     const int pos = GetCurrentPos();
-    if (pos == wxSCI_INVALID_POSITION)
+    if (pos == wxSTC_INVALID_POSITION)
         return false;
 
     const int style = GetStyleAt(pos);
@@ -430,11 +431,11 @@ bool cbStyledTextCtrl::AllowTabSmartJump()
 
 void cbStyledTextCtrl::HighlightRightBrace()
 {
-    if (m_bracePosition == wxSCI_INVALID_POSITION)
+    if (m_bracePosition == wxSTC_INVALID_POSITION)
         return;
 
     int pos = GetCurrentPos();
-    if (pos == wxSCI_INVALID_POSITION)
+    if (pos == wxSTC_INVALID_POSITION)
         return;
 
     const static wxColour caretForeground = GetCaretForeground();
@@ -473,7 +474,7 @@ void cbStyledTextCtrl::HighlightRightBrace()
                 SetCaretWidth(caretWidth + 1);
 
                 IndicatorSetForeground(s_indicHighlight, wxColour(80, 236, 120));
-                IndicatorSetStyle(s_indicHighlight, wxSCI_INDIC_ROUNDBOX);
+                IndicatorSetStyle(s_indicHighlight, wxSTC_INDIC_ROUNDBOX);
 #ifndef wxHAVE_RAW_BITMAP
                 IndicatorSetUnder(s_indicHighlight, true);
 #endif
@@ -486,8 +487,8 @@ void cbStyledTextCtrl::HighlightRightBrace()
         while (++pos);
     }
 
-    m_bracePosition = wxSCI_INVALID_POSITION;
-    m_lastPosition = wxSCI_INVALID_POSITION;
+    m_bracePosition = wxSTC_INVALID_POSITION;
+    m_lastPosition = wxSTC_INVALID_POSITION;
     m_tabSmartJump = false;
     SetIndicatorCurrent(s_indicHighlight);
     IndicatorClearRange(0, len);

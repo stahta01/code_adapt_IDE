@@ -365,8 +365,8 @@ void EditorTweaks::UpdateUI()
 
     if(control)
     {
-        submenu->Check(id_et_WordWrap,control->GetWrapMode()==wxSCI_WRAP_WORD);
-        submenu->Check(id_et_CharWrap,control->GetWrapMode()==wxSCI_WRAP_CHAR);
+        submenu->Check(id_et_WordWrap,control->GetWrapMode()==wxSTC_WRAP_WORD);
+        submenu->Check(id_et_CharWrap,control->GetWrapMode()==wxSTC_WRAP_CHAR);
         submenu->Check(id_et_ShowLineNumbers,control->GetMarginWidth(0)>0);
         submenu->Check(id_et_TabChar,control->GetUseTabs());
         submenu->Check(id_et_TabIndent,control->GetTabIndents());
@@ -374,11 +374,11 @@ void EditorTweaks::UpdateUI()
         submenu->Check(id_et_TabSize4,control->GetTabWidth()==4);
         submenu->Check(id_et_TabSize6,control->GetTabWidth()==6);
         submenu->Check(id_et_TabSize8,control->GetTabWidth()==8);
-        submenu->Check(id_et_EOLCRLF,control->GetEOLMode()==wxSCI_EOL_CRLF);
-        submenu->Check(id_et_EOLCR,control->GetEOLMode()==wxSCI_EOL_CR);
-        submenu->Check(id_et_EOLLF,control->GetEOLMode()==wxSCI_EOL_LF);
+        submenu->Check(id_et_EOLCRLF,control->GetEOLMode()==wxSTC_EOL_CRLF);
+        submenu->Check(id_et_EOLCR,control->GetEOLMode()==wxSTC_EOL_CR);
+        submenu->Check(id_et_EOLLF,control->GetEOLMode()==wxSTC_EOL_LF);
         submenu->Check(id_et_ShowEOL,control->GetViewEOL());
-        submenu->Check(id_et_ShowWhitespaceChars, control->GetViewWhiteSpace()!=wxSCI_WS_INVISIBLE);
+        submenu->Check(id_et_ShowWhitespaceChars, control->GetViewWhiteSpace()!=wxSTC_WS_INVISIBLE);
     }
     submenu->Check(id_et_SuppressInsertKey, m_suppress_insert);
     submenu->Check(id_et_LaptopFriendly, m_laptop_friendly);
@@ -492,7 +492,7 @@ void EditorTweaks::OnKeyPress(wxKeyEvent& event)
             return;
         int l = a<p? a: p;
         int m = control->BraceMatch(l);
-        if (m == wxSCI_INVALID_POSITION)
+        if (m == wxSTC_INVALID_POSITION)
             return;
         control->BeginUndoAction();
         if(l<m)
@@ -572,7 +572,7 @@ void EditorTweaks::OnChar(wxKeyEvent& event)
               return;
         }
         int m = control->BraceMatch(l);
-        if (m == wxSCI_INVALID_POSITION)
+        if (m == wxSTC_INVALID_POSITION)
             return;
         control->BeginUndoAction();
         control->InsertText(l, wxString(ch,1));
@@ -650,11 +650,11 @@ void EditorTweaks::BuildModuleMenu(const ModuleType type, wxMenu* menu, const Fi
     menu->Append(id_et,_("Editor Tweaks"),submenu);
 
     submenu->AppendCheckItem( id_et_WordWrap, _( "Word wrap" ), _( "Wrap word" ) );
-    if (control->GetWrapMode()==wxSCI_WRAP_WORD)
+    if (control->GetWrapMode()==wxSTC_WRAP_WORD)
         submenu->Check(id_et_WordWrap,true);
 
     submenu->AppendCheckItem( id_et_CharWrap, _( "Char wrap" ), _( "Wrap char" ) );
-    if (control->GetWrapMode()==wxSCI_WRAP_CHAR)
+    if (control->GetWrapMode()==wxSTC_WRAP_CHAR)
         submenu->Check(id_et_CharWrap,true);
 
     submenu->AppendCheckItem( id_et_ShowLineNumbers, _( "Show Line Numbers" ), _( "Show Line Numbers" ) );
@@ -690,13 +690,13 @@ void EditorTweaks::BuildModuleMenu(const ModuleType type, wxMenu* menu, const Fi
 
     wxMenu *eolmenu=new wxMenu();
     eolmenu->AppendRadioItem( id_et_EOLCRLF, _( "CR LF" ), _( "Carriage Return - Line Feed (Windows Default)" ) );
-    if (control->GetEOLMode()==wxSCI_EOL_CRLF)
+    if (control->GetEOLMode()==wxSTC_EOL_CRLF)
         eolmenu->Check(id_et_EOLCRLF,true);
     eolmenu->AppendRadioItem( id_et_EOLCR, _( "CR" ), _( "Carriage Return (Mac Default)" ) );
-    if (control->GetEOLMode()==wxSCI_EOL_CR)
+    if (control->GetEOLMode()==wxSTC_EOL_CR)
         eolmenu->Check(id_et_EOLCR,true);
     eolmenu->AppendRadioItem( id_et_EOLLF, _( "LF" ), _( "Line Feed (Unix Default)" ) );
-    if (control->GetEOLMode()==wxSCI_EOL_LF)
+    if (control->GetEOLMode()==wxSTC_EOL_LF)
         eolmenu->Check(id_et_EOLLF,true);
     submenu->Append(wxID_ANY,_("End-of-Line Mode"),eolmenu);
 
@@ -718,12 +718,12 @@ void EditorTweaks::OnWordWrap(wxCommandEvent &/*event*/)
     if (!control)
         return;
 
-    bool enabled = control->GetWrapMode() == wxSCI_WRAP_WORD;
+    bool enabled = control->GetWrapMode() == wxSTC_WRAP_WORD;
 
     if (enabled)
-        control->SetWrapMode(wxSCI_WRAP_NONE);
+        control->SetWrapMode(wxSTC_WRAP_NONE);
     else
-        control->SetWrapMode(wxSCI_WRAP_WORD);
+        control->SetWrapMode(wxSTC_WRAP_WORD);
 }
 
 void EditorTweaks::OnCharWrap(wxCommandEvent &/*event*/)
@@ -732,12 +732,12 @@ void EditorTweaks::OnCharWrap(wxCommandEvent &/*event*/)
     if (!control)
         return;
 
-    bool enabled = control->GetWrapMode() == wxSCI_WRAP_CHAR;
+    bool enabled = control->GetWrapMode() == wxSTC_WRAP_CHAR;
 
     if (enabled)
-        control->SetWrapMode(wxSCI_WRAP_NONE);
+        control->SetWrapMode(wxSTC_WRAP_NONE);
     else
-        control->SetWrapMode(wxSCI_WRAP_CHAR);
+        control->SetWrapMode(wxSTC_WRAP_CHAR);
 }
 
 void EditorTweaks::OnShowLineNumbers(wxCommandEvent &/*event*/)
@@ -756,7 +756,7 @@ void EditorTweaks::OnShowLineNumbers(wxCommandEvent &/*event*/)
     else
     {
         ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("editor"));
-        int pixelWidth = control->TextWidth(wxSCI_STYLE_LINENUMBER, _T("9"));
+        int pixelWidth = control->TextWidth(wxSTC_STYLE_LINENUMBER, _T("9"));
 
         if (cfg->ReadBool(_T("/margin/dynamic_width"), false))
         {
@@ -875,7 +875,7 @@ void EditorTweaks::OnShowWhitespaceChars(wxCommandEvent &event)
 {
     cbStyledTextCtrl* control = GetSafeControl();
     if (control)
-        control->SetViewWhiteSpace(event.IsChecked() ? wxSCI_WS_VISIBLEALWAYS : wxSCI_WS_INVISIBLE);
+        control->SetViewWhiteSpace(event.IsChecked() ? wxSTC_WS_VISIBLEALWAYS : wxSTC_WS_INVISIBLE);
 }
 
 void EditorTweaks::OnShowEOL(wxCommandEvent &/*event*/)
@@ -936,7 +936,7 @@ void EditorTweaks::OnEOLCRLF(wxCommandEvent &/*event*/)
     if (!control)
         return;;
 
-    control->SetEOLMode(wxSCI_EOL_CRLF);
+    control->SetEOLMode(wxSTC_EOL_CRLF);
 }
 
 void EditorTweaks::OnEOLCR(wxCommandEvent &/*event*/)
@@ -945,7 +945,7 @@ void EditorTweaks::OnEOLCR(wxCommandEvent &/*event*/)
     if (!control)
         return;
 
-    control->SetEOLMode(wxSCI_EOL_CR);
+    control->SetEOLMode(wxSTC_EOL_CR);
 }
 
 void EditorTweaks::OnEOLLF(wxCommandEvent &/*event*/)
@@ -954,7 +954,7 @@ void EditorTweaks::OnEOLLF(wxCommandEvent &/*event*/)
     if (!control)
         return;
 
-    control->SetEOLMode(wxSCI_EOL_LF);
+    control->SetEOLMode(wxSTC_EOL_LF);
 }
 
 void EditorTweaks::OnFold(wxCommandEvent &event)
@@ -984,7 +984,7 @@ void EditorTweaks::DoFoldAboveLevel(int level, int fold)
     if (!control)
         return;
 
-    level+=wxSCI_FOLDLEVELBASE;
+    level+=wxSTC_FOLDLEVELBASE;
 
     control->Colourise(0, -1); // the *most* important part!
 
@@ -993,9 +993,9 @@ void EditorTweaks::DoFoldAboveLevel(int level, int fold)
     for (int line = 0; line <= count; ++line)
     {
         int line_level_data = control->GetFoldLevel(line);
-        if (!(line_level_data & wxSCI_FOLDLEVELHEADERFLAG))
+        if (!(line_level_data & wxSTC_FOLDLEVELHEADERFLAG))
             continue;
-        const int line_level = line_level_data & wxSCI_FOLDLEVELNUMBERMASK;
+        const int line_level = line_level_data & wxSTC_FOLDLEVELNUMBERMASK;
 
         const bool IsExpanded = control->GetFoldExpanded(line);
 
@@ -1107,8 +1107,8 @@ void EditorTweaks::DoAlignAuto()
     if (!stc)
         return;
 
-    int line_start = wxSCI_INVALID_POSITION;
-    int line_end   = wxSCI_INVALID_POSITION;
+    int line_start = wxSTC_INVALID_POSITION;
+    int line_end   = wxSTC_INVALID_POSITION;
     if (!GetSelectionLines(line_start, line_end))
         return;
     wxArrayString lines;
@@ -1122,7 +1122,7 @@ void EditorTweaks::DoAlignAuto()
     {
         lines[i].Replace(wxT("\t"), wxT(" "));
         // buffer assignment operators and commas in C++
-        if (lexer == wxSCI_LEX_CPP)
+        if (lexer == wxSTC_LEX_CPP)
         {
             const wxString op = wxT("=<>!+-*/%&^| "); // do not split compound operators
             for (int j = lines[i].Length() - 2; j >= 0; --j)
@@ -1188,8 +1188,8 @@ void EditorTweaks::AlignToString(const wxString AlignmentString)
     if (!control)
         return;
 
-    int line_start = wxSCI_INVALID_POSITION;
-    int line_end   = wxSCI_INVALID_POSITION;
+    int line_start = wxSTC_INVALID_POSITION;
+    int line_end   = wxSTC_INVALID_POSITION;
     if (GetSelectionLines(line_start, line_end))
     {
         // get furthest position of alignmentstring
@@ -1285,7 +1285,7 @@ bool EditorTweaks::GetSelectionLines(int& LineStart, int& LineEnd)
             int line_start = control->GetSelectionStart();
             int line_end   = control->GetSelectionEnd();
 
-			if ( (line_start != wxSCI_INVALID_POSITION) && (line_end != wxSCI_INVALID_POSITION) )
+			if ( (line_start != wxSTC_INVALID_POSITION) && (line_end != wxSTC_INVALID_POSITION) )
 			{
 				LineStart   = control->LineFromPosition(line_start);
 				LineEnd     = control->LineFromPosition(line_end);

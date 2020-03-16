@@ -1497,9 +1497,9 @@ void MouseEventsHandler::OnMouseEvent(wxMouseEvent& event)    //MSW
     }
 
     // if StyledTextCtrl, remember for later scrolling
-    wxScintilla* pStyledTextCtrl = 0;
+    wxStyledTextCtrl* pStyledTextCtrl = 0;
     if ( ((wxWindow*)pEvtObject)->GetName() == _T("SCIwindow"))
-        pStyledTextCtrl = (wxScintilla*)pEvtObject;
+        pStyledTextCtrl = (wxStyledTextCtrl*)pEvtObject;
 
     // set focus to editor window if mouse is in it
     if (event.GetEventType() ==  wxEVT_MOTION)
@@ -1695,9 +1695,9 @@ void MouseEventsHandler::OnMouseEvent(wxMouseEvent& event)    //GTK
     }
 
     // if StyledTextCtrl, remember for later scrolling
-    wxScintilla* pStyledTextCtrl = 0;
+    wxStyledTextCtrl* pStyledTextCtrl = 0;
     if ( ((wxWindow*)pEvtObject)->GetName() == _T("SCIwindow"))
-        pStyledTextCtrl = (wxScintilla*)pEvtObject;
+        pStyledTextCtrl = (wxStyledTextCtrl*)pEvtObject;
 
     // set focus to editor window if mouse is in it
     if (event.GetEventType() ==  wxEVT_MOTION)

@@ -219,9 +219,9 @@ void IncrementalSearch::OnAttach()
     sel = cfg->ReadInt(_T("/incremental_search/selected_default_state"),0);
     m_SelectedOnly = (sel == 1) || ((sel == 2) && cfg->ReadBool(_T("/incremental_search/search_selected_only"),false));
     sel = cfg->ReadInt(_T("/incremental_search/match_case_default_state"),0);
-    m_flags |= ((sel == 1) || ((sel == 2) && cfg->ReadInt(_T("/incremental_search/match_case"),false)))?wxSCI_FIND_MATCHCASE:0;
+    m_flags |= ((sel == 1) || ((sel == 2) && cfg->ReadInt(_T("/incremental_search/match_case"),false)))?wxSTC_FIND_MATCHCASE:0;
     sel = cfg->ReadInt(_T("/incremental_search/regex_default_state"),0);
-    m_flags |= ((sel == 1) || ((sel == 2) && cfg->ReadInt(_T("/incremental_search/regex"),false)))?wxSCI_FIND_REGEXP:0;
+    m_flags |= ((sel == 1) || ((sel == 2) && cfg->ReadInt(_T("/incremental_search/regex"),false)))?wxSTC_FIND_REGEXP:0;
 }
 
 void IncrementalSearch::OnRelease(bool /*appShutDown*/)
@@ -242,11 +242,11 @@ void IncrementalSearch::OnRelease(bool /*appShutDown*/)
     }
     if (cfg->ReadInt(_T("/incremental_search/match_case_default_state"),0) == 2)
     {
-        cfg->Write(_T("/incremental_search/match_case"),m_flags & wxSCI_FIND_MATCHCASE);
+        cfg->Write(_T("/incremental_search/match_case"),m_flags & wxSTC_FIND_MATCHCASE);
     }
     if (cfg->ReadInt(_T("/incremental_search/regex_default_state"),0) == 2)
     {
-        cfg->Write(_T("/incremental_search/regex"),m_flags & wxSCI_FIND_REGEXP);
+        cfg->Write(_T("/incremental_search/regex"),m_flags & wxSTC_FIND_REGEXP);
     }
     cfg->Write(_T("/incremental_search/last_searched_items"), m_pChoice->GetStrings());
     m_pTextCtrl->Disconnect(wxEVT_KEY_DOWN);
@@ -334,7 +334,7 @@ void IncrementalSearch::OnEditorEvent(CodeBlocksEvent& event)
     if (m_pComboCtrl->IsEnabled())
     {
         m_SearchText=m_pTextCtrl->GetValue();
-        m_pToolbar->EnableTool(XRCID("idIncSearchPrev"), !m_SearchText.empty() && ((m_flags & wxSCI_FIND_REGEXP) == 0));
+        m_pToolbar->EnableTool(XRCID("idIncSearchPrev"), !m_SearchText.empty() && ((m_flags & wxSTC_FIND_REGEXP) == 0));
         m_pToolbar->EnableTool(XRCID("idIncSearchNext"), !m_SearchText.empty());
         m_NewPos=m_pEditor->GetControl()->GetCurrentPos();
         m_OldPos=m_NewPos;
@@ -398,8 +398,8 @@ bool IncrementalSearch::BuildToolBar(wxToolBar* toolBar)
             m_pComboCtrl->Enable(m_pEditor && m_pEditor->GetControl());
             m_pToolbar->ToggleTool(XRCID("idIncSearchHighlight"),m_Highlight);
             m_pToolbar->ToggleTool(XRCID("idIncSearchSelectOnly"),m_SelectedOnly);
-            m_pToolbar->ToggleTool(XRCID("idIncSearchMatchCase"),m_flags & wxSCI_FIND_MATCHCASE);
-            m_pToolbar->ToggleTool(XRCID("idIncSearchUseRegex"),m_flags & wxSCI_FIND_REGEXP);
+            m_pToolbar->ToggleTool(XRCID("idIncSearchMatchCase"),m_flags & wxSTC_FIND_MATCHCASE);
+            m_pToolbar->ToggleTool(XRCID("idIncSearchUseRegex"),m_flags & wxSTC_FIND_REGEXP);
             return true;
         }
     }
@@ -528,11 +528,11 @@ void IncrementalSearch::DoToggleMatchCase(bool checked)
 {
     if(checked)
     {
-        m_flags |= wxSCI_FIND_MATCHCASE;
+        m_flags |= wxSTC_FIND_MATCHCASE;
     }
     else
     {
-        m_flags &=  ~wxSCI_FIND_MATCHCASE;
+        m_flags &=  ~wxSTC_FIND_MATCHCASE;
     }
     if (!m_pEditor || !m_pEditor->GetControl())
     {
@@ -550,11 +550,11 @@ void IncrementalSearch::DoToggleUseRegex(bool checked)
 {
     if(checked)
     {
-        m_flags |= wxSCI_FIND_REGEXP;
+        m_flags |= wxSTC_FIND_REGEXP;
     }
     else
     {
-        m_flags &=  ~wxSCI_FIND_REGEXP;
+        m_flags &=  ~wxSTC_FIND_REGEXP;
     }
     if (!m_pEditor || !m_pEditor->GetControl())
     {
@@ -708,7 +708,7 @@ void IncrementalSearch::DoSearchNext()
 static void SetupIndicator(cbStyledTextCtrl *control, int indicator, const wxColor &colour)
 {
     control->IndicatorSetForeground(indicator, colour);
-    control->IndicatorSetStyle(indicator, wxSCI_INDIC_ROUNDBOX);
+    control->IndicatorSetStyle(indicator, wxSTC_INDIC_ROUNDBOX);
     control->IndicatorSetAlpha(indicator, 100);
     control->IndicatorSetOutlineAlpha(indicator, 255);
 #ifndef wxHAVE_RAW_BITMAP
@@ -734,7 +734,7 @@ void IncrementalSearch::HighlightText()
     control->SetIndicatorCurrent(m_IndicHighlight);
     control->IndicatorClearRange(0, control->GetLength());
     // then set the new ones (if any)
-    if (m_NewPos != wxSCI_INVALID_POSITION && !m_SearchText.empty())
+    if (m_NewPos != wxSTC_INVALID_POSITION && !m_SearchText.empty())
     {
         ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("editor"));
         wxColour colourTextFound(cfg->ReadColour(_T("/incremental_search/text_found_colour"), wxColour(160, 32, 240)));
@@ -773,7 +773,7 @@ void IncrementalSearch::HighlightText()
                 SetupIndicator(ctrlRight, m_IndicHighlight, colourTextHighlight);
             int endPos=0; // needed for regex-search, because the length of found text can vary
             for ( int pos = control->FindText(m_MinPos, m_MaxPos, m_SearchText, m_flags, &endPos);
-                    pos != wxSCI_INVALID_POSITION && endPos > 0;
+                    pos != wxSTC_INVALID_POSITION && endPos > 0;
                     pos = control->FindText(pos+=1, m_MaxPos, m_SearchText, m_flags, &endPos) )
             {
                 // check that this occurrence is not the same as the one we just found
@@ -800,7 +800,7 @@ void IncrementalSearch::DoSearch(int fromPos, int startPos, int endPos)
         return;
     }
     cbStyledTextCtrl* control = m_pEditor->GetControl();
-    if (startPos == wxSCI_INVALID_POSITION && endPos == wxSCI_INVALID_POSITION)
+    if (startPos == wxSTC_INVALID_POSITION && endPos == wxSTC_INVALID_POSITION)
     {
         startPos = m_MinPos;
         endPos = m_MaxPos;
@@ -812,7 +812,7 @@ void IncrementalSearch::DoSearch(int fromPos, int startPos, int endPos)
     m_NewPos=control->FindText(fromPos, endPos, m_SearchText, m_flags, &newEndPos);
     m_LengthFound = newEndPos - m_NewPos;
 
-    if (m_NewPos == wxSCI_INVALID_POSITION || m_LengthFound == 0)
+    if (m_NewPos == wxSTC_INVALID_POSITION || m_LengthFound == 0)
     {
         ConfigManager* cfg = Manager::Get()->GetConfigManager(_T("editor"));
         wxColour colourTextCtrlBG_Wrapped(cfg->ReadColour(_T("/incremental_search/wrapped_colour"), wxColour(127, 127, 255)));
@@ -822,7 +822,7 @@ void IncrementalSearch::DoSearch(int fromPos, int startPos, int endPos)
         // search again
         m_NewPos=control->FindText(startPos, endPos, m_SearchText, m_flags, &newEndPos);
         m_LengthFound = newEndPos - m_NewPos;
-        if (m_NewPos == wxSCI_INVALID_POSITION  || m_LengthFound == 0)
+        if (m_NewPos == wxSTC_INVALID_POSITION  || m_LengthFound == 0)
         {
             wxColour colourTextCtrlBG_NotFound(cfg->ReadColour(_T("/incremental_search/text_not_found_colour"), wxColour(255, 127, 127)));
             // if still not found, show it by colouring the textCtrl

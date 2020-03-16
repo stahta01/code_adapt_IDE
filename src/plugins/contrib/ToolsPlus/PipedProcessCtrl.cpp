@@ -14,12 +14,12 @@
 
 int ID_PROC=wxNewId();
 
-BEGIN_EVENT_TABLE(PipedTextCtrl, wxScintilla)
+BEGIN_EVENT_TABLE(PipedTextCtrl, wxStyledTextCtrl)
     EVT_LEFT_DCLICK(PipedTextCtrl::OnDClick)
     EVT_KEY_DOWN(PipedTextCtrl::OnUserInput)
 END_EVENT_TABLE()
 
-PipedTextCtrl::PipedTextCtrl(wxWindow *parent, PipedProcessCtrl *pp) : wxScintilla(parent, wxID_ANY)
+PipedTextCtrl::PipedTextCtrl(wxWindow *parent, PipedProcessCtrl *pp) : wxStyledTextCtrl(parent, wxID_ANY)
 {
     m_pp = pp;
 
@@ -34,7 +34,7 @@ PipedTextCtrl::PipedTextCtrl(wxWindow *parent, PipedProcessCtrl *pp) : wxScintil
         font.SetNativeFontInfo(nfi);
     }
 
-    StyleSetFont(wxSCI_STYLE_DEFAULT, font);
+    StyleSetFont(wxSTC_STYLE_DEFAULT, font);
     StyleSetForeground(PP_ERROR_STYLE,wxColor(200,0,0));
     StyleSetForeground(PP_LINK_STYLE,wxColor(0,0,200));
     StyleSetUnderline(PP_LINK_STYLE,true);

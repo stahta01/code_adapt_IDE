@@ -509,8 +509,6 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
     EVT_MENU(idSearchReplace,               MainFrame::OnSearchReplace)
     EVT_MENU(idSearchReplaceInFiles,        MainFrame::OnSearchReplace)
     EVT_MENU(idSearchGotoLine,              MainFrame::OnSearchGotoLine)
-    EVT_MENU(idSearchGotoNextChanged,       MainFrame::OnSearchGotoNextChanged)
-    EVT_MENU(idSearchGotoPreviousChanged,   MainFrame::OnSearchGotoPrevChanged)
 
     EVT_MENU(idViewLayoutSave,            MainFrame::OnViewLayoutSave)
     EVT_MENU(idViewLayoutDelete,          MainFrame::OnViewLayoutDelete)
@@ -2227,9 +2225,9 @@ void MainFrame::DoUpdateStatusBar()
         panel++;
         switch (control->GetEOLMode())
         {
-            case wxSCI_EOL_CRLF: msg = _T("Windows (CR+LF)"); break;
-            case wxSCI_EOL_CR:   msg = _T("Mac (CR)");        break;
-            case wxSCI_EOL_LF:   msg = _T("Unix (LF)");       break;
+            case wxSTC_EOL_CRLF: msg = _T("Windows (CR+LF)"); break;
+            case wxSTC_EOL_CR:   msg = _T("Mac (CR)");        break;
+            case wxSTC_EOL_LF:   msg = _T("Unix (LF)");       break;
             default:                                          break;
         }
         SetStatusText(msg, panel++);
@@ -2634,10 +2632,6 @@ void MainFrame::OnFileNewWhat(wxCommandEvent& event)
     if (project)
         wxSetWorkingDirectory(project->GetBasePath());
     cbEditor* ed = Manager::Get()->GetEditorManager()->New();
-
-    // initially start change-collection if configured on empty files
-    if (ed)
-        ed->GetControl()->SetChangeCollection(Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/margin/use_changebar"), true));
 
     if (ed && ed->IsOK())
         m_filesHistory.AddToHistory(ed->GetFilename());
@@ -3474,14 +3468,14 @@ struct EditorSelection
 bool SelectNext(cbStyledTextCtrl *control, const wxString &selectedText, long selectionEnd, bool reversed)
 {
     // always match case and try to match whole words if they have no special characters
-    int flag = wxSCI_FIND_MATCHCASE;
+    int flag = wxSTC_FIND_MATCHCASE;
     if (selectedText.find_first_of(wxT(";:\"'`~@#$%^,-+*/\\=|!?&*(){}[]")) == wxString::npos)
-        flag |= wxSCI_FIND_WHOLEWORD;
+        flag |= wxSTC_FIND_WHOLEWORD;
 
     int endPos = 0; // we need this to work properly with multibyte characters
     int eof = control->GetLength();
     int pos = control->FindText(selectionEnd, eof, selectedText, flag, &endPos);
-    if (pos != wxSCI_INVALID_POSITION)
+    if (pos != wxSTC_INVALID_POSITION)
     {
         control->SetAdditionalSelectionTyping(true);
         control->SetMultiPaste(true);
@@ -3622,7 +3616,7 @@ void MainFrame::OnEditCommentSelected(cb_unused wxCommandEvent& event)
         return;
 
     stc->BeginUndoAction();
-    if ( wxSCI_INVALID_POSITION != stc->GetSelectionStart() )
+    if ( wxSTC_INVALID_POSITION != stc->GetSelectionStart() )
     {
         int startLine = stc->LineFromPosition( stc->GetSelectionStart() );
         int endLine   = stc->LineFromPosition( stc->GetSelectionEnd() );
@@ -3678,7 +3672,7 @@ void MainFrame::OnEditUncommentSelected(cb_unused wxCommandEvent& event)
         return;
 
     stc->BeginUndoAction();
-    if ( wxSCI_INVALID_POSITION != stc->GetSelectionStart() )
+    if ( wxSTC_INVALID_POSITION != stc->GetSelectionStart() )
     {
         int startLine = stc->LineFromPosition( stc->GetSelectionStart() );
         int endLine   = stc->LineFromPosition( stc->GetSelectionEnd() );
@@ -3769,7 +3763,7 @@ void MainFrame::OnEditToggleCommentSelected(cb_unused wxCommandEvent& event)
         return;
 
     stc->BeginUndoAction();
-    if ( wxSCI_INVALID_POSITION != stc->GetSelectionStart() )
+    if ( wxSTC_INVALID_POSITION != stc->GetSelectionStart() )
     {
         int startLine = stc->LineFromPosition( stc->GetSelectionStart() );
         int endLine   = stc->LineFromPosition( stc->GetSelectionEnd() );
@@ -3847,7 +3841,7 @@ void MainFrame::OnEditStreamCommentSelected(cb_unused wxCommandEvent& event)
         return;
 
     stc->BeginUndoAction();
-    if ( wxSCI_INVALID_POSITION != stc->GetSelectionStart() )
+    if ( wxSTC_INVALID_POSITION != stc->GetSelectionStart() )
     {
         int startPos = stc->GetSelectionStart();
         int endPos   = stc->GetSelectionEnd();
@@ -3927,7 +3921,7 @@ void MainFrame::OnEditBoxCommentSelected(cb_unused wxCommandEvent& event)
         return;
 
     stc->BeginUndoAction();
-    if ( wxSCI_INVALID_POSITION != stc->GetSelectionStart() )
+    if ( wxSTC_INVALID_POSITION != stc->GetSelectionStart() )
     {
         int startLine = stc->LineFromPosition( stc->GetSelectionStart() );
         int endLine   = stc->LineFromPosition( stc->GetSelectionEnd() );
@@ -4065,11 +4059,11 @@ void MainFrame::OnEditEOLMode(wxCommandEvent& event)
         int mode = -1;
 
         if (event.GetId() == idEditEOLCRLF)
-            mode = wxSCI_EOL_CRLF;
+            mode = wxSTC_EOL_CRLF;
         else if (event.GetId() == idEditEOLCR)
-            mode = wxSCI_EOL_CR;
+            mode = wxSTC_EOL_CR;
         else if (event.GetId() == idEditEOLLF)
-            mode = wxSCI_EOL_LF;
+            mode = wxSTC_EOL_LF;
 
         if (mode != -1 && mode != ed->GetControl()->GetEOLMode())
         {
@@ -4298,20 +4292,6 @@ void MainFrame::OnSearchGotoLine(cb_unused wxCommandEvent& event)
     }
 }
 
-void MainFrame::OnSearchGotoNextChanged(cb_unused wxCommandEvent& event)
-{
-    cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
-    if (ed)
-        ed->GotoNextChanged();
-}
-
-void MainFrame::OnSearchGotoPrevChanged(cb_unused wxCommandEvent& event)
-{
-    cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
-    if (ed)
-        ed->GotoPreviousChanged();
-}
-
 void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
 {
     dlgAbout dlg(this);
@@ -4459,13 +4439,13 @@ void MainFrame::OnEditMenuUpdateUI(wxUpdateUIEvent& event)
 
         switch (ed->GetControl()->GetEOLMode())
         {
-            case wxSCI_EOL_CRLF:
+            case wxSTC_EOL_CRLF:
                 mbar->Check(idEditEOLCRLF, true);
                 break;
-            case wxSCI_EOL_CR:
+            case wxSTC_EOL_CR:
                 mbar->Check(idEditEOLCR,   true);
                 break;
-            case wxSCI_EOL_LF:
+            case wxSTC_EOL_LF:
                 mbar->Check(idEditEOLLF,   true);
                 break;
             default:
@@ -4563,8 +4543,7 @@ void MainFrame::OnSearchMenuUpdateUI(wxUpdateUIEvent& event)
 
     bool enableGoto = false;
     if (ed)
-        enableGoto = Manager::Get()->GetConfigManager(_T("editor"))->ReadBool(_T("/margin/use_changebar"), true)
-                   && (ed->CanUndo() || ed->CanRedo());
+        enableGoto = (ed->CanUndo() || ed->CanRedo());
 
     wxMenuBar* mbar = GetMenuBar();
 

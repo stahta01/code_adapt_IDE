@@ -154,7 +154,7 @@ void CscopePlugin::BuildModuleMenu(const ModuleType type, wxMenu* menu, const Fi
     cbStyledTextCtrl* stc = ((cbEditor*)edb)->GetControl();
     if ( !stc ) return;
 
-    if ( stc->GetLexer()  != wxSCI_LEX_CPP) return;
+    if ( stc->GetLexer()  != wxSTC_LEX_CPP) return;
 
     wxString word = GetWordAtCaret();
     if ( word.IsEmpty() ) return;
