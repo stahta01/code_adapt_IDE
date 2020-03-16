@@ -13,7 +13,9 @@
 
     #include <cbproject.h>
     #include <configmanager.h>
+#if caEDIT
     #include <editormanager.h>
+#endif // caEDIT
     #include <logmanager.h>
 #endif
 #include "app.h"
@@ -572,7 +574,9 @@ MainFrame::MainFrame(wxWindow* parent)
        m_filesHistory(_("&File"), wxT("/recent_files"), idFileOpenRecentFileClearHistory, wxID_CBFILE01),
        m_projectsHistory(_("&File"), wxT("/recent_projects"), idFileOpenRecentProjectClearHistory, wxID_CBFILE17),
        m_pCloseFullScreenBtn(nullptr),
+#if caEDIT
        m_pEdMan(nullptr),
+#endif // caEDIT
        m_pPrjMan(nullptr),
        m_pPrjManUI(nullptr),
        m_pLogMan(nullptr),
@@ -923,7 +927,9 @@ void MainFrame::SetupGUILogging(int uiSize16)
                 m_pInfoPane->AddLogger(mgr->Slot(i).GetLogger(), log, mgr->Slot(i).title, mgr->Slot(i).icon);
         }
 
+#if caEDIT
         m_findReplace.CreateSearchLog();
+#endif // caEDIT
     }
     else
     {
@@ -2909,7 +2915,11 @@ void MainFrame::OnFileCloseProject(cb_unused wxCommandEvent& event)
 {
     // we 're not actually shutting down here, but we want to check if the
     // active project is still opening files (still busy)
-    if (!ProjectManager::CanShutdown() || !EditorManager::CanShutdown())
+    if (!ProjectManager::CanShutdown()
+#if caEDIT
+        || !EditorManager::CanShutdown()
+#endif // caEDIT
+    )
     {
         wxBell();
         return;
@@ -3076,7 +3086,11 @@ void MainFrame::OnApplicationClose(wxCloseEvent& event)
         }
     }
 
-    if (!ProjectManager::CanShutdown() || !EditorManager::CanShutdown())
+    if (!ProjectManager::CanShutdown()
+#if caEDIT
+        || !EditorManager::CanShutdown()
+#endif // caEDIT
+    )
     {
         event.Veto();
         wxBell();
@@ -4427,14 +4441,18 @@ void MainFrame::OnSearchFind(wxCommandEvent& event)
 
 void MainFrame::OnSearchFindNext(wxCommandEvent& event)
 {
+#if caEDIT
     bool bNext = !(event.GetId() == idSearchFindPrevious);
     m_findReplace.FindNext(bNext, nullptr, nullptr, false);
+#endif // caEDIT
 }
 
 void MainFrame::OnSearchFindNextSelected(wxCommandEvent& event)
 {
+#if caEDIT
     bool bNext = !(event.GetId() == idSearchFindSelectedPrevious);
     m_findReplace.FindSelectedText(bNext);
+#endif // caEDIT
 }
 
 void MainFrame::OnSearchReplace(wxCommandEvent& event)
@@ -4515,7 +4533,11 @@ void MainFrame::OnFileMenuUpdateUI(wxUpdateUIEvent& event)
         return;
     }
 
-    if (!ProjectManager::CanShutdown() || !EditorManager::CanShutdown())
+    if (!ProjectManager::CanShutdown()
+#if caEDIT
+        || !EditorManager::CanShutdown()
+#endif // caEDIT
+    )
     {
         event.Enable(false);
         return;
@@ -5097,8 +5119,8 @@ void MainFrame::OnSettingsEnvironment(cb_unused wxCommandEvent& event)
         Manager::Get()->GetLogManager()->NotifyUpdate();
 #if caEDIT
         Manager::Get()->GetEditorManager()->RecreateOpenEditorStyles();
-#endif // caEDIT
         Manager::Get()->GetCCManager()->UpdateEnvSettings();
+#endif // caEDIT
         m_pPrjManUI->RebuildTree();
         ShowHideStartPage();
 
@@ -5574,7 +5596,9 @@ void MainFrame::SetChecksForViewToolbarsMenu(wxMenu &menu)
     }
 
     menu.Check(idViewToolMain,     m_LayoutManager.GetPane(m_pToolbar).IsShown());
+#if caEDIT
     menu.Check(idViewToolDebugger, m_LayoutManager.GetPane(m_debuggerToolbarHandler->GetToolbar(false)).IsShown());
+#endif // caEDIT
 }
 
 void MainFrame::OnGetGlobalAccels(wxCommandEvent& event)

@@ -2649,6 +2649,7 @@ void ProjectManagerUI::ConfigureProjectDependencies(cbProject* base, wxWindow *p
     dlg.ShowModal();
 }
 
+#if caEDIT
 void ProjectManagerUI::CheckForExternallyModifiedProjects()
 {
     if (m_isCheckingForExternallyModifiedProjects) // for some reason, a mutex locker does not work???
@@ -2716,7 +2717,7 @@ void ProjectManagerUI::CheckForExternallyModifiedProjects()
     }
     m_isCheckingForExternallyModifiedProjects = false;
 }
-
+#endif // caEDIT
 
 namespace
 {

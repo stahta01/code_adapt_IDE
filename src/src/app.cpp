@@ -1600,9 +1600,11 @@ void CodeAdaptApp::OnAppActivate(wxActivateEvent& event)
         // If event is close app, wxPostEvent() may have allowed OnApplicationClose() to free the Managers.
         if ( Manager::IsAppShuttingDown())
             return;
+#if caEDIT
         cbProjectManagerUI *prjManUI = m_Frame->GetProjectManagerUI();
         if (prjManUI)
             static_cast<ProjectManagerUI*>(prjManUI)->CheckForExternallyModifiedProjects();
+#endif // caEDIT
     }
 #if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()

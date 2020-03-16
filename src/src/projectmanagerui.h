@@ -52,7 +52,9 @@ class ProjectManagerUI : public wxEvtHandler, public cbProjectManagerUI
         int AskForBuildTargetIndex(cbProject* project);
         wxArrayInt AskForMultiBuildTargetIndex(cbProject* project);
         void ConfigureProjectDependencies(cbProject* base, wxWindow *parent);
+#if caEDIT
         void CheckForExternallyModifiedProjects();
+#endif // caEDIT
 
     private:
         void InitPane();

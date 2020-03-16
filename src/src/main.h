@@ -370,7 +370,9 @@ class MainFrame : public wxFrame
         /// "Close FullScreen" button. Only shown when in FullScreen view
         wxButton* m_pCloseFullScreenBtn;
 
+#if caEDIT
         EditorManager*      m_pEdMan;
+#endif // caEDIT
         ProjectManager*     m_pPrjMan;
         cbProjectManagerUI* m_pPrjManUI;
         LogManager*         m_pLogMan;
@@ -408,7 +410,9 @@ class MainFrame : public wxFrame
         DebuggerMenuHandler*    m_debuggerMenuHandler;
         DebuggerToolbarHandler* m_debuggerToolbarHandler;
 
+#if caEDIT
         FindReplace m_findReplace;
+#endif // caEDIT
 
         DECLARE_EVENT_TABLE()
 };

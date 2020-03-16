@@ -142,6 +142,7 @@ dlgAbout::dlgAbout(wxWindow* parent)
     wxTextCtrl *txtLicense = XRCCTRL(*this, "txtLicense", wxTextCtrl);
     txtLicense->SetValue(LICENSE_GPL);
 
+#if caEDIT
 #if wxCHECK_VERSION(3, 0, 0)
     const wxVersionInfo scintillaVersion = wxScintilla::GetLibraryVersionInfo();
     const wxString scintillaStr = wxString::Format(wxT("%d.%d.%d"),
@@ -151,6 +152,7 @@ dlgAbout::dlgAbout(wxWindow* parent)
 #else
     const wxString scintillaStr = wxSCINTILLA_VERSION;
 #endif // wxCHECK_VERSION
+#endif // caEDIT
 
     struct Item
     {
@@ -160,7 +162,9 @@ dlgAbout::dlgAbout(wxWindow* parent)
     items.push_back({_("Name"), appglobals::AppName});
     items.push_back({_("Version"), appglobals::AppActualVersion});
     items.push_back({_("SDK Version"), appglobals::AppSDKVersion});
+#if caEDIT
     items.push_back({_("Scintilla Version"), scintillaStr});
+#endif // caEDIT
     items.push_back({_("Author"), _("The Code::Blocks Team")});
     items.push_back({_("E-mail"), appglobals::AppContactEmail});
     items.push_back({_("Website"), appglobals::AppUrl});
