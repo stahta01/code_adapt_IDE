@@ -33,6 +33,7 @@ PrintDialog::PrintDialog(wxWindow* parent)
 	wxXmlResource::Get()->LoadObject(this, parent, _T("dlgPrint"),_T("wxScrollingDialog"));
 	XRCCTRL(*this, "wxID_OK", wxButton)->SetDefault();
 
+#if caEDIT
 	cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
 	if (ed)
 	{
@@ -40,6 +41,7 @@ PrintDialog::PrintDialog(wxWindow* parent)
         XRCCTRL(*this, "rbScope", wxRadioBox)->SetSelection(hasSel ? 0 : 1);
 	}
 	else
+#endif // caEDIT
         XRCCTRL(*this, "rbScope", wxRadioBox)->SetSelection(1);
 
     int mode = Manager::Get()->GetConfigManager(_T("app"))->ReadInt(_T("/print_mode"), 1);

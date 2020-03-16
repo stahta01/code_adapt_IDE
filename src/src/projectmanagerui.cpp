@@ -582,6 +582,7 @@ void ProjectManagerUI::ShowMenu(wxTreeItemId id, const wxPoint& pt)
             // selected project file
             ProjectFile* pf = ftd->GetProjectFile();
 
+#if caEDIT
             // is it already open in the editor?
             EditorBase* eb = Manager::Get()->GetEditorManager()->IsOpen(pf->file.GetFullPath());
             if (eb)
@@ -600,6 +601,7 @@ void ProjectManagerUI::ShowMenu(wxTreeItemId id, const wxPoint& pt)
                 menu.Append(idMenuCloseFile, caption);
             }
             else
+#endif // caEDIT
             {
                 caption.Printf(_("Open %s"), m_pTree->GetItemText(id).c_str());
                 menu.Append(idMenuOpenFile, caption);
@@ -621,7 +623,11 @@ void ProjectManagerUI::ShowMenu(wxTreeItemId id, const wxPoint& pt)
             openWith->Append(idOpenWithInternal, _("Internal editor"));
             menu.Append(wxID_ANY, _("Open with"), openWith);
 
-            if (pf->GetFileState() == fvsNormal &&  !Manager::Get()->GetEditorManager()->IsOpen(pf->file.GetFullPath()))
+            if (pf->GetFileState() == fvsNormal
+#if caEDIT
+                &&  !Manager::Get()->GetEditorManager()->IsOpen(pf->file.GetFullPath())
+#endif // caEDIT
+            )
             {
                 menu.AppendSeparator();
                 menu.Append(idMenuRenameFile,  _("Rename file..."));
@@ -732,6 +738,7 @@ void ProjectManagerUI::DoOpenFile(ProjectFile* pf, const wxString& filename)
     FileType ft = FileTypeOf(filename);
     if (ft == ftHeader || ft == ftSource || ft == ftTemplateSource)
     {
+#if caEDIT
         // C/C++ header/source files, always get opened inside Code::Blocks
         if ( cbEditor* ed = Manager::Get()->GetEditorManager()->Open(filename) )
         {
@@ -739,6 +746,7 @@ void ProjectManagerUI::DoOpenFile(ProjectFile* pf, const wxString& filename)
             ed->Activate();
         }
         else
+#endif // caEDIT
         {
             wxString msg;
             msg.Printf(_("Failed to open '%s'."), filename.c_str());
@@ -747,6 +755,7 @@ void ProjectManagerUI::DoOpenFile(ProjectFile* pf, const wxString& filename)
     }
     else
     {
+#if caEDIT
         // first look for custom editors
         // if that fails, try MIME handlers
         EditorBase* eb = Manager::Get()->GetEditorManager()->IsOpen(filename);
@@ -756,6 +765,7 @@ void ProjectManagerUI::DoOpenFile(ProjectFile* pf, const wxString& filename)
             eb->Activate();
             return;
         }
+#endif // caEDIT
 
         // not a recognized file type
         cbMimePlugin* plugin = Manager::Get()->GetPluginManager()->GetMIMEHandlerForFile(filename);
@@ -1557,6 +1567,7 @@ void ProjectManagerUI::OnCloseProject(wxCommandEvent& WXUNUSED(event))
 
 void ProjectManagerUI::OnSaveFile(wxCommandEvent& WXUNUSED(event))
 {
+#if caEDIT
     wxTreeItemId sel = GetTreeSelection();
     if (!sel.IsOk())
         return;
@@ -1566,10 +1577,12 @@ void ProjectManagerUI::OnSaveFile(wxCommandEvent& WXUNUSED(event))
         if ( ProjectFile* pf = ftd->GetProjectFile() )
             Manager::Get()->GetEditorManager()->Save(pf->file.GetFullPath());
     }
+#endif // caEDIT
 }
 
 void ProjectManagerUI::OnCloseFile(wxCommandEvent& WXUNUSED(event))
 {
+#if caEDIT
     wxTreeItemId sel = GetTreeSelection();
     if (!sel.IsOk())
         return;
@@ -1579,6 +1592,7 @@ void ProjectManagerUI::OnCloseFile(wxCommandEvent& WXUNUSED(event))
         if ( ProjectFile* pf = ftd->GetProjectFile() )
             Manager::Get()->GetEditorManager()->Close(pf->file.GetFullPath());
     }
+#endif // caEDIT
 }
 
 void ProjectManagerUI::OnOpenFile(wxCommandEvent& WXUNUSED(event))
@@ -1623,6 +1637,7 @@ void ProjectManagerUI::OnOpenWith(wxCommandEvent& event)
     if ( ProjectFile* pf = ftd->GetProjectFile() )
     {
         wxString filename = pf->file.GetFullPath();
+#if caEDIT
         if (event.GetId() == idOpenWithInternal)
         {
             if ( cbEditor* ed = Manager::Get()->GetEditorManager()->Open(filename) )
@@ -1633,6 +1648,7 @@ void ProjectManagerUI::OnOpenWith(wxCommandEvent& event)
             }
         }
         else
+#endif // caEDIT
         {
             PluginsArray mimes = Manager::Get()->GetPluginManager()->GetMimeOffers();
             cbMimePlugin* plugin = (cbMimePlugin*)mimes[event.GetId() - idOpenWith[0]];
@@ -1687,6 +1703,7 @@ void ProjectManagerUI::OnProperties(wxCommandEvent& event)
         wxString newTitle = prj->GetTitle();
         if (backupTitle != newTitle)
         {
+#if caEDIT
             cbAuiNotebook* nb = Manager::Get()->GetEditorManager()->GetNotebook();
             if (nb)
             {
@@ -1701,6 +1718,7 @@ void ProjectManagerUI::OnProperties(wxCommandEvent& event)
                     }
                 }
             }
+#endif // caEDIT
         }
     }
     else if (event.GetId() == idMenuTreeFileProperties)
@@ -1723,6 +1741,7 @@ void ProjectManagerUI::OnProperties(wxCommandEvent& event)
     }
     else // active editor properties
     {
+#if caEDIT
         if ( cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor() )
         {
             if ( ProjectFile* pf = ed->GetProjectFile() )
@@ -1735,6 +1754,7 @@ void ProjectManagerUI::OnProperties(wxCommandEvent& event)
                 dlg.ShowModal();
             }
         }
+#endif // caEDIT
     }
 }
 
@@ -2314,8 +2334,9 @@ void ProjectManagerUI::OnUpdateUI(wxUpdateUIEvent& event)
 {
     if (event.GetId() == idMenuFileProperties)
     {
-        EditorManager *editorManager = Manager::Get()->GetEditorManager();
         bool enableProperties;
+#if caEDIT
+        EditorManager *editorManager = Manager::Get()->GetEditorManager();
         if (editorManager)
         {
             EditorBase *editor = editorManager->GetActiveEditor();
@@ -2326,6 +2347,7 @@ void ProjectManagerUI::OnUpdateUI(wxUpdateUIEvent& event)
                 enableProperties = !cbHasRunningCompilers(Manager::Get()->GetPluginManager());
         }
         else
+#endif // caEDIT
             enableProperties = false;
 
         event.Enable(enableProperties);
@@ -2494,6 +2516,7 @@ void ProjectManagerUI::MoveProjectDown(cbProject* project, bool warpAround)
 
 bool ProjectManagerUI::QueryCloseAllProjects()
 {
+#if caEDIT
     if (!Manager::Get()->GetEditorManager()->QueryCloseAll())
         return false;
     ProjectsArray* pa = Manager::Get()->GetProjectManager()->GetProjects();
@@ -2506,6 +2529,9 @@ bool ProjectManagerUI::QueryCloseAllProjects()
             return false;
     }
     return true;
+#else
+    return false;
+#endif // caEDIT
 }
 
 bool ProjectManagerUI::QueryCloseProject(cbProject* proj, bool dontsavefiles)

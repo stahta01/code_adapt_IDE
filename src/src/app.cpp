@@ -1415,6 +1415,7 @@ void CodeAdaptApp::LoadDelayedFiles(MainFrame *const frame)
                 filePart = m_AutoFile;
             }
         }
+#if caEDIT
         // Make sure filePart is not empty, because if it is empty Normalize turns the full path in
         // to the path of the current working folder.
         if (!filePart.empty())
@@ -1428,12 +1429,14 @@ void CodeAdaptApp::LoadDelayedFiles(MainFrame *const frame)
                     eb->GotoLine(line - 1, true);
             }
         }
+#endif // caEDIT
         m_AutoFile.Clear();
     }
 }
 
 void CodeAdaptApp::AttachDebugger()
 {
+#if caEDIT
     const wxString localAttach = m_DebuggerAttach;
     const wxString localConfig = m_DebuggerConfig;
     // Reset the values to prevent old values to be used when the user forgets to pass all required
@@ -1530,6 +1533,7 @@ void CodeAdaptApp::AttachDebugger()
     logManager->Log(_("Debugger plugin and configuration found. Attaching!!!"));
     plugin->SetActiveConfig(configIndex);
     plugin->AttachToProcess(localAttach);
+#endif // caEDIT
 }
 
 #ifdef __WXMAC__
@@ -1577,9 +1581,12 @@ void CodeAdaptApp::OnAppActivate(wxActivateEvent& event)
 
     // fix for bug #18007: In batch build mode the following is not needed
     if (  !m_Batch
+#if caEDIT
         && Manager::Get()->GetEditorManager()
+#endif // caEDIT
         && Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/environment/check_modified_files"), true))
     {
+#if caEDIT
         // for some reason a mouse up event doesn't make it into scintilla (scintilla bug)
         // therefore the workaround is not to directly call the editorManager, but
         // take a detour through an event
@@ -1589,6 +1596,7 @@ void CodeAdaptApp::OnAppActivate(wxActivateEvent& event)
         // so : idEditorManagerCheckFiles, EditorManager::OnCheckForModifiedFiles just exist for this workaround
         wxCommandEvent evt(wxEVT_COMMAND_MENU_SELECTED, idEditorManagerCheckFiles);
         wxPostEvent(Manager::Get()->GetEditorManager(), evt);
+#endif // caEDIT
         // If event is close app, wxPostEvent() may have allowed OnApplicationClose() to free the Managers.
         if ( Manager::IsAppShuttingDown())
             return;
@@ -1596,6 +1604,7 @@ void CodeAdaptApp::OnAppActivate(wxActivateEvent& event)
         if (prjManUI)
             static_cast<ProjectManagerUI*>(prjManUI)->CheckForExternallyModifiedProjects();
     }
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()
                  ? Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor() : nullptr;
     if (ed)
@@ -1604,6 +1613,7 @@ void CodeAdaptApp::OnAppActivate(wxActivateEvent& event)
         Manager::Get()->GetEditorManager()->GetNotebook()->SetFocus();
         ed->GetControl()->SetFocus();
     }
+#endif // caEDIT
 }
 
 void CodeAdaptApp::AddFileToOpenDelayed(const wxString& filename)

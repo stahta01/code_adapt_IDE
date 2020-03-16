@@ -41,6 +41,7 @@ inline void CrashHandlerSaveEditorFiles(wxString& buf)
     wxDateTime now = wxDateTime::Now();
     path << now.Format(_T("\\%Y%m%d-%H%M%S"));
 
+#if caEDIT
     EditorManager* em = Manager::Get()->GetEditorManager();
     if (em)
     {
@@ -80,6 +81,7 @@ inline void CrashHandlerSaveEditorFiles(wxString& buf)
                 wxRmdir(path);
         }
     }
+#endif // caEDIT
 }
 
 LONG WINAPI CrashHandlerFunc(PEXCEPTION_POINTERS ExceptionInfo)

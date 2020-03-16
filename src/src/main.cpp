@@ -543,8 +543,10 @@ BEGIN_EVENT_TABLE(MainFrame, wxFrame)
 
     EVT_MENU(idStartHerePageLink,     MainFrame::OnStartHereLink)
 
+#if caEDIT
     EVT_CBAUIBOOK_LEFT_DCLICK(ID_NBEditorManager, MainFrame::OnNotebookDoubleClick)
     EVT_NOTEBOOK_PAGE_CHANGED(ID_NBEditorManager, MainFrame::OnPageChanged)
+#endif // caEDIT
 
     // Highlightbutton
     EVT_BUTTON(idHighlightButton, MainFrame::OnHighlightMenu)
@@ -585,9 +587,12 @@ MainFrame::MainFrame(wxWindow* parent)
        m_LastCtrlAltTabWindow(0),
        m_LastLayoutIsTemp(false),
        m_pScriptConsole(nullptr),
-       m_pBatchBuildDialog(nullptr),
+       m_pBatchBuildDialog(nullptr)
+#if caEDIT
+,
        // Highlightbutton
        m_pHighlightButton(nullptr)
+#endif // caEDIT
 {
     Manager::Get(this); // provide manager with handle to MainFrame (this)
 
@@ -859,12 +864,16 @@ void MainFrame::CreateIDE()
 
     CreateMenubar();
 
+#if caEDIT
     m_pEdMan  = Manager::Get()->GetEditorManager();
+#endif // caEDIT
     m_pLogMan = Manager::Get()->GetLogManager();
 
+#if caEDIT
     // editor manager
     m_LayoutManager.AddPane(m_pEdMan->GetNotebook(), wxAuiPaneInfo().Name(wxT("MainPane")).
                             CentrePane());
+#endif // caEDIT
 
     // script console
     m_pScriptConsole = new ScriptConsole(this, -1);
@@ -875,7 +884,9 @@ void MainFrame::CreateIDE()
     DoUpdateLayoutColours();
     DoUpdateEditorStyle();
 
+#if caEDIT
     m_pEdMan->GetNotebook()->SetDropTarget(new cbFileDropTarget(this));
+#endif // caEDIT
     if (m_pPrjManUI->GetNotebook())
         m_pPrjManUI->GetNotebook()->SetDropTarget(new cbFileDropTarget(this));
 
@@ -933,6 +944,7 @@ void MainFrame::SetupGUILogging(int uiSize16)
 
 void MainFrame::SetupDebuggerUI()
 {
+#if caEDIT
     m_debuggerMenuHandler = new DebuggerMenuHandler;
     m_debuggerToolbarHandler = new DebuggerToolbarHandler(m_debuggerMenuHandler);
     m_debuggerMenuHandler->SetEvtHandlerEnabled(false);
@@ -951,6 +963,7 @@ void MainFrame::SetupDebuggerUI()
         Manager::Get()->GetDebuggerManager()->SetInterfaceFactory(new DebugInterfaceFactory);
         m_debuggerMenuHandler->RegisterDefaultWindowItems();
     }
+#endif // caEDIT
 }
 
 DECLARE_INSTANCE_TYPE(MainFrame);
@@ -1093,7 +1106,12 @@ void MainFrame::CreateMenubar()
         mbar->FindItem(idEditHighlightModeText, &hl);
         if (hl)
         {
+#if caEDIT
             EditorColourSet* colour_set = Manager::Get()->GetEditorManager()->GetColourSet();
+#else
+            EditorColourSet* colour_set = nullptr;
+#endif // caEDIT
+#if caEDIT
             if (colour_set)
             {
                 wxArrayString langs = colour_set->GetAllHighlightLanguages();
@@ -1109,6 +1127,7 @@ void MainFrame::CreateMenubar()
                             &MainFrame::OnEditHighlightMode);
                 }
             }
+#endif // caEDIT
         }
         const wxLanguageInfo* info = wxLocale::GetLanguageInfo(wxLANGUAGE_DEFAULT);
         wxMenu* editMenu = mbar->GetMenu(tmpidx);
@@ -1142,7 +1161,9 @@ void MainFrame::CreateMenubar()
     // core modules: create menus
     if (!Manager::IsBatchBuild())
         static_cast<ProjectManagerUI*>(m_pPrjManUI)->CreateMenu(mbar);
+#if caEDIT
     Manager::Get()->GetDebuggerManager()->SetMenuHandler(m_debuggerMenuHandler);
+#endif // caEDIT
 
     // ask all plugins to rebuild their menus
     PluginElementsArray plugins = Manager::Get()->GetPluginManager()->GetPlugins();
@@ -1222,15 +1243,19 @@ void MainFrame::CreateToolbars()
 
     m_pToolbar->SetInitialSize();
 
+#if caEDIT
     // Right click on the debugger toolbar will popup a context menu
     m_debuggerToolbarHandler->GetToolbar()->Connect(wxID_ANY, wxEVT_COMMAND_TOOL_RCLICKED, wxCommandEventHandler(MainFrame::OnToolBarRightClick), NULL, this );
+#endif // caEDIT
 
     std::vector<ToolbarInfo> toolbars;
 
     toolbars.push_back(ToolbarInfo(m_pToolbar, wxAuiPaneInfo().Name(wxT("MainToolbar")).Caption(_("Main Toolbar")), 0));
+#if caEDIT
     toolbars.push_back(ToolbarInfo(m_debuggerToolbarHandler->GetToolbar(),
                                    wxAuiPaneInfo(). Name(wxT("DebuggerToolbar")).Caption(_("Debugger Toolbar")),
                                    2));
+#endif // caEDIT
 
     // ask all plugins to rebuild their toolbars
     PluginElementsArray plugins = Manager::Get()->GetPluginManager()->GetPlugins();
@@ -2132,6 +2157,7 @@ bool MainFrame::DoOpenProject(const wxString& filename, bool addToHistory)
 
 bool MainFrame::DoOpenFile(const wxString& filename, bool addToHistory)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->Open(filename);
     if (ed)
     {
@@ -2141,6 +2167,7 @@ bool MainFrame::DoOpenFile(const wxString& filename, bool addToHistory)
             m_filesHistory.AddToHistory(ed->GetFilename());
         return true;
     }
+#endif // caEDIT
     return false;
 }
 
@@ -2203,8 +2230,9 @@ void MainFrame::DoUpdateStatusBar()
     if (Manager::IsAppShuttingDown())
         return;
 
-    cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     wxString personality(Manager::Get()->GetPersonalityManager()->GetPersonality());
+#if caEDIT
+    cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
         cbStyledTextCtrl * const control = ed->GetControl();
@@ -2267,6 +2295,7 @@ void MainFrame::DoUpdateStatusBar()
         SetStatusText(wxEmptyString, panel++);
         SetStatusText(personality, panel++);
     }
+#endif // caEDIT
 }
 
 void MainFrame::DoUpdateEditorStyle(cbAuiNotebook* target, const wxString& prefix, long defaultStyle)
@@ -2332,11 +2361,15 @@ void MainFrame::DoUpdateEditorStyle()
             break;
     }
 
+#if caEDIT
     cbAuiNotebook* an = Manager::Get()->GetEditorManager()->GetNotebook();
 
     DoUpdateEditorStyle(an, _T("editor"), style | wxNO_FULL_REPAINT_ON_RESIZE | wxCLIP_CHILDREN);
     if (Manager::Get()->GetConfigManager(_T("app"))->ReadBool(_T("/environment/hide_editor_tabs"),false))
         an->SetTabCtrlHeight(0);
+#else
+    cbAuiNotebook* an = nullptr;
+#endif // caEDIT
 
     an = m_pInfoPane;
     DoUpdateEditorStyle(an, _T("infopane"), style);
@@ -2380,7 +2413,11 @@ void MainFrame::DoUpdateLayout()
 
 void MainFrame::DoUpdateAppTitle()
 {
+#if caEDIT
     EditorBase* ed = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetActiveEditor() : nullptr;
+#else
+    EditorBase* ed = nullptr;
+#endif // caEDIT
     cbProject* prj = nullptr;
     if (ed && ed->IsBuiltinEditor())
     {
@@ -2426,9 +2463,11 @@ void MainFrame::ShowHideStartPage(bool forceHasProject, int forceState)
 
     if (m_InitiatedShutdown)
     {
+#if caEDIT
         EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
         if (sh)
             sh->Destroy();
+#endif // caEDIT
         return;
     }
 
@@ -2441,6 +2480,7 @@ void MainFrame::ShowHideStartPage(bool forceHasProject, int forceState)
     if (forceState>0)
         show = true;
 
+#if caEDIT
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
     if (show)
     {
@@ -2454,6 +2494,7 @@ void MainFrame::ShowHideStartPage(bool forceHasProject, int forceState)
     }
     else if (!show && sh)
         sh->Destroy();
+#endif // caEDIT
 
     DoUpdateAppTitle();
 }
@@ -2595,9 +2636,11 @@ void MainFrame::OnFileNewWhat(wxCommandEvent& event)
 
         wxString filename;
         cbProject* prj = TemplateManager::Get()->New(tot, &filename);
+#if caEDIT
         // verify that the open files are still in sync
         // the new file might have overwritten an existing one)
         Manager::Get()->GetEditorManager()->CheckForExternallyModifiedFiles();
+#endif // caEDIT
 
         // If both are empty it means that the wizard has failed
         if (!prj && filename.IsEmpty())
@@ -2633,6 +2676,7 @@ void MainFrame::OnFileNewWhat(wxCommandEvent& event)
     cbProject* project = Manager::Get()->GetProjectManager()->GetActiveProject();
     if (project)
         wxSetWorkingDirectory(project->GetBasePath());
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->New();
 
     // initially start change-collection if configured on empty files
@@ -2662,6 +2706,7 @@ void MainFrame::OnFileNewWhat(wxCommandEvent& event)
     // verify that the open files are still in sync
     // the new file might have overwritten an existing one)
     Manager::Get()->GetEditorManager()->CheckForExternallyModifiedFiles();
+#endif // caEDIT
 }
 
 bool MainFrame::OnDropFiles(wxCoord /*x*/, wxCoord /*y*/, const wxArrayString& files)
@@ -2798,18 +2843,22 @@ void MainFrame::OnFileOpenRecentClearHistory(cb_unused wxCommandEvent& event)
 
 void MainFrame::OnFileSave(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     if (!Manager::Get()->GetEditorManager()->SaveActive())
     {
         wxString msg;
         msg.Printf(_("File %s could not be saved..."), Manager::Get()->GetEditorManager()->GetActiveEditor()->GetFilename().wx_str());
         cbMessageBox(msg, _("Error saving file"), wxICON_ERROR);
     }
+#endif // caEDIT
     DoUpdateStatusBar();
 }
 
 void MainFrame::OnFileSaveAs(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     Manager::Get()->GetEditorManager()->SaveActiveAs();
+#endif // caEDIT
     DoUpdateStatusBar();
 }
 
@@ -2835,7 +2884,9 @@ void MainFrame::OnFileSaveProjectAs(cb_unused wxCommandEvent& event)
 void MainFrame::OnFileSaveAll(cb_unused wxCommandEvent& event)
 {
     Manager::Get()->GetConfigManager(_T("app"))->Flush();
+#if caEDIT
     Manager::Get()->GetEditorManager()->SaveAll();
+#endif // caEDIT
     ProjectManager *prjManager = Manager::Get()->GetProjectManager();
     prjManager->SaveAllProjects();
 
@@ -2924,26 +2975,34 @@ void MainFrame::OnFileCloseWorkspace(cb_unused wxCommandEvent& event)
 
 void MainFrame::OnFileClose(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     Manager::Get()->GetEditorManager()->CloseActive();
+#endif // caEDIT
     DoUpdateStatusBar();
     Refresh();
 }
 
 void MainFrame::OnFileCloseAll(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     Manager::Get()->GetEditorManager()->CloseAll();
+#endif // caEDIT
     DoUpdateStatusBar();
 }
 
 void MainFrame::OnFileNext(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     Manager::Get()->GetEditorManager()->ActivateNext();
+#endif // caEDIT
     DoUpdateStatusBar();
 }
 
 void MainFrame::OnFilePrev(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     Manager::Get()->GetEditorManager()->ActivatePrevious();
+#endif // caEDIT
     DoUpdateStatusBar();
 }
 
@@ -2951,8 +3010,10 @@ void MainFrame::OnFilePrint(cb_unused wxCommandEvent& event)
 {
     PrintDialog dlg(this);
     PlaceWindow(&dlg);
+#if caEDIT
     if (dlg.ShowModal() == wxID_OK)
         Manager::Get()->GetEditorManager()->Print(dlg.GetPrintScope(), dlg.GetPrintColourMode(), dlg.GetPrintLineNumbers());
+#endif // caEDIT
 }
 
 void MainFrame::OnFileQuit(cb_unused wxCommandEvent& event)
@@ -3045,7 +3106,9 @@ void MainFrame::OnApplicationClose(wxCloseEvent& event)
     if (m_pPrjManUI->GetNotebook())
         m_LayoutManager.DetachPane(m_pPrjManUI->GetNotebook());
     m_LayoutManager.DetachPane(m_pInfoPane);
+#if caEDIT
     m_LayoutManager.DetachPane(Manager::Get()->GetEditorManager()->GetNotebook());
+#endif // caEDIT
 
     m_LayoutManager.UnInit();
     TerminateRecentFilesHistory();
@@ -3084,47 +3147,60 @@ void MainFrame::OnApplicationClose(wxCloseEvent& event)
 
 void MainFrame::OnEditSwapHeaderSource(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     Manager::Get()->GetEditorManager()->SwapActiveHeaderSource();
+#endif // caEDIT
     DoUpdateStatusBar();
 }
 
 void MainFrame::OnEditGotoMatchingBrace(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GotoMatchingBrace();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditBookmarksToggle(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     EditorBase* ed = Manager::Get()->GetEditorManager()->GetActiveEditor();
     if (ed && ed->IsBuiltinEditor())
         static_cast<cbEditor*>(ed)->ToggleBookmark();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditBookmarksNext(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     EditorBase* ed = Manager::Get()->GetEditorManager()->GetActiveEditor();
     if (ed && ed->IsBuiltinEditor())
         static_cast<cbEditor*>(ed)->GotoNextBookmark();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditBookmarksPrevious(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     EditorBase* ed = Manager::Get()->GetEditorManager()->GetActiveEditor();
     if (ed && ed->IsBuiltinEditor())
         static_cast<cbEditor*>(ed)->GotoPreviousBookmark();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditBookmarksClearAll(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     EditorBase* ed = Manager::Get()->GetEditorManager()->GetActiveEditor();
     if (ed && ed->IsBuiltinEditor())
         static_cast<cbEditor*>(ed)->ClearAllBookmarks();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditUndo(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     EditorBase* ed = Manager::Get()->GetEditorManager()->GetActiveEditor();
     if (ed && ed->CanUndo())
     {
@@ -3133,157 +3209,201 @@ void MainFrame::OnEditUndo(cb_unused wxCommandEvent& event)
             cbEd->GetControl()->AutoCompCancel();
         ed->Undo();
     }
+#endif // caEDIT
 }
 
 void MainFrame::OnEditRedo(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     EditorBase* ed = Manager::Get()->GetEditorManager()->GetActiveEditor();
     if (ed)
         ed->Redo();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditClearHistory(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     EditorBase* ed = Manager::Get()->GetEditorManager()->GetActiveEditor();
     if (ed)
         ed->ClearHistory();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditCopy(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     EditorBase* ed = Manager::Get()->GetEditorManager()->GetActiveEditor();
     if (ed)
         ed->Copy();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditCut(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     EditorBase* ed = Manager::Get()->GetEditorManager()->GetActiveEditor();
     if (ed)
         ed->Cut();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditPaste(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     EditorBase* ed = Manager::Get()->GetEditorManager()->GetActiveEditor();
     if (ed)
         ed->Paste();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditParaUp(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->ParaUp();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditParaUpExtend(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->ParaUpExtend();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditParaDown(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->ParaDown();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditParaDownExtend(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->ParaDownExtend();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditWordPartLeft(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->WordPartLeft();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditWordPartLeftExtend(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->WordPartLeftExtend();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditWordPartRight(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->WordPartRight();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditWordPartRightExtend(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->WordPartRightExtend();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditZoomIn(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->ZoomIn();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditZoomOut(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->ZoomOut();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditZoomReset(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->SetZoom(0);
+#endif // caEDIT
 }
 
 void MainFrame::OnEditLineCut(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LineCut();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditLineDelete(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LineDelete();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditLineDuplicate(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LineDuplicate();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditLineTranspose(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LineTranspose();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditLineCopy(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LineCopy();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditLinePaste(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3300,10 +3420,12 @@ void MainFrame::OnEditLinePaste(cb_unused wxCommandEvent& event)
 
         ed->GetControl()->EndUndoAction();
     }
+#endif // caEDIT
 }
 
 void MainFrame::OnEditLineMove(wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (!ed)
         return;
@@ -3366,24 +3488,30 @@ void MainFrame::OnEditLineMove(wxCommandEvent& event)
         stc->EndUndoAction();
     }
     stc->SetSelectionVoid(startPos, endPos);
+#endif // caEDIT
 }
 
 void MainFrame::OnEditUpperCase(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->UpperCase();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditLowerCase(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GetControl()->LowerCase();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditInsertNewLine(wxCommandEvent& event)
 {
+#if caEDIT
     OnEditGotoLineEnd(event);
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
@@ -3393,10 +3521,12 @@ void MainFrame::OnEditInsertNewLine(wxCommandEvent& event)
             stc->AutoCompCancel();
         stc->NewLine();
     }
+#endif // caEDIT
 }
 
 void MainFrame::OnEditGotoLineEnd(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3405,10 +3535,12 @@ void MainFrame::OnEditGotoLineEnd(cb_unused wxCommandEvent& event)
             stc->AutoCompCancel();
         stc->LineEnd();
     }
+#endif // caEDIT
 }
 
 static void InsertNewLine(bool below)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -3433,6 +3565,7 @@ static void InsertNewLine(bool below)
         }
         stc->EndUndoAction();
     }
+#endif // caEDIT
 }
 
 void MainFrame::OnEditInsertNewLineBelow(cb_unused wxCommandEvent& event)
@@ -3447,9 +3580,11 @@ void MainFrame::OnEditInsertNewLineAbove(cb_unused wxCommandEvent& event)
 
 void MainFrame::OnEditSelectAll(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     EditorBase* eb = Manager::Get()->GetEditorManager()->GetActiveEditor();
     if (eb)
         eb->SelectAll();
+#endif // caEDIT
 }
 
 namespace
@@ -3471,6 +3606,7 @@ struct EditorSelection
     }
 };
 
+#if caEDIT
 bool SelectNext(cbStyledTextCtrl *control, const wxString &selectedText, long selectionEnd, bool reversed)
 {
     // always match case and try to match whole words if they have no special characters
@@ -3499,9 +3635,11 @@ bool SelectNext(cbStyledTextCtrl *control, const wxString &selectedText, long se
         return false;
     }
 }
+#endif // caEDIT
 
 bool GetSelectionInEditor(EditorSelection &selection, cbStyledTextCtrl *control)
 {
+#if caEDIT
     int main = control->GetMainSelection();
     int count = control->GetSelections();
     if (main >=0 && main < count)
@@ -3511,6 +3649,7 @@ bool GetSelectionInEditor(EditorSelection &selection, cbStyledTextCtrl *control)
         return true;
     }
     else
+#endif // caEDIT
         return false;
 }
 
@@ -3518,6 +3657,7 @@ bool GetSelectionInEditor(EditorSelection &selection, cbStyledTextCtrl *control)
 
 void MainFrame::OnEditSelectNext(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     EditorBase* eb = Manager::Get()->GetEditorManager()->GetActiveEditor();
     if (!eb || !eb->IsBuiltinEditor())
         return;
@@ -3539,10 +3679,12 @@ void MainFrame::OnEditSelectNext(cb_unused wxCommandEvent& event)
         const int end = control->WordEndPosition(selection.caret, true);
         control->SetSelection(start, end);
     }
+#endif // caEDIT
 }
 
 void MainFrame::OnEditSelectNextSkip(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     EditorBase* eb = Manager::Get()->GetEditorManager()->GetActiveEditor();
     if (!eb || !eb->IsBuiltinEditor())
         return;
@@ -3597,6 +3739,7 @@ void MainFrame::OnEditSelectNextSkip(cb_unused wxCommandEvent& event)
         control->AddSelection(it->caret, it->anchor);
         ++index;
     }
+#endif // caEDIT
 }
 
 /* This is a shameless rip-off of the original OnEditCommentSelected function,
@@ -3605,6 +3748,7 @@ void MainFrame::OnEditSelectNextSkip(cb_unused wxCommandEvent& event)
  */
 void MainFrame::OnEditCommentSelected(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (!ed)
         return;
@@ -3656,11 +3800,13 @@ void MainFrame::OnEditCommentSelected(cb_unused wxCommandEvent& event)
         stc->SetSelectionVoid(stc->PositionFromLine(startLine),stc->PositionFromLine(endLine)+stc->LineLength(endLine));
     }
     stc->EndUndoAction();
+#endif // caEDIT
 }
 
 /* See above (OnEditCommentSelected) for details. */
 void MainFrame::OnEditUncommentSelected(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (!ed)
         return;
@@ -3748,10 +3894,12 @@ void MainFrame::OnEditUncommentSelected(cb_unused wxCommandEvent& event)
         stc->SetSelectionVoid(stc->PositionFromLine(startLine),stc->PositionFromLine(endLine)+stc->LineLength(endLine));
     }
     stc->EndUndoAction();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditToggleCommentSelected(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (!ed)
         return;
@@ -3826,10 +3974,12 @@ void MainFrame::OnEditToggleCommentSelected(cb_unused wxCommandEvent& event)
         stc->SetSelectionVoid(stc->PositionFromLine(startLine),stc->PositionFromLine(endLine)+stc->LineLength(endLine));
     }
     stc->EndUndoAction();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditStreamCommentSelected(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (!ed)
         return;
@@ -3906,10 +4056,12 @@ void MainFrame::OnEditStreamCommentSelected(cb_unused wxCommandEvent& event)
 
     }
     stc->EndUndoAction();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditBoxCommentSelected(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (!ed)
         return;
@@ -3972,6 +4124,7 @@ void MainFrame::OnEditBoxCommentSelected(cb_unused wxCommandEvent& event)
         stc->SetSelectionVoid(stc->PositionFromLine(startLine),stc->PositionFromLine(endLine)+stc->LineLength(endLine));
     }
     stc->EndUndoAction();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditShowCallTip(cb_unused wxCommandEvent& event)
@@ -3988,6 +4141,7 @@ void MainFrame::OnEditCompleteCode(cb_unused wxCommandEvent& event)
 
 void MainFrame::OnEditHighlightMode(wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (!ed)
         return;
@@ -4013,52 +4167,66 @@ void MainFrame::OnEditHighlightMode(wxCommandEvent& event)
         changeButtonLabel(*m_pHighlightButton, colour_set->GetLanguageName(lang));
     ed->SetLanguage(lang, true);
     Manager::Get()->GetCCManager()->NotifyPluginStatus();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditFoldAll(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->FoldAll();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditUnfoldAll(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->UnfoldAll();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditToggleAllFolds(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->ToggleAllFolds();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditFoldBlock(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->FoldBlockFromLine();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditUnfoldBlock(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->UnfoldBlockFromLine();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditToggleFoldBlock(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->ToggleFoldBlockFromLine();
+#endif // caEDIT
 }
 
 void MainFrame::OnEditEOLMode(wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
     {
@@ -4079,10 +4247,12 @@ void MainFrame::OnEditEOLMode(wxCommandEvent& event)
             ed->GetControl()->EndUndoAction();
         }
     }
+#endif // caEDIT
 }
 
 void MainFrame::OnEditEncoding(wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (!ed)
         return;
@@ -4119,6 +4289,7 @@ void MainFrame::OnEditEncoding(wxCommandEvent& event)
         encoding = wxFONTENCODING_UTF32LE;
 
     ed->SetEncoding(encoding);
+#endif // caEDIT
 }
 
 void MainFrame::OnViewLayout(wxCommandEvent& event)
@@ -4228,6 +4399,7 @@ void MainFrame::OnViewScriptConsole(cb_unused wxCommandEvent& event)
 
 void MainFrame::OnViewHideEditorTabs(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
 	cbAuiNotebook* nb = Manager::Get()->GetEditorManager()->GetNotebook();
 	if (nb)
 	{
@@ -4240,14 +4412,17 @@ void MainFrame::OnViewHideEditorTabs(cb_unused wxCommandEvent& event)
 
 		Manager::Get()->GetConfigManager(_T("app"))->Write(_T("/environment/hide_editor_tabs"), hide_editor_tabs);
 	}
+#endif // caEDIT
 }
 
 void MainFrame::OnSearchFind(wxCommandEvent& event)
 {
+#if caEDIT
     bool bDoMultipleFiles = (event.GetId() == idSearchFindInFiles);
     if (!bDoMultipleFiles)
         bDoMultipleFiles = !Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     m_findReplace.ShowFindDialog(false, bDoMultipleFiles);
+#endif // caEDIT
 }
 
 void MainFrame::OnSearchFindNext(wxCommandEvent& event)
@@ -4264,14 +4439,17 @@ void MainFrame::OnSearchFindNextSelected(wxCommandEvent& event)
 
 void MainFrame::OnSearchReplace(wxCommandEvent& event)
 {
+#if caEDIT
     bool bDoMultipleFiles = (event.GetId() == idSearchReplaceInFiles);
     if (!bDoMultipleFiles)
         bDoMultipleFiles = !Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     m_findReplace.ShowFindDialog(true, bDoMultipleFiles);
+#endif // caEDIT
 }
 
 void MainFrame::OnSearchGotoLine(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (!ed)
         return;
@@ -4296,20 +4474,25 @@ void MainFrame::OnSearchGotoLine(cb_unused wxCommandEvent& event)
         ed->UnfoldBlockFromLine(line - 1);
         ed->GotoLine(line - 1);
     }
+#endif // caEDIT
 }
 
 void MainFrame::OnSearchGotoNextChanged(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GotoNextChanged();
+#endif // caEDIT
 }
 
 void MainFrame::OnSearchGotoPrevChanged(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->GotoPreviousChanged();
+#endif // caEDIT
 }
 
 void MainFrame::OnHelpAbout(wxCommandEvent& WXUNUSED(event))
@@ -4338,9 +4521,14 @@ void MainFrame::OnFileMenuUpdateUI(wxUpdateUIEvent& event)
         return;
     }
 
+#if caEDIT
     EditorManager *editorManager = Manager::Get()->GetEditorManager();
     EditorBase *ed = (editorManager ? editorManager->GetActiveEditor() : nullptr);
     EditorBase *sh = (editorManager ? editorManager->GetEditor(g_StartHereTitle) : nullptr);
+#else
+    EditorBase *ed = nullptr;
+    EditorBase *sh = nullptr;
+#endif // caEDIT
 
     const int id = event.GetId();
 
@@ -4349,8 +4537,10 @@ void MainFrame::OnFileMenuUpdateUI(wxUpdateUIEvent& event)
         event.Enable(ed && ed != sh);
     else if (id == idFileSave)
         event.Enable(ed && ed->GetModified());
+#if caEDIT
     else if (id == idFilePrint)
         event.Enable(editorManager && editorManager->GetBuiltinActiveEditor());
+#endif // caEDIT
     else if (id == idFileOpen)
         event.Enable(true);
     else
@@ -4404,11 +4594,13 @@ void MainFrame::OnEditMenuUpdateUI(wxUpdateUIEvent& event)
     bool canCut    = false;
     bool canSelAll = false;
 
+#if caEDIT
     if (Manager::Get()->GetEditorManager() && !Manager::IsAppShuttingDown())
     {
         ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
         eb = Manager::Get()->GetEditorManager()->GetActiveEditor();
     }
+#endif // caEDIT
 
     wxMenuBar* mbar = GetMenuBar();
 
@@ -4449,6 +4641,7 @@ void MainFrame::OnEditMenuUpdateUI(wxUpdateUIEvent& event)
     mbar->Enable(idEditShowCallTip,           ed);
     mbar->Enable(idEditCompleteCode,          ed);
 
+#if caEDIT
     if (ed)
     {
         // OK... this was the strangest/silliest/most-frustrating bug ever in the computer programs history...
@@ -4502,6 +4695,7 @@ void MainFrame::OnEditMenuUpdateUI(wxUpdateUIEvent& event)
             }
         }
     }
+#endif // caEDIT
 
     if (m_pToolbar)
     {
@@ -4524,15 +4718,23 @@ void MainFrame::OnViewMenuUpdateUI(wxUpdateUIEvent& event)
     }
 
     wxMenuBar* mbar   = GetMenuBar();
+#if caEDIT
     cbEditor*  ed     = Manager::Get()->GetEditorManager() ? Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor() : nullptr;
+#else
+    cbEditor*  ed     = nullptr;
+#endif // caEDIT
     bool       manVis = m_LayoutManager.GetPane(m_pPrjManUI->GetNotebook()).IsShown();
 
     mbar->Check(idViewManager,             manVis);
     mbar->Check(idViewLogManager,          m_LayoutManager.GetPane(m_pInfoPane).IsShown());
+#if caEDIT
     mbar->Check(idViewStartPage,           Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle)!=NULL);
+#endif // caEDIT
     mbar->Check(idViewStatusbar,           GetStatusBar() && GetStatusBar()->IsShown());
     mbar->Check(idViewScriptConsole,       m_LayoutManager.GetPane(m_pScriptConsole).IsShown());
+#if caEDIT
     mbar->Check(idViewHideEditorTabs,      Manager::Get()->GetEditorManager()->GetNotebook()->GetTabCtrlHeight() == 0);
+#endif // caEDIT
     mbar->Check(idViewFullScreen,          IsFullScreen());
     mbar->Enable(idViewFocusEditor,        ed);
     mbar->Enable(idViewFocusManagement,    manVis);
@@ -4557,9 +4759,13 @@ void MainFrame::OnSearchMenuUpdateUI(wxUpdateUIEvent& event)
         return;
     }
 
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()
                  ? Manager::Get()->GetEditorManager()->GetBuiltinEditor(
                      Manager::Get()->GetEditorManager()->GetActiveEditor() ) : nullptr;
+#else
+    cbEditor* ed = nullptr;
+#endif // caEDIT
 
     bool enableGoto = false;
     if (ed)
@@ -4593,6 +4799,7 @@ void MainFrame::OnEditorUpdateUI(CodeBlocksEvent& event)
         return;
     }
 
+#if caEDIT
     if (Manager::Get()->GetEditorManager() && event.GetEditor() == Manager::Get()->GetEditorManager()->GetActiveEditor())
     {
 #if wxCHECK_VERSION(3, 0, 0)
@@ -4603,6 +4810,7 @@ void MainFrame::OnEditorUpdateUI(CodeBlocksEvent& event)
         DoUpdateStatusBar();
 #endif // defined(__wxMSW__) && wxCHECK_VERSION(3, 0, 0)
     }
+#endif // caEDIT
 
     event.Skip();
 }
@@ -4632,11 +4840,13 @@ void MainFrame::OnToggleBar(wxCommandEvent& event)
         win = m_pToolbar;
         toolbar = true;
     }
+#if caEDIT
     else if (event.GetId() == idViewToolDebugger)
     {
         win = m_debuggerToolbarHandler->GetToolbar();
         toolbar = true;
     }
+#endif // caEDIT
     else
     {
         wxString pluginName = m_PluginIDsMap[event.GetId()];
@@ -4685,10 +4895,12 @@ void MainFrame::OnToggleStatusBar(cb_unused wxCommandEvent& event)
 
 void MainFrame::OnFocusEditor(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     EditorManager* edman = Manager::Get()->GetEditorManager();
     cbAuiNotebook* nb = edman?edman->GetNotebook():nullptr;
     if (nb)
         nb->FocusActiveTabCtrl();
+#endif // caEDIT
 }
 
 void MainFrame::OnFocusManagement(cb_unused wxCommandEvent& event)
@@ -4706,6 +4918,7 @@ void MainFrame::OnFocusLogsAndOthers(cb_unused wxCommandEvent& event)
 
 void MainFrame::OnSwitchTabs(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     // Get the notebook from the editormanager:
     cbAuiNotebook* nb = Manager::Get()->GetEditorManager()->GetNotebook();
     if (!nb)
@@ -4772,17 +4985,19 @@ void MainFrame::OnSwitchTabs(cb_unused wxCommandEvent& event)
             win->SetFocus();
         }
     }
+#endif // caEDIT
 }
 
 void MainFrame::OnToggleStartPage(cb_unused wxCommandEvent& event)
 {
-
+#if caEDIT
     int toggle=-1;
     if(Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle)==NULL)
     {
         toggle=1;
     }
     ShowHideStartPage(false,toggle);
+#endif // caEDIT
 }
 
 void MainFrame::OnToggleFullScreen(cb_unused wxCommandEvent& event)
@@ -4880,7 +5095,9 @@ void MainFrame::OnSettingsEnvironment(cb_unused wxCommandEvent& event)
         }
 
         Manager::Get()->GetLogManager()->NotifyUpdate();
+#if caEDIT
         Manager::Get()->GetEditorManager()->RecreateOpenEditorStyles();
+#endif // caEDIT
         Manager::Get()->GetCCManager()->UpdateEnvSettings();
         m_pPrjManUI->RebuildTree();
         ShowHideStartPage();
@@ -4900,6 +5117,7 @@ void MainFrame::OnGlobalUserVars(cb_unused wxCommandEvent& event)
 
 void MainFrame::OnSettingsEditor(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     // editor lexers loading takes some time; better reflect this with a hourglass
     wxBeginBusyCursor();
 
@@ -4917,6 +5135,7 @@ void MainFrame::OnSettingsEditor(cb_unused wxCommandEvent& event)
         event2.SetInt(cbSettingsType::Editor);
         Manager::Get()->ProcessEvent(event2);
     }
+#endif // caEDIT
 }
 
 void MainFrame::OnSettingsCompiler(cb_unused wxCommandEvent& event)
@@ -4933,6 +5152,7 @@ void MainFrame::OnSettingsCompiler(cb_unused wxCommandEvent& event)
 
 void MainFrame::OnSettingsDebugger(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     DebuggerSettingsDlg dlg(this);
     PlaceWindow(&dlg);
     if (dlg.ShowModal() == wxID_OK)
@@ -4941,6 +5161,7 @@ void MainFrame::OnSettingsDebugger(cb_unused wxCommandEvent& event)
         event2.SetInt(cbSettingsType::Debugger);
         Manager::Get()->ProcessEvent(event2);
     }
+#endif // caEDIT
 }
 
 void MainFrame::OnSettingsPlugins(cb_unused wxCommandEvent& event)
@@ -5031,10 +5252,12 @@ void MainFrame::OnPageChanged(wxNotebookEvent& event)
 
 void MainFrame::OnShiftTab(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     // Must make sure it's cbEditor and not EditorBase
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (ed)
         ed->DoUnIndent();
+#endif // caEDIT
 }
 
 void MainFrame::OnCtrlAltTab(cb_unused wxCommandEvent& event)
@@ -5247,6 +5470,7 @@ void MainFrame::OnUnlockLogManager(cb_unused CodeBlocksLogEvent& event)
 // Highlight Button
 void MainFrame::OnHighlightMenu(cb_unused wxCommandEvent& event)
 {
+#if caEDIT
     cbEditor* ed = Manager::Get()->GetEditorManager()->GetBuiltinActiveEditor();
     if (!ed) return;
 
@@ -5278,6 +5502,7 @@ void MainFrame::OnHighlightMenu(cb_unused wxCommandEvent& event)
     wxRect rect;
     GetStatusBar()->GetFieldRect(1, rect);
     PopupMenu(&mm, GetStatusBar()->GetPosition() + rect.GetPosition());
+#endif // caEDIT
 }
 
 void MainFrame::StartupDone()

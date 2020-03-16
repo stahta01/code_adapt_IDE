@@ -191,8 +191,10 @@ wxMenu* RecentItemsList::GetMenu()
 
 void RecentItemsList::RefreshStartHerePage()
 {
+#if caEDIT
     // update start here page
     EditorBase* sh = Manager::Get()->GetEditorManager()->GetEditor(g_StartHereTitle);
     if (sh)
         ((StartHerePage*)sh)->Reload();
+#endif // caEDIT
 }
